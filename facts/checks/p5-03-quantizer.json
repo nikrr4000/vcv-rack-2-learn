@@ -1,0 +1,102 @@
+{
+  "lesson": "p5-03-quantizer",
+  "modules": [
+    {
+      "ref": "rnd",
+      "plugin": "Fundamental",
+      "slug": "Random"
+    },
+    {
+      "ref": "q",
+      "plugin": "Fundamental",
+      "slug": "Quantizer"
+    },
+    {
+      "ref": "oct",
+      "plugin": "Fundamental",
+      "slug": "Octave"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "rnd",
+        "Stepped"
+      ],
+      "to": [
+        "q",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "q",
+        "Pitch"
+      ],
+      "to": [
+        "oct",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "oct",
+        "Pitch"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Triangle"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "rnd",
+      "name": "Internal trigger rate",
+      "display_min": 1
+    }
+  ],
+  "probes": [
+    {
+      "module": "oct",
+      "output": "Pitch",
+      "ask": "Выход Octave стоит на месте. Подними Internal trigger rate у Random хотя бы до 1 Гц и нажми «Проверить» ещё раз.",
+      "samples": 40,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.2
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Случайные значения не идут в квантизатор. Какой выход Random даёт ступеньки и в какой вход Quantizer его подать?",
+    "cable:2": "Квантизатор не связан с Octave. Какой выход Quantizer даёт ноты шкалы и куда его подать?",
+    "cable:3": "Октавный сдвиг не доходит до VCO. Куда подаётся высота у VCO?",
+    "cable:4": "Тишина. Подай выход VCO в первый выход Audio.",
+    "param:1": "Ноты меняются слишком редко. Internal trigger rate у Random — хотя бы 1 Гц.",
+    "probe:1": "Высота не меняется. Идут ли ступеньки с Random, и не стоит ли Internal trigger rate на минимуме?"
+  },
+  "reference": {
+    "break": 1
+  }
+}

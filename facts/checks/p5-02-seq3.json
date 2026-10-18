@@ -1,0 +1,227 @@
+{
+  "lesson": "p5-02-seq3",
+  "modules": [
+    {
+      "ref": "seq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "seq",
+        "CV 1"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "Trigger"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "seq",
+      "name": "Tempo",
+      "display_min": 100
+    }
+  ],
+  "probes": [
+    {
+      "module": "seq",
+      "output": "CV 1",
+      "ask": "Включи Run на SEQ 3, выставь на ручках CV 1 разные шаги и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.3
+      }
+    },
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Включи хотя бы несколько кнопок в ряду триггеров (Step N trigger) и убедись, что Run включён; затем нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Мелодия не доходит до высоты. Какой выход SEQ 3 даёт напряжение первого ряда и в какой вход VCO его подать?",
+    "cable:2": "Огибающая не знает, когда начинать. Какой выход SEQ 3 отдаёт импульсы по шагам и в какой вход ADSR его подать?",
+    "cable:3": "Пила есть, но фильтр её не слышит. Какой выход VCO даёт пилу и в какой вход VCF её подать?",
+    "cable:4": "До усилителя звук не доходит. Какой выход VCF ведёт к входу Channel у VCA?",
+    "cable:5": "Звук не открывается шагами. Что должно управлять VCA через вход CV?",
+    "cable:6": "Голос собран, а тишина. Откуда звук выходит из VCA и куда он должен прийти?",
+    "param:1": "Темп слишком медленный: проверка не успеет увидеть шаги. Подними Tempo хотя бы до 100 bpm.",
+    "probe:1": "Выход CV 1 стоит на месте. Включён ли Run, и стоят ли ручки CV 1 step на разных значениях?",
+    "probe:2": "Огибающая не поднимается. Включён ли Run, и горят ли кнопки в ряду триггеров (Step N trigger)?"
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "seq",
+        "name": "CV 1 step 1",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 2",
+        "value": 0.25
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 3",
+        "value": 0.5
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 4",
+        "value": 0.333
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 5",
+        "value": 0.667
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 6",
+        "value": 0.417
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 7",
+        "value": 0.75
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 8",
+        "value": 0.5
+      },
+      {
+        "module": "seq",
+        "name": "Step 1 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 2 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 3 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 4 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 5 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 6 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 7 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 8 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Run",
+        "value": 1
+      }
+    ],
+    "break": 2
+  }
+}

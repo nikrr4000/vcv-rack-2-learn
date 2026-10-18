@@ -1,0 +1,100 @@
+{
+  "lesson": "p5-01-clock-tempo",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "scopeA",
+      "plugin": "Fundamental",
+      "slug": "Scope"
+    },
+    {
+      "ref": "scopeB",
+      "plugin": "Fundamental",
+      "slug": "Scope"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Master clock"
+      ],
+      "to": [
+        "scopeA",
+        "Ch 1"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "scopeA",
+        "Ch 2"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 2"
+      ],
+      "to": [
+        "scopeB",
+        "Ch 1"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 3"
+      ],
+      "to": [
+        "scopeB",
+        "Ch 2"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "clk",
+      "name": "Master clock",
+      "display_min": 80,
+      "display_max": 140
+    }
+  ],
+  "probes": [
+    {
+      "module": "clk",
+      "output": "Master clock",
+      "ask": "Включи Run на Clocked (кнопка Run на панели) и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 5
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Мастер-такт не виден на Scope. Какой выход Clocked даёт главный такт и в какой вход первого Scope его подать?",
+    "cable:2": "Деление 1 не выведено. Подай выход Clock 1 в Ch 2 первого Scope.",
+    "cable:3": "Деление 2 не выведено. Подай выход Clock 2 в Ch 1 второго Scope.",
+    "cable:4": "Деление 3 не выведено. Подай выход Clock 3 в Ch 2 второго Scope.",
+    "param:1": "Темп для упражнения: от 80 до 140 BPM. Сколько стоит у Master clock сейчас? Медленнее 80 тактов не хватит увидеть деления, быстрее 140 они слипнутся на Scope.",
+    "probe:1": "Такта нет: на выходе Master clock 0 В. Включена ли кнопка Run у Clocked? Без Run весь такт стоит."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "clk",
+        "name": "Run",
+        "value": 1
+      }
+    ],
+    "break": 1
+  }
+}

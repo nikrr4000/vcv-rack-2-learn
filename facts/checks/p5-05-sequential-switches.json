@@ -1,0 +1,149 @@
+{
+  "lesson": "p5-05-sequential-switches",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "rv",
+      "plugin": "Fundamental",
+      "slug": "RandomValues"
+    },
+    {
+      "ref": "sw",
+      "plugin": "Fundamental",
+      "slug": "SequentialSwitch2"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "sw",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "rv",
+        "Random 1"
+      ],
+      "to": [
+        "sw",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "rv",
+        "Random 2"
+      ],
+      "to": [
+        "sw",
+        "Channel 2"
+      ]
+    },
+    {
+      "from": [
+        "rv",
+        "Random 3"
+      ],
+      "to": [
+        "sw",
+        "Channel 3"
+      ]
+    },
+    {
+      "from": [
+        "rv",
+        "Random 4"
+      ],
+      "to": [
+        "sw",
+        "Channel 4"
+      ]
+    },
+    {
+      "from": [
+        "sw",
+        "Main"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Triangle"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "sw",
+      "name": "Steps",
+      "display_in": [
+        "4"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "module": "sw",
+      "output": "Main",
+      "ask": "Включи Run у Clocked, нажми Push у Random Values (чтобы получить значения) и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.2
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Переключатель не знает, когда менять канал. Какой выход Clocked ведёт в Clock у Sequential Switch 4 to 1?",
+    "cable:2": "Источник 1 не подключён. Подай Random 1 в Channel 1.",
+    "cable:3": "Источник 2 не подключён. Подай Random 2 в Channel 2.",
+    "cable:4": "Источник 3 не подключён. Подай Random 3 в Channel 3.",
+    "cable:5": "Источник 4 не подключён. Подай Random 4 в Channel 4.",
+    "cable:6": "Мелодия не доходит до высоты. Подай Main в 1V/octave pitch у VCO.",
+    "cable:7": "Тишина. Подай выход VCO в первый выход Audio.",
+    "param:1": "Мелодия из четырёх источников: Steps должен стоять на 4. Сколько сейчас?",
+    "probe:1": "Main стоит на месте. Идёт ли такт (Run у Clocked)? Нажимал ли ты Push у Random Values, чтобы четыре значения стали разными?"
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "clk",
+        "name": "Run",
+        "value": 1
+      },
+      {
+        "module": "rv",
+        "name": "Push",
+        "value": 1
+      }
+    ],
+    "break": 1
+  }
+}

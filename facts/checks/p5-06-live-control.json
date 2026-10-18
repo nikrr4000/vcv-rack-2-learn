@@ -1,0 +1,261 @@
+{
+  "lesson": "p5-06-live-control",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "seq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "mutes",
+      "plugin": "Fundamental",
+      "slug": "Mutes"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "pulses",
+      "plugin": "Fundamental",
+      "slug": "Pulses"
+    },
+    {
+      "ref": "push",
+      "plugin": "Fundamental",
+      "slug": "Push"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "seq",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "CV 1"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "Trigger"
+      ],
+      "to": [
+        "mutes",
+        "Row 1"
+      ]
+    },
+    {
+      "from": [
+        "mutes",
+        "Row 1"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "pulses",
+        "Row 1 trigger"
+      ],
+      "to": [
+        "seq",
+        "Reset"
+      ]
+    },
+    {
+      "from": [
+        "push",
+        "Trigger"
+      ],
+      "to": [
+        "clk",
+        "Reset"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Огибающая стоит. Выключена ли кнопка Row 1 mute у Mutes (заглушенная строка не пропускает гейт)? Идёт ли такт и Run у SEQ 3?",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Секвенсор не получает такт. Какой выход Clocked ведёт в Clock у SEQ 3?",
+    "cable:2": "Мелодия не доходит до высоты. Подай CV 1 в 1V/octave pitch у VCO.",
+    "cable:3": "Ритм не идёт через мьют. Подай Trigger у SEQ 3 в Row 1 у Mutes (входы слева).",
+    "cable:4": "После мьюта гейт не идёт в огибающую. Подай выход Row 1 у Mutes в Gate у ADSR.",
+    "cable:5": "Звук не управляется огибающей. Что должно прийти на CV у VCA?",
+    "cable:6": "Пила не идёт в усилитель. Подай Sawtooth в Channel у VCA.",
+    "cable:7": "Голос собран, а тишина. Откуда звук выходит из VCA и куда он должен прийти?",
+    "cable:8": "Нет кнопки «вернуться на первый шаг». Подай Row 1 trigger у Pulses в Reset у SEQ 3.",
+    "cable:9": "Нет кнопки «сброс такта». Подай Trigger у Push в Reset у Clocked.",
+    "probe:1": "Ритма нет. Строка Row 1 у Mutes не должна быть заглушена на момент проверки, Run у Clocked и у SEQ 3 включены."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "seq",
+        "name": "CV 1 step 1",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 2",
+        "value": 0.25
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 3",
+        "value": 0.5
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 4",
+        "value": 0.333
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 5",
+        "value": 0.667
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 6",
+        "value": 0.417
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 7",
+        "value": 0.75
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 8",
+        "value": 0.5
+      },
+      {
+        "module": "seq",
+        "name": "Step 1 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 2 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 3 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 4 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 5 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 6 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 7 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Step 8 trigger",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "Run",
+        "value": 1
+      },
+      {
+        "module": "clk",
+        "name": "Run",
+        "value": 1
+      }
+    ],
+    "break": 3
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "lesson": "p5-04-logic-gates",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "logic",
+      "plugin": "Fundamental",
+      "slug": "Logic"
+    },
+    {
+      "ref": "gates",
+      "plugin": "Fundamental",
+      "slug": "Gates"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "logic",
+        "A"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 2"
+      ],
+      "to": [
+        "logic",
+        "B"
+      ]
+    },
+    {
+      "from": [
+        "logic",
+        "XOR"
+      ],
+      "to": [
+        "gates",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "gates",
+        "Gate"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "gates",
+      "name": "Gate length",
+      "display_max": 500
+    }
+  ],
+  "probes": [
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Включи Run у Clocked и выставь у Clk 1 ratio и Clk 2 ratio разные значения: при одинаковых делениях XOR молчит. Затем нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Первое деление не дошло до логики. Какой выход Clocked даёт деление 1 и в какой вход Logic его подать?",
+    "cable:2": "Второе деление не дошло до логики. Подай Clock 2 во вход B у Logic.",
+    "cable:3": "Логика не отдаёт результат. С какого выхода Logic брать ритм XOR и куда его подать?",
+    "cable:4": "Гейт нужной длины не идёт в огибающую. Какой выход Gates ведёт в Gate у ADSR?",
+    "cable:5": "Звук не управляется огибающей. Что должно прийти на CV у VCA?",
+    "cable:6": "Пила не идёт в усилитель. Подай Sawtooth в Channel у VCA.",
+    "cable:7": "Голос собран, а тишина. Откуда звук выходит из VCA и куда он должен прийти?",
+    "param:1": "Гейт слишком длинный: ритм сливается в сплошной звук. Поставь Gate length не больше 500 мс.",
+    "probe:1": "Огибающая не оживает. Идёт ли такт (Run у Clocked)? Одинаковые деления Clk 1 ratio и Clk 2 ratio дают XOR = 0: поставь разные."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "clk",
+        "name": "Run",
+        "value": 1
+      },
+      {
+        "module": "clk",
+        "name": "Clk 2 ratio",
+        "value": 2
+      }
+    ],
+    "break": 3
+  }
+}
