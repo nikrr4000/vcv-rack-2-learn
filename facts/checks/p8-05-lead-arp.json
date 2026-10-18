@@ -1,0 +1,304 @@
+{
+  "lesson": "p8-05-lead-arp",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "rnd",
+      "plugin": "Fundamental",
+      "slug": "Random"
+    },
+    {
+      "ref": "att",
+      "plugin": "Fundamental",
+      "slug": "8vert"
+    },
+    {
+      "ref": "quant",
+      "plugin": "Fundamental",
+      "slug": "Quantizer"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "delay",
+      "plugin": "Fundamental",
+      "slug": "Delay"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "rnd",
+        "Trigger"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "rnd",
+        "Stepped"
+      ],
+      "to": [
+        "att",
+        "Row 1"
+      ]
+    },
+    {
+      "from": [
+        "att",
+        "Row 1"
+      ],
+      "to": [
+        "quant",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "quant",
+        "Pitch"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "delay",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "delay",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "delay",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "clk",
+      "name": "Master clock",
+      "display_min": 90
+    },
+    {
+      "module": "att",
+      "name": "Row 1 gain",
+      "display_min": 10,
+      "display_max": 40
+    },
+    {
+      "module": "env",
+      "name": "Sustain",
+      "display_max": 40
+    },
+    {
+      "module": "delay",
+      "name": "Feedback",
+      "display_max": 70
+    },
+    {
+      "module": "delay",
+      "name": "Mix",
+      "display_min": 15,
+      "display_max": 60
+    },
+    {
+      "module": "rnd",
+      "name": "Shape",
+      "display_max": 20
+    }
+  ],
+  "probes": [
+    {
+      "module": "quant",
+      "output": "Pitch",
+      "ask": "Нота должна меняться по такту: проверь, что Clocked идёт (читай состояние Run, не нажимая его вслепую), что у Random в Trigger идёт Clock 1 и что Row 1 gain выше нуля. Нажми «Проверить» ещё раз.",
+      "samples": 40,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.2
+      }
+    },
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Огибающая не запускается. Идёт ли Clocked и дошёл ли Clock 1 до Gate у ADSR? Нажми «Проверить» ещё раз.",
+      "samples": 40,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Random не знает, когда брать новую ноту. Какой выход Clocked даёт такт и в какой вход Random его подать?",
+    "cable:2": "Огибающая не знает, когда начинать. Какой выход Clocked ведёт в Gate у ADSR?",
+    "cable:3": "Случайные ноты слишком широкие (десять октав). Куда подать Stepped, чтобы сузить размах?",
+    "cable:4": "Квантизатору нечего округлять. Какой выход 8vert ведёт к входу квантизатора?",
+    "cable:5": "Ноты не доходят до высоты. Какой выход Quantizer ведёт к входу 1V/octave pitch у VCO?",
+    "cable:6": "Пила есть, но фильтр её не слышит. Какой выход VCO даёт пилу и в какой вход VCF её подать?",
+    "cable:7": "До усилителя звук не доходит. Какой выход VCF ведёт к входу Channel у VCA-1?",
+    "cable:8": "Ноты не отделяются друг от друга. Что должно управлять VCA-1 через вход CV?",
+    "cable:9": "Эхо не слышно. Какой выход VCA-1 идёт в вход Audio у Delay?",
+    "cable:10": "Эхо не в такт. Какой выход Clocked нужен в Clock у Delay?",
+    "cable:11": "Партия собрана, а тишина. Откуда звук выходит из Delay и куда он должен прийти?",
+    "param:1": "Темп арпеджио слишком медленный: подними Master clock хотя бы до 90.",
+    "param:2": "Размах случайных нот вне рабочего диапазона. Поставь Row 1 gain между 10 и 40 процентами.",
+    "param:3": "Партия не должна гудеть: Sustain у ADSR не больше 40 процентов.",
+    "param:4": "Feedback выше 70 процентов: эхо накапливается и заглушает партию. Убавь.",
+    "param:5": "Mix у Delay вне рабочего диапазона: от 15 до 60 процентов, иначе эха или не слышно, или оно заглушает партию.",
+    "probe:1": "Квантизатор выдаёт одну ноту. Идёт ли Clocked, получает ли Random такт и выше ли нуля Row 1 gain?",
+    "probe:2": "Огибающая не поднимается. Идёт ли Clocked и дошёл ли Clock 1 до Gate у ADSR?",
+    "param:6": "Shape у Random выше 20%: между нотами появляются проходные, партия съезжает. Поставь ноль для чистых ступеней."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "clk",
+        "name": "Master clock",
+        "value": 240
+      },
+      {
+        "module": "att",
+        "name": "Row 1 gain",
+        "value": 0.2
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0.0753
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.5753
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.5753
+      },
+      {
+        "module": "vcf",
+        "name": "Cutoff frequency",
+        "value": 0.8256
+      },
+      {
+        "module": "delay",
+        "name": "Feedback",
+        "value": 0.4
+      },
+      {
+        "module": "delay",
+        "name": "Mix",
+        "value": 0.3
+      },
+      {
+        "module": "rnd",
+        "name": "Shape",
+        "value": 0
+      },
+      {
+        "module": "rnd",
+        "name": "Random spread",
+        "value": 0.6
+      }
+    ],
+    "break": 5
+  }
+}

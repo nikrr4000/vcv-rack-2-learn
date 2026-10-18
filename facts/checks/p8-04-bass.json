@@ -1,0 +1,495 @@
+{
+  "lesson": "p8-04-bass",
+  "modules": [
+    {
+      "ref": "seq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "slide",
+      "plugin": "Fundamental",
+      "slug": "Process"
+    },
+    {
+      "ref": "oct",
+      "plugin": "Fundamental",
+      "slug": "Octave"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "seq",
+        "CV 1"
+      ],
+      "to": [
+        "slide",
+        "Voltage"
+      ]
+    },
+    {
+      "from": [
+        "slide",
+        "Glide"
+      ],
+      "to": [
+        "oct",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "oct",
+        "Pitch"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "Trigger"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vcf",
+        "Frequency"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "CV 3"
+      ],
+      "to": [
+        "slide",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "CV 2"
+      ],
+      "to": [
+        "vcf",
+        "Resonance"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "seq",
+      "name": "Tempo",
+      "display_min": 100
+    },
+    {
+      "module": "oct",
+      "name": "Shift",
+      "display_max": -1
+    },
+    {
+      "module": "vcf",
+      "name": "Resonance",
+      "display_min": 25,
+      "display_max": 85
+    },
+    {
+      "module": "vcf",
+      "name": "Cutoff frequency CV",
+      "display_min": 15
+    },
+    {
+      "module": "slide",
+      "name": "Slew",
+      "display_min": 20,
+      "display_max": 400
+    },
+    {
+      "module": "env",
+      "name": "Sustain",
+      "display_max": 15
+    }
+  ],
+  "probes": [
+    {
+      "module": "seq",
+      "output": "CV 1",
+      "ask": "Выставь на ручках CV 1 разные шаги (CV 1 step) и нажми «Проверить» ещё раз. Если шаги не идут, прочитай состояние Run, не нажимая его вслепую.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.3
+      }
+    },
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Включи несколько кнопок в ряду триггеров (Step N trigger) и убедись, что секвенсор идёт; нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    },
+    {
+      "module": "slide",
+      "output": "Glide",
+      "ask": "Слайд работает только на шагах, где CV 3 высокий (около 10 В): выставь CV 3 step на нескольких шагах и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.3
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Мелодия не доходит до обработки. Какой выход SEQ 3 даёт высоту и в какой вход Process его подать?",
+    "cable:2": "Слайда нет: ноты прыгают. Какой выход Process замедляет переход и куда он идёт?",
+    "cable:3": "Бас не опущен в нижний регистр. Какой выход Octave ведёт к высоте VCO?",
+    "cable:4": "Огибающая не знает, когда начинать. Какой выход SEQ 3 отдаёт импульсы по шагам и в какой вход ADSR его подать?",
+    "cable:5": "Пила есть, но фильтр её не слышит. Какой выход VCO даёт пилу и в какой вход VCF её подать?",
+    "cable:6": "До усилителя звук не доходит. Какой выход VCF ведёт к входу Channel у VCA-1?",
+    "cable:7": "Нота не затухает или звука нет. Что должно управлять VCA-1 через вход CV?",
+    "cable:8": "Тембр не «квакает»: огибающая не открывает фильтр. Куда ещё подать Envelope, кроме VCA-1?",
+    "cable:9": "Слайд включается на всех шагах или ни на одном. Какой ряд SEQ 3 решает, где он нужен, и в какой вход Process идёт?",
+    "cable:10": "Акцент не слышен. Какой ряд SEQ 3 ведёт на Resonance у VCF?",
+    "cable:11": "Бас собран, а тишина. Откуда звук выходит из VCA-1 и куда он должен прийти?",
+    "param:1": "Темп слишком медленный: проверка не успеет увидеть шаги. Подними Tempo хотя бы до 100.",
+    "param:2": "Бас звучит слишком высоко. Поставь Shift у Octave на минус один или ниже.",
+    "param:3": "Резонанс вне рабочего диапазона для acid: от 25 до 85 процентов.",
+    "param:4": "Cutoff frequency CV слишком мал: огибающая почти не двигает фильтр. Подними его хотя бы до 15 процентов.",
+    "param:5": "Slew вне рабочего диапазона: от 20 до 400 мс/В. Слишком мало: слайда не слышно; слишком много: ноты не успевают дойти.",
+    "param:6": "Басовая нота не должна держаться: Sustain у ADSR не больше 15 процентов.",
+    "probe:1": "Выход CV 1 стоит на месте. Идёт ли секвенсор, и стоят ли ручки CV 1 step на разных значениях?",
+    "probe:2": "Огибающая не поднимается. Идёт ли секвенсор, и горят ли кнопки в ряду триггеров?",
+    "probe:3": "Слайд не двигает высоту. Высокий ли CV 3 хотя бы на одном шаге, и идёт ли CV 1 в Voltage?"
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "seq",
+        "name": "Tempo",
+        "value": 3
+      },
+      {
+        "module": "seq",
+        "name": "Step 1 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 2 trigger",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "Step 3 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 4 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 5 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 6 trigger",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "Step 7 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 8 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 1",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 2",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 3",
+        "value": 1
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 4",
+        "value": 0.5833
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 5",
+        "value": 0.25
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 6",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 7",
+        "value": 0.8333
+      },
+      {
+        "module": "seq",
+        "name": "CV 1 step 8",
+        "value": 0.5833
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 1",
+        "value": 3
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 2",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 3",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 4",
+        "value": 3
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 5",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 6",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 7",
+        "value": 3
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 8",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 1",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 2",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 3",
+        "value": 10
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 4",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 5",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 6",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 7",
+        "value": 10
+      },
+      {
+        "module": "seq",
+        "name": "CV 3 step 8",
+        "value": 0
+      },
+      {
+        "module": "oct",
+        "name": "Shift",
+        "value": -2
+      },
+      {
+        "module": "slide",
+        "name": "Slew",
+        "value": -4.0589
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0.0753
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.5753
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.5753
+      },
+      {
+        "module": "vcf",
+        "name": "Cutoff frequency",
+        "value": 0.5612
+      },
+      {
+        "module": "vcf",
+        "name": "Resonance",
+        "value": 0.35
+      },
+      {
+        "module": "vcf",
+        "name": "Cutoff frequency CV",
+        "value": 0.35
+      },
+      {
+        "module": "vcf",
+        "name": "Resonance CV",
+        "value": 0.6
+      }
+    ],
+    "break": 2
+  }
+}

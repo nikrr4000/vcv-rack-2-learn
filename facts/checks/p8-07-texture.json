@@ -1,0 +1,165 @@
+{
+  "lesson": "p8-07-texture",
+  "modules": [
+    {
+      "ref": "noise",
+      "plugin": "Fundamental",
+      "slug": "Noise"
+    },
+    {
+      "ref": "clouds",
+      "plugin": "AudibleInstruments",
+      "slug": "Clouds"
+    },
+    {
+      "ref": "rnd",
+      "plugin": "Fundamental",
+      "slug": "Random"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "noise",
+        "Pink noise"
+      ],
+      "to": [
+        "clouds",
+        "Left"
+      ]
+    },
+    {
+      "from": [
+        "rnd",
+        "Smooth"
+      ],
+      "to": [
+        "clouds",
+        "Position"
+      ]
+    },
+    {
+      "from": [
+        "rnd",
+        "Linear"
+      ],
+      "to": [
+        "clouds",
+        "Texture"
+      ]
+    },
+    {
+      "from": [
+        "clouds",
+        "Left"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "clouds",
+        "Right"
+      ],
+      "to": [
+        "out",
+        "To \"device output 2\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "clouds",
+      "name": "Dry/wet",
+      "display_min": 0.7
+    },
+    {
+      "module": "clouds",
+      "name": "Audio input gain",
+      "display_min": 0.3
+    },
+    {
+      "module": "clouds",
+      "name": "Feedback amount",
+      "display_max": 0.5
+    },
+    {
+      "module": "clouds",
+      "name": "Reverb amount",
+      "display_max": 0.7
+    },
+    {
+      "module": "rnd",
+      "name": "Internal trigger rate",
+      "display_max": 1
+    }
+  ],
+  "probes": [
+    {
+      "module": "rnd",
+      "output": "Smooth",
+      "ask": "Random не двигается. Идёт ли его внутренний такт (не подключён ли кабель в Trigger) и не слишком ли он медленный?",
+      "samples": 80,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.3
+      }
+    },
+    {
+      "module": "clouds",
+      "output": "Left",
+      "ask": "Облако молчит. Идёт ли шум в Left у Clouds, не стоит ли Audio input gain в нуле и поднят ли Dry/wet?",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 0.1
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Облаку нечего дробить. Какой выход Noise даёт розовый шум и в какой вход Clouds его подать?",
+    "cable:2": "Положение в буфере не движется. Какой выход Random ведёт в Position у Clouds?",
+    "cable:3": "Текстура стоит на месте. Какой выход Random ведёт в Texture у Clouds?",
+    "cable:4": "Левый канал не попал в Audio. Какой выход Clouds ведёт на первый выход устройства?",
+    "cable:5": "Звук только слева. Правый выход Clouds нужен второму выходу устройства.",
+    "param:1": "Dry/wet слишком мал: слышен сухой шум, а не облако. Подними хотя бы до 0,7.",
+    "param:2": "Audio input gain слишком мал: облаку мало материала. Подними хотя бы до 0,3.",
+    "param:3": "Feedback amount выше 0,5: облако накапливается и разрастается. Убавь.",
+    "param:4": "Reverb amount выше 0,7: текстура тонет в реверберации. Убавь.",
+    "param:5": "Модуляция слишком быстрая для текстуры: Internal trigger rate не выше 1 Гц.",
+    "probe:1": "Smooth у Random стоит на месте. Идёт ли его внутренний такт и не быстрее ли он, чем нужно, чтобы значение успело поменяться?",
+    "probe:2": "На левом выходе Clouds нет сигнала. Идёт ли шум в Left, не в нуле ли Audio input gain, не в нуле ли Dry/wet?"
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "rnd",
+        "name": "Internal trigger rate",
+        "value": -1
+      },
+      {
+        "module": "clouds",
+        "name": "Dry/wet",
+        "value": 0.9
+      },
+      {
+        "module": "clouds",
+        "name": "Audio input gain",
+        "value": 0.6
+      },
+      {
+        "module": "clouds",
+        "name": "Reverb amount",
+        "value": 0.3
+      }
+    ],
+    "break": 1
+  }
+}

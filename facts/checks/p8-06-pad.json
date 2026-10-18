@@ -1,0 +1,352 @@
+{
+  "lesson": "p8-06-pad",
+  "modules": [
+    {
+      "ref": "vco_a",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vco_b",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "lfo",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "mix",
+      "plugin": "Fundamental",
+      "slug": "Mixer"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "sum",
+      "plugin": "Fundamental",
+      "slug": "Sum"
+    },
+    {
+      "ref": "plateau",
+      "plugin": "Valley",
+      "slug": "Plateau"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "lfo",
+        "Triangle"
+      ],
+      "to": [
+        "vco_a",
+        "Pulse width modulation"
+      ]
+    },
+    {
+      "from": [
+        "vco_a",
+        "Square"
+      ],
+      "to": [
+        "mix",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "vco_b",
+        "Sawtooth"
+      ],
+      "to": [
+        "mix",
+        "Channel 2"
+      ]
+    },
+    {
+      "from": [
+        "mix",
+        "Mix"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "sum",
+        "Polyphonic"
+      ]
+    },
+    {
+      "from": [
+        "sum",
+        "Monophonic"
+      ],
+      "to": [
+        "plateau",
+        "Left"
+      ]
+    },
+    {
+      "from": [
+        "plateau",
+        "Left"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "plateau",
+        "Right"
+      ],
+      "to": [
+        "out",
+        "To \"device output 2\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "vco_a",
+      "name": "Frequency",
+      "display_max": 261
+    },
+    {
+      "module": "vco_b",
+      "name": "Frequency",
+      "display_min": 262.3
+    },
+    {
+      "module": "vco_a",
+      "name": "Pulse width modulation",
+      "display_min": 20
+    },
+    {
+      "module": "lfo",
+      "name": "Frequency",
+      "display_max": 1
+    },
+    {
+      "module": "env",
+      "name": "Attack",
+      "display_min": 400
+    },
+    {
+      "module": "env",
+      "name": "Release",
+      "display_min": 800
+    },
+    {
+      "module": "vcf",
+      "name": "Resonance",
+      "display_max": 40
+    },
+    {
+      "module": "sum",
+      "name": "Level",
+      "display_max": 60
+    },
+    {
+      "module": "plateau",
+      "name": "Wet level",
+      "display_min": 25
+    },
+    {
+      "module": "plateau",
+      "name": "Hold",
+      "display_max": 0
+    },
+    {
+      "module": "lfo",
+      "name": "Offset",
+      "display_in": [
+        "Bipolar"
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "module": "plateau",
+      "output": "Left",
+      "ask": "Пусть пэд звучит: держи ноту на клавиатуре (или Hold у Push на Gate у ADSR), подожди секунду-две атаки и нажми «Проверить» ещё раз.",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 0.3
+      }
+    },
+    {
+      "module": "plateau",
+      "output": "Right",
+      "ask": "Правый выход Plateau молчит. Подключён ли он к второму выходу Audio и звучит ли пэд?",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 0.05
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Тембр не «дышит»: ширина импульса стоит на месте. Какой выход LFO даёт треугольник и в какой вход VCO её подать?",
+    "cable:2": "Первый осциллятор не звучит. Какой выход VCO даёт прямоугольник и в какой вход Mixer он идёт?",
+    "cable:3": "Второго осциллятора нет в миксе. Какой выход второго VCO даёт пилу и в какой вход Mixer он идёт?",
+    "cable:4": "Сумма не доходит до фильтра. Откуда выходит Mixer и куда?",
+    "cable:5": "До усилителя звук не доходит. Какой выход VCF ведёт к входу Channel у VCA-1?",
+    "cable:6": "Пэд не нарастает. Что должно управлять VCA-1 через вход CV?",
+    "cable:7": "Голоса нечем свести. В какой вход Sum идёт выход VCA-1?",
+    "cable:8": "Реверберации нечего обрабатывать. Какой выход Sum ведёт в Left у Plateau?",
+    "cable:9": "Левый канал не попал в Audio. Какой выход Plateau ведёт на первый выход устройства?",
+    "cable:10": "Звук только слева. Правый выход Plateau нужен второму выходу устройства.",
+    "param:1": "Первый осциллятор не расстроен вниз. Поставь его Frequency чуть ниже 261 Гц (на несколько центов вниз от C4).",
+    "param:2": "Второй осциллятор не расстроен вверх. Поставь его Frequency чуть выше 262,3 Гц (на несколько центов вверх от C4).",
+    "param:3": "Pulse width modulation у первого VCO почти нулевая: ширина импульса не движется. Подними хотя бы до 20 процентов.",
+    "param:4": "LFO слишком быстрый для пэда: Frequency не выше 1 Гц.",
+    "param:5": "Атака слишком быстрая для пэда: Attack у ADSR не меньше 400 мс.",
+    "param:6": "Release слишком короткий: пэд обрывается. Поставь хотя бы 800 мс.",
+    "param:7": "Resonance выше 40 процентов: пэд свистит. Убавь.",
+    "param:8": "Level у Sum выше 60 процентов: голоса складываются и перегружают выход. Убавь (урок 6.4).",
+    "param:9": "Wet level у Plateau почти нулевой: реверберации не слышно. Подними хотя бы до 25 процентов.",
+    "param:10": "Hold у Plateau включён: хвост заморожен. Выключи Hold или нажми Clear.",
+    "probe:1": "На левом выходе нет сигнала. Держится ли нота, прошла ли атака и дошёл ли звук до Left у Plateau?",
+    "probe:2": "Правый выход молчит. Проверь, что кабель идёт из Right у Plateau в Audio, и что пэд звучит.",
+    "param:11": "Offset у LFO стоит в Unipolar: ширина импульса качается только в одну сторону. Переключи на Bipolar."
+  },
+  "reference": {
+    "helpers": [
+      {
+        "ref": "push",
+        "plugin": "Fundamental",
+        "slug": "Push"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "push",
+          "Gate"
+        ],
+        "to": [
+          "env",
+          "Gate"
+        ]
+      }
+    ],
+    "params": [
+      {
+        "module": "push",
+        "name": "Hold",
+        "value": 1
+      },
+      {
+        "module": "vco_a",
+        "name": "Frequency",
+        "value": -0.1
+      },
+      {
+        "module": "vco_b",
+        "name": "Frequency",
+        "value": 0.1
+      },
+      {
+        "module": "vco_a",
+        "name": "Pulse width modulation",
+        "value": 0.4
+      },
+      {
+        "module": "lfo",
+        "name": "Frequency",
+        "value": -1.737
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0.6747
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.75
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0.8
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.8253
+      },
+      {
+        "module": "vcf",
+        "name": "Cutoff frequency",
+        "value": 0.7782
+      },
+      {
+        "module": "vcf",
+        "name": "Resonance",
+        "value": 0.15
+      },
+      {
+        "module": "sum",
+        "name": "Level",
+        "value": 0.3
+      },
+      {
+        "module": "lfo",
+        "name": "Offset",
+        "value": 0
+      }
+    ],
+    "break": 7
+  }
+}

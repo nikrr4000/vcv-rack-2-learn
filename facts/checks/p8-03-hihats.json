@@ -1,0 +1,331 @@
+{
+  "lesson": "p8-03-hihats",
+  "modules": [
+    {
+      "ref": "seq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "noise",
+      "plugin": "Fundamental",
+      "slug": "Noise"
+    },
+    {
+      "ref": "hpf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "noise",
+        "White noise"
+      ],
+      "to": [
+        "hpf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "hpf",
+        "Highpass filter"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "Trigger"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "CV 2"
+      ],
+      "to": [
+        "env",
+        "Decay"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "CV 2"
+      ],
+      "to": [
+        "env",
+        "Release"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "hpf",
+      "name": "Cutoff frequency",
+      "display_min": 4000
+    },
+    {
+      "module": "env",
+      "name": "Sustain",
+      "display_max": 10
+    },
+    {
+      "module": "env",
+      "name": "Decay CV",
+      "display_min": 30
+    },
+    {
+      "module": "env",
+      "name": "Release CV",
+      "display_min": 30
+    }
+  ],
+  "probes": [
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Включи несколько кнопок в ряду триггеров SEQ 3 (Step N trigger) и убедись, что секвенсор идёт; нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    },
+    {
+      "module": "seq",
+      "output": "CV 2",
+      "ask": "Закрытый и открытый хэт различаются напряжением CV 2: выставь у ручек CV 2 step хотя бы два разных значения и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Хэту нужен шум. Какой выход Noise даёт белый шум и в какой вход VCF его подать?",
+    "cable:2": "Хэт должен быть тонким, без низа. Какой выход VCF пропускает верх и куда он идёт?",
+    "cable:3": "Хэт звучит без конца или молчит. Что должно управлять VCA-1 через вход CV?",
+    "cable:4": "Огибающая не знает, когда начинать. Какой выход SEQ 3 отдаёт импульсы по шагам и в какой вход ADSR его подать?",
+    "cable:5": "Все хэты одной длины. Что у SEQ 3 может менять Decay шаг за шагом?",
+    "cable:6": "Закрытые хэты звучат как открытые, потому что Release остался прежним. Куда ещё подать CV 2?",
+    "cable:7": "Хэт собран, а тишина. Откуда звук выходит из VCA-1 и куда он должен прийти?",
+    "param:1": "Хэт получился гулким: фильтр верхних частот стоит слишком низко. Подними Cutoff frequency хотя бы до 4000 Гц.",
+    "param:2": "Хэт не должен держаться: Sustain у ADSR не больше 10 процентов.",
+    "param:3": "Decay CV почти нулевой: CV 2 не меняет длину хвоста. Подними его хотя бы до 30 процентов.",
+    "param:4": "Release CV почти нулевой: на коротком триггере хвост держит Release, а он не слушает CV 2. Подними Release CV хотя бы до 30 процентов.",
+    "probe:1": "Огибающая не поднимается. Идёт ли секвенсор и горят ли кнопки в ряду триггеров?",
+    "probe:2": "CV 2 стоит на одном значении, и все хэты одинаковы. Выставь у шагов разные CV 2 step: ноль для закрытого, около трёх вольт для открытого."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "seq",
+        "name": "Tempo",
+        "value": 3
+      },
+      {
+        "module": "seq",
+        "name": "Step 1 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 2 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 3 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 4 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 5 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 6 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 7 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 8 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 1",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 2",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 3",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 4",
+        "value": 3
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 5",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 6",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 7",
+        "value": 0
+      },
+      {
+        "module": "seq",
+        "name": "CV 2 step 8",
+        "value": 3
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0.0753
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.4005
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.4005
+      },
+      {
+        "module": "env",
+        "name": "Decay CV",
+        "value": 0.6
+      },
+      {
+        "module": "env",
+        "name": "Release CV",
+        "value": 0.6
+      },
+      {
+        "module": "hpf",
+        "name": "Cutoff frequency",
+        "value": 0.952
+      }
+    ],
+    "break": 5
+  }
+}

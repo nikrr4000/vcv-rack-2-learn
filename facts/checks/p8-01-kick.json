@@ -1,0 +1,196 @@
+{
+  "lesson": "p8-01-kick",
+  "modules": [
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "att",
+      "plugin": "Fundamental",
+      "slug": "8vert"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vco",
+        "Sine"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "att",
+        "Row 1"
+      ]
+    },
+    {
+      "from": [
+        "att",
+        "Row 1"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "vco",
+      "name": "Frequency",
+      "display_min": 30,
+      "display_max": 90
+    },
+    {
+      "module": "att",
+      "name": "Row 1 gain",
+      "display_min": 10,
+      "display_max": 50
+    },
+    {
+      "module": "env",
+      "name": "Decay",
+      "display_min": 100,
+      "display_max": 800
+    },
+    {
+      "module": "env",
+      "name": "Sustain",
+      "display_max": 10
+    }
+  ],
+  "probes": [
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Запусти бочку: пусти ритм (SEQ 3, Clocked или Push с Hold) и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    },
+    {
+      "module": "att",
+      "output": "Row 1",
+      "ask": "Огибающая должна идти в 8vert (Row 1), а выход Row 1 — в высоту VCO. Запусти бочку и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 0.3
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Бочке нужен тон. Какой выход VCO даёт чистую синусоиду и в какой вход VCA-1 его подать?",
+    "cable:2": "Громкость бочки не спадает после удара. Что должно закрывать VCA-1 через вход CV?",
+    "cable:3": "Высота не падает: у бочки нет «нырка». Куда подать огибающую, чтобы она ослабилась в 8vert?",
+    "cable:4": "8vert ослабил огибающую, но VCO её не слышит. Какой выход Row 1 ведёт к входу 1V/octave pitch?",
+    "cable:5": "Бочка собрана, а тишина. Откуда звук выходит из VCA-1 и куда он должен прийти?",
+    "param:1": "Основной тон бочки должен лежать низко: от 30 до 90 Гц. Поправь Frequency у VCO.",
+    "param:2": "Глубина «нырка» вне рабочего диапазона. Поставь Row 1 gain между 10 и 50 процентами.",
+    "param:3": "Хвост бочки слишком короткий или слишком длинный. Decay у ADSR держи от 100 до 800 мс.",
+    "param:4": "У бочки нет выдержки: Sustain у ADSR не больше 10 процентов, иначе звук гудит, пока держится гейт.",
+    "probe:1": "Огибающая не поднимается. Идёт ли ритм и дошёл ли гейт или триггер до входа Gate у ADSR?",
+    "probe:2": "На выходе Row 1 у 8vert нет сигнала. Идёт ли огибающая в 8vert и поднят ли Row 1 gain выше нуля?"
+  },
+  "reference": {
+    "helpers": [
+      {
+        "ref": "lfo",
+        "plugin": "Fundamental",
+        "slug": "LFO"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "lfo",
+          "Square"
+        ],
+        "to": [
+          "env",
+          "Gate"
+        ]
+      }
+    ],
+    "params": [
+      {
+        "module": "vco",
+        "name": "Frequency",
+        "value": -27
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0.0753
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.6193
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.6193
+      },
+      {
+        "module": "att",
+        "name": "Row 1 gain",
+        "value": 0.25
+      }
+    ],
+    "break": 4
+  }
+}

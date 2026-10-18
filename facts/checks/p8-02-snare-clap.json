@@ -1,0 +1,284 @@
+{
+  "lesson": "p8-02-snare-clap",
+  "modules": [
+    {
+      "ref": "tone",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "tone_env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "tone_vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "noise",
+      "plugin": "Fundamental",
+      "slug": "Noise"
+    },
+    {
+      "ref": "hpf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "noise_env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "noise_vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "mix",
+      "plugin": "Fundamental",
+      "slug": "Mixer"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "tone",
+        "Triangle"
+      ],
+      "to": [
+        "tone_vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "tone_env",
+        "Envelope"
+      ],
+      "to": [
+        "tone_vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "noise",
+        "White noise"
+      ],
+      "to": [
+        "hpf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "hpf",
+        "Highpass filter"
+      ],
+      "to": [
+        "noise_vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "noise_env",
+        "Envelope"
+      ],
+      "to": [
+        "noise_vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "tone_vca",
+        "Channel"
+      ],
+      "to": [
+        "mix",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "noise_vca",
+        "Channel"
+      ],
+      "to": [
+        "mix",
+        "Channel 2"
+      ]
+    },
+    {
+      "from": [
+        "mix",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "tone",
+      "name": "Frequency",
+      "display_min": 120,
+      "display_max": 300
+    },
+    {
+      "module": "hpf",
+      "name": "Cutoff frequency",
+      "display_min": 800
+    },
+    {
+      "module": "tone_env",
+      "name": "Sustain",
+      "display_max": 10
+    },
+    {
+      "module": "noise_env",
+      "name": "Sustain",
+      "display_max": 10
+    },
+    {
+      "module": "noise_env",
+      "name": "Decay",
+      "display_min": 100,
+      "display_max": 500
+    }
+  ],
+  "probes": [
+    {
+      "module": "noise_env",
+      "output": "Envelope",
+      "ask": "Запусти малый барабан: пусти ритм (SEQ 3, Clocked или Push с Hold) и нажми «Проверить» ещё раз.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    },
+    {
+      "module": "tone_env",
+      "output": "Envelope",
+      "ask": "Огибающая тона молчит. Запусти ритм и убедись, что триггер идёт и в её Gate тоже.",
+      "samples": 30,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Тон барабана не доходит до усилителя. Какой выход VCO даёт треугольник и в какой вход VCA-1 его подать?",
+    "cable:2": "Тон не затухает или молчит. Что открывает VCA-1 тона на короткое время?",
+    "cable:3": "Шум не идёт в фильтр. Какой выход Noise даёт белый шум и в какой вход VCF его подать?",
+    "cable:4": "Фильтр срезает не то. Какой выход VCF пропускает верх и в какой вход VCA-1 шума он идёт?",
+    "cable:5": "Шум звучит без конца или молчит. Какая огибающая должна открывать VCA-1 шума?",
+    "cable:6": "Тона нет в миксе. В какой вход Mixer идёт VCA-1 тона?",
+    "cable:7": "Шума нет в миксе. В какой вход Mixer идёт VCA-1 шума?",
+    "cable:8": "Барабан собран, а тишина. Откуда выходит сумма Mixer и куда она должна прийти?",
+    "param:1": "Тон малого барабана лежит между 120 и 300 Гц. Поправь Frequency у VCO.",
+    "param:2": "Фильтр верхних частот закрыт слишком низко: шум не отличается от гула. Подними Cutoff frequency хотя бы до 800 Гц.",
+    "param:3": "Тон барабана не должен держаться: Sustain у его ADSR не больше 10 процентов.",
+    "param:4": "Шум не должен держаться: Sustain у его ADSR не больше 10 процентов.",
+    "param:5": "Хвост шума вне рабочего диапазона. Decay его ADSR держи от 100 до 500 мс.",
+    "probe:1": "Огибающая шума не поднимается. Идёт ли ритм и дошёл ли он до её входа Gate?",
+    "probe:2": "Огибающая тона не поднимается. Идёт ли ритм и подключён ли её Gate к тому же источнику?"
+  },
+  "reference": {
+    "helpers": [
+      {
+        "ref": "lfo",
+        "plugin": "Fundamental",
+        "slug": "LFO"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "lfo",
+          "Square"
+        ],
+        "to": [
+          "tone_env",
+          "Gate"
+        ]
+      },
+      {
+        "from": [
+          "lfo",
+          "Square"
+        ],
+        "to": [
+          "noise_env",
+          "Gate"
+        ]
+      }
+    ],
+    "params": [
+      {
+        "module": "tone",
+        "name": "Frequency",
+        "value": -6.4741
+      },
+      {
+        "module": "tone_env",
+        "name": "Attack",
+        "value": 0.0753
+      },
+      {
+        "module": "tone_env",
+        "name": "Decay",
+        "value": 0.4886
+      },
+      {
+        "module": "tone_env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "tone_env",
+        "name": "Release",
+        "value": 0.4886
+      },
+      {
+        "module": "noise_env",
+        "name": "Attack",
+        "value": 0.0753
+      },
+      {
+        "module": "noise_env",
+        "name": "Decay",
+        "value": 0.5753
+      },
+      {
+        "module": "noise_env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "noise_env",
+        "name": "Release",
+        "value": 0.5753
+      },
+      {
+        "module": "hpf",
+        "name": "Cutoff frequency",
+        "value": 0.852
+      }
+    ],
+    "break": 4
+  }
+}
