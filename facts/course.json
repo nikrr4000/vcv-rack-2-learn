@@ -1,0 +1,1068 @@
+{
+  "id": "vcv-rack",
+  "title": "VCV Rack 2 с нуля",
+  "extraSources": {
+    "nh-readme": {
+      "title": "Neural-Harmonics, VCV Rack MCP Server — README и исходный код (src/RackMcpServer.cpp)",
+      "url": "https://github.com/Neural-Harmonics/vcv-rack-plugin"
+    }
+  },
+  "parts": [
+    {
+      "n": 0,
+      "title": "Среда и первый звук",
+      "lessons": [
+        "p0-01-install",
+        "p0-02-interface",
+        "p0-03-audio-out",
+        "p0-04-agent"
+      ]
+    },
+    {
+      "n": 1,
+      "title": "Язык модульного синтеза",
+      "lessons": [
+        "p1-01-sound-wave",
+        "p1-02-voltage",
+        "p1-03-volt-per-octave",
+        "p1-04-knob-cv",
+        "p1-05-signal-map"
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Источники звука",
+      "lessons": [
+        "p2-01-vco",
+        "p2-02-pwm-sync-fm",
+        "p2-03-two-oscillators",
+        "p2-04-wavetable-vco",
+        "p2-05-noise"
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Тембр и громкость",
+      "lessons": [
+        "p3-01-vcf",
+        "p3-02-vcf-cv",
+        "p3-03-vca",
+        "p3-04-adsr",
+        "p3-05-first-voice"
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Модуляция",
+      "lessons": [
+        "p4-01-lfo",
+        "p4-02-wavetable-lfo",
+        "p4-03-mixing-modulation",
+        "p4-04-randomness",
+        "p4-05-sample-hold-slew",
+        "p4-06-crossfade-compare"
+      ]
+    },
+    {
+      "n": 5,
+      "title": "Время, ритм, последовательности",
+      "lessons": [
+        "p5-01-clock-tempo",
+        "p5-02-seq3",
+        "p5-03-quantizer",
+        "p5-04-logic-gates",
+        "p5-05-sequential-switches",
+        "p5-06-live-control"
+      ]
+    },
+    {
+      "n": 6,
+      "title": "MiniLab mkII и полифония",
+      "lessons": [
+        "p6-01-midi-cv",
+        "p6-02-midi-map",
+        "p6-03-pads",
+        "p6-04-polyphony"
+      ]
+    },
+    {
+      "n": 7,
+      "title": "Эффекты, сведение, запись",
+      "lessons": [
+        "p7-01-delay",
+        "p7-02-reverb",
+        "p7-03-mixer-levels",
+        "p7-04-stereo",
+        "p7-05-recording"
+      ]
+    },
+    {
+      "n": 8,
+      "title": "Инструменты трека",
+      "lessons": [
+        "p8-01-kick",
+        "p8-02-snare-clap",
+        "p8-03-hihats",
+        "p8-04-bass",
+        "p8-05-lead-arp",
+        "p8-06-pad",
+        "p8-07-texture"
+      ]
+    },
+    {
+      "n": 9,
+      "title": "Трек целиком",
+      "lessons": [
+        "p9-01-track-architecture",
+        "p9-02-rhythm-section",
+        "p9-03-bass-harmony",
+        "p9-04-arrangement",
+        "p9-05-mix-record"
+      ]
+    }
+  ],
+  "lessons": {
+    "p0-01-install": {
+      "num": "0.1",
+      "title": "Установка Rack 2 и библиотека плагинов",
+      "modules": [],
+      "depends_on": [],
+      "check": null,
+      "sources": [
+        "vcv-manual-installing",
+        "vcv-forum-getting-started",
+        "omri-first-minutes",
+        "shatnyy-lesson1"
+      ]
+    },
+    "p0-02-interface": {
+      "num": "0.2",
+      "title": "Интерфейс Rack",
+      "modules": [
+        "Core/Blank",
+        "Core/Notes"
+      ],
+      "depends_on": [
+        "p0-01-install"
+      ],
+      "check": "checks/p0-02-interface.json",
+      "sources": [
+        "vcv-manual-menu-bar",
+        "vcv-manual-keys",
+        "omri-first-minutes",
+        "doepfer-a100"
+      ]
+    },
+    "p0-03-audio-out": {
+      "num": "0.3",
+      "title": "Звук наружу",
+      "modules": [
+        "Core/AudioInterface2",
+        "Core/AudioInterface",
+        "Core/AudioInterface16",
+        "Fundamental/VCO"
+      ],
+      "depends_on": [
+        "p0-02-interface"
+      ],
+      "check": "checks/p0-03-audio-out.json",
+      "sources": [
+        "vcv-manual-getting-started",
+        "vcv-manual-core",
+        "koma-beginner"
+      ]
+    },
+    "p0-04-agent": {
+      "num": "0.4",
+      "title": "Подключаем агента",
+      "modules": [
+        "VCVRackMcpServer/RackMcpServer"
+      ],
+      "depends_on": [
+        "p0-03-audio-out"
+      ],
+      "check": "checks/p0-04-agent.json",
+      "sources": [
+        "nh-readme",
+        "vcv-manual-getting-started"
+      ]
+    },
+    "p1-01-sound-wave": {
+      "num": "1.1",
+      "title": "Звук как волна",
+      "modules": [
+        "Fundamental/Scope",
+        "Fundamental/VCO"
+      ],
+      "depends_on": [
+        "p0-03-audio-out"
+      ],
+      "check": "checks/p1-01-sound-wave.json",
+      "sources": [
+        "sos-01",
+        "lm-basic-concepts",
+        "zwook-geogenik"
+      ]
+    },
+    "p1-02-voltage": {
+      "num": "1.2",
+      "title": "Напряжение — единственный язык",
+      "modules": [
+        "Fundamental/Scope",
+        "Fundamental/Viz",
+        "Fundamental/8vert"
+      ],
+      "depends_on": [
+        "p1-01-sound-wave"
+      ],
+      "check": "checks/p1-02-voltage.json",
+      "sources": [
+        "vcv-voltage-standards",
+        "sos-07",
+        "doepfer-tech",
+        "lm-glossary"
+      ]
+    },
+    "p1-03-volt-per-octave": {
+      "num": "1.3",
+      "title": "1V/oct",
+      "modules": [
+        "Fundamental/8vert",
+        "Fundamental/VCO",
+        "Fundamental/Octave"
+      ],
+      "depends_on": [
+        "p1-02-voltage"
+      ],
+      "check": "checks/p1-03-volt-per-octave.json",
+      "sources": [
+        "vcv-voltage-standards",
+        "lm-glossary",
+        "sos-16"
+      ]
+    },
+    "p1-04-knob-cv": {
+      "num": "1.4",
+      "title": "Ручка + CV",
+      "modules": [
+        "Fundamental/CVMix",
+        "Fundamental/8vert",
+        "Fundamental/Rescale"
+      ],
+      "depends_on": [
+        "p1-02-voltage"
+      ],
+      "check": "checks/p1-04-knob-cv.json",
+      "sources": [
+        "vcv-free-manual",
+        "mn-maths",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p1-05-signal-map": {
+      "num": "1.5",
+      "title": "Карта сигнала",
+      "modules": [
+        "Fundamental/Mult",
+        "Core/Notes"
+      ],
+      "depends_on": [
+        "p1-04-knob-cv"
+      ],
+      "check": "checks/p1-05-signal-map.json",
+      "sources": [
+        "lm-first-voice",
+        "aikin-how-to-rack",
+        "vcv-voltage-standards",
+        "samesound-first-patch"
+      ]
+    },
+    "p2-01-vco": {
+      "num": "2.1",
+      "title": "VCO",
+      "modules": [
+        "Fundamental/VCO"
+      ],
+      "depends_on": [
+        "p1-03-volt-per-octave"
+      ],
+      "check": "checks/p2-01-vco.json",
+      "sources": [
+        "vcv-free-manual",
+        "sos-01",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p2-02-pwm-sync-fm": {
+      "num": "2.2",
+      "title": "PWM, синхронизация, FM",
+      "modules": [
+        "Fundamental/VCO",
+        "Fundamental/LFO"
+      ],
+      "depends_on": [
+        "p2-01-vco"
+      ],
+      "check": "checks/p2-02-pwm-sync-fm.json",
+      "sources": [
+        "vcv-free-manual",
+        "sos-10",
+        "sos-12",
+        "omri-practical-course"
+      ]
+    },
+    "p2-03-two-oscillators": {
+      "num": "2.3",
+      "title": "Два генератора",
+      "modules": [
+        "Fundamental/VCO",
+        "Fundamental/Octave",
+        "Fundamental/Mixer"
+      ],
+      "depends_on": [
+        "p2-01-vco",
+        "p1-03-volt-per-octave"
+      ],
+      "check": "checks/p2-03-two-oscillators.json",
+      "sources": [
+        "sos-strings",
+        "kane-musichackspace"
+      ]
+    },
+    "p2-04-wavetable-vco": {
+      "num": "2.4",
+      "title": "Wavetable VCO",
+      "modules": [
+        "Fundamental/VCO2"
+      ],
+      "depends_on": [
+        "p2-01-vco"
+      ],
+      "check": "checks/p2-04-wavetable-vco.json",
+      "sources": [
+        "vcv-free-manual",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p2-05-noise": {
+      "num": "2.5",
+      "title": "Шум: 7 цветов",
+      "modules": [
+        "Fundamental/Noise",
+        "Fundamental/Scope"
+      ],
+      "depends_on": [
+        "p1-01-sound-wave"
+      ],
+      "check": "checks/p2-05-noise.json",
+      "sources": [
+        "vcv-free-manual",
+        "pc-learning-synthesis",
+        "lm-basic-concepts"
+      ]
+    },
+    "p3-01-vcf": {
+      "num": "3.1",
+      "title": "VCF",
+      "modules": [
+        "Fundamental/VCF"
+      ],
+      "depends_on": [
+        "p2-01-vco"
+      ],
+      "check": "checks/p3-01-vcf.json",
+      "sources": [
+        "vcv-free-manual",
+        "sos-06",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p3-02-vcf-cv": {
+      "num": "3.2",
+      "title": "VCF под управлением",
+      "modules": [
+        "Fundamental/VCF",
+        "Fundamental/LFO",
+        "Fundamental/8vert"
+      ],
+      "depends_on": [
+        "p3-01-vcf",
+        "p1-04-knob-cv"
+      ],
+      "check": "checks/p3-02-vcf-cv.json",
+      "sources": [
+        "sos-06",
+        "sos-34",
+        "vcv-free-manual"
+      ]
+    },
+    "p3-03-vca": {
+      "num": "3.3",
+      "title": "VCA",
+      "modules": [
+        "Fundamental/VCA-1",
+        "Fundamental/VCMixer"
+      ],
+      "depends_on": [
+        "p1-02-voltage"
+      ],
+      "check": "checks/p3-03-vca.json",
+      "sources": [
+        "vcv-free-manual",
+        "sos-09",
+        "pc-learning-synthesis",
+        "omri-vca-course"
+      ]
+    },
+    "p3-04-adsr": {
+      "num": "3.4",
+      "title": "Огибающая ADSR",
+      "modules": [
+        "Fundamental/ADSR",
+        "Fundamental/Push",
+        "Fundamental/Pulses",
+        "Fundamental/Scope"
+      ],
+      "depends_on": [
+        "p1-02-voltage"
+      ],
+      "check": "checks/p3-04-adsr.json",
+      "sources": [
+        "vcv-free-manual",
+        "sos-07",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p3-05-first-voice": {
+      "num": "3.5",
+      "title": "Первый голос",
+      "modules": [
+        "Fundamental/VCO",
+        "Fundamental/VCF",
+        "Fundamental/VCA-1",
+        "Fundamental/ADSR",
+        "Fundamental/Push",
+        "Core/AudioInterface2"
+      ],
+      "depends_on": [
+        "p3-01-vcf",
+        "p3-03-vca",
+        "p3-04-adsr"
+      ],
+      "check": "checks/p3-05-first-voice.json",
+      "sources": [
+        "lm-first-voice",
+        "samesound-first-patch",
+        "kane-musichackspace"
+      ]
+    },
+    "p4-01-lfo": {
+      "num": "4.1",
+      "title": "LFO",
+      "modules": [
+        "Fundamental/LFO",
+        "Fundamental/Scope"
+      ],
+      "depends_on": [
+        "p1-04-knob-cv"
+      ],
+      "check": "checks/p4-01-lfo.json",
+      "sources": [
+        "vcv-free-manual",
+        "sos-10",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p4-02-wavetable-lfo": {
+      "num": "4.2",
+      "title": "Wavetable LFO",
+      "modules": [
+        "Fundamental/LFO2"
+      ],
+      "depends_on": [
+        "p4-01-lfo",
+        "p2-04-wavetable-vco"
+      ],
+      "check": "checks/p4-02-wavetable-lfo.json",
+      "sources": [
+        "vcv-free-manual",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p4-03-mixing-modulation": {
+      "num": "4.3",
+      "title": "Смешивание и масштабирование модуляции",
+      "modules": [
+        "Fundamental/CVMix",
+        "Fundamental/8vert",
+        "Fundamental/Rescale"
+      ],
+      "depends_on": [
+        "p4-01-lfo",
+        "p1-04-knob-cv"
+      ],
+      "check": "checks/p4-03-mixing-modulation.json",
+      "sources": [
+        "sos-09",
+        "sos-10",
+        "mn-maths",
+        "vcv-free-manual"
+      ]
+    },
+    "p4-04-randomness": {
+      "num": "4.4",
+      "title": "Случайность",
+      "modules": [
+        "Fundamental/Random",
+        "Fundamental/RandomValues"
+      ],
+      "depends_on": [
+        "p1-02-voltage"
+      ],
+      "check": "checks/p4-04-randomness.json",
+      "sources": [
+        "vcv-free-manual",
+        "mi-marbles",
+        "ne-quantizers"
+      ]
+    },
+    "p4-05-sample-hold-slew": {
+      "num": "4.5",
+      "title": "Выборка-хранение, слайд, глайд",
+      "modules": [
+        "Fundamental/Process",
+        "Fundamental/SHASR"
+      ],
+      "depends_on": [
+        "p4-04-randomness"
+      ],
+      "check": "checks/p4-05-sample-hold-slew.json",
+      "sources": [
+        "sos-16",
+        "vcv-free-manual",
+        "mn-maths",
+        "loopop-sh-switch"
+      ]
+    },
+    "p4-06-crossfade-compare": {
+      "num": "4.6",
+      "title": "Кроссфейд и сравнение",
+      "modules": [
+        "Fundamental/Fade",
+        "Fundamental/Compare"
+      ],
+      "depends_on": [
+        "p3-03-vca"
+      ],
+      "check": "checks/p4-06-crossfade-compare.json",
+      "sources": [
+        "vcv-free-manual",
+        "omri-vca-course",
+        "pc-learning-synthesis"
+      ]
+    },
+    "p5-01-clock-tempo": {
+      "num": "5.1",
+      "title": "Такт и темп",
+      "modules": [
+        "Fundamental/SEQ3",
+        "Fundamental/LFO",
+        "ImpromptuModular/Clocked"
+      ],
+      "depends_on": [
+        "p1-02-voltage"
+      ],
+      "check": "checks/p5-01-clock-tempo.json",
+      "sources": [
+        "ne-clocks",
+        "impromptu-clocked",
+        "vcv-voltage-standards",
+        "doepfer-tech"
+      ]
+    },
+    "p5-02-seq3": {
+      "num": "5.2",
+      "title": "Секвенсор SEQ 3",
+      "modules": [
+        "Fundamental/SEQ3"
+      ],
+      "depends_on": [
+        "p5-01-clock-tempo",
+        "p3-05-first-voice"
+      ],
+      "check": "checks/p5-02-seq3.json",
+      "sources": [
+        "vcv-free-manual",
+        "leonov-seq3",
+        "samesound-first-patch"
+      ]
+    },
+    "p5-03-quantizer": {
+      "num": "5.3",
+      "title": "Квантование и минимум теории",
+      "modules": [
+        "Fundamental/Quantizer",
+        "Fundamental/Octave"
+      ],
+      "depends_on": [
+        "p1-03-volt-per-octave",
+        "p4-04-randomness"
+      ],
+      "check": "checks/p5-03-quantizer.json",
+      "sources": [
+        "vcv-free-manual",
+        "ne-quantizers",
+        "sos-16",
+        "mi-marbles"
+      ]
+    },
+    "p5-04-logic-gates": {
+      "num": "5.4",
+      "title": "Логика и гейты",
+      "modules": [
+        "Fundamental/Logic",
+        "Fundamental/Gates"
+      ],
+      "depends_on": [
+        "p5-01-clock-tempo"
+      ],
+      "check": "checks/p5-04-logic-gates.json",
+      "sources": [
+        "vcv-free-manual",
+        "pc-learning-synthesis",
+        "pc-seq-without-seq"
+      ]
+    },
+    "p5-05-sequential-switches": {
+      "num": "5.5",
+      "title": "Последовательные переключатели",
+      "modules": [
+        "Fundamental/SequentialSwitch1",
+        "Fundamental/SequentialSwitch2"
+      ],
+      "depends_on": [
+        "p5-02-seq3"
+      ],
+      "check": "checks/p5-05-sequential-switches.json",
+      "sources": [
+        "vcv-free-manual",
+        "ne-seq-switches",
+        "loopop-sh-switch"
+      ]
+    },
+    "p5-06-live-control": {
+      "num": "5.6",
+      "title": "Живое управление",
+      "modules": [
+        "Fundamental/Mutes",
+        "Fundamental/Pulses",
+        "Fundamental/Push"
+      ],
+      "depends_on": [
+        "p5-01-clock-tempo"
+      ],
+      "check": "checks/p5-06-live-control.json",
+      "sources": [
+        "vcv-free-manual",
+        "ne-mutes",
+        "sos-gigging"
+      ]
+    },
+    "p6-01-midi-cv": {
+      "num": "6.1",
+      "title": "MIDI в напряжения",
+      "modules": [
+        "Core/MIDIToCVInterface"
+      ],
+      "depends_on": [
+        "p3-05-first-voice"
+      ],
+      "check": "checks/p6-01-midi-cv.json",
+      "sources": [
+        "vcv-manual-core",
+        "kane-musichackspace"
+      ]
+    },
+    "p6-02-midi-map": {
+      "num": "6.2",
+      "title": "Ручки контроллера на ручки модулей",
+      "modules": [
+        "Core/MIDI-Map",
+        "Core/MIDICCToCVInterface"
+      ],
+      "depends_on": [
+        "p6-01-midi-cv"
+      ],
+      "check": "checks/p6-02-midi-map.json",
+      "sources": [
+        "vcv-manual-core",
+        "kane-musichackspace"
+      ]
+    },
+    "p6-03-pads": {
+      "num": "6.3",
+      "title": "Пэды как триггеры",
+      "modules": [
+        "Core/MIDITriggerToCVInterface"
+      ],
+      "depends_on": [
+        "p6-01-midi-cv",
+        "p3-04-adsr"
+      ],
+      "check": "checks/p6-03-pads.json",
+      "sources": [
+        "vcv-manual-core",
+        "vcv-voltage-standards"
+      ]
+    },
+    "p6-04-polyphony": {
+      "num": "6.4",
+      "title": "Полифония",
+      "modules": [
+        "Core/MIDIToCVInterface",
+        "Fundamental/Split",
+        "Fundamental/Merge",
+        "Fundamental/Sum",
+        "Fundamental/Viz"
+      ],
+      "depends_on": [
+        "p6-01-midi-cv"
+      ],
+      "check": "checks/p6-04-polyphony.json",
+      "sources": [
+        "vcv-manual-polyphony",
+        "vcv-manual-core",
+        "vcv-voltage-standards"
+      ]
+    },
+    "p7-01-delay": {
+      "num": "7.1",
+      "title": "Задержка",
+      "modules": [
+        "Fundamental/Delay"
+      ],
+      "depends_on": [
+        "p5-01-clock-tempo"
+      ],
+      "check": "checks/p7-01-delay.json",
+      "sources": [
+        "vcv-free-manual",
+        "sos-modular-effects"
+      ]
+    },
+    "p7-02-reverb": {
+      "num": "7.2",
+      "title": "Реверберация",
+      "modules": [
+        "Valley/Plateau"
+      ],
+      "depends_on": [
+        "p3-05-first-voice"
+      ],
+      "check": "checks/p7-02-reverb.json",
+      "sources": [
+        "valley-plateau",
+        "ne-mixers",
+        "sos-modular-effects"
+      ]
+    },
+    "p7-03-mixer-levels": {
+      "num": "7.3",
+      "title": "Микшер, уровни, перегруз",
+      "modules": [
+        "Fundamental/Mixer",
+        "Fundamental/VCMixer",
+        "Fundamental/Compare"
+      ],
+      "depends_on": [
+        "p3-03-vca"
+      ],
+      "check": "checks/p7-03-mixer-levels.json",
+      "sources": [
+        "vcv-voltage-standards",
+        "sos-09",
+        "dewald-gain",
+        "pc-line-level",
+        "ne-mixers"
+      ]
+    },
+    "p7-04-stereo": {
+      "num": "7.4",
+      "title": "Стерео",
+      "modules": [
+        "Fundamental/Fade",
+        "Fundamental/MidSide"
+      ],
+      "depends_on": [
+        "p7-03-mixer-levels"
+      ],
+      "check": "checks/p7-04-stereo.json",
+      "sources": [
+        "vcv-free-manual",
+        "ne-mixers",
+        "omri-vca-course"
+      ]
+    },
+    "p7-05-recording": {
+      "num": "7.5",
+      "title": "Запись в файл",
+      "modules": [
+        "VCV-Recorder/Recorder"
+      ],
+      "depends_on": [
+        "p7-03-mixer-levels"
+      ],
+      "check": "checks/p7-05-recording.json",
+      "sources": [
+        "vcv-recorder",
+        "pc-line-level",
+        "cdm-multitrack"
+      ]
+    },
+    "p8-01-kick": {
+      "num": "8.1",
+      "title": "Бочка",
+      "modules": [
+        "Fundamental/VCO",
+        "Fundamental/ADSR",
+        "Fundamental/VCA-1",
+        "Fundamental/8vert"
+      ],
+      "depends_on": [
+        "p3-04-adsr",
+        "p3-02-vcf-cv"
+      ],
+      "check": "checks/p8-01-kick.json",
+      "sources": [
+        "sos-33",
+        "sos-34",
+        "ne-kick"
+      ]
+    },
+    "p8-02-snare-clap": {
+      "num": "8.2",
+      "title": "Малый барабан и клэп",
+      "modules": [
+        "Fundamental/Noise",
+        "Fundamental/VCF",
+        "Fundamental/VCO",
+        "Fundamental/ADSR",
+        "Fundamental/Mixer"
+      ],
+      "depends_on": [
+        "p2-05-noise",
+        "p3-04-adsr"
+      ],
+      "check": "checks/p8-02-snare-clap.json",
+      "sources": [
+        "sos-35",
+        "sos-36",
+        "ne-clap"
+      ]
+    },
+    "p8-03-hihats": {
+      "num": "8.3",
+      "title": "Хэты",
+      "modules": [
+        "Fundamental/Noise",
+        "Fundamental/VCF",
+        "Fundamental/ADSR",
+        "Fundamental/VCA-1"
+      ],
+      "depends_on": [
+        "p2-05-noise",
+        "p3-04-adsr"
+      ],
+      "check": "checks/p8-03-hihats.json",
+      "sources": [
+        "ne-hats",
+        "sos-38",
+        "sos-39"
+      ]
+    },
+    "p8-04-bass": {
+      "num": "8.4",
+      "title": "Бас, включая acid",
+      "modules": [
+        "Fundamental/VCO",
+        "Fundamental/Octave",
+        "Fundamental/VCF",
+        "Fundamental/ADSR",
+        "Fundamental/Process",
+        "Fundamental/SEQ3"
+      ],
+      "depends_on": [
+        "p5-02-seq3",
+        "p4-05-sample-hold-slew",
+        "p3-05-first-voice"
+      ],
+      "check": "checks/p8-04-bass.json",
+      "sources": [
+        "mr-303-guide",
+        "mr-acid-howto",
+        "ne-acid-repetitor",
+        "omri-303"
+      ]
+    },
+    "p8-05-lead-arp": {
+      "num": "8.5",
+      "title": "Лид и арпеджио",
+      "modules": [
+        "Fundamental/VCO",
+        "Fundamental/VCF",
+        "Fundamental/Quantizer",
+        "Fundamental/Random",
+        "Fundamental/Delay"
+      ],
+      "depends_on": [
+        "p5-03-quantizer",
+        "p4-04-randomness",
+        "p7-01-delay"
+      ],
+      "check": "checks/p8-05-lead-arp.json",
+      "sources": [
+        "sq-arp",
+        "ne-quantizers",
+        "omri-practical-course"
+      ]
+    },
+    "p8-06-pad": {
+      "num": "8.6",
+      "title": "Пэд",
+      "modules": [
+        "Fundamental/VCO",
+        "Fundamental/LFO",
+        "Valley/Plateau"
+      ],
+      "depends_on": [
+        "p6-04-polyphony",
+        "p2-03-two-oscillators",
+        "p7-02-reverb"
+      ],
+      "check": "checks/p8-06-pad.json",
+      "sources": [
+        "sos-strings",
+        "vcv-manual-polyphony",
+        "valley-plateau"
+      ]
+    },
+    "p8-07-texture": {
+      "num": "8.7",
+      "title": "Текстура",
+      "modules": [
+        "AudibleInstruments/Clouds",
+        "Fundamental/Noise",
+        "Fundamental/Random"
+      ],
+      "depends_on": [
+        "p2-05-noise",
+        "p4-04-randomness"
+      ],
+      "check": "checks/p8-07-texture.json",
+      "sources": [
+        "mi-clouds",
+        "ai-texture"
+      ]
+    },
+    "p9-01-track-architecture": {
+      "num": "9.1",
+      "title": "Архитектура патча-трека",
+      "modules": [
+        "ImpromptuModular/Clocked",
+        "Fundamental/Mixer",
+        "Fundamental/VCMixer",
+        "Core/Notes"
+      ],
+      "depends_on": [
+        "p5-01-clock-tempo",
+        "p7-03-mixer-levels"
+      ],
+      "check": "checks/p9-01-track-architecture.json",
+      "sources": [
+        "ne-clocks",
+        "impromptu-clocked",
+        "omri-techno",
+        "patch-tweak"
+      ]
+    },
+    "p9-02-rhythm-section": {
+      "num": "9.2",
+      "title": "Ритм-секция",
+      "modules": [
+        "Fundamental/SEQ3",
+        "Fundamental/Gates"
+      ],
+      "depends_on": [
+        "p9-01-track-architecture",
+        "p8-01-kick",
+        "p8-02-snare-clap",
+        "p8-03-hihats"
+      ],
+      "check": "checks/p9-02-rhythm-section.json",
+      "sources": [
+        "omri-techno",
+        "sos-34",
+        "impromptu-clocked"
+      ]
+    },
+    "p9-03-bass-harmony": {
+      "num": "9.3",
+      "title": "Бас и гармония",
+      "modules": [
+        "Fundamental/Quantizer"
+      ],
+      "depends_on": [
+        "p9-01-track-architecture",
+        "p8-04-bass",
+        "p8-06-pad"
+      ],
+      "check": "checks/p9-03-bass-harmony.json",
+      "sources": [
+        "omri-techno",
+        "ne-quantizers"
+      ]
+    },
+    "p9-04-arrangement": {
+      "num": "9.4",
+      "title": "Аранжировка",
+      "modules": [
+        "Fundamental/Mutes",
+        "Fundamental/SequentialSwitch1",
+        "ImpromptuModular/Clocked"
+      ],
+      "depends_on": [
+        "p9-02-rhythm-section",
+        "p9-03-bass-harmony",
+        "p5-05-sequential-switches",
+        "p5-06-live-control"
+      ],
+      "check": "checks/p9-04-arrangement.json",
+      "sources": [
+        "vcv-forum-song",
+        "ne-mutes",
+        "ne-seq-switches",
+        "omri-generative",
+        "sos-gigging"
+      ]
+    },
+    "p9-05-mix-record": {
+      "num": "9.5",
+      "title": "Сведение, запись, разбор",
+      "modules": [
+        "Fundamental/Mixer",
+        "Valley/Plateau",
+        "VCV-Recorder/Recorder"
+      ],
+      "depends_on": [
+        "p9-04-arrangement",
+        "p7-05-recording"
+      ],
+      "check": "checks/p9-05-mix-record.json",
+      "sources": [
+        "vcv-recorder",
+        "vcv-voltage-standards",
+        "dewald-gain"
+      ]
+    }
+  }
+}
