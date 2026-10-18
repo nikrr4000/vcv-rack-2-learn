@@ -1,0 +1,119 @@
+{
+  "lesson": "p7-01-delay",
+  "modules": [
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "clock",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "delay",
+      "plugin": "Fundamental",
+      "slug": "Delay"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "delay",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "clock",
+        "Clock 1"
+      ],
+      "to": [
+        "delay",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "delay",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "delay",
+      "name": "Feedback",
+      "display_max": 80
+    },
+    {
+      "module": "delay",
+      "name": "Mix",
+      "display_min": 20,
+      "display_max": 80
+    }
+  ],
+  "probes": [
+    {
+      "module": "delay",
+      "output": "Mix",
+      "ask": "Пусть голос звучит: держи Hold у Push (или запусти клок) и нажми «Проверить» ещё раз.",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "reference": {
+    "helpers": [
+      {
+        "ref": "vco",
+        "plugin": "Fundamental",
+        "slug": "VCO"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "vco",
+          "Sine"
+        ],
+        "to": [
+          "vca",
+          "Channel"
+        ]
+      }
+    ],
+    "params": [
+      {
+        "module": "clock",
+        "name": "Run",
+        "value": 1
+      }
+    ],
+    "break": 2
+  },
+  "hints": {
+    "cable:1": "Задержке нечего повторять. Откуда выходит звук голоса (выход VCA) и в какой вход Delay его подать?",
+    "cable:2": "Эхо идёт само по себе, не в такт. Какой выход Clocked даёт тактовые импульсы и в какой вход Delay они идут? Подсказка: вход называется Clock, а не Time.",
+    "cable:3": "Эффект собран, а в Audio ничего нет. С какого выхода Delay брать смесь сухого и эха и в какой вход Audio?",
+    "param:1": "Feedback выше 80 %: повторы почти не затихают. Убавь, чтобы эхо угасало.",
+    "param:2": "Mix слишком близко к краю: либо эха почти нет, либо сухого сигнала. Поставь от 20 до 80 %.",
+    "probe:1": "На выходе Mix нет сигнала. Звучит ли голос (Hold у Push, клок идёт)? Дойдёт ли звук до входа Audio у Delay?"
+  }
+}

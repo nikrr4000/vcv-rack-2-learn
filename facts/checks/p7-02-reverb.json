@@ -1,0 +1,123 @@
+{
+  "lesson": "p7-02-reverb",
+  "modules": [
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "plateau",
+      "plugin": "Valley",
+      "slug": "Plateau"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "plateau",
+        "Left"
+      ]
+    },
+    {
+      "from": [
+        "plateau",
+        "Left"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "plateau",
+        "Right"
+      ],
+      "to": [
+        "out",
+        "To \"device output 2\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "plateau",
+      "name": "Wet level",
+      "display_min": 10
+    },
+    {
+      "module": "plateau",
+      "name": "Decay",
+      "display_max": 90
+    },
+    {
+      "module": "plateau",
+      "name": "Hold",
+      "display_max": 0
+    }
+  ],
+  "probes": [
+    {
+      "module": "plateau",
+      "output": "Left",
+      "ask": "Пусть голос звучит: держи Hold у Push и нажми «Проверить» ещё раз.",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    },
+    {
+      "module": "plateau",
+      "output": "Right",
+      "ask": "Правый выход Plateau молчит. Подключён ли он к Audio, звучит ли голос?",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 0.05
+      }
+    }
+  ],
+  "reference": {
+    "helpers": [
+      {
+        "ref": "vco",
+        "plugin": "Fundamental",
+        "slug": "VCO"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "vco",
+          "Sine"
+        ],
+        "to": [
+          "vca",
+          "Channel"
+        ]
+      }
+    ],
+    "break": 1
+  },
+  "hints": {
+    "cable:1": "Реверберации нечего обрабатывать. Откуда звук голоса и в какой вход Plateau (Left) он идёт?",
+    "cable:2": "Реверберация собрана, но левый канал не попал в Audio. Какой выход Plateau ведёт на первый выход устройства?",
+    "cable:3": "Звук только слева. Второй выход Plateau (Right) нужен второму выходу устройства.",
+    "param:1": "Wet level почти нулевой: реверберации не слышно. Подними хотя бы до 10 %.",
+    "param:2": "Decay выше 90 %: хвост почти не гаснет, патч заплывает. Убавь.",
+    "param:3": "Hold включён: хвост заморожен и звучит бесконечно. Выключи Hold или нажми Clear.",
+    "probe:1": "На левом выходе нет сигнала. Звучит ли голос и дошёл ли он до входа Left?",
+    "probe:2": "Правый выход молчит. Проверь, что кабель идёт из Right у Plateau в Audio, и что голос звучит."
+  }
+}

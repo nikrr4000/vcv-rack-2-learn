@@ -1,0 +1,89 @@
+{
+  "lesson": "p7-05-recording",
+  "modules": [
+    {
+      "ref": "mix",
+      "plugin": "Fundamental",
+      "slug": "VCMixer"
+    },
+    {
+      "ref": "rec",
+      "plugin": "VCV-Recorder",
+      "slug": "Recorder"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "mix",
+        "Mix"
+      ],
+      "to": [
+        "rec",
+        "Left/mono"
+      ]
+    },
+    {
+      "from": [
+        "mix",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "mix",
+      "name": "Mix level",
+      "display_max": 0
+    }
+  ],
+  "probes": [
+    {
+      "module": "mix",
+      "output": "Mix",
+      "ask": "На выходе Mix нет сигнала: нечего записывать. Звучат ли партии, подключённые к VCMixer?",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "reference": {
+    "helpers": [
+      {
+        "ref": "vco",
+        "plugin": "Fundamental",
+        "slug": "VCO"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "vco",
+          "Sawtooth"
+        ],
+        "to": [
+          "mix",
+          "Channel 1"
+        ]
+      }
+    ],
+    "break": 1
+  },
+  "hints": {
+    "cable:1": "Recorder ничего не получает и запишет тишину. Какой выход микшера ведёт в вход Left/mono у Recorder?",
+    "cable:2": "Ты записываешь то, чего не слышишь. Подключи тот же выход Mix ещё и в первый выход Audio, чтобы слышать запись.",
+    "param:1": "Mix level выше 0 dB: на запись пойдёт горячий сигнал. Верни не выше 0 dB.",
+    "probe:1": "Сигнала на Mix нет. Пусть звучат партии: кабели в каналах VCMixer и уровни не на минус бесконечности."
+  }
+}

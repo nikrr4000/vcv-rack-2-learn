@@ -1,0 +1,185 @@
+{
+  "lesson": "p7-03-mixer-levels",
+  "modules": [
+    {
+      "ref": "vco1",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vco2",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vco3",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "mix",
+      "plugin": "Fundamental",
+      "slug": "VCMixer"
+    },
+    {
+      "ref": "cmp",
+      "plugin": "Fundamental",
+      "slug": "Compare"
+    },
+    {
+      "ref": "scope",
+      "plugin": "Fundamental",
+      "slug": "Scope"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vco1",
+        "Sawtooth"
+      ],
+      "to": [
+        "mix",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "vco2",
+        "Sawtooth"
+      ],
+      "to": [
+        "mix",
+        "Channel 2"
+      ]
+    },
+    {
+      "from": [
+        "vco3",
+        "Sawtooth"
+      ],
+      "to": [
+        "mix",
+        "Channel 3"
+      ]
+    },
+    {
+      "from": [
+        "mix",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "mix",
+        "Mix"
+      ],
+      "to": [
+        "cmp",
+        "A"
+      ]
+    },
+    {
+      "from": [
+        "cmp",
+        "Clip gate"
+      ],
+      "to": [
+        "scope",
+        "Ch 2"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "mix",
+      "name": "Channel 1 level",
+      "display_min": -20,
+      "display_max": -9
+    },
+    {
+      "module": "mix",
+      "name": "Channel 2 level",
+      "display_min": -20,
+      "display_max": -9
+    },
+    {
+      "module": "mix",
+      "name": "Channel 3 level",
+      "display_min": -20,
+      "display_max": -9
+    },
+    {
+      "module": "mix",
+      "name": "Mix level",
+      "display_max": 0
+    },
+    {
+      "module": "cmp",
+      "name": "B offset",
+      "display_min": 4.5,
+      "display_max": 10
+    }
+  ],
+  "probes": [
+    {
+      "module": "mix",
+      "output": "Mix",
+      "ask": "На выходе Mix нет сигнала. Звучат ли все три партии (кабели в Channel 1–3, ручки уровней не на минус бесконечности)?",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    },
+    {
+      "module": "cmp",
+      "output": "Clip gate",
+      "ask": "Clip gate всё время высокий: сумма постоянно выше порога. Убавь уровни каналов или Mix level.",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "min_lt": 1
+      }
+    }
+  ],
+  "reference": {
+    "params": [
+      {
+        "module": "vco2",
+        "name": "Frequency",
+        "value": 4
+      },
+      {
+        "module": "vco3",
+        "name": "Frequency",
+        "value": 7
+      }
+    ],
+    "break": 5
+  },
+  "hints": {
+    "cable:1": "Первая партия не доходит до микшера. Какой выход VCO даёт пилу и в какой вход VCMixer (Channel 1) её подать?",
+    "cable:2": "Второй партии не слышно. Кабель из Sawtooth второго VCO идёт в Channel 2 у VCMixer.",
+    "cable:3": "Третьей партии не слышно. Кабель из Sawtooth третьего VCO идёт в Channel 3 у VCMixer.",
+    "cable:4": "Микшер собран, а в Audio пусто. Какой выход VCMixer ведёт в первый выход устройства?",
+    "cable:5": "Индикатор перегруза ничего не меряет. Какой сигнал мы хотим проверять на пределе и в какой вход Compare (A или B) его подать?",
+    "cable:6": "Скопе нечего показывать. Какой выход Compare показывает перегруз как гейт и в какой вход Scope его удобно подать?",
+    "param:1": "Первый канал громче -9 dB или совсем не слышен. Три партии складываются: каждой оставь запас, по правилу «треть» это около -10 dB.",
+    "param:2": "Второй канал громче -9 dB или совсем не слышен. Три партии складываются, каждой оставь запас.",
+    "param:3": "Третий канал громче -9 dB или совсем не слышен. Три партии складываются, каждой оставь запас.",
+    "param:4": "Mix level выше 0 dB: микшер усиливает сумму, запаса остаётся меньше. Верни не выше 0 dB.",
+    "param:5": "Порог перегруза (B offset) слишком низкий. Подними хотя бы до 5 В, чтобы гейт загорался на настоящем перегрузе, а не на нормальном звуке.",
+    "probe:1": "Сигнала на Mix почти нет. Все ли три кабеля на месте и не стоят ли уровни слишком низко?",
+    "probe:2": "Гейт перегруза не отпускает. Убавь уровни каналов и проверь, что сумма не превышает порог B offset."
+  }
+}

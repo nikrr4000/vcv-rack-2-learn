@@ -1,0 +1,148 @@
+{
+  "lesson": "p7-04-stereo",
+  "modules": [
+    {
+      "ref": "vco1",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vco2",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "fade",
+      "plugin": "Fundamental",
+      "slug": "Fade"
+    },
+    {
+      "ref": "ms",
+      "plugin": "Fundamental",
+      "slug": "MidSide"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vco1",
+        "Sawtooth"
+      ],
+      "to": [
+        "fade",
+        "Ch 1"
+      ]
+    },
+    {
+      "from": [
+        "vco2",
+        "Sawtooth"
+      ],
+      "to": [
+        "fade",
+        "Ch 2"
+      ]
+    },
+    {
+      "from": [
+        "fade",
+        "Ch 1"
+      ],
+      "to": [
+        "ms",
+        "Encoder left"
+      ]
+    },
+    {
+      "from": [
+        "fade",
+        "Ch 2"
+      ],
+      "to": [
+        "ms",
+        "Encoder right"
+      ]
+    },
+    {
+      "from": [
+        "ms",
+        "Decoder left"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "ms",
+        "Decoder right"
+      ],
+      "to": [
+        "out",
+        "To \"device output 2\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "fade",
+      "name": "Crossfade",
+      "display_max": 30
+    },
+    {
+      "module": "ms",
+      "name": "Decoder width",
+      "display_min": 110
+    }
+  ],
+  "probes": [
+    {
+      "module": "ms",
+      "output": "Decoder left",
+      "ask": "Левый канал молчит. Идёт ли звук партии через Fade в Encoder left и дальше в Audio?",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    },
+    {
+      "module": "ms",
+      "output": "Decoder right",
+      "ask": "Правый канал молчит. Идёт ли вторая партия через Fade в Encoder right и дальше в Audio?",
+      "samples": 20,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "reference": {
+    "params": [
+      {
+        "module": "vco2",
+        "name": "Frequency",
+        "value": 7
+      }
+    ],
+    "break": 3
+  },
+  "hints": {
+    "cable:1": "Первая партия не попала на панораму. Куда подать пилу первого VCO: в Ch 1 или в Crossfade у Fade?",
+    "cable:2": "Вторая партия не попала на панораму. Пила второго VCO идёт в Ch 2 у Fade.",
+    "cable:3": "Левый канал не дошёл до кодера. Какой выход Fade (Ch 1) ведёт в Encoder left у Mid/Side?",
+    "cable:4": "Правый канал не дошёл до кодера. Выход Ch 2 у Fade идёт в Encoder right.",
+    "cable:5": "Слева в Audio пусто. Декодер выдаёт левый и правый каналы: какой выход ведёт на первый выход устройства?",
+    "cable:6": "Справа в Audio пусто. Выход Decoder right идёт на второй выход устройства.",
+    "param:1": "Партии не разведены. Crossfade у Fade посередине смешивает обе партии в одинаковую пару каналов. Сдвинь влево до 30 % или ниже.",
+    "param:2": "Стерео не расширено. Decoder width остался на нормальной ширине: подними до 110 % или выше.",
+    "probe:1": "В Decoder left нет сигнала. Проверь путь: партия → Fade → Encoder left → Decoder left.",
+    "probe:2": "В Decoder right нет сигнала. Проверь путь: партия → Fade → Encoder right → Decoder right."
+  }
+}
