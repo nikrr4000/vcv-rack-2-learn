@@ -1,0 +1,35 @@
+{
+  "lesson": "p1-01-sound-wave",
+  "modules": [
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "scope", "plugin": "Fundamental", "slug": "Scope" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["vco", "Sine"], "to": ["scope", "Ch 1"] },
+    { "from": ["vco", "Sawtooth"], "to": ["scope", "Ch 2"] },
+    { "from": ["vco", "Sawtooth"], "to": ["out", "To \"device output 1\""] }
+  ],
+  "params": [
+    { "module": "scope", "name": "Time", "display_max": 20 },
+    { "module": "scope", "name": "Trigger", "display_in": ["Enabled"] }
+  ],
+  "probes": [
+    { "module": "vco", "output": "Sine", "ask": "Проверь, что VCO работает: ручка Frequency не в крайнем положении, а кабель из Sine идёт в Scope. Потом нажми «Проверить» ещё раз.", "samples": 10, "interval_ms": 37, "expect": { "range_gt": 3 } }
+  ],
+  "hints": {
+    "module:out": "Не вижу модуля Audio 2. Добавь его из браузера модулей: пилу надо ещё и слышать.",
+    "cable:1": "Синусу некуда прийти: в какой вход Scope должна идти линия канала 1?",
+    "cable:2": "Вторая линия на экране пустая? Пила должна идти во вход Ch 2 у Scope.",
+    "cable:3": "Слышно ли пилу? Выход Sawtooth кормит и Scope, и Audio: у одного выхода может быть два кабеля.",
+    "param:1": "Сколько периодов помещается на экране? Ручка Time: поставь значение не больше 20 мс/экран, около 10.",
+    "param:2": "Картинка плывёт? Переключатель Trigger на Scope должен показывать Enabled."
+  },
+  "reference": {
+    "params": [
+      { "module": "scope", "name": "Time", "value": 6.64 },
+      { "module": "scope", "name": "Trigger", "value": 0 }
+    ],
+    "break": 2
+  }
+}

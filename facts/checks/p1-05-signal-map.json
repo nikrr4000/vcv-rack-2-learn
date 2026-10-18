@@ -1,0 +1,39 @@
+{
+  "lesson": "p1-05-signal-map",
+  "modules": [
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "lfo", "plugin": "Fundamental", "slug": "LFO" },
+    { "ref": "mult", "plugin": "Fundamental", "slug": "Mult" },
+    { "ref": "scope", "plugin": "Fundamental", "slug": "Scope" },
+    { "ref": "notes", "plugin": "Core", "slug": "Notes" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["lfo", "Sine"], "to": ["vco", "Frequency modulation"] },
+    { "from": ["vco", "Sawtooth"], "to": ["mult", "Mult"] },
+    { "from": ["mult", "Mult 1"], "to": ["out", "To \"device output 1\""] },
+    { "from": ["mult", "Mult 2"], "to": ["scope", "Ch 1"] }
+  ],
+  "params": [
+    { "module": "vco", "name": "Frequency modulation", "display_min": 3, "display_max": 15 }
+  ],
+  "probes": [
+    { "module": "lfo", "output": "Sine", "ask": "LFO должен работать: проверь ручку Frequency у LFO и кабель из Sine. Потом нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 50, "expect": { "range_gt": 3 } },
+    { "module": "mult", "output": "Mult 1", "ask": "До Mult 1 сигнал не доходит. Проверь кабель из Sawtooth в Mult.", "samples": 10, "interval_ms": 37, "expect": { "range_gt": 3 } }
+  ],
+  "hints": {
+    "module:notes": "Где записана карта патча? Добавь модуль Notes из браузера модулей и впиши в него карту: по строке на кабель.",
+    "cable:1": "Что качает высоту VCO? Выход Sine у LFO → вход Frequency modulation у VCO.",
+    "cable:2": "Куда идёт пила? Выход Sawtooth у VCO → вход Mult у Mult.",
+    "cable:3": "Слышно ли звук? Выход Mult 1 → Audio 2.",
+    "cable:4": "Видна ли волна на Scope? Выход Mult 2 → вход Ch 1 у Scope.",
+    "param:1": "Насколько сильно качать высоту? Ручка Frequency modulation у VCO: около 10.",
+    "probe:1": "LFO не движется. Проверь его ручку Frequency и кабель из Sine."
+  },
+  "reference": {
+    "params": [
+      { "module": "vco", "name": "Frequency modulation", "value": 0.1 }
+    ],
+    "break": 2
+  }
+}

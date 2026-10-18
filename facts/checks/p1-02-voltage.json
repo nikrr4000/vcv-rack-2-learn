@@ -1,0 +1,39 @@
+{
+  "lesson": "p1-02-voltage",
+  "modules": [
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "v8", "plugin": "Fundamental", "slug": "8vert" },
+    { "ref": "scope", "plugin": "Fundamental", "slug": "Scope" },
+    { "ref": "viz", "plugin": "Fundamental", "slug": "Viz" }
+  ],
+  "cables": [
+    { "from": ["vco", "Sine"], "to": ["scope", "Ch 1"] },
+    { "from": ["v8", "Row 1"], "to": ["scope", "Ch 2"] },
+    { "from": ["v8", "Row 2"], "to": ["viz", "Polyphonic"] }
+  ],
+  "params": [
+    { "module": "v8", "name": "Row 1 gain", "display_min": 9 },
+    { "module": "v8", "name": "Row 2 gain", "display_min": 4, "display_max": 6 }
+  ],
+  "probes": [
+    { "module": "vco", "output": "Sine", "ask": "Проверь, что VCO работает: кабель из Sine идёт в Scope, ручка Frequency не в крайнем положении. Потом нажми «Проверить» ещё раз.", "samples": 10, "interval_ms": 37, "expect": { "range_gt": 3 } },
+    { "module": "v8", "output": "Row 1", "ask": "На выходе Row 1 должно быть почти 10 В: поверни Row 1 gain до упора вправо.", "samples": 3, "interval_ms": 50, "expect": { "max_gt": 9 } },
+    { "module": "v8", "output": "Row 2", "ask": "На выходе Row 2 должно быть около 5 В: правый клик на Row 2 gain и ввести 5.", "samples": 3, "interval_ms": 50, "expect": { "max_gt": 4, "min_lt": 6 } }
+  ],
+  "hints": {
+    "cable:1": "Какая линия Scope должна показывать звук? Синус из VCO идёт во вход Ch 1.",
+    "cable:2": "Что рисует вторая линия Scope? Выход Row 1 у 8vert должен идти во вход Ch 2.",
+    "cable:3": "Viz пустой. Какой выход 8vert ему нужен? Row 2 идёт во вход Polyphonic.",
+    "param:1": "Какое напряжение у гейта по стандарту VCV? Поверни Row 1 gain вправо до упора: 10 В.",
+    "param:2": "Какое значение нужно для середины шкалы 0…10 В? Row 2 gain около 5: правый клик по ручке и число.",
+    "probe:2": "Сигнал на Row 1 должен быть почти 10 В. Проверь ручку Row 1 gain.",
+    "probe:3": "Сигнал на Row 2 должен быть около 5 В. Проверь ручку Row 2 gain."
+  },
+  "reference": {
+    "params": [
+      { "module": "v8", "name": "Row 1 gain", "value": 1 },
+      { "module": "v8", "name": "Row 2 gain", "value": 0.5 }
+    ],
+    "break": 2
+  }
+}

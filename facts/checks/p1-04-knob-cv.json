@@ -1,0 +1,43 @@
+{
+  "lesson": "p1-04-knob-cv",
+  "modules": [
+    { "ref": "lfo", "plugin": "Fundamental", "slug": "LFO" },
+    { "ref": "mix", "plugin": "Fundamental", "slug": "CVMix" },
+    { "ref": "res", "plugin": "Fundamental", "slug": "Rescale" },
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["lfo", "Sine"], "to": ["mix", "CV 1"] },
+    { "from": ["mix", "Mix"], "to": ["res", "Signal"] },
+    { "from": ["res", "Signal"], "to": ["vco", "1V/octave pitch"] },
+    { "from": ["vco", "Sine"], "to": ["out", "To \"device output 1\""] }
+  ],
+  "params": [
+    { "module": "mix", "name": "Level 1", "display_min": 20, "display_max": 80 },
+    { "module": "res", "name": "Gain", "display_min": 90 },
+    { "module": "res", "name": "Maximum", "display_min": 1.5, "display_max": 2.5 }
+  ],
+  "probes": [
+    { "module": "res", "output": "Signal", "ask": "Сигнал после Rescale должен качаться от 0 до 2 В. Проверь Level 1, Gain и Maximum и нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 50, "expect": { "max_gt": 1.8, "min_lt": 0.5 } }
+  ],
+  "hints": {
+    "cable:1": "Через что идёт модуляция? Выход Sine у LFO → вход CV 1 у CV Mix.",
+    "cable:2": "Что обрезает диапазон? Выход Mix у CV Mix → вход Signal у Rescale.",
+    "cable:3": "Что управляет высотой? Выход Signal у Rescale → вход 1V/octave pitch у VCO.",
+    "cable:4": "Слышно ли результат? Выход Sine у VCO → Audio 2.",
+    "param:1": "Сколько процентов сигнала доходит до Rescale? Level 1 у CV Mix около 50.",
+    "param:2": "Что пропускает сигнал через Rescale? Если Gain в нуле, сигнал умножен на ноль: подними Gain до 100 %.",
+    "param:3": "До скольки вольт ограничиваем? Ручка Maximum у Rescale: около 2.",
+    "probe:1": "Сигнал после Rescale должен качаться от 0 до 2 В. Если линия плоская, проверь Level 1 и Gain."
+  },
+  "reference": {
+    "params": [
+      { "module": "mix", "name": "Level 1", "value": 0.5 },
+      { "module": "res", "name": "Gain", "value": 1 },
+      { "module": "res", "name": "Maximum", "value": 2 },
+      { "module": "res", "name": "Minimum", "value": 0 }
+    ],
+    "break": 2
+  }
+}

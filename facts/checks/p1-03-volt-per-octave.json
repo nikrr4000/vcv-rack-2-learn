@@ -1,0 +1,36 @@
+{
+  "lesson": "p1-03-volt-per-octave",
+  "modules": [
+    { "ref": "v8", "plugin": "Fundamental", "slug": "8vert" },
+    { "ref": "oct", "plugin": "Fundamental", "slug": "Octave" },
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["v8", "Row 1"], "to": ["oct", "1V/octave pitch"] },
+    { "from": ["oct", "Pitch"], "to": ["vco", "1V/octave pitch"] },
+    { "from": ["vco", "Sine"], "to": ["out", "To \"device output 1\""] }
+  ],
+  "params": [
+    { "module": "v8", "name": "Row 1 gain", "display_min": 0.56, "display_max": 0.61 },
+    { "module": "oct", "name": "Shift", "display_in": ["1"] }
+  ],
+  "probes": [
+    { "module": "oct", "output": "Pitch", "ask": "На выходе Pitch должно быть около 1,58 В: это 7/12 В от 8vert плюс 1 октава от Octave. Проверь обе ручки и нажми «Проверить» ещё раз.", "samples": 3, "interval_ms": 50, "expect": { "max_gt": 1.5, "min_lt": 1.7 } }
+  ],
+  "hints": {
+    "cable:1": "Куда должно идти напряжение с 8vert, чтобы его сдвинули на октаву? Row 1 → вход 1V/octave pitch у Octave.",
+    "cable:2": "Как VCO узнает новую высоту? Выход Pitch у Octave → вход 1V/octave pitch у VCO.",
+    "cable:3": "Слышно ли ноту? Выход Sine у VCO → Audio 2.",
+    "param:1": "Сколько вольт в семи полутонах? Семь двенадцатых, около 0,583: правый клик по Row 1 gain и ввести число.",
+    "param:2": "На сколько октав выше надо подняться? Ручка Shift у Octave должна показывать 1.",
+    "probe:1": "Сложи напряжения: 7/12 В от 8vert и сдвиг на октаву. На Pitch должно быть около 1,58 В."
+  },
+  "reference": {
+    "params": [
+      { "module": "v8", "name": "Row 1 gain", "value": 0.0583333 },
+      { "module": "oct", "name": "Shift", "value": 1 }
+    ],
+    "break": 2
+  }
+}
