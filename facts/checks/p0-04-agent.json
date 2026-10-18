@@ -1,0 +1,30 @@
+{
+  "lesson": "p0-04-agent",
+  "modules": [
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["vco", "Sine"], "to": ["out", "To \"device output 1\""] },
+    { "from": ["vco", "Sine"], "to": ["out", "To \"device output 2\""] }
+  ],
+  "params": [
+    { "module": "vco", "name": "Frequency", "display_min": 80, "display_max": 1000 },
+    { "module": "out", "name": "Level", "display_min": -40, "display_max": 0 }
+  ],
+  "probes": [
+    { "module": "vco", "output": "Sine", "ask": "Сигнал на выходе Sine не меняется. Проверь, что модуль VCO в патче и кабель от Sine действительно воткнут в Audio 2.", "samples": 10, "interval_ms": 50, "expect": { "range_gt": 4 } }
+  ],
+  "hints": {
+    "module:vco": "В патче нет модуля VCO из Fundamental. Добавь его из браузера модулей.",
+    "module:out": "В патче нет модуля Audio 2 (Core). Добавь его: он выводит звук на колонки или наушники.",
+    "cable:1": "Звук не доходит до первого входа Audio 2. Какой выход VCO даёт синусоиду и куда он должен идти?",
+    "cable:2": "Звук идёт только в один канал. Протяни второй кабель от того же выхода Sine ко второму входу Audio 2.",
+    "param:1": "Частота VCO сейчас вне слышимого и удобного диапазона для этого урока. Верни Frequency в диапазон 80...1000 Гц (по умолчанию 261.63 Гц).",
+    "param:2": "Громкость Audio 2 не должна быть выше 0 дБ и не должна быть выключена (-inf). Сверь Level с цифрой в подсказке и верни её к 0 дБ."
+  },
+  "reference": {
+    "params": [],
+    "break": 1
+  }
+}

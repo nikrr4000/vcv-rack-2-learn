@@ -1,0 +1,25 @@
+{
+  "lesson": "p0-02-interface",
+  "modules": [
+    { "ref": "notes", "plugin": "Core", "slug": "Notes" },
+    { "ref": "blank", "plugin": "Core", "slug": "Blank" },
+    { "ref": "vco_a", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "vco_b", "plugin": "Fundamental", "slug": "VCO" }
+  ],
+  "cables": [
+    { "from": ["vco_a", "Sine"], "to": ["vco_b", "Frequency modulation"] }
+  ],
+  "params": [],
+  "probes": [],
+  "hints": {
+    "module:notes": "В патче нет модуля Notes. Открой браузер модулей (Enter над пустым местом шкафа) и поищи Notes среди модулей Core.",
+    "module:blank": "В патче нет модуля Blank. Найди Blank в браузере модулей: это пустая панель, у неё нет ручек.",
+    "module:vco_a": "Нужны два модуля VCO из Fundamental. Найди их в браузере модулей и поставь рядом.",
+    "module:vco_b": "Нужны два модуля VCO из Fundamental, сейчас найден только один. Добавь второй.",
+    "cable:1": "Два VCO есть, а кабеля между ними нет. Протяни кабель от выхода Sine первого VCO ко входу Frequency modulation второго: тяни от одного разъёма к другому, не отпуская кнопку мыши."
+  },
+  "reference": {
+    "params": [],
+    "break": 1
+  }
+}
