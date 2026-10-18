@@ -1,0 +1,90 @@
+{
+  "lesson": "p3-04-adsr",
+  "modules": [
+    {
+      "ref": "push",
+      "plugin": "Fundamental",
+      "slug": "Push"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "scope",
+      "plugin": "Fundamental",
+      "slug": "Scope"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "push",
+        "Gate"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "scope",
+        "Ch 1"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "env",
+      "name": "Attack",
+      "display_min": 300,
+      "display_max": 3000
+    },
+    {
+      "module": "env",
+      "name": "Sustain",
+      "display_min": 60
+    },
+    {
+      "module": "env",
+      "name": "Release",
+      "display_min": 500
+    }
+  ],
+  "probes": [
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Огибающая стоит на нуле. Включи Hold на модуле Push (или держи кнопку Push) и нажми «Проверить» ещё раз.",
+      "samples": 10,
+      "interval_ms": 50,
+      "expect": {
+        "max_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Огибающая не знает, когда начинать. Какой выход Push держит сигнал, пока кнопка нажата, и в какой вход ADSR его подать?",
+    "cable:2": "На Scope нечего смотреть. Подай выход Envelope в Ch 1 осциллографа.",
+    "param:1": "Для пэда атака должна быть медленной: от 300 мс до 3 секунд. Сколько у Attack сейчас?",
+    "param:2": "У пэда после атаки звук держится: Sustain не меньше 60%. Что произойдёт при нулевом Sustain, пока гейт включён?",
+    "param:3": "У пэда долгий хвост: Release не меньше 500 мс. Что слышно, когда ты отпускаешь кнопку при коротком Release?",
+    "probe:1": "Огибающая не поднимается. Включён ли Hold у Push (или нажата кнопка), идёт ли Gate в Gate у ADSR?"
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "push",
+        "name": "Hold",
+        "value": 1
+      }
+    ],
+    "break": 1
+  }
+}

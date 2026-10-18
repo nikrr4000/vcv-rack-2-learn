@@ -1,0 +1,87 @@
+{
+  "lesson": "p3-03-vca",
+  "modules": [
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "cv",
+      "plugin": "Fundamental",
+      "slug": "8vert"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "cv",
+        "Row 1"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "cv",
+      "name": "Row 1 gain",
+      "display_min": 3,
+      "display_max": 10
+    }
+  ],
+  "probes": [
+    {
+      "module": "vca",
+      "output": "Channel",
+      "ask": "VCA сейчас закрыт. Подними ручку Row 1 gain у 8vert (VCA открывается от CV) и нажми «Проверить» ещё раз.",
+      "samples": 10,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "VCA нечего усиливать. Какой выход VCO идёт во вход Channel?",
+    "cable:2": "Звук слышен всегда, а должен появляться только когда ты его открываешь? Что управляет усилением VCA и в какой вход оно подаётся?",
+    "cable:3": "VCA собран, но звук не идёт на выход. Откуда он выходит из VCA?",
+    "param:1": "VCA открывается напряжением от 8vert: сейчас на выходе Row 1 слишком мало (или оно отрицательное). Подними Row 1 gain до 3-10.",
+    "probe:1": "Выход VCA почти не двигается. Проверь, что VCO звучит, а на CV приходит положительное напряжение."
+  },
+  "reference": {
+    "break": 2
+  }
+}

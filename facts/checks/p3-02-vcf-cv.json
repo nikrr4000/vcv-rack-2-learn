@@ -1,0 +1,110 @@
+{
+  "lesson": "p3-02-vcf-cv",
+  "modules": [
+    {
+      "ref": "lfo",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "cv",
+      "plugin": "Fundamental",
+      "slug": "8vert"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "lfo",
+        "Triangle"
+      ],
+      "to": [
+        "cv",
+        "Row 1"
+      ]
+    },
+    {
+      "from": [
+        "cv",
+        "Row 1"
+      ],
+      "to": [
+        "vcf",
+        "Frequency"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "vcf",
+      "name": "Resonance",
+      "display_min": 80
+    },
+    {
+      "module": "vcf",
+      "name": "Cutoff frequency CV",
+      "display_min": 80
+    },
+    {
+      "module": "cv",
+      "name": "Row 1 gain",
+      "display_min": 10,
+      "display_max": 40
+    }
+  ],
+  "probes": [
+    {
+      "module": "cv",
+      "output": "Row 1",
+      "ask": "Управляющее напряжение не меняется. Проверь, что LFO идёт в 8vert, а ручка Row 1 gain не в нуле.",
+      "samples": 10,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.3
+      }
+    },
+    {
+      "module": "vcf",
+      "output": "Lowpass filter",
+      "ask": "Фильтр молчит. Подними Resonance почти до максимума и убедись, что Cutoff frequency CV не в нуле; при необходимости на секунду подай в Audio шум или пилу, чтобы «разбудить» фильтр.",
+      "samples": 10,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 1.0
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Откуда берётся качание? Подай выход LFO в 8vert: какой выход LFO даёт плавный треугольник?",
+    "cable:2": "Управляющий сигнал не доходит до фильтра. Какой вход VCF отвечает за частоту среза?",
+    "cable:3": "Фильтр поёт, но слышно только его. Из какого выхода VCF тянется звук к выходу на устройство?",
+    "param:1": "Для самогенерации резонанс должен быть почти на максимуме. Сколько процентов у Resonance сейчас?",
+    "param:2": "Сигнал в Frequency есть, но ручка Cutoff frequency CV его почти не пропускает. Что делает эта ручка и в каком положении она должна стоять, чтобы тон следовал за напряжением?",
+    "param:3": "Сейчас качание или не слышно, или слишком широкое. Когда в Row 1 подан LFO, ручка Row 1 gain показывает проценты: поставь от 10 до 40 % — треугольник 0…10 В превратится в качание на 1–4 В, то есть на 1–4 октавы.",
+    "probe:1": "Напряжение на выходе Row 1 у 8vert не качается. Проверь кабель LFO → 8vert и ручку Row 1 gain.",
+    "probe:2": "Фильтр ничего не выдаёт без входного сигнала. Что нужно поднять, чтобы он зазвучал сам?"
+  },
+  "reference": {
+    "break": 2
+  }
+}

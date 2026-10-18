@@ -1,0 +1,71 @@
+{
+  "lesson": "p3-01-vcf",
+  "modules": [
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "vcf",
+      "name": "Cutoff frequency",
+      "display_min": 100,
+      "display_max": 250
+    }
+  ],
+  "probes": [
+    {
+      "module": "vcf",
+      "output": "Lowpass filter",
+      "ask": "Фильтр ничего не пропускает: подними частоту среза хотя бы до 100 Гц и нажми «Проверить» ещё раз.",
+      "samples": 10,
+      "interval_ms": 50,
+      "expect": {
+        "range_gt": 0.05
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Фильтру нечего фильтровать. Какой выход VCO даёт пилу и в какой вход VCF её нужно подать?",
+    "cable:2": "Фильтр работает, но до выхода звук не доходит. Какой выход VCF отдаёт «тёмный» звук, из которого срезано верхнее?",
+    "param:1": "Сейчас частота среза не в нужном окне. Задача: закрыть пилу так, чтобы срез оказался ниже самой ноты VCO (около 261 Гц), но не в самом низу. Куда повернуть Cutoff frequency?",
+    "probe:1": "На выходе Lowpass filter почти нет сигнала. Проверь, что VCO даёт звук, а частота среза не упала в самый низ: тогда фильтр срезает всё."
+  },
+  "reference": {
+    "break": 2
+  }
+}
