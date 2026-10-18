@@ -1,0 +1,249 @@
+{
+  "lesson": "p9-04-arrangement",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "sw",
+      "plugin": "Fundamental",
+      "slug": "SequentialSwitch1"
+    },
+    {
+      "ref": "push",
+      "plugin": "Fundamental",
+      "slug": "Push"
+    },
+    {
+      "ref": "logic",
+      "plugin": "Fundamental",
+      "slug": "Logic"
+    },
+    {
+      "ref": "mutes",
+      "plugin": "Fundamental",
+      "slug": "Mutes"
+    },
+    {
+      "ref": "master",
+      "plugin": "Fundamental",
+      "slug": "VCMixer"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 3"
+      ],
+      "to": [
+        "sw",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Reset"
+      ],
+      "to": [
+        "sw",
+        "Reset"
+      ]
+    },
+    {
+      "from": [
+        "push",
+        "Gate"
+      ],
+      "to": [
+        "sw",
+        "Main"
+      ]
+    },
+    {
+      "from": [
+        "sw",
+        "Channel 1"
+      ],
+      "to": [
+        "logic",
+        "A"
+      ]
+    },
+    {
+      "from": [
+        "sw",
+        "Channel 3"
+      ],
+      "to": [
+        "logic",
+        "B"
+      ]
+    },
+    {
+      "from": [
+        "logic",
+        "NOR"
+      ],
+      "to": [
+        "mutes",
+        "Row 1"
+      ]
+    },
+    {
+      "from": [
+        "mutes",
+        "Row 1"
+      ],
+      "to": [
+        "master",
+        "Channel 1 CV"
+      ]
+    },
+    {
+      "from": [
+        "logic",
+        "NOT A"
+      ],
+      "to": [
+        "mutes",
+        "Row 2"
+      ]
+    },
+    {
+      "from": [
+        "mutes",
+        "Row 2"
+      ],
+      "to": [
+        "master",
+        "Channel 2 CV"
+      ]
+    },
+    {
+      "from": [
+        "master",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "sw",
+      "name": "Steps",
+      "display_in": [
+        "4"
+      ]
+    },
+    {
+      "module": "master",
+      "name": "Mix level",
+      "display_max": 0
+    }
+  ],
+  "probes": [
+    {
+      "module": "logic",
+      "output": "NOR",
+      "ask": "Гейт ударных не меняется: секции не сменяются. Идёт ли Clocked (прочитай Master clock, прежде чем нажимать Run), приходит ли Clock 3 на переключатель и включён ли Hold у Push? Если делитель стоит очень медленно, нажми Reset у Clocked и подожди смены секции.",
+      "samples": 60,
+      "interval_ms": 47,
+      "expect": {
+        "range_gt": 5
+      }
+    },
+    {
+      "module": "logic",
+      "output": "NOT A",
+      "ask": "Гейт баса не меняется. Приходит ли Channel 1 переключателя на вход A у Logic и включён ли Hold у Push?",
+      "samples": 60,
+      "interval_ms": 47,
+      "expect": {
+        "range_gt": 5
+      }
+    },
+    {
+      "module": "master",
+      "output": "Mix",
+      "ask": "На мастере нет сигнала. Звучат ли ударные и бас, не заглушены ли строки у Mutes и открывает ли гейт секции каналы VCMixer?",
+      "samples": 60,
+      "interval_ms": 47,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "reference": {
+    "helpers": [
+      {
+        "ref": "vcoD",
+        "plugin": "Fundamental",
+        "slug": "VCO"
+      },
+      {
+        "ref": "vcoB",
+        "plugin": "Fundamental",
+        "slug": "VCO"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "vcoD",
+          "Sawtooth"
+        ],
+        "to": [
+          "master",
+          "Channel 1"
+        ]
+      },
+      {
+        "from": [
+          "vcoB",
+          "Sawtooth"
+        ],
+        "to": [
+          "master",
+          "Channel 2"
+        ]
+      }
+    ],
+    "params": [
+      {
+        "module": "push",
+        "name": "Hold",
+        "value": 1
+      }
+    ],
+    "break": 6
+  },
+  "hints": {
+    "cable:1": "Секции не будут сменяться. Какой выход Clocked даёт редкий такт для смены секций и в какой вход переключателя он идёт?",
+    "cable:2": "Нет общего сброса: после остановки секции не вернутся к первой. Куда подать Reset у Clocked?",
+    "cable:3": "Переключателю нечего раздавать: гейт секции берётся из Main. Подай Gate у Push (с включённым Hold) в Main.",
+    "cable:4": "Logic не знает, идёт ли интро. Канал 1 переключателя идёт в вход A у Logic.",
+    "cable:5": "Logic не знает, идёт ли брейк. Канал 3 переключателя идёт в вход B у Logic.",
+    "cable:6": "Ударные не получают гейт секций. NOR у Logic высок, когда нет ни интро, ни брейка: подай его в Row 1 у Mutes.",
+    "cable:7": "Гейт ударных не дошёл до мастера. Row 1 у Mutes идёт в Channel 1 CV у VCMixer.",
+    "cable:8": "Бас не получает гейт секций. NOT A у Logic высок во всех секциях, кроме интро: подай его в Row 2 у Mutes.",
+    "cable:9": "Гейт баса не дошёл до мастера. Row 2 у Mutes идёт в Channel 2 CV у VCMixer.",
+    "cable:10": "Мастер-микшер ничего не отдаёт в Audio. Куда идёт его выход Mix?",
+    "param:1": "Секций должно быть четыре: Steps у переключателя 4.",
+    "param:2": "Mix level выше 0 dB: у трека нет запаса. Верни не выше 0 dB.",
+    "probe:1": "Гейт ударных не меняется. Нажми Reset у Clocked, проверь Hold у Push, Clock 3 и ход такта.",
+    "probe:2": "Гейт баса не меняется. Проверь кабель Channel 1 в A у Logic и Hold у Push.",
+    "probe:3": "Слои секций молчат: проверь Row 1 mute и Row 2 mute у Mutes и кабели в Channel CV мастера."
+  }
+}

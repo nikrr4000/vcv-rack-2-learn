@@ -1,0 +1,327 @@
+{
+  "lesson": "p9-02-rhythm-section",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "seq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "gtB",
+      "plugin": "Fundamental",
+      "slug": "Gates"
+    },
+    {
+      "ref": "gtH",
+      "plugin": "Fundamental",
+      "slug": "Gates"
+    },
+    {
+      "ref": "envK",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "envS",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "envH",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "seq",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Reset"
+      ],
+      "to": [
+        "seq",
+        "Reset"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "Trigger"
+      ],
+      "to": [
+        "envK",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 2"
+      ],
+      "to": [
+        "gtB",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Reset"
+      ],
+      "to": [
+        "gtB",
+        "Reset flip/flop"
+      ]
+    },
+    {
+      "from": [
+        "gtB",
+        "Flop"
+      ],
+      "to": [
+        "envS",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "gtH",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "gtH",
+        "Gate"
+      ],
+      "to": [
+        "envH",
+        "Gate"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "gtH",
+      "name": "Gate length",
+      "display_min": 10,
+      "display_max": 150
+    },
+    {
+      "module": "envH",
+      "name": "Decay",
+      "display_max": 400
+    }
+  ],
+  "probes": [
+    {
+      "module": "envK",
+      "output": "Envelope",
+      "ask": "Огибающая бочки стоит. Идёт ли Clocked (прочитай напряжение Master clock, прежде чем нажимать Run) и включены ли шаги бочки в ряду Step N trigger у SEQ 3?",
+      "samples": 45,
+      "interval_ms": 47,
+      "expect": {
+        "max_gt": 1.0
+      }
+    },
+    {
+      "module": "envS",
+      "output": "Envelope",
+      "ask": "Огибающая снейра стоит. Идёт ли Clock 2 у Clocked и приходит ли он на вход Gate у первого Gates?",
+      "samples": 45,
+      "interval_ms": 47,
+      "expect": {
+        "max_gt": 1.0
+      }
+    },
+    {
+      "module": "envH",
+      "output": "Envelope",
+      "ask": "Огибающая хэта стоит. Что приходит на вход Gate у второго Gates и что стоит на ручке Gate length?",
+      "samples": 45,
+      "interval_ms": 47,
+      "expect": {
+        "max_gt": 1.0
+      }
+    }
+  ],
+  "reference": {
+    "params": [
+      {
+        "module": "seq",
+        "name": "Step 1 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 2 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 3 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 4 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 5 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 6 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 7 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 8 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "envK",
+        "name": "Attack",
+        "value": 0
+      },
+      {
+        "module": "envK",
+        "name": "Decay",
+        "value": 0.6
+      },
+      {
+        "module": "envK",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "envK",
+        "name": "Release",
+        "value": 0.6
+      },
+      {
+        "module": "envS",
+        "name": "Attack",
+        "value": 0
+      },
+      {
+        "module": "envS",
+        "name": "Decay",
+        "value": 0.6
+      },
+      {
+        "module": "envS",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "envS",
+        "name": "Release",
+        "value": 0.6
+      },
+      {
+        "module": "envH",
+        "name": "Attack",
+        "value": 0
+      },
+      {
+        "module": "envH",
+        "name": "Decay",
+        "value": 0.6
+      },
+      {
+        "module": "envH",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "envH",
+        "name": "Release",
+        "value": 0.6
+      }
+    ],
+    "break": 6
+  },
+  "hints": {
+    "cable:1": "Бочка не привязана к мастер-такту. Какой выход Clocked ведёт в вход Clock у SEQ 3?",
+    "cable:2": "Нет общего сброса: паттерн бочки уедет от остальных. Куда подать Reset у Clocked?",
+    "cable:3": "Бочка не запускается. Какой выход SEQ 3 даёт триггеры по включённым шагам и куда он идёт?",
+    "cable:4": "Первый Gates (снейр) не получает такт на доли. Подай Clock 2 у Clocked в его вход Gate.",
+    "cable:5": "Flip и Flop у первого Gates не привязаны к общему сбросу: снейр может сесть не на вторую и четвёртую доли. Куда идёт Reset у Clocked?",
+    "cable:6": "Снейр не слышен: он берётся с выхода Flop (вторая и четвёртая доли). Подай Flop в вход Gate огибающей снейра.",
+    "cable:7": "Второй Gates (хэт) не получает такт восьмых. Подай Clock 1 у Clocked в его вход Gate.",
+    "cable:8": "Хэт не запускается. Короткий гейт даёт выход Gate у второго Gates; подай его в вход Gate огибающей хэта.",
+    "param:1": "Gate length у хэтового Gates: от 10 до 150 мс. Сколько стоит сейчас?",
+    "param:2": "Закрытый хэт должен быть коротким: Decay огибающей хэта не больше 400 мс.",
+    "probe:1": "Огибающая бочки не поднимается: такта нет или в SEQ 3 нет включённых шагов.",
+    "probe:2": "Огибающая снейра не поднимается: Flop не получает фронтов. Идёт ли Clock 2?",
+    "probe:3": "Огибающая хэта не поднимается: Gate у второго Gates не получает фронтов."
+  }
+}

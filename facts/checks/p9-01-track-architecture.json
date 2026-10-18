@@ -1,0 +1,287 @@
+{
+  "lesson": "p9-01-track-architecture",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "seq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "bus",
+      "plugin": "Fundamental",
+      "slug": "Mixer"
+    },
+    {
+      "ref": "master",
+      "plugin": "Fundamental",
+      "slug": "VCMixer"
+    },
+    {
+      "ref": "notes",
+      "plugin": "Core",
+      "slug": "Notes"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "seq",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Reset"
+      ],
+      "to": [
+        "seq",
+        "Reset"
+      ]
+    },
+    {
+      "from": [
+        "seq",
+        "Trigger"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "bus",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "bus",
+        "Mix"
+      ],
+      "to": [
+        "master",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "master",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "clk",
+      "name": "Master clock",
+      "display_min": 100,
+      "display_max": 140
+    },
+    {
+      "module": "master",
+      "name": "Mix level",
+      "display_max": 0
+    }
+  ],
+  "probes": [
+    {
+      "module": "env",
+      "output": "Envelope",
+      "ask": "Огибающая стоит. Идёт ли Clocked (прочитай напряжение на Master clock, прежде чем нажимать Run) и включён ли хотя бы один шаг в ряду триггеров SEQ 3 (Step N trigger)?",
+      "samples": 40,
+      "interval_ms": 47,
+      "expect": {
+        "max_gt": 1.0
+      }
+    },
+    {
+      "module": "master",
+      "output": "Mix",
+      "ask": "На мастер-микшере нет сигнала. Пройди по цепочке: триггер, огибающая, VCA, шина Mix, канал VCMixer. Где сигнал пропадает?",
+      "samples": 40,
+      "interval_ms": 47,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "reference": {
+    "params": [
+      {
+        "module": "seq",
+        "name": "Step 1 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 2 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 3 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 4 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 5 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 6 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 7 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "seq",
+        "name": "Step 8 trigger",
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.6
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.6
+      }
+    ],
+    "break": 7
+  },
+  "hints": {
+    "cable:1": "Секвенсор ещё не слышит мастер-такт. Какой выход Clocked даёт такт для секвенсоров и в какой вход SEQ 3 его подать?",
+    "cable:2": "Общий сброс не разведён: после остановки и запуска секвенсор уедет от такта. Куда подать выход Reset у Clocked?",
+    "cable:3": "Строка инструмента не запускается. Что у SEQ 3 даёт триггер и в какой вход огибающей он идёт?",
+    "cable:4": "Огибающая не управляет громкостью. В какой вход VCA идёт её выход?",
+    "cable:5": "Источник звука не дошёл до VCA. Какой выход VCO в вход Channel у VCA?",
+    "cable:6": "Строка не выведена на шину. Выход VCA должен идти в канал микшера Mix.",
+    "cable:7": "Шина не подключена к мастер-микшеру. Выход Mix у Mix (шина) идёт в Channel 1 у VCMixer.",
+    "cable:8": "Мастер-микшер ничего не отдаёт в Audio. Куда идёт его выход Mix?",
+    "param:1": "Темп трека для упражнения: от 100 до 140 BPM. Сколько стоит Master clock сейчас?",
+    "param:2": "Mix level у мастер-микшера выше 0 dB: на выходе нет запаса. Верни не выше 0 dB.",
+    "probe:1": "Огибающая не поднимается: такта нет или в ряду триггеров нет включённых шагов.",
+    "probe:2": "Сигнал на мастер-микшере не двигается: прослеживай цепочку от огибающей до канала VCMixer.",
+    "module:notes": "В патче нет модуля Notes. Заведи его для подписей: что за что отвечает и какой темп и тональность."
+  }
+}

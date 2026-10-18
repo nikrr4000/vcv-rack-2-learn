@@ -1,0 +1,277 @@
+{
+  "lesson": "p9-03-bass-harmony",
+  "modules": [
+    {
+      "ref": "clk",
+      "plugin": "ImpromptuModular",
+      "slug": "Clocked"
+    },
+    {
+      "ref": "bassSeq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "chordSeq",
+      "plugin": "Fundamental",
+      "slug": "SEQ3"
+    },
+    {
+      "ref": "qB",
+      "plugin": "Fundamental",
+      "slug": "Quantizer"
+    },
+    {
+      "ref": "qC",
+      "plugin": "Fundamental",
+      "slug": "Quantizer"
+    },
+    {
+      "ref": "oct",
+      "plugin": "Fundamental",
+      "slug": "Octave"
+    },
+    {
+      "ref": "bass",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "padA",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "padB",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "clk",
+        "Clock 1"
+      ],
+      "to": [
+        "bassSeq",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Reset"
+      ],
+      "to": [
+        "bassSeq",
+        "Reset"
+      ]
+    },
+    {
+      "from": [
+        "bassSeq",
+        "CV 1"
+      ],
+      "to": [
+        "qB",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "qB",
+        "Pitch"
+      ],
+      "to": [
+        "oct",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "oct",
+        "Pitch"
+      ],
+      "to": [
+        "bass",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "bassSeq",
+        "Step 1"
+      ],
+      "to": [
+        "chordSeq",
+        "Clock"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Reset"
+      ],
+      "to": [
+        "chordSeq",
+        "Reset"
+      ]
+    },
+    {
+      "from": [
+        "chordSeq",
+        "CV 1"
+      ],
+      "to": [
+        "qC",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "qC",
+        "Pitch"
+      ],
+      "to": [
+        "padA",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "qC",
+        "Pitch"
+      ],
+      "to": [
+        "padB",
+        "1V/octave pitch"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "oct",
+      "name": "Shift",
+      "display_max": -1
+    },
+    {
+      "module": "padB",
+      "name": "Frequency",
+      "display_min": 300
+    }
+  ],
+  "probes": [
+    {
+      "module": "qB",
+      "output": "Pitch",
+      "ask": "Бас стоит на одной ноте. Идёт ли Clocked (прочитай Master clock, прежде чем нажимать Run) и стоят ли у шагов CV 1 басового SEQ 3 разные напряжения?",
+      "samples": 60,
+      "interval_ms": 47,
+      "expect": {
+        "range_gt": 0.3
+      }
+    },
+    {
+      "module": "qC",
+      "output": "Pitch",
+      "ask": "Аккорд не меняется. Приходит ли Step 1 басового SEQ 3 на Clock аккордового и стоят ли у его шагов CV 1 разные напряжения (Steps не меньше 2)?",
+      "samples": 85,
+      "interval_ms": 47,
+      "expect": {
+        "range_gt": 0.3
+      }
+    }
+  ],
+  "reference": {
+    "params": [
+      {
+        "module": "clk",
+        "name": "Master clock",
+        "value": 300
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 1",
+        "value": 0
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 2",
+        "value": 0.25
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 3",
+        "value": 0.5
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 4",
+        "value": 0.25
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 5",
+        "value": 0
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 6",
+        "value": 0.5
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 7",
+        "value": 0.25
+      },
+      {
+        "module": "bassSeq",
+        "name": "CV 1 step 8",
+        "value": 0.0833
+      },
+      {
+        "module": "chordSeq",
+        "name": "CV 1 step 1",
+        "value": 0.75
+      },
+      {
+        "module": "chordSeq",
+        "name": "CV 1 step 2",
+        "value": 0.4167
+      },
+      {
+        "module": "chordSeq",
+        "name": "CV 1 step 3",
+        "value": 0
+      },
+      {
+        "module": "chordSeq",
+        "name": "CV 1 step 4",
+        "value": 0.5833
+      },
+      {
+        "module": "chordSeq",
+        "name": "Steps",
+        "value": 4
+      }
+    ],
+    "break": 6
+  },
+  "hints": {
+    "cable:1": "Басовая линия не привязана к мастер-такту. Какой выход Clocked ведёт в вход Clock у басового SEQ 3?",
+    "cable:2": "Басовый секвенсор не слышит общий сброс. Куда идёт Reset у Clocked?",
+    "cable:3": "Басовая мелодия не проходит через квантизатор. Какой выход SEQ 3 несёт высоту и в какой вход Quantizer он идёт?",
+    "cable:4": "Бас берёт ноту не из квантизатора. Pitch у Quantizer идёт в вход Octave.",
+    "cable:5": "Бас не получает нижнюю октаву. Куда идёт Pitch у Octave?",
+    "cable:6": "Аккорды не привязаны к такту баса. Какой выход басового SEQ 3 поднимается раз в бар и в какой вход аккордового SEQ 3 он идёт?",
+    "cable:7": "Аккордовый секвенсор не слышит общий сброс: после остановки он встанет не на первый аккорд. Куда идёт Reset у Clocked?",
+    "cable:8": "Корни аккордов не проходят через квантизатор. CV 1 аккордового SEQ 3 идёт в вход Quantizer.",
+    "cable:9": "Первый голос аккорда не слышит квантизатор. Pitch у Quantizer идёт в вход 1V/octave pitch первого пэд-VCO.",
+    "cable:10": "Второй голос аккорда не слышит квантизатор: тогда он уйдёт из тональности. Подай тот же Pitch.",
+    "param:1": "Бас должен быть минимум на октаву ниже аккорда: Shift у Octave не выше −1.",
+    "param:2": "Второй голос аккорда должен стоять выше первого хотя бы на малую терцию: Frequency не ниже 300 Гц при первом на 261,63.",
+    "probe:1": "Нота на выходе басового Quantizer не меняется. Разные ли напряжения на ручках CV 1 step и идёт ли такт?",
+    "probe:2": "Корень аккорда не меняется. Приходит ли такт на аккордовый SEQ 3 и стоят ли на его шагах разные CV 1?"
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "lesson": "p9-05-mix-record",
+  "modules": [
+    {
+      "ref": "master",
+      "plugin": "Fundamental",
+      "slug": "VCMixer"
+    },
+    {
+      "ref": "plate",
+      "plugin": "Valley",
+      "slug": "Plateau"
+    },
+    {
+      "ref": "mixL",
+      "plugin": "Fundamental",
+      "slug": "Mixer"
+    },
+    {
+      "ref": "mixR",
+      "plugin": "Fundamental",
+      "slug": "Mixer"
+    },
+    {
+      "ref": "rec",
+      "plugin": "VCV-Recorder",
+      "slug": "Recorder"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "master",
+        "Mix"
+      ],
+      "to": [
+        "mixL",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "master",
+        "Mix"
+      ],
+      "to": [
+        "mixR",
+        "Channel 1"
+      ]
+    },
+    {
+      "from": [
+        "master",
+        "Channel 3"
+      ],
+      "to": [
+        "plate",
+        "Left"
+      ]
+    },
+    {
+      "from": [
+        "plate",
+        "Left"
+      ],
+      "to": [
+        "mixL",
+        "Channel 2"
+      ]
+    },
+    {
+      "from": [
+        "plate",
+        "Right"
+      ],
+      "to": [
+        "mixR",
+        "Channel 2"
+      ]
+    },
+    {
+      "from": [
+        "mixL",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "mixR",
+        "Mix"
+      ],
+      "to": [
+        "out",
+        "To \"device output 2\""
+      ]
+    },
+    {
+      "from": [
+        "mixL",
+        "Mix"
+      ],
+      "to": [
+        "rec",
+        "Left/mono"
+      ]
+    },
+    {
+      "from": [
+        "mixR",
+        "Mix"
+      ],
+      "to": [
+        "rec",
+        "Right"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "master",
+      "name": "Mix level",
+      "display_max": 0
+    },
+    {
+      "module": "plate",
+      "name": "Dry level",
+      "display_max": 5
+    },
+    {
+      "module": "plate",
+      "name": "Wet level",
+      "display_min": 95
+    }
+  ],
+  "probes": [
+    {
+      "module": "mixL",
+      "output": "Mix",
+      "ask": "На левой шине нет сигнала: записывать нечего. Звучат ли партии мастер-микшера?",
+      "samples": 30,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "reference": {
+    "helpers": [
+      {
+        "ref": "vcoA",
+        "plugin": "Fundamental",
+        "slug": "VCO"
+      },
+      {
+        "ref": "vcoB",
+        "plugin": "Fundamental",
+        "slug": "VCO"
+      }
+    ],
+    "cables": [
+      {
+        "from": [
+          "vcoA",
+          "Sawtooth"
+        ],
+        "to": [
+          "master",
+          "Channel 1"
+        ]
+      },
+      {
+        "from": [
+          "vcoB",
+          "Sawtooth"
+        ],
+        "to": [
+          "master",
+          "Channel 3"
+        ]
+      }
+    ],
+    "break": 8
+  },
+  "hints": {
+    "cable:1": "Левая шина не получает сухой сигнал. Выход Mix мастер-микшера идёт в Channel 1 левого Mix.",
+    "cable:2": "Правая шина не получает сухой сигнал. Тот же Mix мастер-микшера идёт в Channel 1 правого Mix.",
+    "cable:3": "Реверберации нечего обрабатывать. Какой выход VCMixer отдаёт партию после её ручки уровня и в какой вход Plateau он идёт?",
+    "cable:4": "Левый выход реверберации не вернулся в левую шину. Куда идёт Left у Plateau?",
+    "cable:5": "Правый выход реверберации не вернулся в правую шину. Куда идёт Right у Plateau?",
+    "cable:6": "Ты ничего не слышишь слева. Куда идёт выход Mix левой шины?",
+    "cable:7": "Ты ничего не слышишь справа. Куда идёт выход Mix правой шины?",
+    "cable:8": "Recorder не получает левый канал и запишет тишину. Какой выход ведёт в Left/mono?",
+    "cable:9": "Recorder не получает правый канал, и файл будет моно. Какой выход ведёт в Right?",
+    "param:1": "Mix level выше 0 dB: на запись пойдёт горячий сигнал. Верни не выше 0 dB.",
+    "param:2": "Dry level у Plateau выше 5 %: сухой звук пойдёт в сумму дважды. Для возврата нужен только эффект.",
+    "param:3": "Wet level у Plateau ниже 95 %: при возврате по схеме посыла на нём должно быть почти 100 %.",
+    "probe:1": "На шине нет сигнала. Пусть звучат партии: кабели в каналах VCMixer и уровни не на минус бесконечности."
+  }
+}
