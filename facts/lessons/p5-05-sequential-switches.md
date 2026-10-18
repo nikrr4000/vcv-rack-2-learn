@@ -61,7 +61,7 @@ check: "checks/p5-05-sequential-switches.json"
 2. Clocked `Master clock` → Switch `Main`.
 3. Switch `Channel 1` → Scope `Ch 1`; Switch `Channel 2` → Scope `Ch 2`.
 
-Параметры: Clocked Master clock 120, Run 1 (raw), Clk 1 ratio raw 1; Switch Steps = 4 (показание 4). Агент читает Switch через `vcvrack_get_module`: импульсы появляются по очереди только на одном из каналов; ученик говорит, на каком канале импульсы сейчас, и сверяет с Scope. Затем Steps = 2: импульсы только в Channel 1 и Channel 2 по кругу.
+Параметры: Clocked Master clock 120, Run не трогать (новый Clocked уже идёт), Clk 1 ratio raw 1; Switch Steps = 4 (показание 4). Агент читает Switch через `vcvrack_get_module`: импульсы появляются по очереди только на одном из каналов; ученик говорит, на каком канале импульсы сейчас, и сверяет с Scope. Затем Steps = 2: импульсы только в Channel 1 и Channel 2 по кругу.
 
 Часть 2, сбор (4→1) и «замороженная случайность»:
 
@@ -83,7 +83,7 @@ check: "checks/p5-05-sequential-switches.json"
 | Модуль | Параметр | Цель |
 | --- | --- | --- |
 | Clocked | Master clock | 120 |
-| Clocked | Run | 1 (raw) |
+| Clocked | Run | не трогать: новый Clocked уже идёт, кнопка переключает ход |
 | Clocked | Clk 1 ratio | raw 1 |
 | Random Values | Push | 1, затем 0 (получить четыре значения) |
 | Sequential Switch 4 to 1 | Steps | 4 |
@@ -105,7 +105,7 @@ check: "checks/p5-05-sequential-switches.json"
 
 ## Проверка
 
-Файл `checks/p5-05-sequential-switches.json`. Что проверяет: семь кабелей (Clocked `Clock 1` → `Clock`; Random Values `Random 1`…`Random 4` → `Channel 1`…`Channel 4`; `Main` → VCO `1V/octave pitch`; VCO `Triangle` → `To "device output 1"`); Steps равен 4; на `Main` напряжение меняется не менее чем на 0,2 В за полторы секунды (значит, Run включён и у Random Values есть разные значения). Если у ученика уже был Clocked, проверка найдёт любой.
+Файл `checks/p5-05-sequential-switches.json`. Что проверяет: семь кабелей (Clocked `Clock 1` → `Clock`; Random Values `Random 1`…`Random 4` → `Channel 1`…`Channel 4`; `Main` → VCO `1V/octave pitch`; VCO `Triangle` → `To "device output 1"`); Steps равен 4; на `Main` напряжение меняется не менее чем на 0,2 В за полторы секунды (значит, Clocked идёт и у Random Values есть разные значения). Если у ученика уже был Clocked, проверка найдёт любой.
 
 Лесенка подсказок (вопрос, место, ответ):
 
@@ -114,7 +114,7 @@ check: "checks/p5-05-sequential-switches.json"
 - Кабель 6: «Куда уходит результат?» → «Main» → «Main в 1V/octave pitch у VCO».
 - Кабель 7: «Куда звук?» → «VCO в Audio» → «Triangle в первый выход Audio».
 - Steps не 4: «Сколько каналов в цикле?» → «Ручка Steps» → «поставь 4».
-- `Main` стоит: «Идёт ли такт и разные ли значения?» → «Run у Clocked и Push у Random Values» → «включи Run, нажми Push».
+- `Main` стоит: «Идёт ли такт и разные ли значения?» → «Clocked и Push у Random Values» → «Run переключает ход, нажатие на идущем останавливает; нажми Push».
 
 ## Слом
 

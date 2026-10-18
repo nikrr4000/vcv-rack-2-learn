@@ -99,13 +99,6 @@
         ]
       }
     ],
-    "params": [
-      {
-        "module": "clock",
-        "name": "Run",
-        "value": 1
-      }
-    ],
     "break": 2
   },
   "hints": {

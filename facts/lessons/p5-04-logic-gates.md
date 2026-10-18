@@ -89,7 +89,7 @@ NOT переворачивает: 0 станет 1, 1 станет 0. NOR, NAND 
 | Модуль | Параметр | Цель |
 | --- | --- | --- |
 | Clocked | Master clock | 120 |
-| Clocked | Run | 1 (raw) |
+| Clocked | Run | не трогать: новый Clocked уже идёт, кнопка переключает ход |
 | Clocked | Clk 1 ratio | raw 1 (прочитать показание на панели) |
 | Clocked | Clk 2 ratio | raw 2 (прочитать показание на панели) |
 | Gates | Gate length | 100 |
@@ -113,7 +113,7 @@ NOT переворачивает: 0 станет 1, 1 станет 0. NOR, NAND 
 
 ## Проверка
 
-Файл `checks/p5-04-logic-gates.json`. Что проверяет: семь кабелей (Clocked `Clock 1` → Logic `A`; `Clock 2` → `B`; Logic `XOR` → Gates `Gate`; Gates `Gate` → ADSR `Gate`; ADSR `Envelope` → VCA `CV`; VCO `Sawtooth` → VCA `Channel`; VCA `Channel` → `To "device output 1"`); Gate length не больше 500 мс; на `Envelope` напряжение выше 1 В за полторы секунды (значит, Run включён и коэффициенты разные). Если у ученика уже был Clocked, проверка найдёт любой.
+Файл `checks/p5-04-logic-gates.json`. Что проверяет: семь кабелей (Clocked `Clock 1` → Logic `A`; `Clock 2` → `B`; Logic `XOR` → Gates `Gate`; Gates `Gate` → ADSR `Gate`; ADSR `Envelope` → VCA `CV`; VCO `Sawtooth` → VCA `Channel`; VCA `Channel` → `To "device output 1"`); Gate length не больше 500 мс; на `Envelope` напряжение выше 1 В за полторы секунды (значит, Clocked идёт и коэффициенты разные). Если у ученика уже был Clocked, проверка найдёт любой.
 
 Лесенка подсказок (вопрос, место, ответ):
 
@@ -122,7 +122,7 @@ NOT переворачивает: 0 станет 1, 1 станет 0. NOR, NAND 
 - Кабель 4: «Как сделать из ритма гейт для огибающей?» → «Выход Gate у Gates» → «Gate в Gate у ADSR».
 - Кабели 5–7: как в 3.5 (огибающая в CV, пила в Channel, звук в Audio).
 - Gate length больше 500: «Ноты сливаются?» → «Ручка Gate length» → «не больше 500 мс».
-- `Envelope` стоит: «Одинаковые ли деления?» → «Clk 1 ratio и Clk 2 ratio» → «поставь разные; не забудь Run».
+- `Envelope` стоит: «Одинаковые ли деления?» → «Clk 1 ratio и Clk 2 ratio» → «поставь разные; убедись, что Clocked идёт (Run переключает ход, нажатие на идущем останавливает)».
 
 ## Слом
 

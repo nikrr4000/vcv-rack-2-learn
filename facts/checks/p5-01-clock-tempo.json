@@ -88,13 +88,6 @@
     "probe:1": "Такта нет: на выходе Master clock 0 В. Включена ли кнопка Run у Clocked? Без Run весь такт стоит."
   },
   "reference": {
-    "params": [
-      {
-        "module": "clk",
-        "name": "Run",
-        "value": 1
-      }
-    ],
     "break": 1
   }
 }

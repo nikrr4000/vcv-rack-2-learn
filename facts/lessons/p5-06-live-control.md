@@ -70,10 +70,9 @@ check: "checks/p5-06-live-control.json"
 | Модуль | Параметр | Цель |
 | --- | --- | --- |
 | Clocked | Master clock | 120 |
-| Clocked | Run | 1 (raw) |
-| SEQ 3 | Run | 1 (raw) |
+| Clocked | Run | не трогать: новый Clocked и новый SEQ 3 уже идут, кнопка Run переключает ход (нажатие на идущем останавливает) |
 | SEQ 3 | Steps | 8 |
-| SEQ 3 | CV 1 step 1 … step 8 | 0, 0.17, 0.33, 0.58, 0.75, 0.58, 0.33, 0.17 |
+| SEQ 3 | CV 1 step 1 … step 8 | 0, 1, 2, 3, 1, 2, 0, 3 (raw = вольты) |
 | SEQ 3 | Step 1…8 trigger | 1, 1, 1, 0, 1, 1, 1, 0 |
 | ADSR | Attack / Decay / Sustain / Release | 5 / 300 / 40 / 400 |
 | VCO | Frequency | 130.81 |
@@ -103,7 +102,7 @@ check: "checks/p5-06-live-control.json"
 
 ## Проверка
 
-Файл `checks/p5-06-live-control.json`. Что проверяет: девять кабелей (Clocked `Clock 1` → SEQ 3 `Clock`; SEQ 3 `CV 1` → VCO `1V/octave pitch`; SEQ 3 `Trigger` → Mutes `Row 1`; Mutes `Row 1` → ADSR `Gate`; ADSR `Envelope` → VCA `CV`; VCO `Sawtooth` → VCA `Channel`; VCA `Channel` → `To "device output 1"`; Pulses `Row 1 trigger` → SEQ 3 `Reset`; Push `Trigger` → Clocked `Reset`); на `Envelope` напряжение выше 1 В за полторы секунды (значит, строка не заглушена, Run включён и триггеры идут). Если у ученика уже был Clocked, проверка найдёт любой.
+Файл `checks/p5-06-live-control.json`. Что проверяет: девять кабелей (Clocked `Clock 1` → SEQ 3 `Clock`; SEQ 3 `CV 1` → VCO `1V/octave pitch`; SEQ 3 `Trigger` → Mutes `Row 1`; Mutes `Row 1` → ADSR `Gate`; ADSR `Envelope` → VCA `CV`; VCO `Sawtooth` → VCA `Channel`; VCA `Channel` → `To "device output 1"`; Pulses `Row 1 trigger` → SEQ 3 `Reset`; Push `Trigger` → Clocked `Reset`); на `Envelope` напряжение выше 1 В за полторы секунды (значит, строка не заглушена, секвенсор и Clocked идут, триггеры доходят; `Trigger` не проверяется напрямую: это импульс в 1 мс). Если у ученика уже был Clocked, проверка найдёт любой.
 
 Лесенка подсказок (вопрос, место, ответ):
 
@@ -113,7 +112,7 @@ check: "checks/p5-06-live-control.json"
 - Кабель 4: «Куда идёт ритм после мьюта?» → «Row 1 справа у Mutes» → «в Gate у ADSR».
 - Кабель 8: «Чем вернуть мелодию на начало?» → «Row 1 trigger у Pulses» → «в Reset у SEQ 3».
 - Кабель 9: «Чем перезапустить такт?» → «Trigger у Push» → «в Reset у Clocked».
-- `Envelope` стоит: «Не заглушена ли строка?» → «Кнопка Row 1 mute» → «выключи мьют, включи Run у Clocked и SEQ 3».
+- `Envelope` стоит: «Не заглушена ли строка?» → «Кнопка Row 1 mute» → «выключи мьют; Run переключает ход, нажатие на идущем останавливает, поэтому сначала прочитай выходы».
 
 ## Слом
 

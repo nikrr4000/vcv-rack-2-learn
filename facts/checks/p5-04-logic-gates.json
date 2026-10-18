@@ -120,7 +120,7 @@
     {
       "module": "env",
       "output": "Envelope",
-      "ask": "Включи Run у Clocked и выставь у Clk 1 ratio и Clk 2 ratio разные значения: при одинаковых делениях XOR молчит. Затем нажми «Проверить» ещё раз.",
+      "ask": "Выставь у Clk 1 ratio и Clk 2 ratio разные значения: при одинаковых делениях XOR молчит. Убедись, что Clocked идёт, затем нажми «Проверить» ещё раз.",
       "samples": 30,
       "interval_ms": 50,
       "expect": {
@@ -137,19 +137,34 @@
     "cable:6": "Пила не идёт в усилитель. Подай Sawtooth в Channel у VCA.",
     "cable:7": "Голос собран, а тишина. Откуда звук выходит из VCA и куда он должен прийти?",
     "param:1": "Гейт слишком длинный: ритм сливается в сплошной звук. Поставь Gate length не больше 500 мс.",
-    "probe:1": "Огибающая не оживает. Идёт ли такт (Run у Clocked)? Одинаковые деления Clk 1 ratio и Clk 2 ratio дают XOR = 0: поставь разные."
+    "probe:1": "Огибающая не оживает. Идёт ли такт у Clocked? Одинаковые деления Clk 1 ratio и Clk 2 ratio дают XOR = 0: поставь разные."
   },
   "reference": {
     "params": [
       {
         "module": "clk",
-        "name": "Run",
-        "value": 1
-      },
-      {
-        "module": "clk",
         "name": "Clk 2 ratio",
         "value": 2
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0.05
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.6
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.6
       }
     ],
     "break": 3

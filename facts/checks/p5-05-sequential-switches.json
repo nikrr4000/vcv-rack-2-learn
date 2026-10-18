@@ -112,7 +112,7 @@
     {
       "module": "sw",
       "output": "Main",
-      "ask": "Включи Run у Clocked, нажми Push у Random Values (чтобы получить значения) и нажми «Проверить» ещё раз.",
+      "ask": "Убедись, что Clocked идёт, и нажми Push у Random Values (чтобы значения стали разными); затем нажми «Проверить» ещё раз.",
       "samples": 30,
       "interval_ms": 50,
       "expect": {
@@ -129,19 +129,20 @@
     "cable:6": "Мелодия не доходит до высоты. Подай Main в 1V/octave pitch у VCO.",
     "cable:7": "Тишина. Подай выход VCO в первый выход Audio.",
     "param:1": "Мелодия из четырёх источников: Steps должен стоять на 4. Сколько сейчас?",
-    "probe:1": "Main стоит на месте. Идёт ли такт (Run у Clocked)? Нажимал ли ты Push у Random Values, чтобы четыре значения стали разными?"
+    "probe:1": "Main стоит на месте. Идёт ли такт у Clocked? Нажимал ли ты Push у Random Values, чтобы четыре значения стали разными?"
   },
   "reference": {
-    "params": [
+    "helpers": [],
+    "cables": [
       {
-        "module": "clk",
-        "name": "Run",
-        "value": 1
-      },
-      {
-        "module": "rv",
-        "name": "Push",
-        "value": 1
+        "from": [
+          "clk",
+          "Clock 1"
+        ],
+        "to": [
+          "rv",
+          "Trigger"
+        ]
       }
     ],
     "break": 1

@@ -143,7 +143,7 @@
     {
       "module": "env",
       "output": "Envelope",
-      "ask": "Огибающая стоит. Выключена ли кнопка Row 1 mute у Mutes (заглушенная строка не пропускает гейт)? Идёт ли такт и Run у SEQ 3?",
+      "ask": "Огибающая стоит. Выключена ли кнопка Row 1 mute у Mutes (заглушенная строка не пропускает гейт)? Идут ли Clocked и SEQ 3?",
       "samples": 30,
       "interval_ms": 50,
       "expect": {
@@ -161,7 +161,7 @@
     "cable:7": "Голос собран, а тишина. Откуда звук выходит из VCA и куда он должен прийти?",
     "cable:8": "Нет кнопки «вернуться на первый шаг». Подай Row 1 trigger у Pulses в Reset у SEQ 3.",
     "cable:9": "Нет кнопки «сброс такта». Подай Trigger у Push в Reset у Clocked.",
-    "probe:1": "Ритма нет. Строка Row 1 у Mutes не должна быть заглушена на момент проверки, Run у Clocked и у SEQ 3 включены."
+    "probe:1": "Ритма нет. Строка Row 1 у Mutes не должна быть заглушена на момент проверки, Clocked и SEQ 3 должны идти."
   },
   "reference": {
     "params": [
@@ -173,87 +173,137 @@
       {
         "module": "seq",
         "name": "CV 1 step 2",
-        "value": 0.25
+        "value": 1
       },
       {
         "module": "seq",
         "name": "CV 1 step 3",
-        "value": 0.5
+        "value": 2
       },
       {
         "module": "seq",
         "name": "CV 1 step 4",
-        "value": 0.333
+        "value": 3
       },
       {
         "module": "seq",
         "name": "CV 1 step 5",
-        "value": 0.667
+        "value": 1
       },
       {
         "module": "seq",
         "name": "CV 1 step 6",
-        "value": 0.417
+        "value": 2
       },
       {
         "module": "seq",
         "name": "CV 1 step 7",
-        "value": 0.75
+        "value": 0
       },
       {
         "module": "seq",
         "name": "CV 1 step 8",
-        "value": 0.5
+        "value": 3
+      },
+      {
+        "module": "env",
+        "name": "Attack",
+        "value": 0.05
+      },
+      {
+        "module": "env",
+        "name": "Decay",
+        "value": 0.6
+      },
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      },
+      {
+        "module": "env",
+        "name": "Release",
+        "value": 0.6
       },
       {
         "module": "seq",
         "name": "Step 1 trigger",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       },
       {
         "module": "seq",
         "name": "Step 2 trigger",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       },
       {
         "module": "seq",
         "name": "Step 3 trigger",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       },
       {
         "module": "seq",
         "name": "Step 4 trigger",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       },
       {
         "module": "seq",
         "name": "Step 5 trigger",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       },
       {
         "module": "seq",
         "name": "Step 6 trigger",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       },
       {
         "module": "seq",
         "name": "Step 7 trigger",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       },
       {
         "module": "seq",
         "name": "Step 8 trigger",
-        "value": 1
-      },
-      {
-        "module": "seq",
-        "name": "Run",
-        "value": 1
-      },
-      {
-        "module": "clk",
-        "name": "Run",
-        "value": 1
+        "values": [
+          1,
+          0,
+          1,
+          0
+        ]
       }
     ],
     "break": 3

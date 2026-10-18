@@ -73,7 +73,7 @@ check: "checks/p7-01-delay.json"
 
 | Модуль | Параметр | Цель |
 | --- | --- | --- |
-| Clocked | Run | 1 (raw), Master clock 120 BPM по умолчанию |
+| Clocked | Run | не трогать: новый Clocked уже идёт (Run переключает ход), Master clock 120 BPM по умолчанию |
 | ADSR | Attack | 5 |
 | ADSR | Decay | 150 |
 | ADSR | Sustain | 0 |
