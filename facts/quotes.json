@@ -1,0 +1,284 @@
+[
+  {
+    "source": "vcv-manual-installing",
+    "text": "Plugins are typically installed via the VCV Library.",
+    "url": "https://vcvrack.com/manual/Installing",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-manual-getting-started",
+    "text": "The VCV Audio module is the portal between the virtual and physical world.",
+    "url": "https://vcvrack.com/manual/GettingStarted",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-manual-menu-bar",
+    "text": "Engine CPU usage is almost exactly proportional to its sample rate.",
+    "url": "https://vcvrack.com/manual/MenuBar",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-manual-keys",
+    "text": "Launch the Module Browser to add modules to the rack.",
+    "url": "https://vcvrack.com/manual/KeyCommands",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-manual-core",
+    "text": "V/OCT generates a 1V/oct pitch signal of the last held MIDI note.",
+    "url": "https://vcvrack.com/manual/Core",
+    "check": "pre-verified"
+  },
+  {
+    "source": "vcv-manual-polyphony",
+    "text": "Zero-channel cables are also possible, which make modules think the cable is unpatched.",
+    "url": "https://vcvrack.com/manual/Polyphony",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-voltage-standards",
+    "text": "Gates should produce 10 V when active.",
+    "url": "https://vcvrack.com/manual/VoltageStandards",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-free-manual",
+    "text": "A voltage controlled filter removes a range of frequencies from an audio signal.",
+    "url": "https://vcvrack.com/Free",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-recorder",
+    "text": "Click the record button to begin recording.",
+    "url": "https://vcvrack.com/Recorder",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-01",
+    "text": "you attenuate or remove harmonics from harmonically rich waveforms",
+    "url": "https://www.soundonsound.com/techniques/whats-sound",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-06",
+    "text": "the filter begins to oscillate at its cutoff frequency",
+    "url": "https://www.soundonsound.com/techniques/responses-resonance",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-07",
+    "text": "Gate remains 'Open' for the whole time that you depress the key",
+    "url": "https://www.soundonsound.com/techniques/envelopes-gates-triggers",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-09",
+    "text": "Whenever you have more than one amplifier and/or attenuator in series",
+    "url": "https://www.soundonsound.com/techniques/introduction-vcas",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-10",
+    "text": "the magic ingredient that makes all the other elements sound interesting",
+    "url": "https://www.soundonsound.com/techniques/modulation",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-12",
+    "text": "Frequency Modulation is a powerful method of synthesis",
+    "url": "https://www.soundonsound.com/techniques/introduction-frequency-modulation",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-33",
+    "text": "the pitch of a typical kick drum can shift by a couple of semitones",
+    "url": "https://www.soundonsound.com/techniques/synthesizing-drums-bass-drum",
+    "check": "pre-verified"
+  },
+  {
+    "source": "sos-34",
+    "text": "the pitch of the drum always swoops down",
+    "url": "https://www.soundonsound.com/techniques/practical-bass-drum-synthesis",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-35",
+    "text": "the harder you strike a snare drum, the louder it becomes",
+    "url": "https://www.soundonsound.com/techniques/synthesizing-drums-snare-drum",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-36",
+    "text": "a snare drum should never sustain",
+    "url": "https://www.soundonsound.com/techniques/practical-snare-drum-synthesis",
+    "check": "pre-verified"
+  },
+  {
+    "source": "sos-37",
+    "text": "a cymbal's vibrations become chaotic",
+    "url": "https://www.soundonsound.com/techniques/analysing-metallic-percussion",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-39",
+    "text": "six square-wave oscillators tuned enharmonically",
+    "url": "https://www.soundonsound.com/techniques/practical-cymbal-synthesis",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-strings",
+    "text": "Every note you hear is simply four detuned and modulated oscillators",
+    "url": "https://www.soundonsound.com/techniques/synthesizing-strings-pwm-string-sounds",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "lm-basic-concepts",
+    "text": "Demystifying the terminology commonly used in synthesizers.",
+    "url": "https://courses.learningmodular.com/courses/basic-concepts",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "lm-glossary",
+    "text": "CV is the most common shorthand to refer to control voltage",
+    "url": "https://learningmodular.com/glossary/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "lm-first-voice",
+    "text": "If you're a beginner, here is your first step on the ladder",
+    "url": "https://learningmodular.com/patching-a-typical-subtractive-synthesis-voice/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "doepfer-tech",
+    "text": "Only rectangle shaped waveforms should be used as Trigger , Gate or Clock sources",
+    "url": "https://doepfer.de/a100_man/a100t_e.htm",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "doepfer-a100",
+    "text": "A modular is an open system, in which practically anything is possible",
+    "url": "https://doepfer.de/a100e.htm",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "mi-clouds",
+    "text": "Clouds is a granular audio processor.",
+    "url": "https://pichenettes.github.io/mutable-instruments-documentation/modules/clouds/manual/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "vcv-forum-song",
+    "text": "There are ways to trigger things when the time is right",
+    "url": "https://community.vcvrack.com/t/creating-song-with-multiple-sequencers/18708",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "kane-musichackspace",
+    "text": "Patch a modular synth in the free VCV Rack 2 software",
+    "url": "https://musichackspace.org/courses/getting-started-with-vcv-rack-2",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "impromptu-clocked",
+    "text": "The clock can also be synchronized to an external clock source.",
+    "url": "https://marcboule.github.io/ImpromptuModular/#clocked",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "valley-plateau",
+    "text": "Sets the overall delay time and apparent 'size' of the reverb.",
+    "url": "https://valleyaudio.github.io/rack/plateau/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "zwook-geogenik",
+    "text": "VCV Rack состоит из модулей, которые нужно собирать по отдельности",
+    "url": "https://zwook.ru/material/vcv-rack-nachalo",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "samesound-first-patch",
+    "text": "Вуаля, всё запищит.",
+    "url": "https://samesound.ru/soft/145529-vvedenie-v-modulnye-sintezatory-sozdayom-pervyj-patch-v-vcv-rack",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "ne-clap",
+    "text": "Reverb is always fun on claps",
+    "url": "https://noiseengineering.us/blogs/loquelic-literitas-the-blog/percussion-synthesis-part-3-the-sound-of-one-synth-clapping/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "ne-hats",
+    "text": "we'll throw tuning and harmonic relationships to the wind",
+    "url": "https://noiseengineering.us/blogs/loquelic-literitas-the-blog/creating-fm-hats/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "ne-acid-repetitor",
+    "text": "each time Out 3 goes high, our voice will have a brighter timbre.",
+    "url": "https://noiseengineering.us/blogs/loquelic-literitas-the-blog/gamut-repetitor-acid-basslines/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sq-arp",
+    "text": "Notes are played when the clock is high",
+    "url": "https://github.com/squinkylabs/SqHarmony/blob/main/docs/arpeggiator.md",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "ne-clocks",
+    "text": "Reset signals tell sequencers when to start over.",
+    "url": "https://noiseengineering.us/blogs/loquelic-literitas-the-blog/getting-started-clocks/",
+    "check": "pre-verified"
+  },
+  {
+    "source": "ne-quantizers",
+    "text": "they're easier to use than they are to explain.",
+    "url": "https://noiseengineering.us/blogs/loquelic-literitas-the-blog/getting-started-quantizers/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "ne-seq-switches",
+    "text": "Sequential switches are a utility that was originally designed to extend 8-step sequencers",
+    "url": "https://noiseengineering.us/blogs/loquelic-literitas-the-blog/getting-started-sequential-switches/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "ne-mixers",
+    "text": "The simplest mixers have a number of inputs, and an output.",
+    "url": "https://noiseengineering.us/blogs/loquelic-literitas-the-blog/getting-started-mixers/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "dewald-gain",
+    "text": "Set your modular outputs as hot as you can.",
+    "url": "https://gahlorddewald.com/gain-staging-modular.html",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "sos-gigging",
+    "text": "more notes and ideas do not necessarily make for better music",
+    "url": "https://www.soundonsound.com/techniques/sos-guide-gigging-modular-synths",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "cdm-jw-arrange",
+    "text": "Starting is easy; finishing is hard.",
+    "url": "https://cdm.link/new-vcv-rack-modules-jw-arrange/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "cdm-multitrack",
+    "text": "The multitrack is the one I use the most.",
+    "url": "https://cdm.link/how-to-make-a-multitrack-recording-in-vcv-rack-modular-free/",
+    "check": "webfetch verbatim match"
+  },
+  {
+    "source": "loopop-sh-switch",
+    "text": "freeze randomness once a compelling pattern is presented",
+    "url": "https://loopopmusic.com/modular-analog-ram-how-to-store-generative-melodies-rhythms-using-sample-hold-and-a-sequential-switch",
+    "check": "webfetch verbatim match"
+  }
+]

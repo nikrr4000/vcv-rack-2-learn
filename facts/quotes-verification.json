@@ -1,0 +1,387 @@
+[
+  {
+    "source": "vcv-manual-installing",
+    "quote": "Plugins are typically installed via the VCV Library.",
+    "outcome": "VERIFIED",
+    "sentence": "Plugins are typically installed via the VCV Library.",
+    "note": ""
+  },
+  {
+    "source": "vcv-manual-getting-started",
+    "quote": "The VCV Audio module is the portal between the virtual and physical world.",
+    "outcome": "VERIFIED",
+    "sentence": "The VCV Audio module is the portal between the virtual and physical world.",
+    "note": ""
+  },
+  {
+    "source": "vcv-manual-menu-bar",
+    "quote": "Engine CPU usage is almost exactly proportional to its sample rate.",
+    "outcome": "VERIFIED",
+    "sentence": "Engine CPU usage is almost exactly proportional to its sample rate.",
+    "note": ""
+  },
+  {
+    "source": "vcv-manual-keys",
+    "quote": "Launch the Module Browser to add modules to the rack.",
+    "outcome": "VERIFIED",
+    "sentence": "Enter or right-click on rack: Launch the Module Browser to add modules to the rack.",
+    "note": "Quote is the description part of a key-command table entry"
+  },
+  {
+    "source": "vcv-manual-core",
+    "quote": "V/OCT generates a 1V/oct pitch signal of the last held MIDI note.",
+    "outcome": "PRE-VERIFIED",
+    "sentence": null,
+    "note": "accepted as given, not re-fetched"
+  },
+  {
+    "source": "vcv-manual-polyphony",
+    "quote": "Zero-channel cables are also possible, which make modules think the cable is unpatched.",
+    "outcome": "VERIFIED",
+    "sentence": "Zero-channel cables are also possible, which make modules think the cable is unpatched.",
+    "note": ""
+  },
+  {
+    "source": "vcv-voltage-standards",
+    "quote": "Gates should produce 10 V when active.",
+    "outcome": "VERIFIED",
+    "sentence": "Gates should produce **10 V** when active.",
+    "note": "Only difference: markdown bold markup around 10 V from page conversion"
+  },
+  {
+    "source": "vcv-free-manual",
+    "quote": "A voltage controlled filter removes a range of frequencies from an audio signal.",
+    "outcome": "VERIFIED",
+    "sentence": "A voltage controlled filter removes a range of frequencies from an audio signal",
+    "note": "Sentence continues (141 chars total); excerpt returned on second targeted fetch; italics markup omitted by tool"
+  },
+  {
+    "source": "vcv-recorder",
+    "quote": "Click the record button to begin recording.",
+    "outcome": "VERIFIED",
+    "sentence": "Click the record button to begin recording.",
+    "note": ""
+  },
+  {
+    "source": "sos-01",
+    "quote": "you attenuate or remove harmonics from harmonically rich waveforms",
+    "outcome": "VERIFIED",
+    "sentence": "you attenuate or remove harmonics from harmonically rich waveforms",
+    "note": "Short span returned on second targeted fetch (first fetch truncated)"
+  },
+  {
+    "source": "sos-06",
+    "quote": "the filter begins to oscillate at its cutoff frequency",
+    "outcome": "VERIFIED",
+    "sentence": "the filter begins to oscillate at its cutoff frequency.",
+    "note": "Clause of longer sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "sos-07",
+    "quote": "Gate remains 'Open' for the whole time that you depress the key",
+    "outcome": "VERIFIED",
+    "sentence": "However (and unlike the Trigger) the Gate remains 'Open' for the whole time that you depress the key.",
+    "note": ""
+  },
+  {
+    "source": "sos-09",
+    "quote": "Whenever you have more than one amplifier and/or attenuator in series",
+    "outcome": "VERIFIED",
+    "sentence": "Whenever you have more than one amplifier and/or attenuator in series, you can calculate the Gain of the whole system",
+    "note": "Opening of longer sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "sos-10",
+    "quote": "the magic ingredient that makes all the other elements sound interesting",
+    "outcome": "VERIFIED",
+    "sentence": "Gordon Reid considers the magic ingredient that makes all the other elements sound interesting",
+    "note": "Tail of sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "sos-12",
+    "quote": "Frequency Modulation is a powerful method of synthesis",
+    "outcome": "VERIFIED",
+    "sentence": "Frequency Modulation is a powerful method of synthesis that is as relevant to analogue synthesizers as it is to digital ones,",
+    "note": "Opening of longer sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "sos-33",
+    "quote": "the pitch of a typical kick drum can shift by a couple of semitones",
+    "outcome": "PRE-VERIFIED",
+    "sentence": null,
+    "note": "accepted as given, not re-fetched"
+  },
+  {
+    "source": "sos-34",
+    "quote": "the pitch of the drum always swoops down",
+    "outcome": "VERIFIED",
+    "sentence": "Finally, the Sustain level is zero because the pitch of the drum always swoops down; it never 'sustains' at a single pitch.",
+    "note": ""
+  },
+  {
+    "source": "sos-35",
+    "quote": "the harder you strike a snare drum, the louder it becomes",
+    "outcome": "VERIFIED",
+    "sentence": "The first of these is that the harder you strike a snare drum, the louder it becomes,",
+    "note": "Opening of longer sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "sos-36",
+    "quote": "a snare drum should never sustain",
+    "outcome": "PRE-VERIFIED",
+    "sentence": null,
+    "note": "accepted as given, not re-fetched"
+  },
+  {
+    "source": "sos-37",
+    "quote": "a cymbal's vibrations become chaotic",
+    "outcome": "VERIFIED",
+    "sentence": "Research now suggests that, at high amplitudes, a cymbal's vibrations become chaotic.",
+    "note": ""
+  },
+  {
+    "source": "sos-39",
+    "quote": "six square-wave oscillators tuned enharmonically",
+    "outcome": "VERIFIED",
+    "sentence": "The initial sound generator comprises six square-wave oscillators tuned enharmonically, and mixed to create a complex",
+    "note": "Sentence is 126 chars; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "sos-strings",
+    "quote": "Every note you hear is simply four detuned and modulated oscillators",
+    "outcome": "VERIFIED",
+    "sentence": "Every note you hear is simply four detuned and modulated oscillators shaped by two low-pass filters and a pair of VCAs.",
+    "note": ""
+  },
+  {
+    "source": "lm-basic-concepts",
+    "quote": "Demystifying the terminology commonly used in synthesizers.",
+    "outcome": "VERIFIED",
+    "sentence": "Demystifying the terminology commonly used in synthesizers.",
+    "note": ""
+  },
+  {
+    "source": "lm-glossary",
+    "quote": "CV is the most common shorthand to refer to control voltage",
+    "outcome": "VERIFIED",
+    "sentence": "CV is the most common shorthand to refer to control voltage – for example, when a synthesizer module says it features...",
+    "note": "Truncated sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "lm-first-voice",
+    "quote": "If you're a beginner, here is your first step on the ladder",
+    "outcome": "VERIFIED",
+    "sentence": "If you’re a beginner, here is your first step on the ladder to learning how to use modular synths:",
+    "note": "Curly vs straight apostrophe only"
+  },
+  {
+    "source": "doepfer-tech",
+    "quote": "Only rectangle shaped waveforms should be used as Trigger , Gate or Clock sources",
+    "outcome": "VERIFIED",
+    "sentence": "Only rectangle shaped waveforms should be used as Trigger , Gate or Clock sources (e.g. the rectangle output of an LFO",
+    "note": "Truncated sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "doepfer-a100",
+    "quote": "A modular is an open system, in which practically anything is possible",
+    "outcome": "VERIFIED",
+    "sentence": "A modular is an open system, in which practically anything is possible, and that�s where the fun really starts.",
+    "note": "Encoding artifact in apostrophe of later text only"
+  },
+  {
+    "source": "mi-clouds",
+    "quote": "Clouds is a granular audio processor.",
+    "outcome": "VERIFIED",
+    "sentence": "Clouds is a granular audio processor.",
+    "note": ""
+  },
+  {
+    "source": "mn-maths",
+    "quote": "Use for Lag, Portamento, ASR (Attack Sustain Release type envelopes).",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "PDF returned as undecodable binary; cannot be read"
+  },
+  {
+    "source": "omri-basics-course",
+    "quote": "a sort of a glossary in video format",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "WebFetch answered NOT FOUND (page likely JS-rendered)"
+  },
+  {
+    "source": "omri-practical-course",
+    "quote": "This series is very much suited for beginners.",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "WebFetch answered NOT FOUND (page likely JS-rendered)"
+  },
+  {
+    "source": "omri-vca-course",
+    "quote": "fitting for beginners and advanced users alike",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "WebFetch answered NOT FOUND (page likely JS-rendered)"
+  },
+  {
+    "source": "vcv-forum-song",
+    "quote": "There are ways to trigger things when the time is right",
+    "outcome": "VERIFIED",
+    "sentence": "There are ways to trigger things when the time is right but it can get a bit complicated",
+    "note": "Opening of longer sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "kane-musichackspace",
+    "quote": "Patch a modular synth in the free VCV Rack 2 software",
+    "outcome": "VERIFIED",
+    "sentence": "Patch a modular synth in the free VCV Rack 2 software, covering MIDI-to-CV, gates and ADSR envelopes, oscillators, filters,",
+    "note": "Opening of longer sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "aikin-how-to-rack",
+    "quote": "A patch cord carries a signal from an output to an input.",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "Host www.musicwords.net not resolvable (ENOTFOUND)"
+  },
+  {
+    "source": "impromptu-clocked",
+    "quote": "The clock can also be synchronized to an external clock source.",
+    "outcome": "VERIFIED",
+    "sentence": "The clock can also be synchronized to an external clock source.",
+    "note": "Fetched index page; first 100000 of 121494 chars read"
+  },
+  {
+    "source": "valley-plateau",
+    "quote": "Sets the overall delay time and apparent 'size' of the reverb.",
+    "outcome": "VERIFIED",
+    "sentence": "Sets the overall delay time and apparent 'size' of the reverb.",
+    "note": ""
+  },
+  {
+    "source": "zwook-geogenik",
+    "quote": "VCV Rack состоит из модулей, которые нужно собирать по отдельности",
+    "outcome": "VERIFIED",
+    "sentence": "VCV Rack состоит из модулей, которые нужно собирать по отдельности, формируя свой синтезатор из разных частей.",
+    "note": ""
+  },
+  {
+    "source": "samesound-first-patch",
+    "quote": "Вуаля, всё запищит.",
+    "outcome": "VERIFIED",
+    "sentence": "Вуаля, всё запищит.",
+    "note": ""
+  },
+  {
+    "source": "ne-clap",
+    "quote": "Reverb is always fun on claps",
+    "outcome": "VERIFIED",
+    "sentence": "Reverb is always fun on claps, so I’d maybe start there for further processing.",
+    "note": ""
+  },
+  {
+    "source": "ne-hats",
+    "quote": "we'll throw tuning and harmonic relationships to the wind",
+    "outcome": "VERIFIED",
+    "sentence": "In this patch, we'll throw tuning and harmonic relationships to the wind",
+    "note": "Opening of longer sentence (151 chars); WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  },
+  {
+    "source": "mr-303-guide",
+    "quote": "add emphasis to notes by increasing the volume and filter envelope depth",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "WebFetch answered NOT FOUND"
+  },
+  {
+    "source": "mr-acid-howto",
+    "quote": "the distinctive TB-303 slide effect",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "WebFetch answered NOT FOUND"
+  },
+  {
+    "source": "ne-acid-repetitor",
+    "quote": "each time Out 3 goes high, our voice will have a brighter timbre.",
+    "outcome": "VERIFIED",
+    "sentence": "Adjust the attenuator to taste; each time Out 3 goes high, our voice will have a brighter timbre.",
+    "note": ""
+  },
+  {
+    "source": "sq-arp",
+    "quote": "Notes are played when the clock is high",
+    "outcome": "VERIFIED",
+    "sentence": "Notes are played when the clock is high, advancing to the next note on the next low to high clock transition.",
+    "note": ""
+  },
+  {
+    "source": "ne-clocks",
+    "quote": "Reset signals tell sequencers when to start over.",
+    "outcome": "PRE-VERIFIED",
+    "sentence": null,
+    "note": "accepted as given, not re-fetched"
+  },
+  {
+    "source": "ne-quantizers",
+    "quote": "they're easier to use than they are to explain.",
+    "outcome": "VERIFIED",
+    "sentence": "If this post is intimidating, don’t worry – they’re easier to use than they are to explain.",
+    "note": "Curly apostrophe only"
+  },
+  {
+    "source": "ne-seq-switches",
+    "quote": "Sequential switches are a utility that was originally designed to extend 8-step sequencers",
+    "outcome": "VERIFIED",
+    "sentence": "Sequential switches are a utility that was originally designed to extend 8-step sequencers",
+    "note": "Short span returned on second targeted fetch (first fetch truncated)"
+  },
+  {
+    "source": "ne-mixers",
+    "quote": "The simplest mixers have a number of inputs, and an output.",
+    "outcome": "VERIFIED",
+    "sentence": "The simplest mixers have a number of inputs, and an output.",
+    "note": ""
+  },
+  {
+    "source": "pc-learning-synthesis",
+    "quote": "Oscillators or VCOs (Voltage Controlled Oscillators) are sections within synthesizers",
+    "outcome": "UNVERIFIABLE",
+    "sentence": null,
+    "note": "HTTP 403 Forbidden on learning-synthesis-oscillators URL"
+  },
+  {
+    "source": "dewald-gain",
+    "quote": "Set your modular outputs as hot as you can.",
+    "outcome": "VERIFIED",
+    "sentence": "Set your modular outputs as hot as you can, so that the entire system is running as loud as it can without distorting.",
+    "note": ""
+  },
+  {
+    "source": "sos-gigging",
+    "quote": "more notes and ideas do not necessarily make for better music",
+    "outcome": "VERIFIED",
+    "sentence": "more notes and ideas do not necessarily make for better music",
+    "note": "Short span returned on second targeted fetch; it is a quoted remark inside the sentence (opening curly quote precedes it), attributed to Gaz Williams in the article"
+  },
+  {
+    "source": "cdm-jw-arrange",
+    "quote": "Starting is easy; finishing is hard.",
+    "outcome": "VERIFIED",
+    "sentence": "Starting is easy; _finishing_ is hard.",
+    "note": "Only difference: markdown emphasis underscores from page conversion"
+  },
+  {
+    "source": "cdm-multitrack",
+    "quote": "The multitrack is the one I use the most.",
+    "outcome": "VERIFIED",
+    "sentence": "The multitrack is the one I use the most.",
+    "note": ""
+  },
+  {
+    "source": "loopop-sh-switch",
+    "quote": "freeze randomness once a compelling pattern is presented",
+    "outcome": "VERIFIED",
+    "sentence": "their ability to freeze randomness once a compelling pattern is presented to you.",
+    "note": "Tail of longer sentence; WebFetch returned the sentence/excerpt as shown; tool truncates long sentences at 125 chars, excerpt contains the quote verbatim"
+  }
+]
