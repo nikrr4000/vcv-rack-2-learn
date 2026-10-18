@@ -1,0 +1,177 @@
+{
+  "lesson": "p4-05-sample-hold-slew",
+  "modules": [
+    {
+      "ref": "noise",
+      "plugin": "Fundamental",
+      "slug": "Noise"
+    },
+    {
+      "ref": "clk",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "sh",
+      "plugin": "Fundamental",
+      "slug": "Process"
+    },
+    {
+      "ref": "gl",
+      "plugin": "Fundamental",
+      "slug": "Process"
+    },
+    {
+      "ref": "res",
+      "plugin": "Fundamental",
+      "slug": "Rescale"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "noise",
+        "White noise"
+      ],
+      "to": [
+        "sh",
+        "Voltage"
+      ]
+    },
+    {
+      "from": [
+        "clk",
+        "Square"
+      ],
+      "to": [
+        "sh",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "sh",
+        "Sample & hold"
+      ],
+      "to": [
+        "gl",
+        "Voltage"
+      ]
+    },
+    {
+      "from": [
+        "gl",
+        "Slew"
+      ],
+      "to": [
+        "res",
+        "Signal"
+      ]
+    },
+    {
+      "from": [
+        "res",
+        "Signal"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Triangle"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "gl",
+      "name": "Slew",
+      "display_min": 20,
+      "display_max": 400
+    },
+    {
+      "module": "clk",
+      "name": "Frequency",
+      "display_min": 1,
+      "display_max": 8
+    },
+    {
+      "module": "res",
+      "name": "Gain",
+      "display_min": 5,
+      "display_max": 30
+    }
+  ],
+  "probes": [
+    {
+      "module": "sh",
+      "output": "Sample & hold",
+      "ask": "Выборка не меняется: проверь, что такт идёт в Gate у первого Process, а шум в Voltage, и нажми «Проверить» ещё раз.",
+      "samples": 12,
+      "interval_ms": 130,
+      "expect": {
+        "range_gt": 1
+      }
+    },
+    {
+      "module": "gl",
+      "output": "Slew",
+      "ask": "Слайд не движется: проверь, что Sample & hold идёт в Voltage у второго Process.",
+      "samples": 12,
+      "interval_ms": 130,
+      "expect": {
+        "range_gt": 0.5
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Нечего запоминать. Что у нас случайное? White noise → Voltage у первого Process.",
+    "cable:2": "Выборка не знает, когда брать значение. Что подаёт такт? Square у LFO → Gate у первого Process.",
+    "cable:3": "Слайдеру нечего сглаживать. Sample & hold у первого Process → Voltage у второго Process.",
+    "cable:4": "Сглаженное значение не уходит дальше. Slew у второго Process → Signal у Rescale.",
+    "cable:5": "Высота не меняется. Signal у Rescale → 1V/octave pitch у VCO.",
+    "cable:6": "Звука нет. Triangle у VCO → первый вход Audio.",
+    "param:1": "Слайд почти не слышен или слишком вязкий. Slew у второго Process — от 20 до 400 мс/В.",
+    "param:2": "Такт слишком медленный или слишком быстрый. Frequency у LFO-такта от 1 до 8 Гц.",
+    "param:3": "Шум даёт ±5 В — это ±5 октав. Gain у Rescale от 5 до 30 %.",
+    "probe:1": "Нет движения на Sample & hold: проверь Gate и Voltage у первого Process.",
+    "probe:2": "Нет движения на Slew: проверь кабель с Sample & hold и ручку Slew."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "gl",
+        "name": "Slew",
+        "value": -4.32
+      },
+      {
+        "module": "clk",
+        "name": "Frequency",
+        "value": 2
+      },
+      {
+        "module": "res",
+        "name": "Gain",
+        "value": 0.2
+      }
+    ],
+    "break": 3
+  }
+}

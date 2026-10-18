@@ -1,0 +1,209 @@
+{
+  "lesson": "p4-03-mixing-modulation",
+  "modules": [
+    {
+      "ref": "slow",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "fast",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "mix",
+      "plugin": "Fundamental",
+      "slug": "CVMix"
+    },
+    {
+      "ref": "res",
+      "plugin": "Fundamental",
+      "slug": "Rescale"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "slow",
+        "Triangle"
+      ],
+      "to": [
+        "mix",
+        "CV 1"
+      ]
+    },
+    {
+      "from": [
+        "fast",
+        "Sine"
+      ],
+      "to": [
+        "mix",
+        "CV 2"
+      ]
+    },
+    {
+      "from": [
+        "mix",
+        "Mix"
+      ],
+      "to": [
+        "res",
+        "Signal"
+      ]
+    },
+    {
+      "from": [
+        "res",
+        "Signal"
+      ],
+      "to": [
+        "vcf",
+        "Frequency"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "slow",
+      "name": "Frequency",
+      "display_max": 1
+    },
+    {
+      "module": "fast",
+      "name": "Frequency",
+      "display_min": 3
+    },
+    {
+      "module": "mix",
+      "name": "Level 1",
+      "display_min": 30,
+      "display_max": 100
+    },
+    {
+      "module": "mix",
+      "name": "Level 2",
+      "display_min": 5,
+      "display_max": 40
+    },
+    {
+      "module": "res",
+      "name": "Gain",
+      "display_min": 90
+    },
+    {
+      "module": "res",
+      "name": "Maximum",
+      "display_max": 6
+    }
+  ],
+  "probes": [
+    {
+      "module": "mix",
+      "output": "Mix",
+      "ask": "На выходе Mix нет движения: проверь, что оба LFO идут в CV 1 и CV 2 и что Level не в нуле, и нажми «Проверить» ещё раз.",
+      "samples": 12,
+      "interval_ms": 80,
+      "expect": {
+        "range_gt": 1
+      }
+    },
+    {
+      "module": "vcf",
+      "output": "Lowpass filter",
+      "ask": "На Lowpass filter нет сигнала: проверь Sawtooth → Audio и выход Lowpass filter → Audio.",
+      "samples": 24,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Медленной волны в сумме нет. Куда должен идти Triangle медленного LFO? В CV 1 у CV Mix.",
+    "cable:2": "Быстрой ряби в сумме нет. Куда должен идти Sine быстрого LFO? В CV 2 у CV Mix.",
+    "cable:3": "Сумма не доходит до ограничителя. Mix у CV Mix → Signal у Rescale.",
+    "cable:4": "Фильтр не получает модуляцию. Signal у Rescale → Frequency у VCF.",
+    "cable:5": "В фильтр не приходит звук. Sawtooth у VCO → Audio у VCF.",
+    "cable:6": "Звука нет. Lowpass filter у VCF → первый вход Audio.",
+    "param:1": "Основная волна должна быть медленной: Frequency у первого LFO не выше 1 Гц.",
+    "param:2": "Рябь должна быть заметно быстрее основной волны: Frequency у второго LFO не ниже 3 Гц.",
+    "param:3": "Основная волна должна главенствовать: Level 1 от 30 % до 100 %.",
+    "param:4": "Рябь должна быть слабее основной: Level 2 от 5 % до 40 %.",
+    "param:5": "Если Gain у Rescale около нуля, сигнал умножен на ноль. Подними Gain хотя бы до 90 %.",
+    "param:6": "До скольки вольт ограничиваем срез? Maximum у Rescale не выше 6 В.",
+    "probe:1": "Сумма не движется: проверь оба LFO, Level 1 и Level 2.",
+    "probe:2": "На Lowpass filter нет сигнала: проверь кабели в Audio."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "slow",
+        "name": "Frequency",
+        "value": -1
+      },
+      {
+        "module": "fast",
+        "name": "Frequency",
+        "value": 2.585
+      },
+      {
+        "module": "mix",
+        "name": "Level 1",
+        "value": 0.6
+      },
+      {
+        "module": "mix",
+        "name": "Level 2",
+        "value": 0.2
+      },
+      {
+        "module": "res",
+        "name": "Gain",
+        "value": 1
+      },
+      {
+        "module": "res",
+        "name": "Maximum",
+        "value": 4
+      }
+    ],
+    "break": 3
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "lesson": "p4-06-crossfade-compare",
+  "modules": [
+    {
+      "ref": "vcoa",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcob",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "fade",
+      "plugin": "Fundamental",
+      "slug": "Fade"
+    },
+    {
+      "ref": "lfo",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "cmp",
+      "plugin": "Fundamental",
+      "slug": "Compare"
+    },
+    {
+      "ref": "scope",
+      "plugin": "Fundamental",
+      "slug": "Scope"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "vcoa",
+        "Sawtooth"
+      ],
+      "to": [
+        "fade",
+        "Ch 1"
+      ]
+    },
+    {
+      "from": [
+        "vcob",
+        "Square"
+      ],
+      "to": [
+        "fade",
+        "Ch 2"
+      ]
+    },
+    {
+      "from": [
+        "fade",
+        "Ch 1"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "lfo",
+        "Triangle"
+      ],
+      "to": [
+        "fade",
+        "Crossfade"
+      ]
+    },
+    {
+      "from": [
+        "lfo",
+        "Triangle"
+      ],
+      "to": [
+        "cmp",
+        "A"
+      ]
+    },
+    {
+      "from": [
+        "cmp",
+        "A>B"
+      ],
+      "to": [
+        "scope",
+        "Ch 1"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "fade",
+      "name": "Crossfade CV",
+      "display_min": 30
+    },
+    {
+      "module": "cmp",
+      "name": "B offset",
+      "display_min": 3,
+      "display_max": 7
+    }
+  ],
+  "probes": [
+    {
+      "module": "fade",
+      "output": "Ch 1",
+      "ask": "На выходе Ch 1 у Fade нет сигнала: проверь, что оба VCO идут в Ch 1 и Ch 2, и нажми «Проверить» ещё раз.",
+      "samples": 24,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    },
+    {
+      "module": "cmp",
+      "output": "A>B",
+      "ask": "Гейт A>B не переключается: проверь, что Triangle идёт в A, а B offset стоит между 3 и 7 В.",
+      "samples": 12,
+      "interval_ms": 60,
+      "expect": {
+        "range_gt": 5
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Первый тембр не попал в фейдер. Sawtooth у VCO → Ch 1 (вход) у Fade.",
+    "cable:2": "Второго тембра нет. Square у второго VCO → Ch 2 (вход) у Fade.",
+    "cable:3": "Звука нет. Выход Ch 1 у Fade → первый вход Audio.",
+    "cable:4": "Тембры не перетекают сами. Что двигает фейдер? Triangle у LFO → Crossfade (вход) у Fade.",
+    "cable:5": "Сравнивать нечего. Triangle у LFO → A у Compare.",
+    "cable:6": "Гейта не видно. Выход A>B у Compare → Ch 1 у Scope.",
+    "param:1": "LFO подключён, но фейдер почти не двигается: Crossfade CV подними хотя бы до 30 %.",
+    "param:2": "Порог у гейта: B offset у Compare от 3 до 7 В — тогда гейт то включается, то выключается.",
+    "probe:1": "На Ch 1 нет сигнала: проверь кабели в Fade и в Audio.",
+    "probe:2": "Гейт A>B не двигается: проверь Triangle → A и B offset."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "fade",
+        "name": "Crossfade CV",
+        "value": 1
+      },
+      {
+        "module": "cmp",
+        "name": "B offset",
+        "value": 5
+      }
+    ],
+    "break": 4
+  }
+}

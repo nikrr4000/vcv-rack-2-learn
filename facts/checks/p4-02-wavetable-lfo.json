@@ -1,0 +1,149 @@
+{
+  "lesson": "p4-02-wavetable-lfo",
+  "modules": [
+    {
+      "ref": "lfo",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "wlfo",
+      "plugin": "Fundamental",
+      "slug": "LFO2"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "lfo",
+        "Triangle"
+      ],
+      "to": [
+        "wlfo",
+        "Wavetable position"
+      ]
+    },
+    {
+      "from": [
+        "wlfo",
+        "Wavetable"
+      ],
+      "to": [
+        "vcf",
+        "Frequency"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "wlfo",
+      "name": "Wavetable position CV",
+      "display_min": 30
+    },
+    {
+      "module": "wlfo",
+      "name": "Frequency",
+      "display_min": 0.2,
+      "display_max": 8
+    },
+    {
+      "module": "vcf",
+      "name": "Cutoff frequency CV",
+      "display_min": 20
+    }
+  ],
+  "probes": [
+    {
+      "module": "lfo",
+      "output": "Triangle",
+      "ask": "Медленный LFO не движется: проверь кабель с Triangle в Wavetable position у Wavetable LFO и нажми «Проверить» ещё раз.",
+      "samples": 12,
+      "interval_ms": 60,
+      "expect": {
+        "range_gt": 3
+      }
+    },
+    {
+      "module": "wlfo",
+      "output": "Wavetable",
+      "ask": "Wavetable LFO не выдаёт движущийся сигнал: проверь кабель с Wavetable в Frequency у VCF и Wavetable position CV.",
+      "samples": 12,
+      "interval_ms": 60,
+      "expect": {
+        "range_gt": 1.5
+      }
+    },
+    {
+      "module": "vcf",
+      "output": "Lowpass filter",
+      "ask": "На Lowpass filter нет сигнала: проверь, что Sawtooth идёт в Audio у VCF и выход Lowpass filter в Audio.",
+      "samples": 24,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Форма сигнала не эволюционирует. Что должно двигать положение в таблице? Triangle у LFO в Wavetable position у Wavetable LFO.",
+    "cable:2": "Wavetable LFO ничего не качает. Какой выход несёт модуляцию и куда? Wavetable в Frequency у VCF.",
+    "cable:3": "В фильтр не приходит звук. Какой выход VCO даёт пилу? Sawtooth в Audio у VCF.",
+    "cable:4": "Звук не дойдёт до колонок. Какой выход фильтра нужен? Lowpass filter в первый вход Audio.",
+    "param:1": "Wavetable position CV слишком мал: LFO почти не двигает положение. Подними хотя бы до 30 %.",
+    "param:2": "Wavetable LFO слишком медленный или слишком быстрый для плавной эволюции. Frequency — от 0.2 до 8 Гц.",
+    "param:3": "VCF почти не слышит модуляцию: Cutoff frequency CV подними хотя бы до 20 %.",
+    "probe:1": "LFO не движется: проверь кабель с Triangle.",
+    "probe:2": "Wavetable не движется: проверь Wavetable position CV и кабель в VCF.",
+    "probe:3": "На Lowpass filter нет сигнала: проверь кабели Sawtooth → Audio и Lowpass filter → Audio."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "wlfo",
+        "name": "Wavetable position CV",
+        "value": 1
+      },
+      {
+        "module": "vcf",
+        "name": "Cutoff frequency CV",
+        "value": 0.5
+      }
+    ],
+    "break": 2
+  }
+}

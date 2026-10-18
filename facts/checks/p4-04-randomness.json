@@ -1,0 +1,144 @@
+{
+  "lesson": "p4-04-randomness",
+  "modules": [
+    {
+      "ref": "rnd",
+      "plugin": "Fundamental",
+      "slug": "Random"
+    },
+    {
+      "ref": "res",
+      "plugin": "Fundamental",
+      "slug": "Rescale"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "rnd",
+        "Stepped"
+      ],
+      "to": [
+        "res",
+        "Signal"
+      ]
+    },
+    {
+      "from": [
+        "res",
+        "Signal"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "rnd",
+        "Smooth"
+      ],
+      "to": [
+        "vcf",
+        "Frequency"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "rnd",
+      "name": "Internal trigger rate",
+      "display_min": 1,
+      "display_max": 10
+    },
+    {
+      "module": "res",
+      "name": "Gain",
+      "display_min": 5,
+      "display_max": 40
+    }
+  ],
+  "probes": [
+    {
+      "module": "rnd",
+      "output": "Stepped",
+      "ask": "Random не выдаёт новых значений: проверь, что Trigger probability не в нуле и что Internal trigger rate не на минимуме, и нажми «Проверить» ещё раз.",
+      "samples": 16,
+      "interval_ms": 150,
+      "expect": {
+        "range_gt": 1
+      }
+    },
+    {
+      "module": "vcf",
+      "output": "Lowpass filter",
+      "ask": "На Lowpass filter нет сигнала: проверь Sawtooth → Audio и выход Lowpass filter → Audio.",
+      "samples": 24,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Случайные ноты нужно сначала уменьшить. Куда идёт Stepped? В Signal у Rescale.",
+    "cable:2": "Высота не меняется. Что управляет высотой? Signal у Rescale → 1V/octave pitch у VCO.",
+    "cable:3": "Тембр не дрожит. Какой выход Random плавный? Smooth → Frequency у VCF.",
+    "cable:4": "В фильтр не приходит звук. Sawtooth у VCO → Audio у VCF.",
+    "cable:5": "Звука нет. Lowpass filter у VCF → первый вход Audio.",
+    "param:1": "Случайные значения должны меняться несколько раз в секунду: Internal trigger rate от 1 до 10 Гц.",
+    "param:2": "Слишком большой скачок высоты: Random даёт около ±5 В, это ±5 октав. Gain у Rescale от 5 до 40 %.",
+    "probe:1": "Random не меняет значение: проверь Trigger probability и Internal trigger rate.",
+    "probe:2": "На Lowpass filter нет сигнала: проверь кабели в Audio."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "rnd",
+        "name": "Internal trigger rate",
+        "value": 2
+      },
+      {
+        "module": "res",
+        "name": "Gain",
+        "value": 0.2
+      }
+    ],
+    "break": 2
+  }
+}

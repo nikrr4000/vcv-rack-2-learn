@@ -1,0 +1,130 @@
+{
+  "lesson": "p4-01-lfo",
+  "modules": [
+    {
+      "ref": "lfo",
+      "plugin": "Fundamental",
+      "slug": "LFO"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "scope",
+      "plugin": "Fundamental",
+      "slug": "Scope"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "lfo",
+        "Sine"
+      ],
+      "to": [
+        "vco",
+        "Frequency modulation"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sine"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    },
+    {
+      "from": [
+        "lfo",
+        "Sine"
+      ],
+      "to": [
+        "scope",
+        "Ch 1"
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "lfo",
+      "name": "Frequency",
+      "display_min": 3,
+      "display_max": 8
+    },
+    {
+      "module": "lfo",
+      "name": "Offset",
+      "display_in": [
+        "Bipolar"
+      ]
+    },
+    {
+      "module": "vco",
+      "name": "Frequency modulation",
+      "display_min": 0.5,
+      "display_max": 10
+    }
+  ],
+  "probes": [
+    {
+      "module": "lfo",
+      "output": "Sine",
+      "ask": "LFO не движется: проверь, что Sine подключён к VCO и к Scope, а Frequency не на самом минимуме, и нажми «Проверить» ещё раз.",
+      "samples": 12,
+      "interval_ms": 60,
+      "expect": {
+        "range_gt": 5
+      }
+    },
+    {
+      "module": "vco",
+      "output": "Sine",
+      "ask": "На выходе Sine у VCO нет сигнала: проверь кабель в Audio и нажми «Проверить» ещё раз.",
+      "samples": 24,
+      "interval_ms": 23,
+      "expect": {
+        "range_gt": 1
+      }
+    }
+  ],
+  "hints": {
+    "cable:1": "Вибрато не получится: что должно качать высоту? Выход Sine у LFO во вход Frequency modulation у VCO.",
+    "cable:2": "Звука в колонках не будет. Куда идёт звук? Выход Sine у VCO в первый вход Audio.",
+    "cable:3": "На Scope нечего смотреть. Что должен показывать Ch 1? Выход Sine у LFO.",
+    "param:1": "Вибрато звучит при 3–8 Гц. Что слышно, если LFO идёт 0.2 Гц или 30 Гц? Поставь Frequency у LFO в пределах 3–8.",
+    "param:2": "Вибрато должно качать вокруг ноты, а не только вверх. Какой режим Offset у LFO подходит? Bipolar.",
+    "param:3": "LFO подключён, но глубина слишком мала или слишком велика. Frequency modulation у VCO — от 0.5 до 10 %.",
+    "probe:1": "LFO не движется: проверь кабели с Sine и ручку Frequency.",
+    "probe:2": "На Sine у VCO нет сигнала: проверь кабель в Audio."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "lfo",
+        "name": "Frequency",
+        "value": 2.46
+      },
+      {
+        "module": "lfo",
+        "name": "Offset",
+        "value": 0
+      },
+      {
+        "module": "vco",
+        "name": "Frequency modulation",
+        "value": 0.02
+      }
+    ],
+    "break": 1
+  }
+}
