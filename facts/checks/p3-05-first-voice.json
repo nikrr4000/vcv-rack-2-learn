@@ -1,0 +1,35 @@
+{
+  "lesson": "p3-05-first-voice",
+  "modules": [
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "vcf", "plugin": "Fundamental", "slug": "VCF" },
+    { "ref": "vca", "plugin": "Fundamental", "slug": "VCA-1" },
+    { "ref": "env", "plugin": "Fundamental", "slug": "ADSR" },
+    { "ref": "push", "plugin": "Fundamental", "slug": "Push" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["vco", "Sawtooth"], "to": ["vcf", "Audio"] },
+    { "from": ["vcf", "Lowpass filter"], "to": ["vca", "Channel"] },
+    { "from": ["env", "Envelope"], "to": ["vca", "CV"] },
+    { "from": ["vca", "Channel"], "to": ["out", "To \"device output 1\""] },
+    { "from": ["push", "Gate"], "to": ["env", "Gate"] }
+  ],
+  "params": [
+    { "module": "vcf", "name": "Resonance", "display_max": 50 }
+  ],
+  "probes": [
+    { "module": "env", "output": "Envelope", "ask": "Включи Hold на модуле Push (или держи кнопку Push) и нажми «Проверить» ещё раз.", "samples": 10, "interval_ms": 50, "expect": { "max_gt": 1.0 } }
+  ],
+  "hints": {
+    "cable:2": "Фильтр стоит, но звук до VCA не доходит. Какой выход VCF ведёт к входу Channel у VCA?",
+    "cable:3": "Звук есть всегда, даже без нажатия? Проверь, что управляет VCA.",
+    "cable:5": "Огибающая не знает, когда начинать: что подаёт ей гейт?"
+  },
+  "reference": {
+    "params": [
+      { "module": "push", "name": "Hold", "value": 1 }
+    ],
+    "break": 3
+  }
+}
