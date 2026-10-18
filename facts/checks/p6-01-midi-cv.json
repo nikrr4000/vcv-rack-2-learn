@@ -1,0 +1,118 @@
+{
+  "lesson": "p6-01-midi-cv",
+  "modules": [
+    {
+      "ref": "midi",
+      "plugin": "Core",
+      "slug": "MIDIToCVInterface"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "vcf",
+      "plugin": "Fundamental",
+      "slug": "VCF"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "midi",
+        "1V/octave pitch"
+      ],
+      "to": [
+        "vco",
+        "1V/octave pitch"
+      ]
+    },
+    {
+      "from": [
+        "midi",
+        "Gate"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vcf",
+        "Audio"
+      ]
+    },
+    {
+      "from": [
+        "vcf",
+        "Lowpass filter"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "vcf",
+      "name": "Resonance",
+      "display_max": 50
+    }
+  ],
+  "probes": [],
+  "hints": {
+    "cable:1": "Клавиши играют, а голос стоит на одной ноте? Какой выход MIDI to CV несёт высоту в формате 1V/oct и в какой вход VCO её подать?",
+    "cable:2": "Огибающая не знает, когда нажата клавиша. Какой выход MIDI to CV даёт гейт и куда его подать у ADSR?",
+    "cable:3": "Пила есть, но фильтр её не слышит: Sawtooth у VCO в Audio у VCF.",
+    "cable:4": "Фильтр стоит, но звук до VCA не доходит: Lowpass filter у VCF в Channel у VCA.",
+    "cable:5": "Звук есть всегда или его нет вовсе? Envelope у ADSR должен идти в CV у VCA.",
+    "cable:6": "Голос собран, а тишина: Channel у VCA в первый выход Audio.",
+    "param:1": "Резонанс слишком высок: фильтр звучит сам. Убавь Resonance до 50% или ниже.",
+    "module:midi": "Модуля MIDI to CV нет в патче: добавь его (Core) и выбери на панели драйвер, устройство MiniLab mkII и канал."
+  },
+  "reference": {
+    "break": 2
+  }
+}

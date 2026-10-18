@@ -1,0 +1,98 @@
+{
+  "lesson": "p6-03-pads",
+  "modules": [
+    {
+      "ref": "trig",
+      "plugin": "Core",
+      "slug": "MIDITriggerToCVInterface"
+    },
+    {
+      "ref": "vco",
+      "plugin": "Fundamental",
+      "slug": "VCO"
+    },
+    {
+      "ref": "env",
+      "plugin": "Fundamental",
+      "slug": "ADSR"
+    },
+    {
+      "ref": "vca",
+      "plugin": "Fundamental",
+      "slug": "VCA-1"
+    },
+    {
+      "ref": "out",
+      "plugin": "Core",
+      "slug": "AudioInterface2"
+    }
+  ],
+  "cables": [
+    {
+      "from": [
+        "trig",
+        "Gate 1"
+      ],
+      "to": [
+        "env",
+        "Gate"
+      ]
+    },
+    {
+      "from": [
+        "vco",
+        "Sawtooth"
+      ],
+      "to": [
+        "vca",
+        "Channel"
+      ]
+    },
+    {
+      "from": [
+        "env",
+        "Envelope"
+      ],
+      "to": [
+        "vca",
+        "CV"
+      ]
+    },
+    {
+      "from": [
+        "vca",
+        "Channel"
+      ],
+      "to": [
+        "out",
+        "To \"device output 1\""
+      ]
+    }
+  ],
+  "params": [
+    {
+      "module": "env",
+      "name": "Sustain",
+      "display_max": 10
+    }
+  ],
+  "probes": [],
+  "hints": {
+    "cable:1": "Пэд не запускает огибающую. Какой выход MIDI to Gate соответствует первому пэду и куда подать его у ADSR?",
+    "cable:2": "Источник звука не дошёл до усилителя: Sawtooth у VCO в Channel у VCA.",
+    "cable:3": "Звук есть всегда или не откликается на пэд? Envelope у ADSR должен идти в CV у VCA.",
+    "cable:4": "Всё собрано, а тишина: Channel у VCA в первый выход Audio.",
+    "param:1": "Пока пэд нажат, звук тянется? Гейт держится вместе с пэдом, и при высоком Sustain огибающая стоит наверху. Для ударного звука убавь Sustain до 10% или ниже.",
+    "module:trig": "Модуля MIDI to Gate нет: добавь его (Core), выбери драйвер, устройство и канал пэдов."
+  },
+  "reference": {
+    "params": [
+      {
+        "module": "env",
+        "name": "Sustain",
+        "value": 0
+      }
+    ],
+    "break": 1
+  }
+}
