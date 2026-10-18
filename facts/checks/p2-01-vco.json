@@ -1,0 +1,30 @@
+{
+  "lesson": "p2-01-vco",
+  "modules": [
+    { "ref": "vco", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "scope", "plugin": "Fundamental", "slug": "Scope" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["vco", "Sine"], "to": ["scope", "Ch 1"] },
+    { "from": ["vco", "Sine"], "to": ["out", "To \"device output 1\""] }
+  ],
+  "params": [
+    { "module": "vco", "name": "Frequency", "display_min": 437, "display_max": 443 }
+  ],
+  "probes": [
+    { "module": "vco", "output": "Sine", "ask": "Сигнал на выходе Sine не меняется: проверь, что в него воткнут кабель и что модуль не выключен, и нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 37, "expect": { "range_gt": 4 } }
+  ],
+  "hints": {
+    "cable:1": "Scope ничего не покажет. Из какого выхода VCO идёт кабель в Ch 1? Нужен выход Sine.",
+    "cable:2": "Звука в колонках не будет. Куда сигнал уходит из рэка? Нужна связь от Sine до первого входа Audio.",
+    "param:1": "Сколько периодов умещается на экране Scope при Time 25 мс? Для 440 Гц нужно ровно 11. Подстрой Frequency (Shift при вращении даёт более тонкий шаг).",
+    "probe:1": "На выходе Sine нет движения сигнала. Подключён ли кабель в Sine, не отключён ли модуль?"
+  },
+  "reference": {
+    "params": [
+      { "module": "vco", "name": "Frequency", "value": 9 }
+    ],
+    "break": 1
+  }
+}

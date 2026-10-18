@@ -1,0 +1,34 @@
+{
+  "lesson": "p2-04-wavetable-vco",
+  "modules": [
+    { "ref": "wt", "plugin": "Fundamental", "slug": "VCO2" },
+    { "ref": "lfo", "plugin": "Fundamental", "slug": "LFO" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["lfo", "Triangle"], "to": ["wt", "Wavetable position"] },
+    { "from": ["wt", "Wavetable"], "to": ["out", "To \"device output 1\""] }
+  ],
+  "params": [
+    { "module": "wt", "name": "Wavetable position CV", "display_min": 30 },
+    { "module": "lfo", "name": "Frequency", "display_max": 8 }
+  ],
+  "probes": [
+    { "module": "lfo", "output": "Triangle", "ask": "LFO не движется: проверь, что его Triangle подключён к Wavetable position, и нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 60, "expect": { "range_gt": 3 } },
+    { "module": "wt", "output": "Wavetable", "ask": "На выходе Wavetable нет сигнала: проверь кабель в Audio и нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 37, "expect": { "range_gt": 2 } }
+  ],
+  "hints": {
+    "cable:1": "Тембр не двигается. Что должно двигать положение в таблице? Соедини выход Triangle у LFO со входом Wavetable position.",
+    "cable:2": "Звука в колонках не будет. Куда идёт звук? Выход Wavetable нужен в первом входе Audio.",
+    "param:1": "LFO подключён, но глубина мала. Подними ручку Wavetable position CV хотя бы до 30 %.",
+    "param:2": "LFO слишком быстрый для плавного движения тембра. Поставь Frequency не выше 8 Гц.",
+    "probe:1": "LFO не движется: проверь кабель с Triangle.",
+    "probe:2": "На Wavetable нет сигнала: проверь кабель в Audio."
+  },
+  "reference": {
+    "params": [
+      { "module": "wt", "name": "Wavetable position CV", "value": 1 }
+    ],
+    "break": 1
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "lesson": "p2-05-noise",
+  "modules": [
+    { "ref": "noise", "plugin": "Fundamental", "slug": "Noise" },
+    { "ref": "scope", "plugin": "Fundamental", "slug": "Scope" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["noise", "White noise"], "to": ["scope", "Ch 1"] },
+    { "from": ["noise", "Red noise"], "to": ["scope", "Ch 2"] },
+    { "from": ["noise", "Red noise"], "to": ["out", "To \"device output 1\""] }
+  ],
+  "probes": [
+    { "module": "noise", "output": "White noise", "ask": "На выходе White noise нет сигнала: проверь, что в него воткнут кабель (в Scope Ch 1), и нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 37, "expect": { "range_gt": 1 } },
+    { "module": "noise", "output": "Red noise", "ask": "На выходе Red noise нет сигнала: проверь, что в него воткнут кабель (в Scope Ch 2 и в Audio), и нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 37, "expect": { "range_gt": 0.2 } }
+  ],
+  "hints": {
+    "cable:1": "Сравнивать нечего: белый шум в Scope не попал. Какой выход Noise должен идти в Ch 1? White noise.",
+    "cable:2": "Красного шума на Scope нет. Какой выход Noise должен идти в Ch 2? Red noise.",
+    "cable:3": "Красного шума не будет слышно. Куда идёт звук наружу? Red noise в первый вход Audio.",
+    "probe:1": "Нет сигнала на White noise: проверь кабель с этого выхода.",
+    "probe:2": "Нет сигнала на Red noise: проверь кабели с этого выхода."
+  },
+  "reference": {
+    "break": 3
+  }
+}

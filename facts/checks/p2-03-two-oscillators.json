@@ -1,0 +1,35 @@
+{
+  "lesson": "p2-03-two-oscillators",
+  "modules": [
+    { "ref": "vco1", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "vco2", "plugin": "Fundamental", "slug": "VCO" },
+    { "ref": "mix", "plugin": "Fundamental", "slug": "Mixer" },
+    { "ref": "out", "plugin": "Core", "slug": "AudioInterface2" }
+  ],
+  "cables": [
+    { "from": ["vco1", "Sawtooth"], "to": ["mix", "Channel 1"] },
+    { "from": ["vco2", "Sawtooth"], "to": ["mix", "Channel 2"] },
+    { "from": ["mix", "Mix"], "to": ["out", "To \"device output 1\""] }
+  ],
+  "params": [
+    { "module": "vco1", "name": "Frequency", "display_min": 261, "display_max": 262.3 },
+    { "module": "vco2", "name": "Frequency", "display_min": 262.8, "display_max": 272 }
+  ],
+  "probes": [
+    { "module": "mix", "output": "Mix", "ask": "На выходе Mix нет движения сигнала: проверь, что оба VCO подключены к Mix, что Level не в нуле, и нажми «Проверить» ещё раз.", "samples": 12, "interval_ms": 37, "expect": { "range_gt": 5 } }
+  ],
+  "hints": {
+    "cable:1": "Первый голос не попал в сумму. Куда должен идти Sawtooth первого VCO? В Channel 1 микшера Mix.",
+    "cable:2": "Второго голоса в сумме нет: Sawtooth второго VCO должен идти в Channel 2 микшера Mix.",
+    "cable:3": "Сумма не доходит до колонок. Выход Mix нужно соединить с первым входом Audio.",
+    "param:1": "Первый VCO оставь на 261.63 Гц (значение по умолчанию): он опорный.",
+    "param:2": "Второй VCO должен быть чуть выше первого: Frequency между 262.8 и 272 Гц. Что слышно при разнице 0 Гц? А при разнице в полтона?",
+    "probe:1": "На выходе Mix нет движения сигнала: проверь кабели в Mix и ручку Level."
+  },
+  "reference": {
+    "params": [
+      { "module": "vco2", "name": "Frequency", "value": 0.2 }
+    ],
+    "break": 2
+  }
+}
