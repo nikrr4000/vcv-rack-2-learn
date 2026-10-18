@@ -1,0 +1,277 @@
+{
+  "plugin": "AudibleInstruments",
+  "slug": "Clouds",
+  "name": "Texture Synthesizer",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:00.877Z",
+  "library": {
+    "name": "Texture Synthesizer",
+    "description": "Based on Mutable Instruments Clouds",
+    "tags": [
+      "Granular",
+      "Reverb",
+      "Hardware clone"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Freeze",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "",
+      "display": {
+        "min": "",
+        "mid": "",
+        "max": ""
+      },
+      "snap": true
+    },
+    {
+      "id": 1,
+      "name": "Mode",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "",
+      "display": {
+        "min": "",
+        "mid": "",
+        "max": ""
+      },
+      "snap": true
+    },
+    {
+      "id": 2,
+      "name": "Load/save",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "",
+      "display": {
+        "min": "",
+        "mid": "",
+        "max": ""
+      },
+      "snap": true
+    },
+    {
+      "id": 3,
+      "name": "Grain position",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Grain size",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Grain pitch",
+      "unit": "",
+      "min": -2,
+      "max": 2,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-2",
+        "mid": "0",
+        "max": "2"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "Audio input gain",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "Grain density",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 8,
+      "name": "Grain texture",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 9,
+      "name": "Dry/wet",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 10,
+      "name": "Stereo spread",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 11,
+      "name": "Feedback amount",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 12,
+      "name": "Reverb amount",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Freeze",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Trigger",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Position",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Size",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Pitch (1V/oct)",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Blend",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "Left",
+      "description": ""
+    },
+    {
+      "id": 7,
+      "name": "Right",
+      "description": ""
+    },
+    {
+      "id": 8,
+      "name": "Density",
+      "description": ""
+    },
+    {
+      "id": 9,
+      "name": "Texture",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Left",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Right",
+      "description": ""
+    }
+  ]
+}

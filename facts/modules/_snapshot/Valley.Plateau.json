@@ -1,0 +1,598 @@
+{
+  "plugin": "Valley",
+  "slug": "Plateau",
+  "name": "Plateau",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:13:06.438Z",
+  "library": {
+    "name": "Plateau",
+    "description": "Lush and bendable plate reverb based on the Dattorro 1997 algorithm.",
+    "tags": [
+      "Reverb",
+      "Effect",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Dry level",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Wet level",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "50",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 2,
+      "name": "Pre-delay",
+      "unit": "ms",
+      "min": 0,
+      "max": 0.5,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "250",
+        "max": "500"
+      },
+      "snap": false
+    },
+    {
+      "id": 3,
+      "name": "Input low cut",
+      "unit": "Hz",
+      "min": 0,
+      "max": 10,
+      "default": 10,
+      "displayDefault": "14080",
+      "display": {
+        "min": "13.75",
+        "mid": "440",
+        "max": "14080"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Input high cut",
+      "unit": "Hz",
+      "min": 0,
+      "max": 10,
+      "default": 10,
+      "displayDefault": "14080",
+      "display": {
+        "min": "13.75",
+        "mid": "440",
+        "max": "14080"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Size",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "50",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "Diffusion",
+      "unit": "%",
+      "min": 0,
+      "max": 10,
+      "default": 10,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "Decay",
+      "unit": "%",
+      "min": 0.1,
+      "max": 0.9999,
+      "default": 0.54995,
+      "displayDefault": "50",
+      "display": {
+        "min": "3.5632e-07",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 8,
+      "name": "Reverb high cut",
+      "unit": "Hz",
+      "min": 0,
+      "max": 10,
+      "default": 10,
+      "displayDefault": "14080",
+      "display": {
+        "min": "13.75",
+        "mid": "440",
+        "max": "14080"
+      },
+      "snap": false
+    },
+    {
+      "id": 9,
+      "name": "Reverb low cut",
+      "unit": "Hz",
+      "min": 0,
+      "max": 10,
+      "default": 10,
+      "displayDefault": "14080",
+      "display": {
+        "min": "13.75",
+        "mid": "440",
+        "max": "14080"
+      },
+      "snap": false
+    },
+    {
+      "id": 10,
+      "name": "Modulation rate",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 11,
+      "name": "Modulation shape",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 12,
+      "name": "Modulation depth",
+      "unit": "%",
+      "min": 0,
+      "max": 16,
+      "default": 0.5,
+      "displayDefault": "3.125",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 13,
+      "name": "Hold",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "1",
+        "max": "1"
+      },
+      "snap": true
+    },
+    {
+      "id": 14,
+      "name": "Clear",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "Off",
+      "display": {
+        "min": "Off",
+        "mid": "On",
+        "max": "On"
+      },
+      "options": [
+        "Off",
+        "On"
+      ],
+      "snap": true
+    },
+    {
+      "id": 15,
+      "name": "Hold toggle",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "Off",
+      "display": {
+        "min": "Off",
+        "mid": "On",
+        "max": "On"
+      },
+      "options": [
+        "Off",
+        "On"
+      ],
+      "snap": true
+    },
+    {
+      "id": 16,
+      "name": "",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 17,
+      "name": "Dry CV depth",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 18,
+      "name": "Wet CV depth",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 19,
+      "name": "Input low cut CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 20,
+      "name": "Input high cut CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 21,
+      "name": "Size CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 22,
+      "name": "Diffusion CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 23,
+      "name": "Decay CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 24,
+      "name": "Reverb high cut CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 25,
+      "name": "Reverb low cut CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 26,
+      "name": "Mod speed CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 27,
+      "name": "Mod shape CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 28,
+      "name": "Mod depth CV",
+      "unit": "x",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 29,
+      "name": "Tuned mode",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "Off",
+      "display": {
+        "min": "Off",
+        "mid": "On",
+        "max": "On"
+      },
+      "options": [
+        "Off",
+        "On"
+      ],
+      "snap": true
+    },
+    {
+      "id": 30,
+      "name": "Diffuse input",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "On",
+      "display": {
+        "min": "Off",
+        "mid": "On",
+        "max": "On"
+      },
+      "options": [
+        "Off",
+        "On"
+      ],
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Left",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Right",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Dry level CV",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Wet level CV",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Pre delay CV",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Input low cut CV",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "Input high cut CV",
+      "description": ""
+    },
+    {
+      "id": 7,
+      "name": "Size CV",
+      "description": ""
+    },
+    {
+      "id": 8,
+      "name": "Diffusion CV",
+      "description": ""
+    },
+    {
+      "id": 9,
+      "name": "Decay CV",
+      "description": ""
+    },
+    {
+      "id": 10,
+      "name": "Reverb high cut CV",
+      "description": ""
+    },
+    {
+      "id": 11,
+      "name": "Reverb low cut CV",
+      "description": ""
+    },
+    {
+      "id": 12,
+      "name": "Mod. speed CV",
+      "description": ""
+    },
+    {
+      "id": 13,
+      "name": "Mod. shape CV",
+      "description": ""
+    },
+    {
+      "id": 14,
+      "name": "Mod. depth CV",
+      "description": ""
+    },
+    {
+      "id": 15,
+      "name": "Hold",
+      "description": ""
+    },
+    {
+      "id": 16,
+      "name": "Clear",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Left",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Right",
+      "description": ""
+    }
+  ]
+}

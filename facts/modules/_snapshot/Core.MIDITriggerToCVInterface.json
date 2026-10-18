@@ -1,0 +1,99 @@
+{
+  "plugin": "Core",
+  "slug": "MIDITriggerToCVInterface",
+  "name": "MIDI to Gate",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:02.755Z",
+  "library": {
+    "name": "MIDI to Gate",
+    "description": "Converts MIDI notes from an external device to gates",
+    "tags": [
+      "External",
+      "MIDI"
+    ]
+  },
+  "params": [],
+  "inputs": [],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Gate 1",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Gate 2",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Gate 3",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Gate 4",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Gate 5",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Gate 6",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "Gate 7",
+      "description": ""
+    },
+    {
+      "id": 7,
+      "name": "Gate 8",
+      "description": ""
+    },
+    {
+      "id": 8,
+      "name": "Gate 9",
+      "description": ""
+    },
+    {
+      "id": 9,
+      "name": "Gate 10",
+      "description": ""
+    },
+    {
+      "id": 10,
+      "name": "Gate 11",
+      "description": ""
+    },
+    {
+      "id": 11,
+      "name": "Gate 12",
+      "description": ""
+    },
+    {
+      "id": 12,
+      "name": "Gate 13",
+      "description": ""
+    },
+    {
+      "id": 13,
+      "name": "Gate 14",
+      "description": ""
+    },
+    {
+      "id": 14,
+      "name": "Gate 15",
+      "description": ""
+    },
+    {
+      "id": 15,
+      "name": "Gate 16",
+      "description": ""
+    }
+  ]
+}

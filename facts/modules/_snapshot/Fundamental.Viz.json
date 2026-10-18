@@ -1,0 +1,24 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Viz",
+  "name": "Viz",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:52.508Z",
+  "library": {
+    "name": "Viz",
+    "description": "Visualizes all channels of a polyphonic cable",
+    "tags": [
+      "Polyphonic",
+      "Visual"
+    ]
+  },
+  "params": [],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Polyphonic",
+      "description": ""
+    }
+  ],
+  "outputs": []
+}

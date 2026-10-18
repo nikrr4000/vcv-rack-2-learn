@@ -1,0 +1,191 @@
+{
+  "plugin": "Fundamental",
+  "slug": "ADSR",
+  "name": "ADSR EG",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:07.438Z",
+  "library": {
+    "name": "ADSR EG",
+    "description": "Generates an envelope with Attack/Decay/Sustain/Release",
+    "tags": [
+      "Envelope generator",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Attack",
+      "unit": " ms",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "100",
+      "display": {
+        "min": "1",
+        "mid": "100",
+        "max": "10000"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Decay",
+      "unit": " ms",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "100",
+      "display": {
+        "min": "1",
+        "mid": "100",
+        "max": "10000"
+      },
+      "snap": false
+    },
+    {
+      "id": 2,
+      "name": "Sustain",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "50",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 3,
+      "name": "Release",
+      "unit": " ms",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "100",
+      "display": {
+        "min": "1",
+        "mid": "100",
+        "max": "10000"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Attack CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Decay CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "Sustain CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "Release CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 8,
+      "name": "Push",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "",
+      "display": {
+        "min": "",
+        "mid": "",
+        "max": ""
+      },
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Attack",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Decay",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Sustain",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Release",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Gate",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Retrigger",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Envelope",
+      "description": ""
+    }
+  ]
+}

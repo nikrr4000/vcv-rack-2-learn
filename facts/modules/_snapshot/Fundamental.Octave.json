@@ -1,0 +1,51 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Octave",
+  "name": "Octave",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:21.053Z",
+  "library": {
+    "name": "Octave",
+    "description": "Shifts 1V/oct pitch CV by octaves",
+    "tags": [
+      "Utility",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Shift",
+      "unit": " oct",
+      "min": -4,
+      "max": 4,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-4",
+        "mid": "0",
+        "max": "4"
+      },
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "1V/octave pitch",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Octave shift CV",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Pitch",
+      "description": ""
+    }
+  ]
+}

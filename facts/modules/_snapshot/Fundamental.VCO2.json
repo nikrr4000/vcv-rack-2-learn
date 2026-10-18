@@ -1,0 +1,159 @@
+{
+  "plugin": "Fundamental",
+  "slug": "VCO2",
+  "name": "Wavetable VCO",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:52.304Z",
+  "library": {
+    "name": "Wavetable VCO",
+    "description": "Voltage-controlled wavetable oscillator",
+    "tags": [
+      "Oscillator",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Sync",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "Hard",
+      "display": {
+        "min": "Hard",
+        "mid": "Soft",
+        "max": "Soft"
+      },
+      "options": [
+        "Hard",
+        "Soft"
+      ],
+      "snap": true
+    },
+    {
+      "id": 2,
+      "name": "Frequency",
+      "unit": " Hz",
+      "min": -75,
+      "max": 75,
+      "default": 0,
+      "displayDefault": "261.63",
+      "display": {
+        "min": "3.4375",
+        "mid": "261.63",
+        "max": "19912"
+      },
+      "snap": false
+    },
+    {
+      "id": 3,
+      "name": "Wavetable position",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Frequency modulation",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Wavetable position CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "FM mode",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "1V/octave",
+      "display": {
+        "min": "1V/octave",
+        "mid": "Through-zero linear",
+        "max": "Through-zero linear"
+      },
+      "options": [
+        "1V/octave",
+        "Through-zero linear"
+      ],
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Frequency modulation",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Sync",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Wavetable position",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "1V/octave pitch",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Wavetable",
+      "description": ""
+    }
+  ]
+}

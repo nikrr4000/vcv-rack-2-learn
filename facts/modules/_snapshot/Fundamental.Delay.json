@@ -1,0 +1,180 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Delay",
+  "name": "Delay",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:10.921Z",
+  "library": {
+    "name": "Delay",
+    "description": "",
+    "tags": [
+      "Delay"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Time",
+      "unit": " s",
+      "min": 0,
+      "max": 1,
+      "default": 0.674743,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0.001",
+        "mid": "0.1",
+        "max": "10"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Feedback",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "50",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 2,
+      "name": "Tone",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 3,
+      "name": "Mix",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "50",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Time CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Feedback CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "Tone CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "Mix CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Time",
+      "description": "1V/octave when Time CV is 100%"
+    },
+    {
+      "id": 1,
+      "name": "Feedback",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Tone",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Mix",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Audio",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Clock",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Mix",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Wet",
+      "description": ""
+    }
+  ]
+}

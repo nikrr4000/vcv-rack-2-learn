@@ -1,0 +1,359 @@
+[
+  {
+    "module": "AudibleInstruments/Clouds",
+    "status": "ok",
+    "params": 13,
+    "inputs": 10,
+    "outputs": 2
+  },
+  {
+    "module": "Core/AudioInterface",
+    "status": "ok",
+    "params": 0,
+    "inputs": 8,
+    "outputs": 8
+  },
+  {
+    "module": "Core/AudioInterface16",
+    "status": "ok",
+    "params": 0,
+    "inputs": 16,
+    "outputs": 16
+  },
+  {
+    "module": "Core/AudioInterface2",
+    "status": "ok",
+    "params": 1,
+    "inputs": 2,
+    "outputs": 2
+  },
+  {
+    "module": "Core/Blank",
+    "status": "ok",
+    "params": 0,
+    "inputs": 0,
+    "outputs": 0
+  },
+  {
+    "module": "Core/MIDI-Map",
+    "status": "ok",
+    "params": 0,
+    "inputs": 0,
+    "outputs": 0
+  },
+  {
+    "module": "Core/MIDICCToCVInterface",
+    "status": "ok",
+    "params": 0,
+    "inputs": 0,
+    "outputs": 16
+  },
+  {
+    "module": "Core/MIDIToCVInterface",
+    "status": "ok",
+    "params": 0,
+    "inputs": 0,
+    "outputs": 12
+  },
+  {
+    "module": "Core/MIDITriggerToCVInterface",
+    "status": "ok",
+    "params": 0,
+    "inputs": 0,
+    "outputs": 16
+  },
+  {
+    "module": "Core/Notes",
+    "status": "ok",
+    "params": 0,
+    "inputs": 0,
+    "outputs": 0
+  },
+  {
+    "module": "Fundamental/8vert",
+    "status": "ok",
+    "params": 8,
+    "inputs": 8,
+    "outputs": 8
+  },
+  {
+    "module": "Fundamental/ADSR",
+    "status": "ok",
+    "params": 9,
+    "inputs": 6,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/CVMix",
+    "status": "ok",
+    "params": 3,
+    "inputs": 3,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/Compare",
+    "status": "ok",
+    "params": 1,
+    "inputs": 2,
+    "outputs": 8
+  },
+  {
+    "module": "Fundamental/Delay",
+    "status": "ok",
+    "params": 8,
+    "inputs": 6,
+    "outputs": 2
+  },
+  {
+    "module": "Fundamental/Fade",
+    "status": "ok",
+    "params": 2,
+    "inputs": 3,
+    "outputs": 2
+  },
+  {
+    "module": "Fundamental/Gates",
+    "status": "ok",
+    "params": 2,
+    "inputs": 3,
+    "outputs": 6
+  },
+  {
+    "module": "Fundamental/LFO",
+    "status": "ok",
+    "params": 7,
+    "inputs": 5,
+    "outputs": 4
+  },
+  {
+    "module": "Fundamental/LFO2",
+    "status": "ok",
+    "params": 6,
+    "inputs": 4,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/Logic",
+    "status": "ok",
+    "params": 1,
+    "inputs": 2,
+    "outputs": 8
+  },
+  {
+    "module": "Fundamental/Merge",
+    "status": "ok",
+    "params": 0,
+    "inputs": 16,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/MidSide",
+    "status": "ok",
+    "params": 2,
+    "inputs": 6,
+    "outputs": 4
+  },
+  {
+    "module": "Fundamental/Mixer",
+    "status": "ok",
+    "params": 1,
+    "inputs": 6,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/Mult",
+    "status": "ok",
+    "params": 0,
+    "inputs": 1,
+    "outputs": 8
+  },
+  {
+    "module": "Fundamental/Mutes",
+    "status": "ok",
+    "params": 10,
+    "inputs": 10,
+    "outputs": 10
+  },
+  {
+    "module": "Fundamental/Noise",
+    "status": "ok",
+    "params": 0,
+    "inputs": 0,
+    "outputs": 7
+  },
+  {
+    "module": "Fundamental/Octave",
+    "status": "ok",
+    "params": 1,
+    "inputs": 2,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/Process",
+    "status": "ok",
+    "params": 2,
+    "inputs": 3,
+    "outputs": 6
+  },
+  {
+    "module": "Fundamental/Pulses",
+    "status": "ok",
+    "params": 10,
+    "inputs": 0,
+    "outputs": 20
+  },
+  {
+    "module": "Fundamental/Push",
+    "status": "ok",
+    "params": 2,
+    "inputs": 2,
+    "outputs": 2
+  },
+  {
+    "module": "Fundamental/Quantizer",
+    "status": "ok",
+    "params": 1,
+    "inputs": 1,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/Random",
+    "status": "ok",
+    "params": 10,
+    "inputs": 6,
+    "outputs": 5
+  },
+  {
+    "module": "Fundamental/RandomValues",
+    "status": "ok",
+    "params": 1,
+    "inputs": 1,
+    "outputs": 7
+  },
+  {
+    "module": "Fundamental/Rescale",
+    "status": "ok",
+    "params": 4,
+    "inputs": 1,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/SEQ3",
+    "status": "ok",
+    "params": 39,
+    "inputs": 5,
+    "outputs": 16
+  },
+  {
+    "module": "Fundamental/SHASR",
+    "status": "ok",
+    "params": 3,
+    "inputs": 16,
+    "outputs": 8
+  },
+  {
+    "module": "Fundamental/Scope",
+    "status": "ok",
+    "params": 8,
+    "inputs": 3,
+    "outputs": 2
+  },
+  {
+    "module": "Fundamental/SequentialSwitch1",
+    "status": "ok",
+    "params": 1,
+    "inputs": 3,
+    "outputs": 4
+  },
+  {
+    "module": "Fundamental/SequentialSwitch2",
+    "status": "ok",
+    "params": 1,
+    "inputs": 6,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/Split",
+    "status": "ok",
+    "params": 0,
+    "inputs": 1,
+    "outputs": 16
+  },
+  {
+    "module": "Fundamental/Sum",
+    "status": "ok",
+    "params": 1,
+    "inputs": 1,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/VCA-1",
+    "status": "ok",
+    "params": 2,
+    "inputs": 2,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/VCF",
+    "status": "ok",
+    "params": 7,
+    "inputs": 4,
+    "outputs": 2
+  },
+  {
+    "module": "Fundamental/VCMixer",
+    "status": "ok",
+    "params": 5,
+    "inputs": 9,
+    "outputs": 5
+  },
+  {
+    "module": "Fundamental/VCO",
+    "status": "ok",
+    "params": 8,
+    "inputs": 4,
+    "outputs": 4
+  },
+  {
+    "module": "Fundamental/VCO2",
+    "status": "ok",
+    "params": 7,
+    "inputs": 4,
+    "outputs": 1
+  },
+  {
+    "module": "Fundamental/Viz",
+    "status": "ok",
+    "params": 0,
+    "inputs": 1,
+    "outputs": 0
+  },
+  {
+    "module": "ImpromptuModular/Clocked",
+    "status": "ok",
+    "params": 20,
+    "inputs": 7,
+    "outputs": 7
+  },
+  {
+    "module": "VCV-Recorder/Recorder",
+    "status": "ok",
+    "params": 2,
+    "inputs": 4,
+    "outputs": 0
+  },
+  {
+    "module": "VCVRackMcpServer/RackMcpServer",
+    "status": "ok",
+    "params": 2,
+    "inputs": 0,
+    "outputs": 1
+  },
+  {
+    "module": "Valley/Plateau",
+    "status": "ok",
+    "params": 31,
+    "inputs": 17,
+    "outputs": 2
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "plugin": "VCV-Recorder",
+  "slug": "Recorder",
+  "name": "Recorder",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:58.149Z",
+  "note": "parameters were not moved: the record button would start writing a file",
+  "library": {
+    "name": "Recorder",
+    "description": "Records stereo audio and video to a file",
+    "tags": [
+      "Recording",
+      "Visual"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Level",
+      "unit": " dB",
+      "min": 0,
+      "max": 2,
+      "default": 1,
+      "displayDefault": "0",
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Record",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "",
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Gate",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Trigger",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Left/mono",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Right",
+      "description": ""
+    }
+  ],
+  "outputs": []
+}

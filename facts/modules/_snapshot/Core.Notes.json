@@ -1,0 +1,17 @@
+{
+  "plugin": "Core",
+  "slug": "Notes",
+  "name": "Notes",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:02.958Z",
+  "library": {
+    "name": "Notes",
+    "description": "Write text for patch notes or artist attribution",
+    "tags": [
+      "Blank"
+    ]
+  },
+  "params": [],
+  "inputs": [],
+  "outputs": []
+}

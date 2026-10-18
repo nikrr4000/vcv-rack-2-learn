@@ -1,0 +1,46 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Sum",
+  "name": "Sum",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:44.104Z",
+  "library": {
+    "name": "Sum",
+    "description": "Sums all channels of a polyphonic cable",
+    "tags": [
+      "Polyphonic",
+      "Utility"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Level",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Polyphonic",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Monophonic",
+      "description": ""
+    }
+  ]
+}

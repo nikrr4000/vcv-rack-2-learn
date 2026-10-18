@@ -1,0 +1,92 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Rescale",
+  "name": "Rescale",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:29.666Z",
+  "library": {
+    "name": "Rescale",
+    "description": "Rescales voltages with gain, offset, and range limiting",
+    "tags": [
+      "Attenuator",
+      "Utility",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Gain",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Offset",
+      "unit": " V",
+      "min": -10,
+      "max": 10,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-10",
+        "mid": "0",
+        "max": "10"
+      },
+      "snap": false
+    },
+    {
+      "id": 2,
+      "name": "Maximum",
+      "unit": " V",
+      "min": -10,
+      "max": 10,
+      "default": 10,
+      "displayDefault": "10",
+      "display": {
+        "min": "-10",
+        "mid": "0",
+        "max": "10"
+      },
+      "snap": false
+    },
+    {
+      "id": 3,
+      "name": "Minimum",
+      "unit": " V",
+      "min": -10,
+      "max": 10,
+      "default": -10,
+      "displayDefault": "-10",
+      "display": {
+        "min": "-10",
+        "mid": "0",
+        "max": "10"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Signal",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Signal",
+      "description": ""
+    }
+  ]
+}

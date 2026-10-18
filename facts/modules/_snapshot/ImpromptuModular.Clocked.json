@@ -1,0 +1,390 @@
+{
+  "plugin": "ImpromptuModular",
+  "slug": "Clocked",
+  "name": "Clocked",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:57.940Z",
+  "library": {
+    "name": "Clocked",
+    "description": "Chainable master clock with swing, clock delay and pulse width",
+    "tags": [
+      "Clock generator"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Master clock",
+      "unit": " BPM",
+      "min": 30,
+      "max": 300,
+      "default": 120,
+      "displayDefault": "120",
+      "display": {
+        "min": "30",
+        "mid": "165",
+        "max": "300"
+      },
+      "snap": true
+    },
+    {
+      "id": 1,
+      "name": "Clk 1 ratio",
+      "unit": "",
+      "min": -34,
+      "max": 34,
+      "default": 0,
+      "displayDefault": "1",
+      "display": {
+        "min": "-96",
+        "mid": "1",
+        "max": "96"
+      },
+      "snap": true
+    },
+    {
+      "id": 2,
+      "name": "Clk 2 ratio",
+      "unit": "",
+      "min": -34,
+      "max": 34,
+      "default": 0,
+      "displayDefault": "1",
+      "display": {
+        "min": "-96",
+        "mid": "1",
+        "max": "96"
+      },
+      "snap": true
+    },
+    {
+      "id": 3,
+      "name": "Clk 3 ratio",
+      "unit": "",
+      "min": -34,
+      "max": 34,
+      "default": 0,
+      "displayDefault": "1",
+      "display": {
+        "min": "-96",
+        "mid": "1",
+        "max": "96"
+      },
+      "snap": true
+    },
+    {
+      "id": 4,
+      "name": "Swing clk",
+      "unit": "",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Swing clk 1",
+      "unit": "",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "Swing clk 2",
+      "unit": "",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "Swing clk 3",
+      "unit": "",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-1",
+        "mid": "0",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 8,
+      "name": "Pulse width clk",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 9,
+      "name": "Pulse width clk 1",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 10,
+      "name": "Pulse width clk 2",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 11,
+      "name": "Pulse width clk 3",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "displayDefault": "0.5",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 12,
+      "name": "Reset",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "1",
+        "max": "1"
+      },
+      "snap": true
+    },
+    {
+      "id": 13,
+      "name": "Run",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "1",
+        "max": "1"
+      },
+      "snap": true
+    },
+    {
+      "id": 14,
+      "name": "",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 15,
+      "name": "Delay clk 1",
+      "unit": "",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "4",
+        "max": "7"
+      },
+      "snap": true
+    },
+    {
+      "id": 16,
+      "name": "Delay clk 2",
+      "unit": "",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "4",
+        "max": "7"
+      },
+      "snap": true
+    },
+    {
+      "id": 17,
+      "name": "Delay clk 3",
+      "unit": "",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "4",
+        "max": "7"
+      },
+      "snap": true
+    },
+    {
+      "id": 18,
+      "name": "Bpm mode prev",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "1",
+        "max": "1"
+      },
+      "snap": true
+    },
+    {
+      "id": 19,
+      "name": "Bpm mode next",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "1",
+        "max": "1"
+      },
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Unused 1",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Unused 2",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Unused 3",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Unused 4",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Reset",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Run",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "BPM CV / Ext clock",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Master clock",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Clock 1",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Clock 2",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Clock 3",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Reset",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Run",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "BPM CV / Ext clock thru",
+      "description": ""
+    }
+  ]
+}

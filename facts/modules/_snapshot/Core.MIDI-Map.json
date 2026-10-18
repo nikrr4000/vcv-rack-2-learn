@@ -1,0 +1,18 @@
+{
+  "plugin": "Core",
+  "slug": "MIDI-Map",
+  "name": "MIDI Map",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:02.137Z",
+  "library": {
+    "name": "MIDI Map",
+    "description": "Controls parameters (knobs, sliders, switches) directly with MIDI CC",
+    "tags": [
+      "External",
+      "MIDI"
+    ]
+  },
+  "params": [],
+  "inputs": [],
+  "outputs": []
+}

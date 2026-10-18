@@ -1,0 +1,189 @@
+{
+  "plugin": "Fundamental",
+  "slug": "VCO",
+  "name": "VCO",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:50.253Z",
+  "library": {
+    "name": "VCO",
+    "description": "Voltage-controlled oscillator",
+    "tags": [
+      "Oscillator",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Sync mode",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "Hard",
+      "display": {
+        "min": "Soft",
+        "mid": "Hard",
+        "max": "Hard"
+      },
+      "options": [
+        "Soft",
+        "Hard"
+      ],
+      "snap": true
+    },
+    {
+      "id": 2,
+      "name": "Frequency",
+      "unit": " Hz",
+      "min": -54,
+      "max": 54,
+      "default": 0,
+      "displayDefault": "261.63",
+      "display": {
+        "min": "11.562",
+        "mid": "261.63",
+        "max": "5919.9"
+      },
+      "snap": false
+    },
+    {
+      "id": 3,
+      "name": "",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Frequency modulation",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Pulse width",
+      "unit": "%",
+      "min": 0.01,
+      "max": 0.99,
+      "default": 0.5,
+      "displayDefault": "50",
+      "display": {
+        "min": "1",
+        "mid": "50",
+        "max": "99"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "Pulse width modulation",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "FM mode",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "1V/octave",
+      "display": {
+        "min": "1V/octave",
+        "mid": "Linear",
+        "max": "Linear"
+      },
+      "options": [
+        "1V/octave",
+        "Linear"
+      ],
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "1V/octave pitch",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Frequency modulation",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Sync",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Pulse width modulation",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Sine",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Triangle",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Sawtooth",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Square",
+      "description": ""
+    }
+  ]
+}

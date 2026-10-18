@@ -1,0 +1,95 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Gates",
+  "name": "Gates",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:12.292Z",
+  "library": {
+    "name": "Gates",
+    "description": "Gate processor",
+    "tags": [
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Gate length",
+      "unit": " ms",
+      "min": -9.965784,
+      "max": 3.321928,
+      "default": -3.321928,
+      "displayDefault": "100",
+      "display": {
+        "min": "1",
+        "mid": "100",
+        "max": "10000"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Reset flip/flop",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "",
+      "display": {
+        "min": "",
+        "mid": "",
+        "max": ""
+      },
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Gate length",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Gate",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Reset flip/flop",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Rising edge trigger",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Falling edge trigger",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Flip",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Flop",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Gate",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Gate delay",
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "plugin": "Fundamental",
+  "slug": "SequentialSwitch2",
+  "name": "Sequential Switch 4 to 1",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:43.413Z",
+  "library": {
+    "name": "Sequential Switch 4 to 1",
+    "description": "Routes one of 4 inputs to 1 output",
+    "tags": [
+      "Switch",
+      "Utility",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Steps",
+      "unit": "",
+      "min": 0,
+      "max": 2,
+      "default": 2,
+      "displayDefault": "4",
+      "display": {
+        "min": "2",
+        "mid": "3",
+        "max": "4"
+      },
+      "options": [
+        "2",
+        "3",
+        "4"
+      ],
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Clock",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Reset",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Channel 1",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Channel 2",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Channel 3",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Channel 4",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Main",
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "plugin": "Core",
+  "slug": "AudioInterface2",
+  "name": "Audio 2",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:01.727Z",
+  "library": {
+    "name": "Audio 2",
+    "description": "Sends audio and CV to/from an audio device",
+    "tags": [
+      "External"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Level",
+      "unit": " dB",
+      "min": 0,
+      "max": 2,
+      "default": 1,
+      "displayDefault": "0",
+      "display": {
+        "min": "-inf",
+        "mid": "0",
+        "max": "12.041"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "To \"device output 1\"",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "To \"device output 2\"",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "From \"device input 1\"",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "From \"device input 2\"",
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Random",
+  "name": "Random",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:28.062Z",
+  "library": {
+    "name": "Random",
+    "description": "Random CV generator",
+    "tags": [
+      "Random",
+      "Sample and hold",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Internal trigger rate",
+      "unit": " Hz",
+      "min": -8.965784,
+      "max": 10.965784,
+      "default": 1,
+      "displayDefault": "2",
+      "display": {
+        "min": "0.002",
+        "mid": "2",
+        "max": "2000"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Shape",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 2,
+      "name": "Offset",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "Bipolar",
+      "display": {
+        "min": "Bipolar",
+        "mid": "Unipolar",
+        "max": "Unipolar"
+      },
+      "options": [
+        "Bipolar",
+        "Unipolar"
+      ],
+      "snap": true
+    },
+    {
+      "id": 3,
+      "name": "",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "0.5",
+        "max": "1"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Trigger probability",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Random spread",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 6,
+      "name": "Internal trigger rate CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "Shape CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 8,
+      "name": "Trigger probability CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 9,
+      "name": "Random spread CV",
+      "unit": "%",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-100",
+        "mid": "0",
+        "max": "100"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Internal trigger rate",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Shape",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Trigger",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "External",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Trigger probability",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Random spread",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Stepped",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Linear",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Smooth",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Exponential",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Trigger",
+      "description": ""
+    }
+  ]
+}

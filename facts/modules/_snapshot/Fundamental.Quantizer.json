@@ -1,0 +1,46 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Quantizer",
+  "name": "Quantizer",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:25.462Z",
+  "library": {
+    "name": "Quantizer",
+    "description": "12-note quantizer and scale selector",
+    "tags": [
+      "Quantizer",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Pre-offset",
+      "unit": " semitones",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-12",
+        "mid": "0",
+        "max": "12"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "1V/octave pitch",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Pitch",
+      "description": ""
+    }
+  ]
+}

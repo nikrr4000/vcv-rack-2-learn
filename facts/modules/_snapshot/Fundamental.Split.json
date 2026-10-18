@@ -1,0 +1,105 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Split",
+  "name": "Split",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:43.621Z",
+  "library": {
+    "name": "Split",
+    "description": "Splits a polyphonic cable into multiple monophonic cables",
+    "tags": [
+      "Polyphonic",
+      "Utility"
+    ]
+  },
+  "params": [],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Polyphonic",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Channel 1",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Channel 2",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Channel 3",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Channel 4",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Channel 5",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Channel 6",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "Channel 7",
+      "description": ""
+    },
+    {
+      "id": 7,
+      "name": "Channel 8",
+      "description": ""
+    },
+    {
+      "id": 8,
+      "name": "Channel 9",
+      "description": ""
+    },
+    {
+      "id": 9,
+      "name": "Channel 10",
+      "description": ""
+    },
+    {
+      "id": 10,
+      "name": "Channel 11",
+      "description": ""
+    },
+    {
+      "id": 11,
+      "name": "Channel 12",
+      "description": ""
+    },
+    {
+      "id": 12,
+      "name": "Channel 13",
+      "description": ""
+    },
+    {
+      "id": 13,
+      "name": "Channel 14",
+      "description": ""
+    },
+    {
+      "id": 14,
+      "name": "Channel 15",
+      "description": ""
+    },
+    {
+      "id": 15,
+      "name": "Channel 16",
+      "description": ""
+    }
+  ]
+}

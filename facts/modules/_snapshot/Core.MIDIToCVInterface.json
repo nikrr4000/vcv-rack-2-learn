@@ -1,0 +1,80 @@
+{
+  "plugin": "Core",
+  "slug": "MIDIToCVInterface",
+  "name": "MIDI to CV",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:02.548Z",
+  "library": {
+    "name": "MIDI to CV",
+    "description": "Converts MIDI from an external device to CV and gates",
+    "tags": [
+      "External",
+      "MIDI",
+      "Polyphonic"
+    ]
+  },
+  "params": [],
+  "inputs": [],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "1V/octave pitch",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Gate",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Velocity",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Aftertouch",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Pitch wheel",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Mod wheel",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "Retrigger",
+      "description": ""
+    },
+    {
+      "id": 7,
+      "name": "Clock",
+      "description": ""
+    },
+    {
+      "id": 8,
+      "name": "Clock divider",
+      "description": ""
+    },
+    {
+      "id": 9,
+      "name": "Start trigger",
+      "description": ""
+    },
+    {
+      "id": 10,
+      "name": "Stop trigger",
+      "description": ""
+    },
+    {
+      "id": 11,
+      "name": "Continue trigger",
+      "description": ""
+    }
+  ]
+}

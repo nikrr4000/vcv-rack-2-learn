@@ -1,0 +1,101 @@
+{
+  "plugin": "Fundamental",
+  "slug": "MidSide",
+  "name": "Mid/Side",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:17.152Z",
+  "library": {
+    "name": "Mid/Side",
+    "description": "Encodes/decodes between mid/side and left/right stereo signals",
+    "tags": [
+      "Utility",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Encoder width",
+      "unit": "%",
+      "min": 0,
+      "max": 2,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "100",
+        "max": "200"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Decoder width",
+      "unit": "%",
+      "min": 0,
+      "max": 2,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "100",
+        "max": "200"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Encoder width",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Encoder left",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Encoder right",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Decoder width",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Decoder mid",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Decoder side",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Encoder mid",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Encoder side",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Decoder left",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Decoder right",
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "plugin": "Fundamental",
+  "slug": "VCMixer",
+  "name": "VCA Mix",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:48.112Z",
+  "library": {
+    "name": "VCA Mix",
+    "description": "Mixes 4 signals with built-in VCAs",
+    "tags": [
+      "Mixer",
+      "Voltage-controlled amplifier",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Mix level",
+      "unit": " dB",
+      "min": 0,
+      "max": 2,
+      "default": 1,
+      "displayDefault": "0",
+      "display": {
+        "min": "-inf",
+        "mid": "0",
+        "max": "6.0206"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Channel 1 level",
+      "unit": " dB",
+      "min": 0,
+      "max": 1.414214,
+      "default": 1,
+      "displayDefault": "0",
+      "display": {
+        "min": "-inf",
+        "mid": "-6.0206",
+        "max": "6.0206"
+      },
+      "snap": false
+    },
+    {
+      "id": 2,
+      "name": "Channel 2 level",
+      "unit": " dB",
+      "min": 0,
+      "max": 1.414214,
+      "default": 1,
+      "displayDefault": "0",
+      "display": {
+        "min": "-inf",
+        "mid": "-6.0206",
+        "max": "6.0206"
+      },
+      "snap": false
+    },
+    {
+      "id": 3,
+      "name": "Channel 3 level",
+      "unit": " dB",
+      "min": 0,
+      "max": 1.414214,
+      "default": 1,
+      "displayDefault": "0",
+      "display": {
+        "min": "-inf",
+        "mid": "-6.0206",
+        "max": "6.0206"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Channel 4 level",
+      "unit": " dB",
+      "min": 0,
+      "max": 1.414214,
+      "default": 1,
+      "displayDefault": "0",
+      "display": {
+        "min": "-inf",
+        "mid": "-6.0206",
+        "max": "6.0206"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Mix CV",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Channel 1",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Channel 2",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Channel 3",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Channel 4",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Channel 1 CV",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "Channel 2 CV",
+      "description": ""
+    },
+    {
+      "id": 7,
+      "name": "Channel 3 CV",
+      "description": ""
+    },
+    {
+      "id": 8,
+      "name": "Channel 4 CV",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Mix",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Channel 1",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Channel 2",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Channel 3",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Channel 4",
+      "description": ""
+    }
+  ]
+}

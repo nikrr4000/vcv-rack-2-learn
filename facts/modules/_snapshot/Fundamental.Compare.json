@@ -1,0 +1,86 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Compare",
+  "name": "Compare",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:08.804Z",
+  "library": {
+    "name": "Compare",
+    "description": "Compares two voltages",
+    "tags": [
+      "Utility",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "B offset",
+      "unit": " V",
+      "min": -10,
+      "max": 10,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-10",
+        "mid": "0",
+        "max": "10"
+      },
+      "snap": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "A",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "B",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Maximum",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Minimum",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Clip",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Limit",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Clip gate",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Limit gate",
+      "description": ""
+    },
+    {
+      "id": 6,
+      "name": "A>B",
+      "description": ""
+    },
+    {
+      "id": 7,
+      "name": "A<B",
+      "description": ""
+    }
+  ]
+}

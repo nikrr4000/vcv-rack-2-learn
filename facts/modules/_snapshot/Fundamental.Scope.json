@@ -1,0 +1,174 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Scope",
+  "name": "Scope",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:42.454Z",
+  "library": {
+    "name": "Scope",
+    "description": "Inspect waveforms with an oscilloscope",
+    "tags": [
+      "Visual",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Gain 1",
+      "unit": " V/screen",
+      "min": 0,
+      "max": 8,
+      "default": 0,
+      "displayDefault": "20",
+      "display": {
+        "min": "20",
+        "mid": "1.25",
+        "max": "0.078125"
+      },
+      "snap": true
+    },
+    {
+      "id": 1,
+      "name": "Offset 1",
+      "unit": " V",
+      "min": -10,
+      "max": 10,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-10",
+        "mid": "0",
+        "max": "10"
+      },
+      "snap": false
+    },
+    {
+      "id": 2,
+      "name": "Gain 2",
+      "unit": " V/screen",
+      "min": 0,
+      "max": 8,
+      "default": 0,
+      "displayDefault": "20",
+      "display": {
+        "min": "20",
+        "mid": "1.25",
+        "max": "0.078125"
+      },
+      "snap": true
+    },
+    {
+      "id": 3,
+      "name": "Offset 2",
+      "unit": " V",
+      "min": -10,
+      "max": 10,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-10",
+        "mid": "0",
+        "max": "10"
+      },
+      "snap": false
+    },
+    {
+      "id": 4,
+      "name": "Time",
+      "unit": " ms/screen",
+      "min": -5.643856,
+      "max": 7.643856,
+      "default": 1,
+      "displayDefault": "500",
+      "display": {
+        "min": "50000",
+        "mid": "500",
+        "max": "5"
+      },
+      "snap": false
+    },
+    {
+      "id": 5,
+      "name": "Scope mode",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "1 & 2",
+      "display": {
+        "min": "1 & 2",
+        "mid": "1 x 2",
+        "max": "1 x 2"
+      },
+      "options": [
+        "1 & 2",
+        "1 x 2"
+      ],
+      "snap": true
+    },
+    {
+      "id": 6,
+      "name": "Trigger threshold",
+      "unit": " V",
+      "min": -10,
+      "max": 10,
+      "default": 0,
+      "displayDefault": "0",
+      "display": {
+        "min": "-10",
+        "mid": "0",
+        "max": "10"
+      },
+      "snap": false
+    },
+    {
+      "id": 7,
+      "name": "Trigger",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "Disabled",
+      "display": {
+        "min": "Enabled",
+        "mid": "Disabled",
+        "max": "Disabled"
+      },
+      "options": [
+        "Enabled",
+        "Disabled"
+      ],
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Ch 1",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Ch 2",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "External trigger",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Ch 1",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Ch 2",
+      "description": ""
+    }
+  ]
+}

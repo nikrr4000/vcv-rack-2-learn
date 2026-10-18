@@ -1,0 +1,53 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Noise",
+  "name": "Noise",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:20.607Z",
+  "library": {
+    "name": "Noise",
+    "description": "Multicolored noise generator",
+    "tags": [
+      "Noise"
+    ]
+  },
+  "params": [],
+  "inputs": [],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "White noise",
+      "description": "0 dB/octave power density"
+    },
+    {
+      "id": 1,
+      "name": "Pink noise",
+      "description": "-3 dB/octave power density"
+    },
+    {
+      "id": 2,
+      "name": "Red noise",
+      "description": "-6 dB/octave power density"
+    },
+    {
+      "id": 3,
+      "name": "Violet noise",
+      "description": "+6 dB/octave power density"
+    },
+    {
+      "id": 4,
+      "name": "Blue noise",
+      "description": "+3 dB/octave power density"
+    },
+    {
+      "id": 5,
+      "name": "Gray noise",
+      "description": "Psychoacoustic equal loudness"
+    },
+    {
+      "id": 6,
+      "name": "Black noise",
+      "description": "Uniform random numbers"
+    }
+  ]
+}

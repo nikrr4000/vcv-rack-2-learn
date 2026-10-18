@@ -1,0 +1,70 @@
+{
+  "plugin": "Fundamental",
+  "slug": "VCA-1",
+  "name": "VCA",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:44.812Z",
+  "library": {
+    "name": "VCA",
+    "description": "Voltage-controlled amplifier",
+    "tags": [
+      "Voltage-controlled amplifier",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Level",
+      "unit": "%",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "100",
+      "display": {
+        "min": "0",
+        "mid": "50",
+        "max": "100"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Response mode",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "displayDefault": "Linear",
+      "display": {
+        "min": "Exponential",
+        "mid": "Linear",
+        "max": "Linear"
+      },
+      "options": [
+        "Exponential",
+        "Linear"
+      ],
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "CV",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Channel",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Channel",
+      "description": ""
+    }
+  ]
+}

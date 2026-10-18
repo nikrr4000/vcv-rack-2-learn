@@ -1,0 +1,97 @@
+{
+  "plugin": "Fundamental",
+  "slug": "Process",
+  "name": "Process",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:21.738Z",
+  "library": {
+    "name": "Process",
+    "description": "CV processor",
+    "tags": [
+      "Sample and hold",
+      "Slew limiter",
+      "Polyphonic"
+    ]
+  },
+  "params": [
+    {
+      "id": 0,
+      "name": "Slew",
+      "unit": " ms/V",
+      "min": -9.965784,
+      "max": 3.321928,
+      "default": -9.965784,
+      "displayDefault": "0",
+      "display": {
+        "min": "0",
+        "mid": "100",
+        "max": "10000"
+      },
+      "snap": false
+    },
+    {
+      "id": 1,
+      "name": "Gate",
+      "unit": "",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "displayDefault": "",
+      "display": {
+        "min": "",
+        "mid": "",
+        "max": ""
+      },
+      "snap": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": 0,
+      "name": "Slew",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Voltage",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Gate",
+      "description": ""
+    }
+  ],
+  "outputs": [
+    {
+      "id": 0,
+      "name": "Sample & hold",
+      "description": ""
+    },
+    {
+      "id": 1,
+      "name": "Sample & hold 2",
+      "description": ""
+    },
+    {
+      "id": 2,
+      "name": "Track & hold",
+      "description": ""
+    },
+    {
+      "id": 3,
+      "name": "Hold & track",
+      "description": ""
+    },
+    {
+      "id": 4,
+      "name": "Slew",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "name": "Glide",
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "plugin": "Core",
+  "slug": "Blank",
+  "name": "Blank",
+  "origin": "live",
+  "capturedAt": "2026-10-18T22:12:01.932Z",
+  "library": {
+    "name": "Blank",
+    "description": "A resizable blank panel",
+    "tags": [
+      "Blank"
+    ]
+  },
+  "params": [],
+  "inputs": [],
+  "outputs": []
+}
