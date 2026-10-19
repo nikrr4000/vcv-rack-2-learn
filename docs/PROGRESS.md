@@ -34,9 +34,9 @@ Read this first after a compaction or restart; continue from the first task that
 | W4 | 4.4 build.sh (+ --test), gallery.vcv | DONE | 1b471d2 | |
 | W5 | 5.1 pilot p1-01 + full QA | DONE | 0c6ef47 | validate 0/0, compile 0/0, live verify 4/4 blocks, template checks ok, harness previews checked; in-Rack run → rack-test.mjs (owner) |
 | W5 | 5.2 pilot p3-05 | DONE | 0c6ef47 | same: live verify 3/3, template checks ok |
-| W6 | tutor runtime, /api/rack/*, stub, tests | DONE | (W6 commit) | TUTOR.md 600 words; runner + probe-and-fallback; /api/rack/*; vault note log; tutor model/effort in Settings; tests 14/14 (`node --test app/server/rack/rack.test.mjs`, servers 5185/5186), all server tests 88/88, web e2e-vcv ok; real CLI flags UNVERIFIED (open issue) |
+| W6 | tutor runtime, /api/rack/*, stub, tests | DONE | 2db443c | TUTOR.md 600 words; runner + probe-and-fallback; /api/rack/*; vault note log; tutor model/effort in Settings; tests 14/14 (`node --test app/server/rack/rack.test.mjs`, servers 5185/5186), all server tests 87/87, web e2e-vcv ok; real CLI flags UNVERIFIED (open issue) |
 | W7 | parts 0–9 | TODO | | |
-| W8 | Atlas companion | TODO | | |
+| W8 | Atlas companion | DONE | (W8 commit) | «Модульный синтез» shows Rack progress (block N of M, learned, last lesson), note links (obsidian://), «Как заниматься в Rack» (#/vcv/rack), tutor indicator; old web lesson kept as a «веб-урок» link; checked in the browser on test server 5185; tests 87/87, e2e-vcv ok |
 | W9 | whole-course QA, read-through | TODO | | |
 | W10 | owner-install.sh, final build, REPORT, OWNER_CHECKLIST | TODO | | |
 
@@ -51,6 +51,7 @@ Read this first after a compaction or restart; continue from the first task that
 - Tutor `claude` path: a separate setting `tutorClaudePath` (env `RACK_TUTOR_CLAUDE` wins, else the app's `claudePath`). The fixtures point only the Rack tutor at `vcv/tutor/stub-claude.mjs`, so the web runner's fixture runs keep their own stub.
 - Tutor patch line: the plugin posts it with every question (bench + given modules, from the engine); without it the server summarises the whole patch from REST `:2600` (all modules except Atlas and MCP Server) — REST module positions do not map to pack rows cleanly.
 - Model exchanges are logged by the server when a stream ends; FAQ answers («из урока») arrive as plugin `tutor` events and are logged the same way.
+- `app/dist` was rebuilt (`vite build`, 2026-10-20 02:17) to check W8 in the browser. If the owner's Atlas service on 5175 serves this checkout, it already serves the new UI; with the old server process the Rack parts degrade (no tutor line, no Rack progress) until the service restarts.
 - Long mono values (more than 12 characters, e.g. `To "device output 1"`) may break at spaces; short ones (`440 Гц`) never break. Same in C++ and Node.
 
 ## Open issues
