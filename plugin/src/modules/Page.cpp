@@ -37,7 +37,7 @@ struct PageWidget : AtlasWidget {
 		if (pm())
 			pm()->page = view.text.page;
 	}
-	void onAction(int a, int arg) override { view.action(a, arg); }
+	void onHit(int a, int arg) override { view.action(a, arg); }
 	bool onWheel(float dy) override { return false; }
 	std::string hoverTerm() override { return view.termAt(ptr.x, ptr.y); }
 };

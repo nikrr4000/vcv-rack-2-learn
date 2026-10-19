@@ -10,6 +10,10 @@
  *   probes   [{module: ref, output, ask, samples, interval_ms, expect: {max_gt?, min_lt?, range_gt?}}]
  *   hints    {"module:<ref>" | "cable:<i>" | "param:<i>" | "probe:<i>": text}   (i is 1-based)
  *
+ * Kind `fixed` (debug blocks of the Rack course): `{kind: "fixed", modules, expect_cable: [[ref, out, ref, in], …],
+ * expect_param: [{module, name, display_*}]}` — the expectations become cables/params whose items all
+ * carry the key `fixed` (hint `hints.fixed`). Every result item has a `key` (`module:<ref>`, `cable:<i>`, …).
+ *
  * Ports and parameters are matched by **name** from `GET /modules/:id`, never by index.
  * Several modules of one kind: every assignment of refs to distinct modules is tried and
  * the one that satisfies the most cables and params wins.
@@ -90,7 +94,17 @@ function evaluate(spec, assign, details, cables) {
  * Runs a check. `exclude` — module ids that must not count (the agent's own demo modules).
  * `rack` — the REST client (tests pass a fake). `sleep` — for probes.
  */
-export async function runCheck(spec, { exclude = [], rack = defaultRack, sleep = (ms) => new Promise((r) => setTimeout(r, ms)) } = {}) {
+/** Normalizes a `fixed` check into the plain shape; keys every item as `fixed`. */
+export function normalizeCheck(spec) {
+	if (spec?.kind !== "fixed") return { spec, fixed: false };
+	const cables = (Array.isArray(spec.expect_cable?.[0]) ? spec.expect_cable : spec.expect_cable ? [spec.expect_cable] : []).map((c) => ({ from: [c[0], c[1]], to: [c[2], c[3]] }));
+	const params = Array.isArray(spec.expect_param) ? spec.expect_param : spec.expect_param ? [spec.expect_param] : [];
+	return { spec: { ...spec, cables, params, probes: [] }, fixed: true };
+}
+
+export async function runCheck(rawSpec, { exclude = [], rack = defaultRack, sleep = (ms) => new Promise((r) => setTimeout(r, ms)) } = {}) {
+	const { spec, fixed } = normalizeCheck(rawSpec);
+	const keyOf = (k) => (fixed && !k.startsWith("module:") ? "fixed" : k);
 	const skip = new Set(exclude.map(String));
 	const all = (await rack.modules()).filter((m) => m && !skip.has(String(m.id)));
 	const refs = (spec.modules || []).map((m) => m.ref);
@@ -121,6 +135,7 @@ export async function runCheck(spec, { exclude = [], rack = defaultRack, sleep =
 	for (const m of spec.modules || []) {
 		const ok = Boolean(assign[m.ref]);
 		items.push({
+			key: `module:${m.ref}`,
 			ok,
 			what: `Модуль ${m.slug} в патче`,
 			hint: ok ? null : hints[`module:${m.ref}`] || `Не нашёл модуль ${m.slug} (${m.plugin}). Добавь его из браузера модулей.`,
@@ -129,9 +144,10 @@ export async function runCheck(spec, { exclude = [], rack = defaultRack, sleep =
 	(spec.cables || []).forEach((c, i) => {
 		const ok = cableResults[i];
 		items.push({
+			key: keyOf(`cable:${i + 1}`),
 			ok,
 			what: `Кабель ${nameOf(c.from[0])} «${c.from[1]}» → ${nameOf(c.to[0])} «${c.to[1]}»`,
-			hint: ok ? null : hints[`cable:${i + 1}`] || `Нет кабеля из выхода «${c.from[1]}» модуля ${nameOf(c.from[0])} во вход «${c.to[1]}» модуля ${nameOf(c.to[0])}.`,
+			hint: ok ? null : hints[keyOf(`cable:${i + 1}`)] || `Нет кабеля из выхода «${c.from[1]}» модуля ${nameOf(c.from[0])} во вход «${c.to[1]}» модуля ${nameOf(c.to[0])}.`,
 		});
 	});
 	(spec.params || []).forEach((p, i) => {
@@ -139,9 +155,10 @@ export async function runCheck(spec, { exclude = [], rack = defaultRack, sleep =
 		const d = details[assign[p.module]];
 		const now = d ? (d.params || []).find((x) => norm(x.name) === norm(p.name)) : null;
 		items.push({
+			key: keyOf(`param:${i + 1}`),
 			ok,
 			what: `${nameOf(p.module)}: «${p.name}» ${paramText(p)}`.trim(),
-			hint: ok ? null : hints[`param:${i + 1}`] || (now ? `Сейчас «${p.name}» = ${now.displayValue}${now.unit || ""}.` : `Ручка «${p.name}» не найдена.`),
+			hint: ok ? null : hints[keyOf(`param:${i + 1}`)] || (now ? `Сейчас «${p.name}» = ${now.displayValue}${now.unit || ""}.` : `Ручка «${p.name}» не найдена.`),
 		});
 	});
 	for (const [i, p] of (spec.probes || []).entries()) {
@@ -163,6 +180,7 @@ export async function runCheck(spec, { exclude = [], rack = defaultRack, sleep =
 			}
 		}
 		items.push({
+			key: `probe:${i + 1}`,
 			ok,
 			what: `Сигнал на выходе «${p.output}» модуля ${nameOf(p.module)}`,
 			hint: ok ? null : hints[`probe:${i + 1}`] || p.ask || "Сигнал не меняется.",

@@ -25,19 +25,19 @@ render: $(BIN)/render
 
 $(OBJ)/nanovg.o: $(V)/nanovg/nanovg.c
 	@mkdir -p $(OBJ)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ)/jansson_%.o: $(V)/jansson/%.c
 	@mkdir -p $(OBJ)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(BIN)/unit: $(wildcard $(ROOT)/tests/unit/*.cpp) $(wildcard $(ROOT)/tests/unit/*.hpp) $(CORE_SRC) $(HARNESS_SRC) $(VENDOR_OBJ) $(wildcard $(SRC)/*/*.hpp)
 	@mkdir -p $(BIN)
-	$(CXX) $(CXXFLAGS) $(wildcard $(ROOT)/tests/unit/*.cpp) $(CORE_SRC) $(HARNESS_SRC) $(VENDOR_OBJ) -o $@
+	@$(CXX) $(CXXFLAGS) $(wildcard $(ROOT)/tests/unit/*.cpp) $(CORE_SRC) $(HARNESS_SRC) $(VENDOR_OBJ) -o $@
 
 $(BIN)/render: $(wildcard $(ROOT)/tests/render/*.cpp) $(wildcard $(ROOT)/tests/render/*.hpp) $(CORE_SRC) $(VENDOR_OBJ) $(wildcard $(SRC)/*/*.hpp)
 	@mkdir -p $(BIN)
-	$(CXX) $(CXXFLAGS) $(wildcard $(ROOT)/tests/render/*.cpp) $(CORE_SRC) $(VENDOR_OBJ) -o $@
+	@$(CXX) $(CXXFLAGS) $(wildcard $(ROOT)/tests/render/*.cpp) $(CORE_SRC) $(VENDOR_OBJ) -o $@
 
 clean:
 	rm -rf $(BIN)

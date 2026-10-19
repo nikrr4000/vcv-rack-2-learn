@@ -152,7 +152,7 @@ void AtlasWidget::onButton(const ButtonEvent& e) {
 		const Hit* h = hits.at(e.pos.x, e.pos.y);
 		if (h) {
 			int action = h->action, arg = h->arg;
-			onAction(action, arg);
+			onHit(action, arg);
 			e.consume(this);
 			return;
 		}

@@ -66,7 +66,7 @@ struct AtlasWidget : ModuleWidget {
 	/** Draws the module in a w × h box with hits registered in `hits`. */
 	virtual void drawView(NVGcontext* vg, const Style& st, float w, float h) = 0;
 	/** A click on a hit region. */
-	virtual void onAction(int action, int arg) {}
+	virtual void onHit(int action, int arg) {}
 	/** Wheel over the module; return true when used. */
 	virtual bool onWheel(float dy) { return false; }
 	/** Glossary term under the pointer (for the tooltip), or "". */
