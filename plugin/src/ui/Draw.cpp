@@ -211,6 +211,11 @@ std::vector<Rect> drawDots(NVGcontext* vg, const Style& st, float cx, float cy, 
 	return out;
 }
 
+NVGcolor tint(const Style& st, float a) {
+	NVGcolor p = st.pal.panel, f = st.accent;
+	return nvgRGBf(p.r + (f.r - p.r) * a, p.g + (f.g - p.g) * a, p.b + (f.b - p.b) * a);
+}
+
 NVGcolor okColor(const Style& st) { return st.dark ? nvgRGB(0x7F, 0xB0, 0x82) : nvgRGB(0x3E, 0x7A, 0x45); }
 NVGcolor failColor(const Style& st) { return st.dark ? nvgRGB(0xE0, 0x7A, 0x5F) : nvgRGB(0xB0, 0x45, 0x2E); }
 NVGcolor busyColor(const Style& st) { return st.dark ? nvgRGB(0xE0, 0xB0, 0x5A) : nvgRGB(0xB0, 0x7A, 0x1E); }

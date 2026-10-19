@@ -97,6 +97,9 @@ void drawLight(NVGcontext* vg, const Style& st, float cx, float cy, float r, int
 /** Single-line text truncated with «…» to fit `maxW`. */
 std::string ellipsize(NVGcontext* vg, int font, float size, const std::string& s, float maxW);
 
+/** The accent mixed into the panel color (opaque), e.g. 0.15 for active fills. */
+NVGcolor tint(const Style& st, float amount);
+
 /** Semantic colors that read on both themes. */
 NVGcolor okColor(const Style& st);
 NVGcolor failColor(const Style& st);

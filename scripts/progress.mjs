@@ -7,7 +7,7 @@ const lines = fs.readFileSync(file, "utf8").split("\n");
 let hit = 0;
 const out = lines.map((l) => {
 	const cells = l.split("|");
-	if (cells.length < 7 || !cells[2].trim().startsWith(prefix)) return l;
+	if (cells.length < 7 || !(cells[2].trim() + " ").startsWith(prefix + " ")) return l;
 	hit++;
 	cells[3] = ` ${status} `;
 	if (commit) cells[4] = ` ${commit} `;
