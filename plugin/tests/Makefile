@@ -12,7 +12,7 @@ CXXFLAGS := -std=c++17 -O2 -Wall -Wno-unused-function -I$(SRC) -I$(V)/nanovg -I$
 CFLAGS := -O2 -I$(V)/nanovg -I$(V)/jansson -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TIME_H=1 -DHAVE_FCNTL_H=1 -DHAVE_SCHED_H=1 -DHAVE_GETTIMEOFDAY=1 -DHAVE_SCHED_YIELD=1 -DHAVE_ATOMIC_BUILTINS=1 -DHAVE_SYNC_BUILTINS=1 -DUSE_URANDOM=1 -DINITIAL_HASHTABLE_ORDER=3 -Wno-everything
 
 # Rack-free plugin sources (everything except Rack glue).
-CORE_SRC := $(wildcard $(SRC)/text/*.cpp) $(wildcard $(SRC)/check/*.cpp) $(wildcard $(SRC)/core/*.cpp) $(wildcard $(SRC)/figures/*.cpp) $(wildcard $(SRC)/views/*.cpp) $(wildcard $(SRC)/ui/Draw.cpp)
+CORE_SRC := $(filter-out $(SRC)/check/RackPatch.cpp,$(wildcard $(SRC)/text/*.cpp) $(wildcard $(SRC)/check/*.cpp) $(wildcard $(SRC)/core/*.cpp) $(wildcard $(SRC)/figures/*.cpp) $(wildcard $(SRC)/views/*.cpp) $(wildcard $(SRC)/ui/Draw.cpp))
 JANSSON_SRC := $(wildcard $(V)/jansson/*.c)
 VENDOR_OBJ := $(OBJ)/nanovg.o $(patsubst $(V)/jansson/%.c,$(OBJ)/jansson_%.o,$(JANSSON_SRC))
 HARNESS_SRC := $(ROOT)/tests/render/SoftNvg.cpp
