@@ -41,3 +41,16 @@ $(BIN)/render: $(wildcard $(ROOT)/tests/render/*.cpp) $(wildcard $(ROOT)/tests/r
 
 clean:
 	rm -rf $(BIN)
+
+# Plugin smoke test: loads plugin.dylib with the Rack app's libRack (no window), creates every
+# module and widget (with a module and as a preview), round-trips module data.
+RACK_APP_RES ?= $(HOME)/Applications/VCV Rack 2 Free.app/Contents/Resources
+RACK_SDK := $(ROOT)/../../vcv/.sdk/Rack-SDK
+.PHONY: smoke
+smoke: $(BIN)/smoke
+	@mkdir -p $(BIN)/rackrun && ln -sf "$(RACK_APP_RES)/libRack.dylib" $(BIN)/rackrun/libRack.dylib
+	cd $(BIN)/rackrun && ATLAS_PACK=$(or $(PACK),$(ROOT)/tests/fixtures/pack-sample.json) $(BIN)/smoke $(ROOT)/plugin.dylib
+
+$(BIN)/smoke: $(ROOT)/tests/smoke/smoke.cpp
+	@mkdir -p $(BIN)
+	@$(CXX) -std=c++11 -I$(RACK_SDK)/include -I$(RACK_SDK)/dep/include $< -L$(RACK_SDK) -lRack -o $@
