@@ -1,5 +1,6 @@
-// Figure: placeholder until its workstream task.
-#include "Base.hpp"
+// Схема: a procedural figure from a template plus a caption.
+#include "Modules.hpp"
+#include "views/SmallViews.hpp"
 
 namespace atlas {
 
@@ -8,8 +9,19 @@ struct FigureModule : AtlasModule {
 };
 
 struct FigureWidget : AtlasWidget {
-	FigureWidget(FigureModule* m) : AtlasWidget(m, 10, 2, 40, false, "", "Figure") {}
-	void drawView(NVGcontext* vg, const Style& st, float w, float h) override { drawMissing(vg, st, w, h, "**Figure**"); }
+	FigureView view;
+	FigureWidget(FigureModule* m) : AtlasWidget(m, 16, 8, 24, true, "figure", "Figure") {}
+	void drawView(NVGcontext* vg, const Style& st, float w, float h) override {
+		const Item* it = itemP();
+		if (!it) {
+			drawMissing(vg, st, w, h, "**Схема** к уроку курса Atlas.");
+			return;
+		}
+		view.header = header();
+		view.figure = it->figure;
+		view.caption = it->caption;
+		view.draw(vg, st, w, h);
+	}
 };
 
 } // namespace atlas

@@ -68,6 +68,7 @@ void TutorView::draw(NVGcontext* vg, const Style& st, const Rect& r, const Point
 	}
 	// Conversation.
 	Rect conv(r.x, r.y, r.w, std::max(0.f, y - r.y));
+	convRect = conv;
 	drawHairline(vg, st, r.x, y + 1.f, r.right());
 	if (conv.h < 20.f)
 		return;

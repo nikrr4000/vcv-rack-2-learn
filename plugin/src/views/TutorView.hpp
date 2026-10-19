@@ -17,7 +17,7 @@ struct TutorMessage {
 	bool error = false;
 };
 
-enum TutorAction { TUTOR_FAQ = 1, TUTOR_QUICK, TUTOR_SEND, TUTOR_INPUT, TUTOR_MSG, TUTOR_SCROLL_DOWN };
+enum TutorAction { TUTOR_FAQ = 200, TUTOR_QUICK, TUTOR_SEND, TUTOR_INPUT, TUTOR_MSG, TUTOR_SCROLL_DOWN };
 enum QuickKind { QUICK_SIMPLER = 0, QUICK_EXAMPLE, QUICK_HINT, QUICK_REVIEW };
 
 const char* quickLabel(int k);
@@ -35,6 +35,7 @@ struct TutorView {
 	bool focused = false, blink = true;
 
 	Rect inputRect;
+	Rect convRect;
 	Scroll scroll;
 	FlowCache cache;
 	size_t lastCount = 0;
@@ -43,7 +44,7 @@ struct TutorView {
 
 	/** Draws into r (no panel frame). */
 	void draw(NVGcontext* vg, const Style& st, const Rect& r, const Pointer& p, Hits& hits);
-	bool wheel(float dy) { return scroll.wheel(dy * 30.f); }
+	bool wheel(float dy) { return scroll.wheel(dy); }
 };
 
 } // namespace atlas

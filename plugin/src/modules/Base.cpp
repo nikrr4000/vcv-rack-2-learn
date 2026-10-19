@@ -148,6 +148,12 @@ void AtlasWidget::setTooltip(const std::string& key, const std::string& text) {
 }
 
 void AtlasWidget::onButton(const ButtonEvent& e) {
+	// Text fields (children) get their own clicks.
+	for (widget::Widget* c : children)
+		if (c != handle && c->visible && c->box.contains(e.pos)) {
+			ModuleWidget::onButton(e);
+			return;
+		}
 	if (e.action == GLFW_PRESS && e.button == GLFW_MOUSE_BUTTON_LEFT && (e.mods & RACK_MOD_MASK) == 0) {
 		const Hit* h = hits.at(e.pos.x, e.pos.y);
 		if (h) {

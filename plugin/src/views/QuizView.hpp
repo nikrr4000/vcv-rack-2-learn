@@ -51,7 +51,7 @@ struct QuizView {
 	void draw(NVGcontext* vg, const Style& st, float w, float h, const Pointer& p, Hits& hits);
 	/** Local actions (choose, retry, navigation). Returns true when the view changed. SEND is handled by the widget. */
 	bool action(int a, int arg);
-	bool wheel(float dy) { return scroll.wheel(dy * 30.f); }
+	bool wheel(float dy) { return scroll.wheel(dy); }
 };
 
 /** Letter marker for option k: А Б В Г. */

@@ -32,7 +32,7 @@ struct TaskView {
 
 	void draw(NVGcontext* vg, const Style& st, float w, float h, const Pointer& p, Hits& hits);
 	bool action(int a, int arg);
-	bool wheel(float dy) { return scroll.wheel(dy * 30.f); }
+	bool wheel(float dy) { return scroll.wheel(dy); }
 	/** The hint shown for the first failing item at its current level, or "". */
 	std::string currentHint(int* level = nullptr, int* levels = nullptr) const;
 	const check::Item* firstFailing() const;

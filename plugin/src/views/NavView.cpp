@@ -100,8 +100,12 @@ void NavigatorView::draw(NVGcontext* vg, const Style& st, float w, float h, cons
 			}
 		}
 		y = std::max(y + 6.f, c.bottom() - 80.f);
+		if (L)
+			y -= 23.f;
 		button("Продолжить", NAV_CONTINUE, 0, BUTTON_PRIMARY, !N, -1, G_ARROW_RIGHT, 24.f);
 		button("Карта курса", NAV_MAP, 0, BUTTON_NORMAL, false);
+		if (L)
+			button("К уроку " + L->num, NAV_HOME, 0, BUTTON_QUIET, false, G_ARROW_LEFT, -1, 18.f);
 		connection(vg, st, c, s.connected);
 		return;
 	}
