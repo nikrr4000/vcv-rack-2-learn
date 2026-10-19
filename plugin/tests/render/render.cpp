@@ -14,6 +14,7 @@
 using namespace atlas;
 
 int previewsMain(int argc, char** argv);
+int layoutMain(int argc, char** argv);
 
 static int gallery(const std::string& out) {
 	int n = 0;
@@ -69,6 +70,8 @@ static int gallery(const std::string& out) {
 int main(int argc, char** argv) {
 	if (argc >= 3 && std::strcmp(argv[1], "gallery") == 0)
 		return gallery(argv[2]);
+	if (argc >= 4 && std::strcmp(argv[1], "layout") == 0)
+		return layoutMain(argc, argv);
 	if (argc >= 4 && std::strcmp(argv[1], "previews") == 0)
 		return previewsMain(argc, argv);
 	std::fprintf(stderr, "usage: render gallery <outdir> | render previews <pack.json> <outdir> [spec…]\n");
