@@ -26,15 +26,15 @@ Read this first after a compaction or restart; continue from the first task that
 | W3 | 3.6 Task + Bench | DONE | 13b7f00 | code + harness render; in-Rack behaviour UNVERIFIED (Rack cannot start in the sandbox) → owner checklist / rack-test.mjs |
 | W3 | 3.7 C++ checker (+ `fixed` kind in Node) | DONE | 13b7f00 | C++ checker 102/102 parity; Rack adapter rackPatch(); probes sampled on the UI thread in host step() (deviation: not in process(), avoids dangling module pointers) |
 | W3 | 3.8 Navigator, course map, lesson loading, docked panel | DONE | 13b7f00 | code + harness render; in-Rack behaviour UNVERIFIED (Rack cannot start in the sandbox) → owner checklist / rack-test.mjs |
-| W3 | 3.9 Tutor module + panel UI + Atlas client | IN PROGRESS | 13b7f00 | UI + client written; client e2e against /api/rack in W6 |
+| W3 | 3.9 Tutor module + panel UI + Atlas client | DONE | 13b7f00, W6 | client e2e (`make -C rack/plugin/tests client`): the real Client.cpp on the app's libRack against /api/rack with the stub — 8/8 + note log; Tutor UI in Rack UNVERIFIED → owner checklist |
 | W3 | 3.10 dev bridge | DONE | 13b7f00 | code + harness render; in-Rack behaviour UNVERIFIED (Rack cannot start in the sandbox) → owner checklist / rack-test.mjs |
 | W4 | 4.1 schema, compiler, presets, param resolver | DONE | 1b471d2 | |
 | W4 | 4.2 text-fit tool + parity test | DONE | 75a10a5 | parity 200/200 exact (lines + pages); npm needs --registry registry.npmjs.org --cache $TMPDIR (owner's npm config points to an internal registry) |
 | W4 | 4.3 validator | DONE | 1b471d2 | |
 | W4 | 4.4 build.sh (+ --test), gallery.vcv | DONE | 1b471d2 | |
-| W5 | 5.1 pilot p1-01 + full QA | TODO | | |
-| W5 | 5.2 pilot p3-05 | TODO | | |
-| W6 | tutor runtime, /api/rack/*, stub, tests | TODO | | |
+| W5 | 5.1 pilot p1-01 + full QA | DONE | 0c6ef47 | validate 0/0, compile 0/0, live verify 4/4 blocks, template checks ok, harness previews checked; in-Rack run → rack-test.mjs (owner) |
+| W5 | 5.2 pilot p3-05 | DONE | 0c6ef47 | same: live verify 3/3, template checks ok |
+| W6 | tutor runtime, /api/rack/*, stub, tests | DONE | (W6 commit) | TUTOR.md 600 words; runner + probe-and-fallback; /api/rack/*; vault note log; tutor model/effort in Settings; tests 14/14 (`node --test app/server/rack/rack.test.mjs`, servers 5185/5186), all server tests 88/88, web e2e-vcv ok; real CLI flags UNVERIFIED (open issue) |
 | W7 | parts 0–9 | TODO | | |
 | W8 | Atlas companion | TODO | | |
 | W9 | whole-course QA, read-through | TODO | | |
@@ -48,6 +48,9 @@ Read this first after a compaction or restart; continue from the first task that
 - Practice probes are sampled from the UI thread in the host's `step()` (like the REST checker), not in a module's `process()` — no engine-thread pointers to modules that a patch load can delete.
 - Learner copies are saved by `APP->patch->save` (zstd .vcv). The layout hash of a saved copy is kept next to it (`Atlas/patches/<id>.hash`) instead of being read from the archive. The audio device is applied to the loaded patch's Audio modules after `load()` instead of being injected into the JSON before it.
 - npm: the owner's npm config points at an internal registry; the compiler's deps are installed with `--registry https://registry.npmjs.org --cache $TMPDIR/npm-cache`.
+- Tutor `claude` path: a separate setting `tutorClaudePath` (env `RACK_TUTOR_CLAUDE` wins, else the app's `claudePath`). The fixtures point only the Rack tutor at `vcv/tutor/stub-claude.mjs`, so the web runner's fixture runs keep their own stub.
+- Tutor patch line: the plugin posts it with every question (bench + given modules, from the engine); without it the server summarises the whole patch from REST `:2600` (all modules except Atlas and MCP Server) — REST module positions do not map to pack rows cleanly.
+- Model exchanges are logged by the server when a stream ends; FAQ answers («из урока») arrive as plugin `tutor` events and are logged the same way.
 - Long mono values (more than 12 characters, e.g. `To "device output 1"`) may break at spaces; short ones (`440 Гц`) never break. Same in C++ and Node.
 
 ## Open issues
@@ -55,6 +58,8 @@ Read this first after a compaction or restart; continue from the first task that
 - **The test Rack instance cannot start inside the sandbox** (2026-10-20, two tries, 20 s and 60 s): Rack 2.6.6 with `-u rack/.rack-test` hangs at `Creating RtAudio Core Audio driver` (XPC «Connection invalid» for hiservices; CoreAudio is not reachable from the sandbox). `audio::init()` / `rtaudioInit()` run even in headless mode, so `-h` and `-t` cannot work either. Per plan §8: in-Rack checks move to the owner's checklist; Rack is not run outside the sandbox.
   - Fallback for visual QA and text-overflow checks: an offscreen **render harness** (`rack/plugin/tests/render/`) that compiles the plugin's Rack-free view/draw code with the real nanovg.c + fontstash from VCV's fork (`VCVRack/nanovg@0bebdb3`, the submodule pinned by Rack v2.6.6; zlib licence) and a small software rasterizer backend → PNG (stb_image_write). Same font files and same fontstash measuring as in Rack, so line breaks and overflow match.
   - The dev bridge and `rack/scripts/rack-test.mjs` are still built so the owner can run the in-Rack QA in one command outside the sandbox (OWNER_CHECKLIST).
+
+- **The real tutor CLI flags are unverified**: the session may not run `claude`. The argv follows the plan (§7.2); the runner drops `--exclude-dynamic-system-prompt-sections`, `--permission-prompts`, `--effort`, `--append-system-prompt-file` (→ `--append-system-prompt`) one by one on «unknown option» and logs it to `APP_STATE_DIR/rack-tutor.jsonl`. Tested with the stub only → OWNER_CHECKLIST (first real question; check the log for `fallback`). With `cwd` `vcv/tutor/run/` and `--setting-sources local`, memory files (CLAUDE.md of REPO and of the owner's home) may still be loaded by the CLI; not controllable from the flags the plan lists.
 
 ## Background processes
 

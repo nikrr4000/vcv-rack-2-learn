@@ -54,3 +54,13 @@ smoke: $(BIN)/smoke
 $(BIN)/smoke: $(ROOT)/tests/smoke/smoke.cpp
 	@mkdir -p $(BIN)
 	@$(CXX) -std=c++11 -I$(RACK_SDK)/include -I$(RACK_SDK)/dep/include $< -L$(RACK_SDK) -lRack -o $@
+
+# The plugin's Atlas client against a running Atlas server (tests/client/run.mjs starts one).
+.PHONY: client
+client: $(BIN)/client_e2e
+	@mkdir -p $(BIN)/rackrun && ln -sf "$(RACK_APP_RES)/libRack.dylib" $(BIN)/rackrun/libRack.dylib
+	node $(ROOT)/tests/client/run.mjs $(BIN)/client_e2e
+
+$(BIN)/client_e2e: $(ROOT)/tests/client/client_e2e.cpp $(SRC)/net/Client.cpp $(SRC)/net/Client.hpp
+	@mkdir -p $(BIN)
+	@$(CXX) -std=c++11 -I$(SRC) -I$(RACK_SDK)/include -I$(RACK_SDK)/dep/include $(ROOT)/tests/client/client_e2e.cpp $(SRC)/net/Client.cpp -L$(RACK_SDK) -lRack -o $@
