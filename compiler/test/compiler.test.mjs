@@ -24,7 +24,7 @@ test("resolver: exponential, switch and snapped params", () => {
 	assert.equal(resolveParam("Fundamental", "VCO", "Pulse width", "50").value, 0.5);
 	assert.throws(() => resolveParam("Fundamental", "Scope", "Trigger", "On"), /not one of/);
 	assert.throws(() => resolveParam("Fundamental", "VCO", "Freq", "1"), /no param/);
-	assert.throws(() => resolveParam("Core", "AudioInterface2", "Level", "6"), /calibration/);
+	assert.throws(() => resolveParam("Fundamental", "VCMixer", "Mix level", "3"), /calibration/);
 });
 
 test("pilot compiles: rows, fixed parts, bus routing, practice and debug", () => {

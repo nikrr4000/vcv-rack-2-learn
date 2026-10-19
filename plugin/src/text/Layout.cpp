@@ -167,8 +167,12 @@ std::vector<Atom> atomize(const Block& b, Measurer& m, const TextStyle& st) {
 		while (i + 1 < glued.size() && glued[i + 1].hasSpace) {
 			std::string last = lastWord(a);
 			const Atom& next = glued[i + 1];
-			bool unit = isNumber(last) && utf8Length(next.textOf()) <= 4 && !isNumber(next.textOf());
-			if (!isShortWord(last) && !unit)
+			std::string nt = next.textOf();
+			bool unit = isNumber(last) && utf8Length(nt) <= 4 && !isNumber(nt);
+			// A panel name and its number stay together: «Ch 1», «Gain 2».
+			bool latin = !last.empty() && (unsigned char) last.back() < 0x80 && std::isalpha((unsigned char) last.back());
+			bool index = latin && !nt.empty() && nt.size() <= 3 && std::isdigit((unsigned char) nt[0]);
+			if (!isShortWord(last) && !unit && !index)
 				break;
 			a.parts.push_back(next.spaceBefore);
 			a.parts.insert(a.parts.end(), next.parts.begin(), next.parts.end());

@@ -123,4 +123,7 @@ struct Pack {
 /** «1.1 · Блок 2» */
 std::string blockHeader(const Lesson* l, const Block* b);
 
+/** «Часть 1 · Язык модульного синтеза» for a lesson's cover. */
+std::string partHeader(const Pack& pack, const Lesson* l);
+
 } // namespace atlas

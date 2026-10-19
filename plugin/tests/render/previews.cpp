@@ -64,7 +64,7 @@ float drawItem(NVGcontext* vg, const Style& st, const Pack& pk, const Lesson& L,
 	if (it.kind == "page") {
 		w = hpOf(it, 24);
 		PageView v;
-		v.header = header;
+		v.header = it.title ? partHeader(pk, &L) : header;
 		v.text.md = it.text;
 		v.text.title = it.title;
 		v.text.reportId = report;

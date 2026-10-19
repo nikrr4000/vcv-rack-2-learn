@@ -29,7 +29,7 @@ struct PageWidget : AtlasWidget {
 			drawMissing(vg, st, w, h, "**Страница**\nТекст блока появится, когда модуль привязан к уроку курса Atlas.");
 			return;
 		}
-		view.header = header();
+		view.header = it->title ? partHeader(pack(), lesson()) : header();
 		view.text.md = it->text;
 		view.text.title = it->title;
 		view.text.reportId = lessonId() + "/" + blockId() + "/" + itemId();

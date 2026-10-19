@@ -27,7 +27,7 @@ const ROW_PX = 380;
 
 const W = {
 	navigator: 10,
-	page: { cover: 36, story: 24, live: 20, anatomy: 16, quiz: 12, recap: 24, next: 12 },
+	page: { cover: 28, story: 24, live: 20, anatomy: 16, quiz: 12, recap: 24, next: 12 },
 	figure: 16,
 	quiz: 14,
 	task: 14,

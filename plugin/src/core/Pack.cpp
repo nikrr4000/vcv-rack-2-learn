@@ -257,4 +257,13 @@ std::string blockHeader(const Lesson* l, const Block* b) {
 	return s;
 }
 
+std::string partHeader(const Pack& pack, const Lesson* l) {
+	if (!l)
+		return "";
+	for (const Part& p : pack.parts)
+		if (p.n == l->part)
+			return "Часть " + std::to_string(p.n) + " · " + p.title;
+	return "Часть " + std::to_string(l->part);
+}
+
 } // namespace atlas

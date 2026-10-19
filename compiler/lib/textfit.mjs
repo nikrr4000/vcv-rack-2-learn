@@ -283,8 +283,10 @@ function atomize(block, st) {
 		while (i + 1 < glued.length && glued[i + 1].hasSpace) {
 			const last = lastWord(a);
 			const next = glued[i + 1];
-			const unit = isNumber(last) && [...text(next)].length <= 4 && !isNumber(text(next));
-			if (!isShortWord(last) && !unit) break;
+			const nt = text(next);
+			const unit = isNumber(last) && [...nt].length <= 4 && !isNumber(nt);
+			const index = /[A-Za-z]$/.test(last) && nt.length > 0 && nt.length <= 3 && /^\d/.test(nt);
+			if (!isShortWord(last) && !unit && !index) break;
 			a.parts.push(next.spaceBefore, ...next.parts);
 			i++;
 		}
