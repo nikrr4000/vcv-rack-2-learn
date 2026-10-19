@@ -1,0 +1,39 @@
+{
+  "$comment": "Visual identity «Атлас». Source of truth for the plugin (rack/plugin/src/ui/ThemeTokens.hpp is generated from this file by rack/compiler/gen-theme.mjs) and for the text-fit tool.",
+  "themes": {
+    "light": { "panel": "#F3EEE4", "ink": "#1E1C19", "ink2": "#6B655C", "hairline": "#D9D1C3", "paper2": "#EAE3D6" },
+    "dark": { "panel": "#1C1D1F", "ink": "#ECE6DA", "ink2": "#9A938A", "hairline": "#34363A", "paper2": "#25272A" }
+  },
+  "accents": ["#8A8F98", "#C0583B", "#D08C2F", "#5E8C61", "#3F7CAC", "#8A5FA8", "#B5476F", "#2F8F8A", "#A86B3C", "#4A4E9C"],
+  "fonts": {
+    "heading": "PTSerif-Bold.ttf",
+    "body": "PTSans-Regular.ttf",
+    "bodyBold": "PTSans-Bold.ttf",
+    "bodyItalic": "PTSans-Italic.ttf",
+    "mono": "JetBrainsMono-Regular.ttf"
+  },
+  "type": {
+    "title": 17,
+    "heading": 14.5,
+    "body": 12,
+    "small": 10.5,
+    "mono": 11,
+    "lineHeight": 1.42,
+    "paragraphGap": 7,
+    "listIndent": 14
+  },
+  "panel": {
+    "padLeft": 12,
+    "padRight": 12,
+    "padTop": 14,
+    "padBottom": 12,
+    "accentRule": 3,
+    "headerHeight": 16,
+    "footerHeight": 22,
+    "rackHeight": 380,
+    "hp": 15
+  },
+  "controls": { "minHit": 18, "border": 1, "activeFill": 0.15, "radius": 0 },
+  "motion": { "glideMs": 350 },
+  "textfit": { "widthMargin": 0.03, "spareLines": 1 }
+}
