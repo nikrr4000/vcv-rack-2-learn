@@ -1,0 +1,262 @@
+id: p3-05-first-voice
+num: "3.5"
+part: 3
+title: Первый голос
+goal: Собрать с нуля голос синтезатора, который звучит только пока нажата кнопка.
+builds: Первый инструмент курса — на нём держатся бас, лид и пэд из части 8.
+minutes: 35
+requires: [p3-01-vcf, p3-03-vca, p3-04-adsr]
+glossary: [голос синтезатора, путь звука, путь управления, огибающая, гейт]
+sources: [lm-first-voice, samesound-first-patch, kane-musichackspace]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Первый голос
+    page: |
+      # 3.5 Первый голос
+      **Ты научишься:** собирать [[голос синтезатора]] из пяти модулей и отличать **путь звука** от **пути управления**.
+      **Ты соберёшь:** VCO → VCF → VCA → Audio, а кнопка Push через ADSR решает, когда звучать.
+      **Понадобится:** 35 минут и уроки про VCF, VCA и ADSR за плечами.
+      Это первый настоящий инструмент курса. Бас, лид и пэд в части 8 — его вариации.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: vco, label: VCO, kind: audio }
+        - { id: vcf, label: VCF, kind: audio }
+        - { id: vca, label: VCA, kind: audio }
+        - { id: out, label: Audio, kind: audio }
+        - { id: push, label: Push, kind: gate }
+        - { id: env, label: ADSR, kind: cv }
+      edges:
+        - { from: vco, to: vcf, kind: audio }
+        - { from: vcf, to: vca, kind: audio }
+        - { from: vca, to: out, kind: audio }
+        - { from: push, to: env, kind: gate }
+        - { from: env, to: vca, kind: cv }
+      caption: Голос — два пути. Звук идёт сверху, управление снизу, встречаются они у VCA.
+    faq:
+      - q: Чем голос отличается от того, что я собирал раньше?
+        a: Раньше звук шёл всегда. В голосе громкостью управляет огибающая, а её запускает кнопка. Звук появляется только по нажатию — как у клавиши синтезатора.
+      - q: Почему именно пять модулей?
+        a: Источник, тембр, громкость, огибающая и кнопка — минимальный набор, где каждый модуль делает одно дело. Позже кнопку заменит секвенсер, а модулей станет больше.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса по прошлым урокам. Ответы подскажут, что повторить.
+    questions:
+      - q: В каком порядке идёт звук в классическом голосе?
+        free: true
+        options:
+          - { text: VCO → VCF → VCA → Audio, correct: true, why: "Сначала источник, потом тембр, потом громкость. Так фильтр работает с богатой пилой, а VCA решает, когда её слышно." }
+          - { text: VCA → VCF → VCO, why: "VCO — источник, перед ним нечего усиливать. Звук начинается с генератора." }
+          - { text: "VCO → VCA → VCF, огибающая на фильтре", why: "Так тоже бывает, но это другой голос. В классическом огибающая управляет громкостью у VCA." }
+      - q: Что получает ADSR на вход и что отдаёт?
+        options:
+          - { text: "Гейт от кнопки, отдаёт CV для VCA", correct: true, why: "Гейт говорит, когда нота длится. Огибающая превращает его в плавное напряжение для входа CV у VCA." }
+          - { text: "Звук от VCO, отдаёт тихий звук", why: "Огибающая работает с управлением, а не со звуком. Звук через неё не идёт." }
+          - { text: "Гейт от кнопки, отдаёт звук в Channel", why: "Выход Envelope — это управляющее напряжение. Его место — вход CV, а не Channel." }
+      - q: Звук играет без нажатия и не выключается. В чём причина?
+        options:
+          - { text: У VCA нет кабеля во входе CV, correct: true, why: "Без кабеля в CV усилитель VCA открыт всегда. Огибающая должна прийти именно туда." }
+          - { text: У ADSR слишком большой Release, why: "Release — хвост после отпускания. Если нота вообще не заканчивается, дело не в нём." }
+          - { text: VCO сломан, why: "VCO звучит всегда, так задумано. Решать, когда звучать, — работа VCA." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Два пути
+    page: |
+      # Два пути
+      В голосе идут рядом два пути.
+      [[путь звука|Путь звука]]: VCO даёт пилу, VCF делает её мягче, VCA решает, насколько громко. Это аудио, ±5 В.
+      [[путь управления|Путь управления]]: кнопка Push даёт [[гейт]], ADSR превращает его в [[огибающая|огибающую]], огибающая идёт в CV у VCA.
+      Пути встречаются в одном месте — на входе **CV** у VCA. Там управление решает судьбу звука.
+      Запомни этот порядок, а не конкретные ручки. Он повторяется в каждом инструменте курса.
+    figure: { template: adsr, a: 0.05, d: 0.3, s: 0.4, r: 0.4, gate: 1.0, markers: true, caption: "Огибающая по гейту: Attack, Decay, Sustain, пока кнопка нажата, и Release после." }
+    simpler: Представь кран и воду. Вода из VCO течёт всегда. Кран — это VCA. Кнопка с огибающей поворачивают кран — плавно или резко.
+    faq:
+      - q: Почему гейт идёт в ADSR, а не сразу в VCA?
+        a: Гейт — резкий прямоугольник, 0 или 10 В. Сразу в VCA он даст щелчок и мгновенный обрыв. ADSR делает из него плавную форму с атакой и хвостом.
+      - q: Чем путь звука отличается от пути управления на слух?
+        a: Путь звука ты слышишь. Путь управления не слышен, он только двигает ручки за тебя — громкость, яркость, высоту.
+      - q: Можно ли перепутать гнёзда CV и Channel у VCA?
+        a: Можно, и звук пропадёт. Channel — вход звука, CV — вход управления. Подписи под гнёздами помогают не ошибиться.
+
+  - id: b4
+    type: live
+    preset: live
+    title: Голос целиком
+    page: |
+      # Голос целиком
+      Перед тобой собранный голос. У Push включён **Hold** — нота держится сама, пока ты крутишь ручки.
+      Сними Hold — голос замолчит после Release. Нажми кнопку Push — нота прозвучит, пока держишь.
+      Поверни **Cutoff frequency** у VCF от 500 до 3000 Гц. Звук идёт от тёмного к яркому.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "800" }, Resonance: { display: "30" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "40" }, Release: { display: "400" } } }
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 1 } } }
+    cables:
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: vcf, text: "**Cutoff frequency** — яркость. Крути от 500 до 3000 Гц.", targets: [{ module: vcf, param: Cutoff frequency }] }
+      - { after: env, text: "**Envelope** идёт в **CV** у VCA: громкость повторяет огибающую.", targets: [{ module: env, output: Envelope }, { module: vca, input: CV }] }
+      - { after: push, text: "**Hold** держит ноту. Сними его — голос замолчит.", targets: [{ module: push, param: Hold }] }
+    faq:
+      - q: Сняла Hold, а звук ещё немного звучит. Почему?
+        a: Это Release — хвост огибающей, 400 мс в этом демо. Поверни Release к минимуму, и звук будет обрываться сразу.
+      - q: Почему Resonance стоит на 30 %?
+        a: Немного резонанса делает звук выразительнее. Выше 50 % фильтр начинает свистеть сам — это тема урока 3.2.
+      - q: Почему нота такая низкая?
+        a: Frequency у VCO стоит на 130,81 Гц — до малой октавы. Для баса это хорошая высота. Покрути Frequency и найди свою.
+
+  - id: b5
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поставь **Attack** у ADSR на 500 мс."
+        see: Нота вплывает, а не бьёт.
+      - do: "Поставь **Sustain** на 0, потом на 100 %."
+        see: При 0 нота затихает сама, при 100 % держится без спада.
+      - do: "Поставь **Release** на 2000 мс и сними **Hold**."
+        see: После отпускания тянется длинный хвост.
+      - do: Поверни **Frequency** у VCO.
+        see: Меняется высота, а форма огибающей остаётся прежней.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "800" }, Resonance: { display: "30" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "40" }, Release: { display: "400" } } }
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 1 } } }
+    cables:
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: env, text: "Шаги 1–3 — ручки этого ADSR.", targets: [{ module: env, param: Attack }, { module: env, param: Sustain }, { module: env, param: Release }] }
+    faq:
+      - q: Поставил Sustain на 0 — нота короткая даже с Hold. Это нормально?
+        a: Да. Sustain — уровень, на котором нота держится, пока гейт высокий. При 0 огибающая после Decay падает в ноль, и звук затихает даже с нажатой кнопкой.
+      - q: Почему Attack в 500 мс звучит как «вплывание»?
+        a: Огибающая полсекунды поднимается от нуля. Пока она растёт, VCA постепенно открывается, и громкость нарастает плавно.
+
+  - id: b6
+    type: practice
+    preset: practice
+    title: Практика — свой голос
+    task: |
+      Собери голос сам, между маркерами «Верстак».
+      1. **VCO**, **VCF**, **VCA**, **ADSR** и **Push**.
+      2. Путь звука: `Sawtooth` → `Audio` у VCF, `Lowpass filter` → `Channel` у VCA, выход `Channel` → вход 1 у Audio.
+      3. Путь управления: `Gate` у Push → `Gate` у ADSR, `Envelope` → `CV` у VCA.
+      4. **Resonance** не выше 50 %. Включи **Hold** у Push и нажми «Проверить».
+    given: [audio]
+    check: p3-05-first-voice
+    hints:
+      "cable:1":
+        - Пила есть, но фильтр её не слышит.
+        - Какой выход VCO даёт пилу и какой вход у VCF принимает звук?
+        - "`Sawtooth` у VCO → вход `Audio` у VCF."
+      "cable:2":
+        - Фильтр стоит, но звук до VCA не доходит.
+        - Какой выход VCF ведёт дальше по пути звука?
+        - "`Lowpass filter` у VCF → вход `Channel` у VCA."
+      "cable:3":
+        - Звук есть всегда, даже без нажатия?
+        - Что управляет громкостью VCA? Нужен вход управления, а не звука.
+        - "`Envelope` у ADSR → вход `CV` у VCA."
+      "cable:4":
+        - Голос собран, а тишина.
+        - Откуда звук выходит из VCA и куда должен прийти?
+        - "Выход `Channel` у VCA → `To \"device output 1\"` у Audio этого ряда."
+      "cable:5":
+        - Огибающая не знает, когда начинать.
+        - Что подаёт ей гейт?
+        - "`Gate` у Push → вход `Gate` у ADSR."
+      "param:1":
+        - Фильтр свистит сам по себе?
+        - Посмотри на Resonance у VCF.
+        - Поставь Resonance на 50 % или ниже.
+      "probe:1":
+        - Огибающая не поднялась.
+        - Идёт ли гейт от Push в ADSR, и держится ли нота?
+        - Включи Hold у Push и нажми «Проверить» ещё раз.
+    faq:
+      - q: Можно взять VCA Mix вместо VCA?
+        a: Для этой проверки нужен именно VCA — урок про него. В части 7 ты поработаешь с VCA Mix.
+      - q: Проверка говорит, что огибающая не поднялась, а я слышу звук.
+        a: Скорее всего, звук идёт без огибающей — кабель Envelope не в CV. Или Hold выключен в момент проверки. Включи Hold и проверь ещё раз.
+      - q: Нужно ли подключать Scope?
+        a: Не нужно, но полезно. Подключи выход VCA к Scope и смотри, как растёт и падает размах волны.
+
+  - id: b7
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Этот голос звучит без остановки, Hold на него не действует.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "800" }, Resonance: { display: "30" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "40" }, Release: { display: "400" } } }
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 1 } } }
+    cables:
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    break: { remove_cable: [env, Envelope, vca, CV] }
+    check: { kind: fixed, expect_cable: [env, Envelope, vca, CV] }
+    hints:
+      fixed:
+        - Нажимаешь Push, а громкость не меняется. Кто должен открывать VCA?
+        - Проследи, куда идёт выход ADSR.
+        - Соедини `Envelope` у ADSR с `CV` у VCA.
+    faq:
+      - q: Почему без кабеля в CV звук идёт всегда?
+        a: У VCA вход CV без кабеля считается полностью открытым. Огибающая приходит туда и закрывает усилитель между нотами.
+
+  - id: b8
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Голос — два пути: звук (VCO → VCF → VCA) и управление (Push → ADSR → CV у VCA).
+      - Пути встречаются на входе CV у VCA.
+      - Гейт говорит, когда нота длится. Огибающая решает, как громкость меняется во времени.
+      - Без кабеля в CV усилитель открыт всегда.
+      Сохрани патч: это твой первый инструмент.
+      **Источники:** «Patching a typical subtractive synthesis voice» (Learning Modular); «Введение в модульные синтезаторы» (samesound); Getting Started with VCV Rack 2 (Music Hackspace).
+    questions:
+      - q: Почему гейт идёт в ADSR, а не прямо в VCA?
+        options:
+          - { text: Огибающая делает из гейта плавную форму громкости, correct: true, why: "Гейт резкий. ADSR добавляет атаку, спад и хвост — нота звучит живо, без щелчков." }
+          - { text: VCA не принимает гейты, why: "Принимает, но тогда громкость прыгает резко: включено или выключено." }
+          - { text: Так звук становится выше, why: "Высоту задаёт VCO. Огибающая управляет громкостью." }
+    next: |
+      # Дальше: 4.1
+      **LFO.** Медленные волны начнут крутить ручки голоса за тебя: вибрато, «вау» фильтра.
+    faq:
+      - q: Голос звучит скучно. Это нормально для начала?
+        a: Да. Это скелет. В части 4 его оживит модуляция, а в части 8 он станет басом, лидом и пэдом.
+      - q: Что повторить, если голос не собирается?
+        a: Уроки 3.3 про VCA и 3.4 про ADSR. Чаще всего путают входы CV и Channel у VCA.

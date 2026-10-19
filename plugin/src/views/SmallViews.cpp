@@ -81,12 +81,14 @@ void FigureView::draw(NVGcontext* vg, const Style& st, float w, float h) {
 	}
 	float avail = c.h - capH;
 	float fh = figure ? std::min(avail, std::max(80.f, c.w * figures::aspect(figure))) : 0.f;
+	// Figure and caption sit a little above the middle of the page.
+	float top = c.y + std::max(0.f, (avail - fh) / 3.f);
 	if (figure)
-		figures::draw(vg, st, Rect(c.x, c.y + 4.f, c.w, fh - 4.f), figure);
+		figures::draw(vg, st, Rect(c.x, top + 4.f, c.w, fh - 4.f), figure);
 	if (!caption.empty()) {
 		text::TextColors tc = st.textColors();
 		tc.ink = st.pal.ink2;
-		text::drawPage(vg, st.fonts, capPage, c.x, c.y + fh + 8.f, tc);
+		text::drawPage(vg, st.fonts, capPage, c.x, top + fh + 8.f, tc);
 	}
 }
 

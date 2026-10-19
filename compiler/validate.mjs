@@ -140,7 +140,7 @@ function validateLesson(L) {
 			if (k > 22) E(t.where, `sentence of ${k} words (at most 22): «${s.slice(0, 60)}…»`);
 			else if (k > 18) longSentences++;
 			const latin = s.match(/[A-Za-z]{3,}/g) || [];
-			if (!/[А-Яа-яЁё]/.test(s) && latin.length >= 4 && t.kind !== "page") E(t.where, `an English sentence in learner text: «${s.slice(0, 60)}»`);
+			if (!/[А-Яа-яЁё]/.test(s) && latin.filter((w) => !LATIN_OK.has(w)).length >= 3 && t.kind !== "page") E(t.where, `an English sentence in learner text: «${s.slice(0, 60)}»`);
 		}
 		if (!t.where.endsWith(".page") || !/Источники/.test(t.text)) {
 			for (const w of prose.match(/[A-Za-z][A-Za-z0-9&]*/g) || []) if (!LATIN_OK.has(w) && w.length > 1) Wn(t.where, `Latin word «${w}» is not a Rack name (check the spelling against the snapshot)`);
