@@ -1,0 +1,25 @@
+{
+  "slug": "Atlas",
+  "name": "Atlas",
+  "version": "2.1.0",
+  "license": "proprietary",
+  "brand": "Atlas",
+  "author": "Atlas",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    { "slug": "Navigator", "name": "Навигатор", "description": "Курс «Модульный синтез с нуля»: карта уроков, блоки, «Дальше →», репетитор", "tags": ["Utility"] },
+    { "slug": "Page", "name": "Страница", "description": "Текст блока урока", "tags": ["Utility"] },
+    { "slug": "Note", "name": "Подпись", "description": "Короткая подпись с указателем на ручку или гнездо", "tags": ["Utility"] },
+    { "slug": "Figure", "name": "Схема", "description": "Схема урока: формы волн, гармоники, огибающая, путь сигнала", "tags": ["Utility", "Visual"] },
+    { "slug": "Quiz", "name": "Вопрос", "description": "Вопрос с вариантами и своим ответом", "tags": ["Utility"] },
+    { "slug": "Task", "name": "Задание", "description": "Задание урока и проверка патча", "tags": ["Utility"] },
+    { "slug": "Bench", "name": "Верстак", "description": "Граница места для практики", "tags": ["Utility"] },
+    { "slug": "Tutor", "name": "Репетитор", "description": "Репетитор урока прямо в стойке", "tags": ["Utility"] }
+  ]
+}

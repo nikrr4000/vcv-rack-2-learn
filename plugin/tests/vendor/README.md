@@ -1,0 +1,1 @@
+Vendored for the Rack-free tests only: jansson 2.12 (akheron/jansson tag v2.12, MIT; the version Rack 2.6.6 links), nanovg from VCVRack/nanovg@0bebdb314aff9cfa28fde4744bcb037a2b3fd756 (zlib; the submodule pinned by Rack v2.6.6), stb_image_write.h from the Rack SDK (public domain).
