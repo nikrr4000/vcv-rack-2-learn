@@ -1,0 +1,1740 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 802001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "75b5836f495b",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 802002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 802005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 802006,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 802007,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    84,
+    0
+   ]
+  },
+  {
+   "id": 802010,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802011,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802012,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802013,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802014,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    2
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b3",
+    "item": "page-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 802015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802016,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802017,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    3
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b4",
+    "item": "page-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 802018,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802019,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 802020,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -6.473792,
+     "id": 2
+    }
+   ],
+   "pos": [
+    31,
+    4
+   ]
+  },
+  {
+   "id": 802021,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.075257,
+     "id": 0
+    },
+    {
+     "value": 0.488561,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.488561,
+     "id": 3
+    }
+   ],
+   "pos": [
+    41,
+    4
+   ]
+  },
+  {
+   "id": 802022,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.7,
+     "id": 0
+    }
+   ],
+   "pos": [
+    51,
+    4
+   ]
+  },
+  {
+   "id": 802023,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    55,
+    4
+   ]
+  },
+  {
+   "id": 802024,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.851938,
+     "id": 0
+    },
+    {
+     "value": 0.15,
+     "id": 2
+    }
+   ],
+   "pos": [
+    59,
+    4
+   ]
+  },
+  {
+   "id": 802025,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.075257,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.575257,
+     "id": 3
+    }
+   ],
+   "pos": [
+    67,
+    4
+   ]
+  },
+  {
+   "id": 802026,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    77,
+    4
+   ]
+  },
+  {
+   "id": 802027,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    81,
+    4
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802028,
+   "plugin": "Fundamental",
+   "model": "Mixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.6,
+     "id": 0
+    }
+   ],
+   "pos": [
+    88,
+    4
+   ]
+  },
+  {
+   "id": 802040,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802041,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 2
+    },
+    {
+     "value": 0.06,
+     "id": 5
+    }
+   ],
+   "pos": [
+    21,
+    5
+   ]
+  },
+  {
+   "id": 802042,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 6.64386,
+     "id": 2
+    }
+   ],
+   "pos": [
+    31,
+    5
+   ]
+  },
+  {
+   "id": 802043,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    41,
+    5
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802044,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 0
+    },
+    {
+     "value": 0.294023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.544023,
+     "id": 3
+    }
+   ],
+   "pos": [
+    48,
+    5
+   ]
+  },
+  {
+   "id": 802045,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    58,
+    5
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 802046,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    65,
+    5
+   ]
+  },
+  {
+   "id": 802047,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.851938,
+     "id": 0
+    },
+    {
+     "value": 0.15,
+     "id": 2
+    }
+   ],
+   "pos": [
+    69,
+    5
+   ]
+  },
+  {
+   "id": 802048,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    77,
+    5
+   ]
+  },
+  {
+   "id": 802056,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802057,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.851938,
+     "id": 0
+    },
+    {
+     "value": 0.15,
+     "id": 2
+    }
+   ],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 802058,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    6
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802059,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    32,
+    6
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 802060,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    39,
+    6
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 802061,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    46,
+    6
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b7",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 802062,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b8",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802063,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 0
+    },
+    {
+     "value": 0.294023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.544023,
+     "id": 3
+    }
+   ],
+   "pos": [
+    17,
+    7
+   ]
+  },
+  {
+   "id": 802064,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    27,
+    7
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802065,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    34,
+    7
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b8",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 802066,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    41,
+    7
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b8",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 802067,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    48,
+    7
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b8",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 802068,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    55,
+    7
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b8",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 802069,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802070,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 802071,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -6.473792,
+     "id": 2
+    }
+   ],
+   "pos": [
+    25,
+    8
+   ]
+  },
+  {
+   "id": 802072,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.075257,
+     "id": 0
+    },
+    {
+     "value": 0.488561,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.488561,
+     "id": 3
+    }
+   ],
+   "pos": [
+    35,
+    8
+   ]
+  },
+  {
+   "id": 802073,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.7,
+     "id": 0
+    }
+   ],
+   "pos": [
+    45,
+    8
+   ]
+  },
+  {
+   "id": 802074,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    49,
+    8
+   ]
+  },
+  {
+   "id": 802075,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.851938,
+     "id": 0
+    },
+    {
+     "value": 0.15,
+     "id": 2
+    }
+   ],
+   "pos": [
+    53,
+    8
+   ]
+  },
+  {
+   "id": 802076,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.075257,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.575257,
+     "id": 3
+    }
+   ],
+   "pos": [
+    61,
+    8
+   ]
+  },
+  {
+   "id": 802077,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    71,
+    8
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802078,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    78,
+    8
+   ]
+  },
+  {
+   "id": 802079,
+   "plugin": "Fundamental",
+   "model": "Mixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.6,
+     "id": 0
+    }
+   ],
+   "pos": [
+    82,
+    8
+   ]
+  },
+  {
+   "id": 802091,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802092,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    19,
+    9
+   ]
+  },
+  {
+   "id": 802093,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    9
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b10",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 802094,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    68,
+    9
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b10",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 802095,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b11",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802096,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    15,
+    10
+   ]
+  },
+  {
+   "id": 802097,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -6.473792,
+     "id": 2
+    }
+   ],
+   "pos": [
+    25,
+    10
+   ]
+  },
+  {
+   "id": 802098,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.075257,
+     "id": 0
+    },
+    {
+     "value": 0.488561,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.488561,
+     "id": 3
+    }
+   ],
+   "pos": [
+    35,
+    10
+   ]
+  },
+  {
+   "id": 802099,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.7,
+     "id": 0
+    }
+   ],
+   "pos": [
+    45,
+    10
+   ]
+  },
+  {
+   "id": 802100,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    49,
+    10
+   ]
+  },
+  {
+   "id": 802101,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.851938,
+     "id": 0
+    },
+    {
+     "value": 0.15,
+     "id": 2
+    }
+   ],
+   "pos": [
+    53,
+    10
+   ]
+  },
+  {
+   "id": 802102,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.075257,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.575257,
+     "id": 3
+    }
+   ],
+   "pos": [
+    61,
+    10
+   ]
+  },
+  {
+   "id": 802103,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    71,
+    10
+   ]
+  },
+  {
+   "id": 802104,
+   "plugin": "Fundamental",
+   "model": "Mixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.6,
+     "id": 0
+    }
+   ],
+   "pos": [
+    75,
+    10
+   ]
+  },
+  {
+   "id": 802115,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    79,
+    10
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b11",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802116,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    11
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b12",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802117,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    11
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b12",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 802118,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    11
+   ],
+   "data": {
+    "lesson": "p8-02-snare-clap",
+    "block": "b12",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 802008,
+   "outputModuleId": 802005,
+   "outputId": 0,
+   "inputModuleId": 802007,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802009,
+   "outputModuleId": 802006,
+   "outputId": 0,
+   "inputModuleId": 802007,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802029,
+   "outputModuleId": 802019,
+   "outputId": 3,
+   "inputModuleId": 802021,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802030,
+   "outputModuleId": 802019,
+   "outputId": 3,
+   "inputModuleId": 802025,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802031,
+   "outputModuleId": 802020,
+   "outputId": 1,
+   "inputModuleId": 802022,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802032,
+   "outputModuleId": 802021,
+   "outputId": 0,
+   "inputModuleId": 802022,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802033,
+   "outputModuleId": 802023,
+   "outputId": 0,
+   "inputModuleId": 802024,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802034,
+   "outputModuleId": 802024,
+   "outputId": 1,
+   "inputModuleId": 802026,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802035,
+   "outputModuleId": 802025,
+   "outputId": 0,
+   "inputModuleId": 802026,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802036,
+   "outputModuleId": 802022,
+   "outputId": 0,
+   "inputModuleId": 802028,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802037,
+   "outputModuleId": 802026,
+   "outputId": 0,
+   "inputModuleId": 802028,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802038,
+   "outputModuleId": 802028,
+   "outputId": 0,
+   "inputModuleId": 802005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802039,
+   "outputModuleId": 802028,
+   "outputId": 0,
+   "inputModuleId": 802006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802049,
+   "outputModuleId": 802041,
+   "outputId": 3,
+   "inputModuleId": 802044,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802050,
+   "outputModuleId": 802042,
+   "outputId": 3,
+   "inputModuleId": 802044,
+   "inputId": 5,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802051,
+   "outputModuleId": 802046,
+   "outputId": 0,
+   "inputModuleId": 802047,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802052,
+   "outputModuleId": 802047,
+   "outputId": 1,
+   "inputModuleId": 802048,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802053,
+   "outputModuleId": 802044,
+   "outputId": 0,
+   "inputModuleId": 802048,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802054,
+   "outputModuleId": 802048,
+   "outputId": 0,
+   "inputModuleId": 802005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802055,
+   "outputModuleId": 802048,
+   "outputId": 0,
+   "inputModuleId": 802006,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802080,
+   "outputModuleId": 802070,
+   "outputId": 3,
+   "inputModuleId": 802072,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802081,
+   "outputModuleId": 802070,
+   "outputId": 3,
+   "inputModuleId": 802076,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802082,
+   "outputModuleId": 802071,
+   "outputId": 1,
+   "inputModuleId": 802073,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802083,
+   "outputModuleId": 802072,
+   "outputId": 0,
+   "inputModuleId": 802073,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802084,
+   "outputModuleId": 802074,
+   "outputId": 0,
+   "inputModuleId": 802075,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802085,
+   "outputModuleId": 802075,
+   "outputId": 1,
+   "inputModuleId": 802078,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802086,
+   "outputModuleId": 802076,
+   "outputId": 0,
+   "inputModuleId": 802078,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802087,
+   "outputModuleId": 802073,
+   "outputId": 0,
+   "inputModuleId": 802079,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802088,
+   "outputModuleId": 802078,
+   "outputId": 0,
+   "inputModuleId": 802079,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802089,
+   "outputModuleId": 802079,
+   "outputId": 0,
+   "inputModuleId": 802005,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802090,
+   "outputModuleId": 802079,
+   "outputId": 0,
+   "inputModuleId": 802006,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802105,
+   "outputModuleId": 802096,
+   "outputId": 3,
+   "inputModuleId": 802098,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802106,
+   "outputModuleId": 802096,
+   "outputId": 3,
+   "inputModuleId": 802102,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802107,
+   "outputModuleId": 802097,
+   "outputId": 1,
+   "inputModuleId": 802099,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802108,
+   "outputModuleId": 802098,
+   "outputId": 0,
+   "inputModuleId": 802099,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802109,
+   "outputModuleId": 802100,
+   "outputId": 0,
+   "inputModuleId": 802101,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802110,
+   "outputModuleId": 802101,
+   "outputId": 1,
+   "inputModuleId": 802103,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802111,
+   "outputModuleId": 802099,
+   "outputId": 0,
+   "inputModuleId": 802104,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802112,
+   "outputModuleId": 802103,
+   "outputId": 0,
+   "inputModuleId": 802104,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802113,
+   "outputModuleId": 802104,
+   "outputId": 0,
+   "inputModuleId": 802005,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 802114,
+   "outputModuleId": 802104,
+   "outputId": 0,
+   "inputModuleId": 802006,
+   "inputId": 4,
+   "color": "#C0583B"
+  }
+ ]
+}

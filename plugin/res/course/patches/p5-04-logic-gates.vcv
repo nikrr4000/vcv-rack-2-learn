@@ -1,0 +1,1361 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 504001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "8eecf91a5f34",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 504002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 504005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 504006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 504009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504016,
+   "plugin": "Fundamental",
+   "model": "Push",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    }
+   ],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 504017,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    4
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504018,
+   "plugin": "Fundamental",
+   "model": "Logic",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 0
+    }
+   ],
+   "pos": [
+    32,
+    4
+   ]
+  },
+  {
+   "id": 504019,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    38,
+    4
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 504020,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    45,
+    4
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b5",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 504021,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    52,
+    4
+   ]
+  },
+  {
+   "id": 504025,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504026,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    },
+    {
+     "value": 2,
+     "id": 2
+    }
+   ],
+   "pos": [
+    21,
+    5
+   ]
+  },
+  {
+   "id": 504027,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    5
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504028,
+   "plugin": "Fundamental",
+   "model": "Logic",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    51,
+    5
+   ]
+  },
+  {
+   "id": 504029,
+   "plugin": "Fundamental",
+   "model": "Gates",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -3.321928,
+     "id": 0
+    }
+   ],
+   "pos": [
+    57,
+    5
+   ]
+  },
+  {
+   "id": 504030,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    63,
+    5
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 504031,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    72,
+    5
+   ]
+  },
+  {
+   "id": 504032,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    82,
+    5
+   ]
+  },
+  {
+   "id": 504033,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    86,
+    5
+   ]
+  },
+  {
+   "id": 504041,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504042,
+   "plugin": "Fundamental",
+   "model": "Logic",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 504043,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    23,
+    6
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504044,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    30,
+    6
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 504045,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    39,
+    6
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 504046,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    46,
+    6
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b7",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 504047,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    53,
+    6
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b7",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 504048,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b8",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504049,
+   "plugin": "Fundamental",
+   "model": "Gates",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    7
+   ]
+  },
+  {
+   "id": 504050,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    23,
+    7
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504051,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    30,
+    7
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b8",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 504052,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    39,
+    7
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b8",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 504053,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    46,
+    7
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b8",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 504054,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    55,
+    7
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b8",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 504055,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    7
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b8",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 504056,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504057,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    },
+    {
+     "value": 2,
+     "id": 2
+    }
+   ],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 504058,
+   "plugin": "Fundamental",
+   "model": "Logic",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    36,
+    8
+   ]
+  },
+  {
+   "id": 504059,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    8
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504060,
+   "plugin": "Fundamental",
+   "model": "Gates",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -3.321928,
+     "id": 0
+    }
+   ],
+   "pos": [
+    49,
+    8
+   ]
+  },
+  {
+   "id": 504061,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    55,
+    8
+   ]
+  },
+  {
+   "id": 504062,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    65,
+    8
+   ]
+  },
+  {
+   "id": 504063,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    69,
+    8
+   ]
+  },
+  {
+   "id": 504071,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504072,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    9
+   ]
+  },
+  {
+   "id": 504073,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    9
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b10",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 504074,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    9
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b10",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 504075,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b11",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504076,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    },
+    {
+     "value": 2,
+     "id": 2
+    }
+   ],
+   "pos": [
+    15,
+    10
+   ]
+  },
+  {
+   "id": 504077,
+   "plugin": "Fundamental",
+   "model": "Logic",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    36,
+    10
+   ]
+  },
+  {
+   "id": 504078,
+   "plugin": "Fundamental",
+   "model": "Gates",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -3.321928,
+     "id": 0
+    }
+   ],
+   "pos": [
+    42,
+    10
+   ]
+  },
+  {
+   "id": 504079,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    48,
+    10
+   ]
+  },
+  {
+   "id": 504080,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    58,
+    10
+   ]
+  },
+  {
+   "id": 504081,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    62,
+    10
+   ]
+  },
+  {
+   "id": 504088,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    72,
+    10
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b11",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504089,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    11
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b12",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504090,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    11
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b12",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 504091,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    11
+   ],
+   "data": {
+    "lesson": "p5-04-logic-gates",
+    "block": "b12",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 504007,
+   "outputModuleId": 504005,
+   "outputId": 0,
+   "inputModuleId": 504006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504008,
+   "outputModuleId": 504005,
+   "outputId": 0,
+   "inputModuleId": 504006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504022,
+   "outputModuleId": 504016,
+   "outputId": 1,
+   "inputModuleId": 504018,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504023,
+   "outputModuleId": 504018,
+   "outputId": 4,
+   "inputModuleId": 504021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504024,
+   "outputModuleId": 504018,
+   "outputId": 6,
+   "inputModuleId": 504021,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504034,
+   "outputModuleId": 504026,
+   "outputId": 1,
+   "inputModuleId": 504028,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504035,
+   "outputModuleId": 504026,
+   "outputId": 2,
+   "inputModuleId": 504028,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504036,
+   "outputModuleId": 504028,
+   "outputId": 6,
+   "inputModuleId": 504029,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504037,
+   "outputModuleId": 504029,
+   "outputId": 4,
+   "inputModuleId": 504031,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504038,
+   "outputModuleId": 504031,
+   "outputId": 0,
+   "inputModuleId": 504032,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504039,
+   "outputModuleId": 504033,
+   "outputId": 2,
+   "inputModuleId": 504032,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504040,
+   "outputModuleId": 504032,
+   "outputId": 0,
+   "inputModuleId": 504005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504064,
+   "outputModuleId": 504057,
+   "outputId": 1,
+   "inputModuleId": 504058,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504065,
+   "outputModuleId": 504057,
+   "outputId": 2,
+   "inputModuleId": 504058,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504066,
+   "outputModuleId": 504058,
+   "outputId": 6,
+   "inputModuleId": 504060,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504067,
+   "outputModuleId": 504060,
+   "outputId": 4,
+   "inputModuleId": 504061,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504068,
+   "outputModuleId": 504061,
+   "outputId": 0,
+   "inputModuleId": 504062,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504069,
+   "outputModuleId": 504063,
+   "outputId": 2,
+   "inputModuleId": 504062,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504070,
+   "outputModuleId": 504062,
+   "outputId": 0,
+   "inputModuleId": 504005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504082,
+   "outputModuleId": 504076,
+   "outputId": 1,
+   "inputModuleId": 504077,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504083,
+   "outputModuleId": 504076,
+   "outputId": 2,
+   "inputModuleId": 504077,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504084,
+   "outputModuleId": 504078,
+   "outputId": 4,
+   "inputModuleId": 504079,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504085,
+   "outputModuleId": 504079,
+   "outputId": 0,
+   "inputModuleId": 504080,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504086,
+   "outputModuleId": 504081,
+   "outputId": 2,
+   "inputModuleId": 504080,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 504087,
+   "outputModuleId": 504080,
+   "outputId": 0,
+   "inputModuleId": 504005,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

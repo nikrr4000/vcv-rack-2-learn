@@ -1,0 +1,325 @@
+id: p4-02-wavetable-lfo
+num: "4.2"
+part: 4
+title: Wavetable LFO
+goal: Получить управляющий сигнал меняющейся формы и понять приём «модулировать модулятор».
+builds: Свип фильтра с рисунком, который сам эволюционирует. Так оживают пэд и бас в части 8.
+minutes: 30
+requires: [p4-01-lfo, p2-04-wavetable-vco]
+glossary: [Wavetable LFO, wavetable, положение в таблице, модуляция модуляции, LFO, свип фильтра]
+sources: [vcv-free-manual, pc-learning-synthesis]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Wavetable LFO
+    page: |
+      # 4.2 Wavetable LFO
+      **Ты научишься:** читать форму сигнала из таблицы и двигать её положение вторым **LFO**.
+      **Ты соберёшь:** [[свип фильтра|свип]] фильтра, чей рисунок сам плывёт со временем.
+      **Понадобится:** 30 минут, урок 4.1 про [[LFO]] и урок 2.4 про [[таблица волн|таблицы волн]].
+      Обычный LFO даёт четыре готовые формы. Здесь форма меняется прямо во время игры.
+    figure:
+      template: flow
+      layout: row
+      nodes:
+        - { id: lfo, label: LFO, kind: cv }
+        - { id: wlfo, label: Wavetable LFO, kind: cv }
+        - { id: vcf, label: VCF, kind: audio }
+      edges:
+        - { from: lfo, to: wlfo, kind: cv }
+        - { from: wlfo, to: vcf, kind: cv }
+      caption: Медленный LFO двигает форму Wavetable LFO. Тот ведёт фильтр.
+    faq:
+      - q: Чем это отличается от обычного LFO?
+        a: Обычный LFO выдаёт одну из четырёх фиксированных форм. Wavetable LFO читает форму из таблицы, и ты управляешь тем, какую форму он сейчас читает.
+      - q: Wavetable LFO звучит как Wavetable VCO?
+        a: Нет. Принцип тот же, но частота у него низкая, и его выход нужен для управления. Звуковой источник из него не получится.
+      - q: Зачем мне это для трека?
+        a: Срез фильтра у пэда или баса перестаёт ходить по одной ровной волне. Он идёт по рисунку, который развивается сам. Звук меньше повторяется.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, на что смотреть в уроке.
+    questions:
+      - q: Чем Wavetable LFO отличается от обычного LFO?
+        free: true
+        options:
+          - { text: "Форму сигнала берёт из таблицы, а положением в ней можно управлять", correct: true, why: "Вместо четырёх готовых форм у модуля ряд форм подряд. Ручка или CV выбирают, где в ряду он читает." }
+          - { text: "Работает быстрее обычного", why: "Название относится к таблице, а не к скорости. Частота у обоих низкая." }
+          - { text: "Выдаёт только гейты", why: "Это CV с плавной формой. Гейты делают другие модули." }
+      - q: Что делает ручка Wavetable position?
+        options:
+          - { text: "Выбирает, какая форма из таблицы читается сейчас", correct: true, why: "Положение двигает точку чтения по таблице. Скорость цикла при этом остаётся прежней." }
+          - { text: "Меняет скорость цикла", why: "Скорость задаёт Frequency. Положение в таблице на неё не влияет." }
+          - { text: "Меняет размах сигнала", why: "Размах всегда 10 В. Положение меняет только форму." }
+      - q: Обычный LFO подан в Wavetable position, а Wavetable position CV стоит на 0 %. Что будет?
+        options:
+          - { text: "Ничего, вход не действует", correct: true, why: "Ручка CV задаёт глубину входа. На 0 % глубина нулевая, кабель ничего не двигает." }
+          - { text: "Форма начнёт меняться по всему диапазону", why: "Кабель сам по себе ничего не включает. Глубину задаёт Wavetable position CV." }
+          - { text: "Wavetable LFO остановится", why: "Скорость цикла не связана с этим входом. Модуль продолжит идти." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Форма из таблицы
+    page: |
+      # Форма из таблицы
+      У обычного LFO четыре выхода и четыре готовые формы. У [[Wavetable LFO]] выход один, **Wavetable**, а форма берётся из таблицы.
+      Таблица — это ряд форм подряд. Ручка **Wavetable position** и одноимённый вход задают [[положение в таблице]]: место в ряду.
+      Между соседними формами идёт плавный переход. Это тот же принцип, что у Wavetable VCO из урока 2.4, но частота низкая.
+      Выход — управляющий сигнал, не звук. Его место на входе CV, например на **Frequency** у VCF.
+    figure: { template: waveforms, shapes: [sine, triangle, saw], periods: 2, labels: [положение 0, положение 50, положение 100], caption: "Одна скорость, разные формы: положение выбирает, какую форму читать." }
+    simpler: Представь стопку картинок с разными волнами и лупу над ними. Положение — это то, на какой картинке лупа сейчас. Скорость цикла остаётся прежней, меняется только то, что ты видишь.
+    faq:
+      - q: Форма на Scope перестроилась, а частота та же. Так и должно быть?
+        a: Да. Положение выбирает форму, а скорость цикла задаёт Frequency. Эти две вещи независимы.
+      - q: Какая форма на каком положении?
+        a: "Это зависит от таблицы, которая загружена. Двигай ручку Wavetable position и смотри на Scope: так ты увидишь формы своей таблицы."
+      - q: Можно ли слушать выход Wavetable напрямую?
+        a: Можно, но звука не будет. Он медленный, и защиты от алиасинга в модуле нет. Выход предназначен для CV, а не для звука.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Модуляция модуляции
+    page: |
+      # Модуляция модуляции
+      Положением в таблице может двигать другой, медленный LFO. Это [[модуляция модуляции]].
+      Тогда форма сигнала у Wavetable LFO плавно меняется со временем. Один цикл — один проход, а следующий проход чуть другой.
+      Пусти такой сигнал на срез фильтра, и получится рисунок, который не повторяется ровно.
+      Глубину задаёт ручка **Wavetable position CV**. На 0 % кабель ничего не двигает, на 100 % положение ходит по всему диапазону.
+    figure: { template: flow, layout: row, nodes: [{ id: slow, label: LFO медленный, kind: cv }, { id: wlfo, label: Wavetable LFO, kind: cv }, { id: vcf, label: VCF Frequency, kind: audio }], edges: [{ from: slow, to: wlfo, kind: cv }, { from: wlfo, to: vcf, kind: cv }], caption: "Два модулятора в цепочке: первый двигает форму, второй ведёт фильтр." }
+    simpler: Представь, что ты качаешь рукой регулятор, а другой рукой в это время медленно меняешь, как именно его качать. Рисунок движения сам постепенно эволюционирует.
+    faq:
+      - q: Зачем второй LFO, если можно крутить Wavetable position руками?
+        a: Руками не получится ровно и долго. LFO делает это сам, с постоянной скоростью. Руки свободны, а форма всё время плывёт.
+      - q: Что будет, если подключить кабель, но Wavetable position CV оставить на 0 %?
+        a: Ничего. Ручка CV задаёт глубину входа, и на 0 % вход не действует. Подними её, и форма начнёт двигаться.
+      - q: Какую скорость ставить второму LFO?
+        a: "Медленную. В демо 0,1 Гц: полный проход занимает 10 секунд. Быстрее движение формы будет заметнее, но рисунок станет менее плавным."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Рисунок фильтра
+    page: |
+      # Рисунок фильтра
+      Пила идёт через VCF. **Wavetable** ведёт его срез. Положением в таблице управляет медленный LFO.
+      На Scope канал 1 — выход Wavetable, канал 2 — медленный треугольник. Смотри, как форма на канале 1 перестраивается.
+      Слушай, как свип приобретает разный рисунок от прохода к проходу.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.1" }, Offset: Unipolar } }
+      - { ref: wlfo, plugin: Fundamental, slug: LFO2, params: { Frequency: { display: "1" }, Offset: Unipolar, Wavetable position: { display: "0" }, Wavetable position CV: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [wlfo, Wavetable position] }
+      - { from: [wlfo, Wavetable], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [wlfo, Wavetable], to: [scope, Ch 1] }
+      - { from: [lfo, Triangle], to: [scope, Ch 2] }
+    notes:
+      - { after: lfo, text: "**Frequency** 0,1 Гц: медленный треугольник ведёт положение. Один проход — 10 секунд.", targets: [{ module: lfo, param: Frequency }, { module: lfo, output: Triangle }] }
+      - { after: wlfo, text: "**Wavetable position CV** на 100 %: кабель двигает положение по всему диапазону.", targets: [{ module: wlfo, param: Wavetable position CV }, { module: wlfo, input: Wavetable position }] }
+      - { after: vcf, text: "**Cutoff frequency CV** на 50 %: фильтр слышит модуляцию.", targets: [{ module: vcf, param: Cutoff frequency CV }] }
+    faq:
+      - q: Звук почти не меняется. Что проверить?
+        a: Подними Cutoff frequency CV у VCF. На 0 % фильтр не слышит модуляцию. Потом проверь Wavetable position CV у Wavetable LFO.
+      - q: Почему на Scope медленная картинка?
+        a: Time стоит на 2000 мс на экран, и LFO идёт медленно. Форма меняется плавно, за несколько экранов. Подожди несколько секунд.
+      - q: Зачем два LFO для одного фильтра?
+        a: Один LFO даёт ровное качание. Два, соединённые цепочкой, дают рисунок, где форма качания сама плывёт. Звук получается менее повторяющимся.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: Панель Wavetable LFO
+    page: |
+      # Панель Wavetable LFO
+      Панель знакома по LFO из урока 4.1. Отличается положение в таблице и единственный выход.
+    module: { ref: wlfo, plugin: Fundamental, slug: LFO2 }
+    notes:
+      - { text: "Единственный выход **Wavetable** — управляющий сигнал, не звук.", targets: [{ module: wlfo, output: Wavetable }] }
+      - { text: "**Offset** и **Invert** работают как у LFO: Unipolar 0…10 В, Bipolar ±5 В.", targets: [{ module: wlfo, param: Offset }, { module: wlfo, param: Invert }] }
+      - { text: "**Frequency** — скорость цикла, от 0,0039 до 1024 Гц, по умолчанию 2 Гц.", targets: [{ module: wlfo, param: Frequency }] }
+      - { text: "**Wavetable position** — место в таблице, от 0 до 100 %. Вход справа берёт его от CV.", targets: [{ module: wlfo, param: Wavetable position }, { module: wlfo, input: Wavetable position }] }
+      - { text: "**Wavetable position CV** — глубина этого входа, от −100 до +100 %. На 0 % вход молчит.", targets: [{ module: wlfo, param: Wavetable position CV }] }
+      - { text: "Вход **Reset** сбрасывает цикл, как Sync у VCO.", targets: [{ module: wlfo, input: Reset }] }
+    later:
+      - { what: Вход Clock — подгонка под такт, lesson: "5.1" }
+      - { what: Выбор и загрузка таблицы в контекстном меню, lesson: "2.4" }
+    faq:
+      - q: Я подключил кабель в Wavetable position, а форма не двигается.
+        a: Подними ручку Wavetable position CV. Она задаёт глубину входа, и на 0 % вход не действует.
+      - q: Можно ли загрузить свою таблицу?
+        a: Как у Wavetable VCO, выбор таблицы лежит в контекстном меню модуля. Состав меню проверь на своей версии Rack.
+      - q: Чем Frequency modulation отличается от Wavetable position?
+        a: Frequency modulation ускоряет и замедляет цикл. Wavetable position выбирает форму из таблицы. Первое меняет скорость, второе — вид сигнала.
+
+  - id: b7
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поставь **Wavetable position CV** на 0. Двигай **Wavetable position** от 0 до 50 и до 100 %."
+        see: Форма сигнала на Scope перестраивается, скорость цикла прежняя. Свип в фильтре получает другой рисунок.
+      - do: "Поставь **Wavetable position CV** на 50, потом на 100 %."
+        see: На 50 % форма плывёт в половине диапазона, на 100 % ходит по всему.
+      - do: "Поставь **Frequency** у LFO на 0,5, потом на 2."
+        see: Рисунок меняется быстрее. Форма на Scope перестраивается чаще.
+      - do: "Поставь **Frequency** у Wavetable LFO на 0,5, потом на 2 и на 8."
+        see: Ускоряется сам цикл свипа. На цикл приходится несколько быстрых «ударов».
+      - do: "Поставь **Wavetable position CV** на −100 % и нажми **Invert**."
+        see: Движение формы идёт в обратную сторону, а рисунок на фильтре отзеркаливается.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.1" }, Offset: Unipolar } }
+      - { ref: wlfo, plugin: Fundamental, slug: LFO2, params: { Frequency: { display: "1" }, Offset: Unipolar, Wavetable position: { display: "0" }, Wavetable position CV: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [wlfo, Wavetable position] }
+      - { from: [wlfo, Wavetable], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [wlfo, Wavetable], to: [scope, Ch 1] }
+      - { from: [lfo, Triangle], to: [scope, Ch 2] }
+    notes:
+      - { after: lfo, text: "Шаг 3 — скорость медленного LFO.", targets: [{ module: lfo, param: Frequency }] }
+      - { after: wlfo, text: "Шаги 1, 2, 4 и 5 — ручки Wavetable LFO.", targets: [{ module: wlfo, param: Wavetable position }, { module: wlfo, param: Wavetable position CV }, { module: wlfo, param: Frequency }, { module: wlfo, param: Invert }] }
+    faq:
+      - q: Двигаю Wavetable position, а форма не меняется.
+        a: Скорее всего, ручка попала в край диапазона или Wavetable position CV на 100 % сдвигает положение кабелем. Поставь CV на 0 и двигай ручку.
+      - q: На 8 Гц ничего красивого, одни удары. Это нормально?
+        a: Да. Цикл стал быстрым, и свип звучит как ритмичные удары. Для плавной эволюции держи Frequency у Wavetable LFO от 0,2 до 8 Гц, ближе к нижней границе.
+      - q: Что делает отрицательная глубина?
+        a: "На −100 % сигнал на входе работает наоборот: где положение шло вверх, оно идёт вниз. Форма проходит ту же таблицу в обратном порядке."
+
+  - id: b8
+    type: practice
+    preset: practice
+    title: Практика — сложный свип
+    task: |
+      Собери свип с эволюционирующим рисунком между маркерами «Верстак».
+      1. **LFO**, **Wavetable LFO** (модуль LFO2), **VCO**, **VCF**.
+      2. `Triangle` у LFO → `Wavetable position` у Wavetable LFO. **Wavetable position CV** — не ниже 30 %.
+      3. `Wavetable` → `Frequency` у VCF. **Cutoff frequency CV** у VCF — не ниже 20 %.
+      4. `Sawtooth` у VCO → `Audio` у VCF, `Lowpass filter` → `To "device output 1"` у Audio.
+      5. **Frequency** у Wavetable LFO — от 0,2 до 8 Гц. Нажми «Проверить».
+    given: [audio]
+    check: p4-02-wavetable-lfo
+    hints:
+      "cable:1":
+        - Форма сигнала не эволюционирует. Что должно двигать положение в таблице?
+        - Куда у Wavetable LFO приходит модуляция положения?
+        - "`Triangle` у LFO → вход `Wavetable position` у Wavetable LFO."
+      "cable:2":
+        - Wavetable LFO ничего не качает. Какой выход несёт модуляцию и куда?
+        - Что управляет срезом фильтра?
+        - "`Wavetable` у Wavetable LFO → вход `Frequency` у VCF."
+      "cable:3":
+        - В фильтр не приходит звук.
+        - Какой выход VCO даёт пилу и какой вход у VCF принимает звук?
+        - "`Sawtooth` у VCO → вход `Audio` у VCF."
+      "cable:4":
+        - Звук не дойдёт до колонок.
+        - Какой выход фильтра нужен?
+        - "`Lowpass filter` у VCF → вход `To \"device output 1\"` у Audio этого ряда."
+      "param:1":
+        - LFO почти не двигает положение в таблице.
+        - Посмотри на Wavetable position CV у Wavetable LFO.
+        - Поставь Wavetable position CV не ниже 30 %.
+      "param:2":
+        - Wavetable LFO слишком медленный или слишком быстрый для плавной эволюции.
+        - Посмотри на Frequency у Wavetable LFO.
+        - Поставь Frequency между 0,2 и 8 Гц.
+      "param:3":
+        - Фильтр почти не слышит модуляцию.
+        - Посмотри на Cutoff frequency CV у VCF.
+        - Подними Cutoff frequency CV не ниже 20 %.
+      "probe:1":
+        - Медленный LFO не движется.
+        - Идёт ли Triangle в Wavetable position, и не на минимуме ли Frequency у LFO?
+        - Соедини `Triangle` с `Wavetable position`, подними Frequency у LFO и проверь ещё раз.
+      "probe:2":
+        - Wavetable не выдаёт движущийся сигнал.
+        - Идёт ли кабель в Wavetable position, и не нулевая ли Wavetable position CV?
+        - Подними Wavetable position CV и проверь кабель из `Wavetable` в `Frequency` у VCF.
+      "probe:3":
+        - На выходе фильтра нет сигнала.
+        - Идёт ли пила в Audio у VCF и Lowpass filter в Audio?
+        - Проверь кабели `Sawtooth` → `Audio` у VCF и `Lowpass filter` → `To \"device output 1\"`.
+    faq:
+      - q: Нужен ли именно Wavetable LFO, а не обычный?
+        a: Да. Урок про модуляцию положения в таблице, и у обычного LFO такого входа нет. Модуль называется LFO2 в браузере модулей.
+      - q: Проверка говорит, что Wavetable не движется, а кабели на месте.
+        a: "Посмотри на Wavetable position CV: на 0 % кабель в Wavetable position ничего не двигает. Подними хотя бы до 30 %."
+      - q: Как понять, что рисунок эволюционирует?
+        a: Подключи Wavetable к Scope и смотри форму. Если она плавно перестраивается, а не только качается вверх и вниз, всё работает.
+
+  - id: b9
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Свип превратился в грубую шероховатую окраску. Плавной эволюции рисунка не слышно.
+      Найди одну неверную настройку и исправь её. Кабели трогать не нужно.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.1" }, Offset: Unipolar } }
+      - { ref: wlfo, plugin: Fundamental, slug: LFO2, params: { Frequency: { display: "1" }, Offset: Unipolar, Wavetable position: { display: "0" }, Wavetable position CV: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [wlfo, Wavetable position] }
+      - { from: [wlfo, Wavetable], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [wlfo, Wavetable], to: [scope, Ch 1] }
+    break: { set_param: { module: wlfo, name: Frequency, value: { display: "300" } } }
+    check: { kind: fixed, expect_param: { module: wlfo, name: Frequency, display_max: 8 } }
+    hints:
+      fixed:
+        - "Посмотри на Scope: плавная кривая или частокол?"
+        - Какая ручка Wavetable LFO задаёт скорость цикла?
+        - Поставь Frequency у Wavetable LFO не выше 8 Гц.
+    faq:
+      - q: Почему на 300 Гц получается шероховатый звук?
+        a: Wavetable LFO вышел на звуковую частоту и сам начал давать окраску, а не медленный свип. В модуле нет защиты от алиасинга, он создан для CV.
+      - q: Можно ли оставить высокую частоту ради тембра?
+        a: Для тембра есть Wavetable VCO. Здесь Wavetable LFO нужен как модулятор, поэтому держи Frequency в диапазоне 0,2–8 Гц.
+
+  - id: b10
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Wavetable LFO читает форму из таблицы. Выход один, **Wavetable**, и это CV.
+      - Положение в таблице выбирает форму. Скорость цикла остаётся прежней.
+      - Один LFO может двигать положение другого. Это модуляция модуляции.
+      - Wavetable position CV на 0 % отключает вход.
+      Сохрани патч: приём «LFO в положение таблицы» ещё пригодится.
+      **Источники:** руководство VCV Rack Free (раздел Wavetable LFO); Perfect Circuit, «Learning Synthesis: LFOs».
+    questions:
+      - q: Что значит «модулировать модулятор» и зачем это нужно?
+        options:
+          - { text: "Один LFO двигает параметр другого, и рисунок сигнала эволюционирует", correct: true, why: "Форма второго LFO плавно меняется, и модуляция не повторяется ровно." }
+          - { text: "Два LFO складываются в один звук", why: "LFO не звучат. Здесь один управляет положением в таблице другого." }
+          - { text: "LFO делают быстрее", why: "Скорость задаёт Frequency. Положение в таблице меняет форму, а не скорость." }
+    next: |
+      # Дальше: 4.3
+      **Смешивание и масштабирование.** Несколько модуляторов сложатся в один сигнал, а его диапазон придётся ограничить.
+    faq:
+      - q: Что повторить, если запутался?
+        a: Урок 4.1 про LFO и урок 2.4 про Wavetable VCO. Главное — различать скорость и положение в таблице.
+      - q: Пригодится ли Wavetable LFO дальше?
+        a: Да, в пэдах и басах части 8. Там срез фильтра ходит по рисунку, который сам эволюционирует.

@@ -1,0 +1,369 @@
+id: p8-07-texture
+num: "8.7"
+part: 8
+title: Текстура
+goal: Собрать «облако» — живую текстуру из шума, которая сама медленно меняется, и понять, что делают зёрна и ручки Clouds.
+builds: Седьмой инструмент трека. В уроке 9.4 текстура заполнит паузы между секциями и сыграет роль перехода.
+minutes: 35
+requires: [p2-05-noise, p4-04-randomness]
+glossary: [гранулярный синтез, зерно, заморозка буфера, цвет шума, случайное напряжение, шум]
+sources: [mi-clouds, ai-texture]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Текстура
+    page: |
+      # 8.7 Текстура
+      **Ты научишься:** превращать [[шум]] и любой другой звук в облако зёрен и двигать его случайным напряжением.
+      **Ты соберёшь:** Noise → Clouds (Texture Synthesizer) с двумя выходами Random на Position и Texture.
+      **Понадобится:** 35 минут, уроки про шум и случайные значения. Громкость держи низкой.
+      Патч понадобится в части 9, сохрани его в конце урока.
+    figure: { template: flow, layout: row, nodes: [{ id: noise, label: Noise, kind: audio }, { id: clouds, label: Clouds, kind: audio }, { id: out, label: Audio, kind: audio }, { id: rnd, label: Random, kind: cv }], edges: [{ from: noise, to: clouds, kind: audio }, { from: clouds, to: out, kind: audio }, { from: rnd, to: clouds, kind: cv }], caption: "Шум идёт в Clouds, Random двигает Position и Texture. Выход Clouds — в Audio." }
+    faq:
+      - q: "Что такое текстура в музыке?"
+        a: "Фон без мелодии: ветер, дождь, шипящий ковёр. Он не играет ноты, а создаёт настроение. В треке такой звук заполняет паузы между секциями."
+      - q: "Почему модуль называется Texture Synthesizer, а не Clouds?"
+        a: "В библиотеке VCV он называется Texture Synthesizer, а панель повторяет Mutable Instruments Clouds. Это один и тот же модуль, в курсе звучит оба названия."
+      - q: "Звук будет громким?"
+        a: "Облако может звучать громче входа. Убавь громкость в системе и держи Audio input gain около 0,6, пока не услышишь результат."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, о чём будет урок.
+    questions:
+      - q: "Что такое «зерно» в Texture Synthesizer?"
+        free: true
+        options:
+          - { text: "Крошечный кусочек записанного звука, из множества зёрен собирается облако", correct: true, why: "Модуль записывает вход в буфер и воспроизводит из него короткие кусочки. Их много, и они накладываются." }
+          - { text: "Одна нота мелодии", why: "Зерно короче ноты в десятки раз. Ноты облако не играет." }
+          - { text: "Шумовая волна определённого цвета", why: "Цвет шума задаёт источник, например Pink noise. Зерно — кусочек звука из буфера." }
+      - q: "Что делает Freeze?"
+        options:
+          - { text: "Останавливает запись в буфер, зёрна читаются из того, что там лежит", correct: true, why: "Звук застывает: новый звук в буфер не попадает, а зёрна продолжают играть." }
+          - { text: "Отключает выход", why: "Выход остаётся включённым, звук продолжает играть. Мьют выключает звук, Freeze — нет." }
+          - { text: "Ставит на паузу и продолжает с того же места", why: "Паузы здесь нет: зёрна играют всё время, но из неподвижного буфера." }
+      - q: "Зачем Random подключён к Position и Texture?"
+        options:
+          - { text: "Медленно двигает окно в буфере и характер зёрен, облако «дышит»", correct: true, why: "Position и Texture меняют, откуда и какие зёрна берутся. Случайное напряжение делает облако живым." }
+          - { text: "Меняет высоту звука", why: "Высоту зёрен задаёт Grain pitch, и Random в нём нет." }
+          - { text: "Включает и выключает Freeze", why: "Freeze берёт гейт. Smooth и Linear выдают непрерывное напряжение, а не переключатель." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Звук из зёрен
+    page: |
+      # Звук из зёрен
+      [[гранулярный синтез|Гранулярный синтез]] собирает звук из очень коротких кусочков, [[зерно|зёрен]], длиной в десятки миллисекунд.
+      Модуль записывает вход в буфер. Потом читает из него множество зёрен и накладывает их друг на друга.
+      Зёрна можно брать из разных мест буфера, сдвигать по высоте, прореживать или сгущать.
+    page2: |
+      Из одного материала получается и рассыпь трещащих капель, и сплошная ткань.
+      Каждое зерно управляется своими ручками: **Position** (откуда), **Size** (какой длины), **Pitch** (какой высоты), **Density** (сколько), **Texture** (какого характера).
+    figure: { template: table, rows: [[Ручка, Что решает], [Position, Откуда в буфере], [Size, Длина зерна], [Density, Сколько зёрен], [Pitch, Высота зёрен]], caption: "Четыре ручки зёрен. Texture меняет их характер." }
+    simpler: Представь мозаику из крошечных кусочков записи. Position выбирает, откуда брать кусочки. Size — их размер, Density — как плотно они лежат.
+    faq:
+      - q: "Зерно — это нота?"
+        a: "Нет. Зерно короче ноты в десятки раз и не имеет высоты в обычном смысле. Из множества зёрен складывается звук, а ноту он играет, только если вход — тон."
+      - q: "Зачем шум на входе?"
+        a: "Шум не привязан к высоте. Облако из него выходит ветром, дождём или шипящим ковром. Если нужно услышать именно зёрна, подай на вход простой тон, например пилу."
+      - q: "Чем гранулярный синтез отличается от реверберации?"
+        a: "Реверберация размывает звук, добавляя отражения. Зёрна перебирают сам материал: берут кусочки, меняют порядок и высоту. Звук после облака иногда не узнать."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Облако для трека
+    page: |
+      # Облако для трека
+      Рецепт курса: розовый шум на вход, **Random** двигает Position и Texture, **Dry/wet** почти в максимум.
+      [[цвет шума|Розовый шум]] мягче белого, поэтому облако не шипит.
+      Это выбор курса, а не рецепт из руководства.
+    page2: |
+      **Smooth** из Random даёт плавное [[случайное напряжение]], **Linear** — другое, и облако «ходит».
+      [[заморозка буфера|Заморозка буфера]]: **Freeze** останавливает запись. Облако играет то, что успело записать.
+      Внутренний такт Random идёт сам, кабеля в Trigger не нужно.
+    figure: { template: voltages, ranges: [{ label: "Smooth", min: -5, max: 5 }, { label: "Linear", min: -5, max: 5 }, { label: "аудио", min: -5, max: 5 }], caption: "Random выдаёт плавные случайные значения. Размах — ±5 В, как у Offset в положении Bipolar." }
+    simpler: Представь ветер, который задувает то слева, то справа. Random — это ветер, который сам решает, куда дуть. Облако поворачивается вслед за ним.
+    faq:
+      - q: "Почему Random без Trigger?"
+        a: "У Random есть внутренний такт, ручка Internal trigger rate. Если не подключать кабель в Trigger, он идёт сам. Для текстуры хватает скорости не выше 1 Гц."
+      - q: "Чем Smooth отличается от Linear?"
+        a: "Оба выдают непрерывные случайные значения, но с разной формой перехода. Smooth плавнее, Linear идёт прямыми отрезками. Для текстуры годятся оба."
+      - q: "Что делает заморозка буфера?"
+        a: "Останавливает запись. Зёрна читаются из последнего содержимого буфера, поэтому звук застывает и не меняется, пока Freeze включён."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Пила в облаке
+    page: |
+      # Пила в облаке
+      Сначала на вход идёт пила, чтобы ты услышал зёрна.
+      Подвинь **Grain density** от 0,2 до 0,9. От редких капель к сплошной массе.
+      Нажми **Freeze**: звук застывает. Нажми ещё раз, чтобы отпустить.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: clouds, plugin: AudibleInstruments, slug: Clouds, params: { Audio input gain: { display: "0.6" }, Grain position: { display: "0.5" }, Grain size: { display: "0.6" }, Grain pitch: { display: "0" }, Grain density: { display: "0.6" }, Grain texture: { display: "0.5" }, Dry/wet: { display: "0.9" } } }
+    cables:
+      - { from: [vco, Sawtooth], to: [clouds, Left] }
+      - { from: [clouds, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [clouds, Right], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: clouds, text: "**Grain density** — сколько зёрен играет сразу.", targets: [{ module: clouds, param: Grain density }] }
+      - { after: clouds, text: "**Freeze** замораживает буфер.", targets: [{ module: clouds, param: Freeze }] }
+    faq:
+      - q: "Слышу не зёрна, а ровную ноту."
+        a: "Подними Grain density и опусти Grain size. Тогда зёрна короче и реже, и пила распадается на отдельные кусочки. Dry/wet держи выше 0,7."
+      - q: "После Freeze звук остался навсегда."
+        a: "Нажми Freeze ещё раз. Кнопка работает как переключатель: первое нажатие замораживает, второе отпускает."
+      - q: "Звука нет."
+        a: "Проверь, что пила идёт в Left у Clouds, а не в Right. Ещё посмотри на Audio input gain: он не должен быть в нуле."
+
+  - id: b6
+    type: live
+    preset: live
+    title: Облако из шума
+    page: |
+      # Облако из шума
+      Теперь на входе розовый шум, а Random двигает Position и Texture.
+      Облако «ходит» медленно: за секунды меняется его характер.
+      Подними **Internal trigger rate** до 1 Гц. Облако движется быстрее.
+    modules:
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Internal trigger rate: { display: "0.5" }, Shape: { display: "100" }, Random spread: { display: "50" }, Offset: { display: "Bipolar" } } }
+      - { ref: clouds, plugin: AudibleInstruments, slug: Clouds, params: { Audio input gain: { display: "0.6" }, Grain position: { display: "0.5" }, Grain size: { display: "0.6" }, Grain pitch: { display: "0" }, Grain density: { display: "0.6" }, Grain texture: { display: "0.5" }, Dry/wet: { display: "0.9" }, Stereo spread: { display: "0.7" }, Feedback amount: { display: "0.2" }, Reverb amount: { display: "0.3" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5000" } } }
+    cables:
+      - { from: [noise, Pink noise], to: [clouds, Left] }
+      - { from: [rnd, Smooth], to: [clouds, Position] }
+      - { from: [rnd, Linear], to: [clouds, Texture] }
+      - { from: [rnd, Smooth], to: [scope, Ch 1] }
+      - { from: [clouds, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [clouds, Right], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: rnd, text: "**Smooth** и **Linear** двигают облако.", targets: [{ module: rnd, output: Smooth }, { module: rnd, output: Linear }] }
+      - { after: rnd, text: "**Internal trigger rate** — скорость движения.", targets: [{ module: rnd, param: Internal trigger rate }] }
+    faq:
+      - q: "Облако не движется."
+        a: "Проверь, что Smooth идёт в Position, а Linear — в Texture. Ещё посмотри на Internal trigger rate: на 0,002 Гц движение почти незаметно."
+      - q: "Что показывает Scope?"
+        a: "Медленную кривую Smooth за пять секунд. Она плавно идёт вверх и вниз: так Random двигает Position."
+      - q: "Облако накапливается и разрастается."
+        a: "Feedback amount слишком высокий. Верни его на 0,2. Feedback возвращает выход облака на вход, и звук копится."
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Зёрна на панели Clouds
+    page: |
+      # Зёрна на панели Clouds
+      Пять ручек определяют зёрна. Каждая имеет CV-вход, нам хватит Position и Texture.
+    module: { ref: clouds, plugin: AudibleInstruments, slug: Clouds }
+    notes:
+      - { text: "**Grain position** — откуда в буфере берётся зерно.", targets: [{ module: clouds, param: Grain position }] }
+      - { text: "**Grain size** — длина зерна.", targets: [{ module: clouds, param: Grain size }] }
+      - { text: "**Grain pitch** — высота зёрен.", targets: [{ module: clouds, param: Grain pitch }] }
+      - { text: "**Grain density** — сколько зёрен играет.", targets: [{ module: clouds, param: Grain density }] }
+      - { text: "**Grain texture** — характер зёрен.", targets: [{ module: clouds, param: Grain texture }] }
+      - { text: "**Freeze** — заморозка буфера.", targets: [{ module: clouds, param: Freeze }] }
+    later:
+      - { what: "Mode и Load/save", lesson: "9.1" }
+    faq:
+      - q: "Что делают Mode и Load/save?"
+        a: "Mode переключает режим работы модуля, Load/save хранит служебные настройки. В уроке остаёмся на режиме по умолчанию и этими кнопками не пользуемся."
+      - q: "Какие ручки имеют CV-входы?"
+        a: "Position, Size, Pitch, Density и Texture. Pitch ждёт 1 вольт на октаву. Для текстуры нужны только Position и Texture."
+      - q: "Что делает Grain pitch?"
+        a: "Сдвигает высоту зёрен вверх или вниз. Для шума это меняет «цвет» облака: темнее или светлее. Для простого тона высота сдвигается заметно."
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Вход, выход и смесь
+    page: |
+      # Вход, выход и смесь
+      Остальная часть панели отвечает за вход звука и смешивание с сухим сигналом.
+    module: { ref: clouds, plugin: AudibleInstruments, slug: Clouds }
+    notes:
+      - { text: "Вход **Left**: сюда идёт шум.", targets: [{ module: clouds, input: Left }] }
+      - { text: "**Audio input gain** — уровень записи в буфер.", targets: [{ module: clouds, param: Audio input gain }] }
+      - { text: "**Dry/wet** — доля облака против сухого звука.", targets: [{ module: clouds, param: Dry/wet }] }
+      - { text: "**Feedback amount** возвращает выход на вход. Держи не выше 0,5.", targets: [{ module: clouds, param: Feedback amount }] }
+      - { text: "**Reverb amount** добавляет реверберацию.", targets: [{ module: clouds, param: Reverb amount }] }
+      - { text: "Выходы **Left** и **Right** идут в Audio.", targets: [{ module: clouds, output: Left }, { module: clouds, output: Right }] }
+    faq:
+      - q: "Почему четыре значения на одной ручке Blend?"
+        a: "На панели Clouds ручка Blend несёт четыре значения: Dry/wet, Stereo spread, Feedback amount и Reverb amount. Кнопка рядом выбирает, какое сейчас крутится."
+      - q: "Что будет, если Dry/wet поставить в ноль?"
+        a: "Ты услышишь сухой вход без облака. Для текстуры оставляй 0,7 и выше, иначе вместо облака слышен просто шум."
+      - q: "Зачем Stereo spread?"
+        a: "Он разводит зёрна по левому и правому каналам, и облако становится шире. Для текстуры хорошо работает около 0,7."
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Двигай **Grain size** от 0,2 до 0,8."
+        see: "От «хруста» к плавному гулу."
+      - do: "Двигай **Grain pitch** от −1 до 1."
+        see: "Облако темнеет или светлеет."
+      - do: "Поставь **Dry/wet** на 0,5 и на 1."
+        see: "От смеси с сухим шумом к чистому облаку."
+      - do: "Нажми **Freeze** на несколько секунд и отпусти."
+        see: "Звук застывает, потом снова меняется."
+      - do: "Двигай **Internal trigger rate** у Random от 0,1 до 1."
+        see: "Облако ходит медленнее или быстрее."
+    modules:
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Internal trigger rate: { display: "0.5" }, Shape: { display: "100" }, Random spread: { display: "50" }, Offset: { display: "Bipolar" } } }
+      - { ref: clouds, plugin: AudibleInstruments, slug: Clouds, params: { Audio input gain: { display: "0.6" }, Grain position: { display: "0.5" }, Grain size: { display: "0.6" }, Grain pitch: { display: "0" }, Grain density: { display: "0.6" }, Grain texture: { display: "0.5" }, Dry/wet: { display: "0.9" }, Stereo spread: { display: "0.7" }, Feedback amount: { display: "0.2" }, Reverb amount: { display: "0.3" } } }
+    cables:
+      - { from: [noise, Pink noise], to: [clouds, Left] }
+      - { from: [rnd, Smooth], to: [clouds, Position] }
+      - { from: [rnd, Linear], to: [clouds, Texture] }
+      - { from: [clouds, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [clouds, Right], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: rnd, text: "Шаг 5 — ручка этого Random.", targets: [{ module: rnd, param: Internal trigger rate }] }
+    faq:
+      - q: "Облако слишком тихое."
+        a: "Подними Audio input gain: облаку мало материала. Ещё проверь Dry/wet: при низком значении слышен сухой вход, а не облако."
+      - q: "Слышу разрастание и гул."
+        a: "Feedback amount слишком велик. Верни его на 0,2: выход слишком сильно возвращается на вход и накапливается."
+      - q: "Как сделать дождь?"
+        a: "Подними Grain density и опусти Grain size: зёрна станут короткими и частыми. Для ветра оставь Size побольше, а Density поменьше."
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — своя текстура
+    task: |
+      Собери текстуру сам, между маркерами «Верстак».
+      1. **Noise**, **Random**, **Texture Synthesizer** (Clouds).
+      2. `Pink noise` → `Left` у Clouds.
+      3. `Smooth` у Random → `Position`, `Linear` → `Texture`.
+      4. `Left` и `Right` у Clouds → входы 1 и 2 у Audio.
+      5. **Dry/wet** от 0,7, **Audio input gain** от 0,3, **Feedback amount** до 0,5, **Reverb amount** до 0,7, **Internal trigger rate** до 1 Гц.
+    given: [audio]
+    check: p8-07-texture
+    hints:
+      "cable:1":
+        - "Облаку нечего дробить."
+        - "Какой выход Noise даёт розовый шум?"
+        - "`Pink noise` у Noise → `Left` у Clouds."
+      "cable:2":
+        - "Положение в буфере не движется."
+        - "Какой выход Random плавно меняется?"
+        - "`Smooth` у Random → `Position` у Clouds."
+      "cable:3":
+        - "Текстура стоит на месте."
+        - "Какой выход Random можно подать на Texture?"
+        - "`Linear` у Random → `Texture` у Clouds."
+      "cable:4":
+        - "Левый канал не попал в Audio."
+        - "Какой выход Clouds идёт на первый выход устройства?"
+        - "`Left` у Clouds → `To \"device output 1\"` у Audio."
+      "cable:5":
+        - "Звук только слева."
+        - "Правый выход Clouds нужен второму выходу."
+        - "`Right` у Clouds → `To \"device output 2\"` у Audio."
+      "param:1":
+        - "Слышен сухой шум, а не облако."
+        - "Ручка Dry/wet у Clouds."
+        - "Подними Dry/wet хотя бы до 0,7."
+      "param:2":
+        - "Облаку мало материала."
+        - "Ручка Audio input gain у Clouds."
+        - "Подними Audio input gain хотя бы до 0,3."
+      "param:3":
+        - "Облако разрастается."
+        - "Ручка Feedback amount у Clouds."
+        - "Убавь Feedback amount до 0,5 или ниже."
+      "param:4":
+        - "Текстура тонет в реверберации."
+        - "Ручка Reverb amount у Clouds."
+        - "Убавь Reverb amount до 0,7 или ниже."
+      "param:5":
+        - "Модуляция слишком быстрая."
+        - "Ручка Internal trigger rate у Random."
+        - "Поставь Internal trigger rate не выше 1 Гц."
+      "probe:1":
+        - "Smooth стоит на месте."
+        - "Идёт ли внутренний такт Random? Нет ли кабеля в Trigger?"
+        - "Убери кабель из Trigger у Random и нажми «Проверить» ещё раз."
+      "probe:2":
+        - "На левом выходе Clouds нет сигнала."
+        - "Идёт ли шум в Left, не в нуле ли Audio input gain и Dry/wet?"
+        - "`Pink noise` → `Left` у Clouds, подними Audio input gain и Dry/wet."
+    faq:
+      - q: "Можно ли взять белый шум?"
+        a: "Можно, но проверка ждёт Pink noise. Розовый шум мягче, и облако из него не шипит. Белый добавит резкости."
+      - q: "Как сыграть ветер, а как дождь?"
+        a: "Для ветра: большие Size, малая Density, медленный Random. Для дождя: короткие Size, высокая Density. Подбирай ручки на слух и сохрани любимый вариант."
+      - q: "Проверка не видит кнопки Freeze и Mode."
+        a: "У них нет числового значения, поэтому проверка смотрит только на ручки с числами. Freeze и Mode остаются на твой слух."
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Это облако звучит, но стоит на месте: ничего не меняется.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Internal trigger rate: { display: "0.5" }, Shape: { display: "100" }, Random spread: { display: "50" }, Offset: { display: "Bipolar" } } }
+      - { ref: clouds, plugin: AudibleInstruments, slug: Clouds, params: { Audio input gain: { display: "0.6" }, Grain position: { display: "0.5" }, Grain size: { display: "0.6" }, Grain pitch: { display: "0" }, Grain density: { display: "0.6" }, Grain texture: { display: "0.5" }, Dry/wet: { display: "0.9" }, Stereo spread: { display: "0.7" }, Feedback amount: { display: "0.2" }, Reverb amount: { display: "0.3" } } }
+    cables:
+      - { from: [noise, Pink noise], to: [clouds, Left] }
+      - { from: [rnd, Smooth], to: [clouds, Position] }
+      - { from: [rnd, Linear], to: [clouds, Texture] }
+      - { from: [clouds, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [clouds, Right], to: [audio, "To \"device output 2\""] }
+    break: { remove_cable: [rnd, Smooth, clouds, Position] }
+    check: { kind: fixed, expect_cable: [rnd, Smooth, clouds, Position] }
+    hints:
+      fixed:
+        - "Texture ходит, а положение в буфере нет. Что двигает Position?"
+        - "Проследи выходы Random: один идёт в Texture, а второй свободен."
+        - "Соедини `Smooth` у Random с `Position` у Clouds."
+    faq:
+      - q: "Почему без Position облако застыло?"
+        a: "Position остаётся там, где стоит ручка: зёрна берутся из одного места буфера. Texture ещё меняется, но облако теряет большую часть движения."
+      - q: "Как это услышать?"
+        a: "Сравни ровность звука до и после кабеля. С кабелем облако медленно меняет характер, без него остаётся одно ощущение."
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Облако собирается из зёрен: Position, Size, Pitch, Density, Texture.
+      - Розовый шум даёт материал, не привязанный к высоте.
+      - Random на Position и Texture оживляет облако, скорость не выше 1 Гц.
+      - Freeze замораживает буфер. Feedback держи не выше 0,5.
+      Сохрани патч как `vcv-8.7.vcv`: он понадобится в части 9.
+      **Источники:** руководство Mutable Instruments, модуль Clouds. Страница Clouds в VCV Library.
+    questions:
+      - q: "Чем Freeze отличается от паузы и мьюта?"
+        options:
+          - { text: "Звук продолжает играть из неподвижного буфера", correct: true, why: "Запись в буфер остановлена, зёрна читают то, что там лежит. Звук не выключается и не останавливается." }
+          - { text: "Он выключает выход", why: "Это мьют. Freeze оставляет выход включённым." }
+          - { text: "Он ставит воспроизведение на паузу", why: "Паузы нет: зёрна продолжают играть." }
+    next: |
+      # Дальше: 9.1
+      **Архитектура патча-трека.** Семь инструментов части 8 соберутся в один трек: ряды, такт и общий микшер.
+    faq:
+      - q: "Что повторить, если облако не звучит?"
+        a: "Проверь Pink noise в Left у Clouds, Audio input gain и Dry/wet. Если любой из них у нуля, облако молчит."
+      - q: "Зачем сохранять патч?"
+        a: "В части 9 текстура заполнит паузы между секциями. Файл `vcv-8.7.vcv` понадобится как готовый инструмент."

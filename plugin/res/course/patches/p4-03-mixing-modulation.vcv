@@ -1,0 +1,1283 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 403001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "f1aaee115896",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 403002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 403005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 403006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 403009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403016,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -0.999989,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 403017,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 2.58497,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    31,
+    4
+   ]
+  },
+  {
+   "id": 403018,
+   "plugin": "Fundamental",
+   "model": "CVMix",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.6,
+     "id": 0
+    },
+    {
+     "value": 0.2,
+     "id": 1
+    }
+   ],
+   "pos": [
+    41,
+    4
+   ]
+  },
+  {
+   "id": 403019,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    45,
+    4
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403020,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    54,
+    4
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 403021,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 4,
+     "id": 2
+    },
+    {
+     "value": -10,
+     "id": 3
+    }
+   ],
+   "pos": [
+    61,
+    4
+   ]
+  },
+  {
+   "id": 403022,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    65,
+    4
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b5",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 403023,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    72,
+    4
+   ]
+  },
+  {
+   "id": 403024,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    82,
+    4
+   ]
+  },
+  {
+   "id": 403031,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403032,
+   "plugin": "Fundamental",
+   "model": "CVMix",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 403033,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    5
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403034,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    28,
+    5
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 403035,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    37,
+    5
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 403036,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403037,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 403038,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    6
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403039,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    30,
+    6
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 403040,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    37,
+    6
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 403041,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    44,
+    6
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b7",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 403042,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    51,
+    6
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b7",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 403043,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403044,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -0.999989,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    21,
+    7
+   ]
+  },
+  {
+   "id": 403045,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 2.58497,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    31,
+    7
+   ]
+  },
+  {
+   "id": 403046,
+   "plugin": "Fundamental",
+   "model": "CVMix",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.6,
+     "id": 0
+    },
+    {
+     "value": 0.2,
+     "id": 1
+    }
+   ],
+   "pos": [
+    41,
+    7
+   ]
+  },
+  {
+   "id": 403047,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    45,
+    7
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403048,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 4,
+     "id": 2
+    },
+    {
+     "value": -10,
+     "id": 3
+    }
+   ],
+   "pos": [
+    52,
+    7
+   ]
+  },
+  {
+   "id": 403049,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    56,
+    7
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b8",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 403050,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    63,
+    7
+   ]
+  },
+  {
+   "id": 403051,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    73,
+    7
+   ]
+  },
+  {
+   "id": 403052,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    81,
+    7
+   ]
+  },
+  {
+   "id": 403061,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403062,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    19,
+    8
+   ]
+  },
+  {
+   "id": 403063,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    8
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b9",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 403064,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    68,
+    8
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b9",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 403065,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403066,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -0.999989,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    9
+   ]
+  },
+  {
+   "id": 403067,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 2.58497,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    25,
+    9
+   ]
+  },
+  {
+   "id": 403068,
+   "plugin": "Fundamental",
+   "model": "CVMix",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.6,
+     "id": 0
+    },
+    {
+     "value": 0.2,
+     "id": 1
+    }
+   ],
+   "pos": [
+    35,
+    9
+   ]
+  },
+  {
+   "id": 403069,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 0
+    },
+    {
+     "value": 4,
+     "id": 2
+    },
+    {
+     "value": -10,
+     "id": 3
+    }
+   ],
+   "pos": [
+    39,
+    9
+   ]
+  },
+  {
+   "id": 403070,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    43,
+    9
+   ]
+  },
+  {
+   "id": 403071,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    53,
+    9
+   ]
+  },
+  {
+   "id": 403072,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    61,
+    9
+   ]
+  },
+  {
+   "id": 403081,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    75,
+    9
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b10",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403082,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b11",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403083,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    10
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b11",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 403084,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    10
+   ],
+   "data": {
+    "lesson": "p4-03-mixing-modulation",
+    "block": "b11",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 403007,
+   "outputModuleId": 403005,
+   "outputId": 0,
+   "inputModuleId": 403006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403008,
+   "outputModuleId": 403005,
+   "outputId": 0,
+   "inputModuleId": 403006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403025,
+   "outputModuleId": 403016,
+   "outputId": 1,
+   "inputModuleId": 403018,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403026,
+   "outputModuleId": 403017,
+   "outputId": 0,
+   "inputModuleId": 403018,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403027,
+   "outputModuleId": 403018,
+   "outputId": 0,
+   "inputModuleId": 403021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403028,
+   "outputModuleId": 403021,
+   "outputId": 0,
+   "inputModuleId": 403024,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403029,
+   "outputModuleId": 403023,
+   "outputId": 2,
+   "inputModuleId": 403024,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403030,
+   "outputModuleId": 403024,
+   "outputId": 0,
+   "inputModuleId": 403005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403053,
+   "outputModuleId": 403044,
+   "outputId": 1,
+   "inputModuleId": 403046,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403054,
+   "outputModuleId": 403045,
+   "outputId": 0,
+   "inputModuleId": 403046,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403055,
+   "outputModuleId": 403046,
+   "outputId": 0,
+   "inputModuleId": 403048,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403056,
+   "outputModuleId": 403048,
+   "outputId": 0,
+   "inputModuleId": 403051,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403057,
+   "outputModuleId": 403050,
+   "outputId": 2,
+   "inputModuleId": 403051,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403058,
+   "outputModuleId": 403051,
+   "outputId": 0,
+   "inputModuleId": 403005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403059,
+   "outputModuleId": 403046,
+   "outputId": 0,
+   "inputModuleId": 403052,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403060,
+   "outputModuleId": 403048,
+   "outputId": 0,
+   "inputModuleId": 403052,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403073,
+   "outputModuleId": 403066,
+   "outputId": 1,
+   "inputModuleId": 403068,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403074,
+   "outputModuleId": 403067,
+   "outputId": 0,
+   "inputModuleId": 403068,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403075,
+   "outputModuleId": 403068,
+   "outputId": 0,
+   "inputModuleId": 403069,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403076,
+   "outputModuleId": 403069,
+   "outputId": 0,
+   "inputModuleId": 403071,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403077,
+   "outputModuleId": 403070,
+   "outputId": 2,
+   "inputModuleId": 403071,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403078,
+   "outputModuleId": 403071,
+   "outputId": 0,
+   "inputModuleId": 403005,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403079,
+   "outputModuleId": 403068,
+   "outputId": 0,
+   "inputModuleId": 403072,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 403080,
+   "outputModuleId": 403069,
+   "outputId": 0,
+   "inputModuleId": 403072,
+   "inputId": 1,
+   "color": "#C0583B"
+  }
+ ]
+}

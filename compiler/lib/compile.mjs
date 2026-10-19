@@ -18,7 +18,7 @@ import crypto from "node:crypto";
 
 import { facts, loadCheck, RACK_VERSION, VERSIONS } from "./data.mjs";
 import { findParam, findPort, ResolveError, resolveParam, snapshot } from "./resolve.mjs";
-import { fitPage, plain, terms, TOKENS } from "./textfit.mjs";
+import { fitPage, fitTask, plain, terms, TOKENS } from "./textfit.mjs";
 
 export const ROW_HP = 96;
 const GAP = 1;
@@ -150,6 +150,13 @@ export function compileLesson(L, { lessonIndex = 0, mcpPort = 2600, test = false
 		if (fit.splitWords) warn(b.id, `${id}: a word longer than the line is hyphenated`);
 		allTerms.push(...terms(text));
 		return { id, kind: "page", text, width: hp, ...(opts.title ? { title: true } : {}) };
+	};
+
+	// The narrowest Task (14 HP when it fits) whose brief needs no scrolling.
+	const taskWidth = (b, steps, text, checkable) => {
+		const hp = [W.task, 16, 18, 20].find((x) => fitTask(b.title, steps, text, x, { checkable }).fits);
+		if (!hp) err(b.id, `the task brief does not fit a Task module even at 20 HP — ${steps.length ? "fewer or shorter steps" : "shorten the text"}`);
+		return hp || W.task;
 	};
 
 	L.blocks.forEach((b, bi) => {
@@ -299,7 +306,8 @@ export function compileLesson(L, { lessonIndex = 0, mcpPort = 2600, test = false
 			case "try": {
 				const steps = (b.steps || []).map((s) => ({ do: s.do, see: s.see || "" }));
 				for (const s of steps) allTerms.push(...terms(s.do), ...terms(s.see));
-				putAtlas("task", "Task", W.task, { id: "task-1", kind: "task", mode: "try", width: W.task, text: b.task || "", steps });
+				const tw = taskWidth(b, steps, b.task || "", false);
+				putAtlas("task", "Task", tw, { id: "task-1", kind: "task", mode: "try", width: tw, text: b.task || "", steps });
 				const notes = b.notes || [];
 				for (const spec of b.modules || []) {
 					putModule(spec);
@@ -318,8 +326,9 @@ export function compileLesson(L, { lessonIndex = 0, mcpPort = 2600, test = false
 				const check = typeof b.check === "string" ? loadCheck(b.check) : null;
 				if (!check) err(b.id, `check file «${b.check}» not found in vcv/course/checks`);
 				allTerms.push(...terms(b.task));
-				const taskItem = { id: "task-1", kind: "task", mode: "practice", width: W.task, text: b.task, check, hints: b.hints || {}, given: [] };
-				putAtlas("task", "Task", W.task, taskItem);
+				const tw = taskWidth(b, [], b.task, true);
+				const taskItem = { id: "task-1", kind: "task", mode: "practice", width: tw, text: b.task, check, hints: b.hints || {}, given: [] };
+				putAtlas("task", "Task", tw, taskItem);
 				for (const spec of b.modules || []) putModule(spec);
 				// The learner's output for this practice: its own Audio module (several Audio modules share one device in Rack 2).
 				if (check && (check.modules || []).some((m) => m.plugin === "Core" && m.slug === "AudioInterface2") && !local.audio) {
@@ -342,8 +351,9 @@ export function compileLesson(L, { lessonIndex = 0, mcpPort = 2600, test = false
 			}
 			case "debug": {
 				allTerms.push(...terms(b.task));
-				const taskItem = { id: "task-1", kind: "task", mode: "debug", width: W.task, text: b.task, hints: b.hints || {}, scope: [] };
-				putAtlas("task", "Task", W.task, taskItem);
+				const tw = taskWidth(b, [], b.task, true);
+				const taskItem = { id: "task-1", kind: "task", mode: "debug", width: tw, text: b.task, hints: b.hints || {}, scope: [] };
+				putAtlas("task", "Task", tw, taskItem);
 				const brk = b.break || {};
 				for (const spec of b.modules || []) {
 					const s = { ...spec, params: { ...(spec.params || {}) } };

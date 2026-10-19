@@ -1,0 +1,333 @@
+id: p6-01-midi-cv
+num: "6.1"
+part: 6
+title: MIDI в напряжения
+goal: "Играть голосом из урока 3.5 с клавиатуры: понять, во что Rack превращает ноты — высоту 1V/oct, гейт и велосити."
+builds: Связка «клавиатура → MIDI to CV → голос» — основа каждого инструмента, на котором играют руками.
+minutes: 30
+requires: [p3-05-first-voice]
+glossary: [MIDI, MIDI-канал, велосити, драйвер и устройство MIDI, номер ноты, 1V/oct, гейт, голос синтезатора]
+sources: [vcv-manual-core, kane-musichackspace]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: MIDI в напряжения
+    page: |
+      # 6.1 MIDI в напряжения
+      **Ты научишься:** превращать ноты с клавиатуры в сигналы, которые понимают модули: высоту, [[гейт]] и [[велосити]].
+      **Ты соберёшь:** [[голос синтезатора]] из урока 3.5, где вместо кнопки Push играет клавиатура через **MIDI to CV**.
+      **Понадобится:** 30 минут, контроллер Arturia MiniLab mkII и тихая громкость.
+      Контроллера под рукой нет? Собери патч и пройди проверку: она смотрит только кабели и ручки, MIDI ей не нужен.
+    figure: { template: keyboard, from: C3, to: C5, marks: [{ note: C3, volts: -1 }, { note: C4, volts: 0 }, { note: C5, volts: 1 }], caption: "Высота ноты в вольтах: C4 даёт 0 В, октава ниже или выше сдвигает на 1 В." }
+    faq:
+      - q: Мне нужен контроллер, чтобы пройти урок?
+        a: Для игры нужен. Для сборки патча и проверки — нет. Проверка читает кабели и ручки Rack, MIDI она не получает. Без клавиатуры ты соберёшь голос, но услышать его не сможешь.
+      - q: Чем клавиатура лучше кнопки Push?
+        a: Push даёт только гейт — одну ноту одной высоты. Клавиатура добавляет высоту, силу нажатия и колёса. Один контроллер заменяет сразу несколько модулей.
+      - q: Почему в уроке нет ручек у MIDI to CV?
+        a: У этого модуля нет параметров. Всё, что настраивается, лежит в меню на его панели и в контекстном меню. Выходы — единственное, к чему подключаются кабели.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ошибаться можно: ответы покажут, о чём будет урок.
+    questions:
+      - q: Какое напряжение даёт выход 1V/octave pitch, пока нажата нота C4?
+        free: true
+        options:
+          - { text: "0 В", correct: true, why: "В Rack нота C4 — точка отсчёта. От неё высота растёт на 1 В за каждую октаву вверх." }
+          - { text: "4 В", why: "Напряжение не равно номеру октавы. Номер октавы в нём не участвует, важна только разница с C4." }
+          - { text: "10 В", why: "10 В — уровень гейта. Высота и гейт идут по разным выходам и в разных диапазонах." }
+      - q: Что делает выход Gate у MIDI to CV?
+        options:
+          - { text: "Держит 10 В, пока клавиша зажата", correct: true, why: "Гейт показывает, что нота длится: высокий уровень — клавиша держится, низкий — отпущена." }
+          - { text: "Передаёт высоту ноты", why: "Высоту несёт отдельный выход 1V/octave pitch. Гейт знает только «нажата или нет»." }
+          - { text: "Выдаёт короткий импульс 1 мс при нажатии", why: "Это триггер. Гейт держится столько же, сколько и клавиша." }
+      - q: Клавиши нажимаются, кабели на месте, а голос молчит. Что проверить первым?
+        options:
+          - { text: "Выбраны ли драйвер, устройство и канал на модуле MIDI to CV", correct: true, why: "Пока модуль не знает, откуда брать MIDI, он ничего не выдаёт. Выбор делается на самом модуле." }
+          - { text: "Громкость на Audio", why: "Громкость проверяют, когда сигнал уже идёт. Здесь первый вопрос — доходят ли ноты до модуля." }
+          - { text: "Resonance у VCF", why: "Резонанс меняет окраску звука, но не заглушает сигнал целиком." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Что такое MIDI
+    page: |
+      # Что такое MIDI
+      [[MIDI]] — не звук и не напряжение. Это поток сообщений: «нота 60 нажата с силой 90», «нота 60 отпущена», «колесо сдвинуто».
+      Устройство шлёт их по 16 каналам — это [[MIDI-канал|MIDI-каналы]]. Каждому сообщению соответствует [[номер ноты|номер ноты]] от 0 до 127: 60 — это C4.
+      Rack не умеет играть MIDI сам. Модуль **MIDI to CV** переводит каждое сообщение в напряжение, и дальше работают обычные кабели.
+    page2: |
+      Три результата перевода:
+      - высота — на выходе **1V/octave pitch**, 0 В для C4;
+      - нажата ли клавиша — на выходе **Gate**, 10 В;
+      - сила нажатия — на выходе **Velocity**, от 0 до 10 В.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: kbd, label: Клавиатура, kind: gate }
+        - { id: midi, label: MIDI to CV, kind: cv }
+        - { id: pitch, label: Высота, kind: cv }
+        - { id: gate, label: Gate, kind: gate }
+        - { id: vel, label: Velocity, kind: cv }
+      edges:
+        - { from: kbd, to: midi, kind: gate }
+        - { from: midi, to: pitch, kind: cv }
+        - { from: midi, to: gate, kind: gate }
+        - { from: midi, to: vel, kind: cv }
+      caption: Клавиатура шлёт сообщения, MIDI to CV раскладывает их на три выхода.
+    simpler: Представь переводчика на встрече. Клавиатура говорит на языке MIDI, модули Rack понимают только напряжение. MIDI to CV слушает первую и пересказывает вторым.
+    faq:
+      - q: Почему нельзя просто подать клавиатуру в VCO?
+        a: Клавиатура не выдаёт напряжение, она отправляет сообщения по USB. У VCO нет входа для сообщений, только для напряжения. Поэтому между ними нужен MIDI to CV.
+      - q: Что значит «16 каналов» у MIDI?
+        a: Это 16 независимых линий внутри одного соединения. Модуль слушает один канал или все сразу. Если клавиатура играет на одном канале, а модуль слушает другой, нот не будет.
+      - q: Откуда берётся число 60 для C4?
+        a: "Так нумерует ноты MIDI: клавиши подряд от 0 до 127. Rack берёт номер 60 за точку отсчёта и ставит на нём 0 В."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Высота, гейт, велосити
+    page: |
+      # Три сигнала клавиши
+      Высота идёт по стандарту [[1V/oct]]. Нота C4 — 0 В, C5 — 1 В, C3 — минус 1 В.
+      Разработчики Rack описывают выход так: "V/OCT generates a 1V/oct pitch signal of the last held MIDI note."
+      Значит, после отпускания клавиши напряжение остаётся: модуль помнит последнюю ноту.
+    page2: |
+      [[Гейт]] — 10 В, пока клавиша зажата. Его принимает ADSR и запускает огибающую.
+      [[Велосити]] — сила нажатия от 0 до 10 В. Её можно подать в CV у VCA: тихо и громко зависят от нажатия.
+      Пока модуль не получил ни одной ноты, на выходах 0 В.
+    figure: { template: voltages, ranges: [{ label: высота, min: -1, max: 1 }, { label: гейт, min: 0, max: 10 }, { label: велосити, min: 0, max: 10 }], caption: "Диапазоны трёх выходов: высота на 25 клавишах около ±1 В, гейт и велосити до 10 В." }
+    simpler: Высота — адрес ноты на лестнице, гейт — рука на выключателе, велосити — сила, с которой ты его нажал.
+    faq:
+      - q: Почему напряжение высоты не пропадает после отпускания клавиши?
+        a: Модуль хранит последнюю ноту. Высота остаётся, а гейт падает до 0 В. Пока огибающая тянет хвост Release, VCO продолжает играть ту же ноту.
+      - q: Зачем нужен Velocity, если есть ADSR?
+        a: "ADSR задаёт форму громкости, а Velocity — её размах: сильное нажатие даёт больше. Вместе они делают игру выразительнее."
+      - q: Все клавиши дают одно и то же напряжение на Velocity?
+        a: Нет. Максимальная сила нажатия даёт 10 В, слабая — меньше. Напряжение держится до следующей ноты.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Голос с клавиатуры
+    page: |
+      # Голос с клавиатуры
+      Перед тобой голос из урока 3.5. Кнопки Push нет: высоту и гейт даёт **MIDI to CV**.
+      Сначала выбери на панели модуля [[драйвер и устройство MIDI|драйвер и устройство]] **Arturia MiniLab mkII**, потом канал. Потом нажми клавишу: звук идёт, пока она зажата.
+      Сыграй C4, C5 и C3. Октава вверх вдвое поднимает частоту.
+      Контроллера нет? Звука не будет, но кабели и ручки те же, что понадобятся в практике.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1500" }, Resonance: { display: "20" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "60" }, Release: { display: "400" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: midi, text: "**1V/octave pitch** — высота, **Gate** — гейт. Оба идут туда, где раньше работал Push.", targets: [{ module: midi, output: 1V/octave pitch }, { module: midi, output: Gate }] }
+      - { after: vco, text: "Высота из MIDI to CV приходит сюда. Нота выше — частота выше.", targets: [{ module: vco, input: 1V/octave pitch }] }
+      - { after: env, text: "Гейт запускает **Envelope**, пока клавиша зажата.", targets: [{ module: env, input: Gate }] }
+    faq:
+      - q: Нажимаю клавиши, а звука нет. Что смотреть?
+        a: "Сначала меню на панели MIDI to CV: выбраны ли драйвер, устройство и канал. Без этого модуль не получает ноты. Потом проверь кабели Gate и 1V/octave pitch."
+      - q: Все ноты звучат на одной высоте. Почему?
+        a: Скорее всего, нет кабеля от 1V/octave pitch к входу 1V/octave pitch у VCO. Гейт при этом работает, поэтому звук есть, но высота не меняется.
+      - q: Звук после отпускания клавиши не обрывается сразу. Это ошибка?
+        a: Нет, это Release у ADSR — 400 мс в этом демо. Огибающая дотягивает громкость до нуля после того, как гейт упал.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: Панель MIDI to CV
+    page: |
+      # Панель MIDI to CV
+      Ручек у модуля нет: настройки лежат в меню, а выходы дают сигналы. Пройдём сверху вниз.
+    module: { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+    notes:
+      - { text: "**Верх панели** — драйвер MIDI, устройство и канал. Без этого выбора нет ни одной ноты. Для канала выбери номер или «Все каналы»." }
+      - { text: "**1V/octave pitch** — высота последней нажатой ноты, 0 В для C4.", targets: [{ module: midi, output: 1V/octave pitch }] }
+      - { text: "**Gate** — 10 В, пока клавиша зажата. **Velocity** — сила нажатия от 0 до 10 В.", targets: [{ module: midi, output: Gate }, { module: midi, output: Velocity }] }
+      - { text: "**Retrigger** — короткий импульс на каждую новую ноту. Пригодится при игре легато.", targets: [{ module: midi, output: Retrigger }] }
+      - { text: "**Aftertouch**, **Pitch wheel**, **Mod wheel** — давление и два колеса. Сами они ничего не меняют: их нужно подать куда-то кабелем.", targets: [{ module: midi, output: Aftertouch }, { module: midi, output: Pitch wheel }, { module: midi, output: Mod wheel }] }
+      - { text: "**Clock**, **Start trigger**, **Stop trigger**, **Continue trigger** — служебные сообщения MIDI-клока. У клавиатуры они молчат.", targets: [{ module: midi, output: Clock }, { module: midi, output: Start trigger }, { module: midi, output: Stop trigger }, { module: midi, output: Continue trigger }] }
+    later:
+      - { what: "Channels и режимы распределения нот в контекстном меню", lesson: "6.4" }
+      - { what: "Клок и Start/Stop с внешнего устройства", lesson: "5.1" }
+    faq:
+      - q: Есть ли у MiniLab mkII aftertouch?
+        a: Это зависит от устройства, и пока не проверено на твоём контроллере. Если aftertouch нет, выход стоит на 0 В. Подключать его не обязательно.
+      - q: Где у MiniLab mkII колёса высоты и модуляции?
+        a: По описанию — две сенсорные полосы слева. Одна отправляет Pitch wheel, другая — Mod wheel. Чтобы они что-то сделали, подай их выходы в нужные входы.
+      - q: Почему выходов так много, а нужны два?
+        a: "Один модуль покрывает всё, что умеет MIDI. Для первого голоса хватает высоты и гейта. Остальное пригодится позже: велосити, колёса, клок."
+
+  - id: b7
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Сыграй одну ноту и держи."
+        see: Звук идёт, пока клавиша зажата. После отпускания он затихает за время Release.
+      - do: "Сыграй C3, C4 и C5 по очереди."
+        see: "Каждая октава вверх вдвое поднимает частоту. На Scope пила становится вдвое чаще."
+      - do: "Перетащи кабель с выхода **Velocity** на вход **CV** у VCA поверх огибающей."
+        see: Тихая и сильная игра дают разную громкость. Верни **Envelope** на **CV**, когда услышишь разницу.
+      - do: "Подай **Mod wheel** в вход **Frequency** у VCF и подними **Cutoff frequency CV** до 50 %."
+        see: Сенсорная полоса открывает фильтр. Колёса пригодятся в уроке 6.2.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1500" }, Resonance: { display: "20" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "60" }, Release: { display: "400" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [scope, Ch 1] }
+    notes:
+      - { after: midi, text: "Шаги 3 и 4 берут сигнал отсюда: **Velocity** и **Mod wheel**.", targets: [{ module: midi, output: Velocity }, { module: midi, output: Mod wheel }] }
+    faq:
+      - q: Нет контроллера. Что из шагов можно сделать?
+        a: "Кабельные шаги можно собрать, но результат не услышишь: без нот модуль выдаёт 0 В. Вернись к ним, когда подключишь клавиатуру."
+      - q: Подал Velocity в CV, и звук пропал. Почему?
+        a: Если играть слабо, Velocity даёт малое напряжение, и VCA почти закрыт. Нажми сильнее. Не забудь вернуть Envelope в CV, когда закончишь опыт.
+      - q: Почему Scope показывает ровную линию, когда клавиша отпущена?
+        a: После Release сигнал на выходе VCA равен нулю. Линия ровная, пока нет новой ноты.
+
+  - id: b8
+    type: practice
+    preset: practice
+    title: Практика — свой голос с клавиатуры
+    task: |
+      Собери голос сам, между маркерами «Верстак».
+      1. **VCO**, **VCF**, **VCA**, **ADSR** и **MIDI to CV**.
+      2. Путь управления: `1V/octave pitch` → `1V/octave pitch` у VCO, `Gate` → `Gate` у ADSR.
+      3. Путь звука: `Sawtooth` → `Audio` у VCF, `Lowpass filter` → `Channel` у VCA, `Envelope` → `CV` у VCA, выход `Channel` → вход 1 у Audio.
+      4. **Resonance** не выше 50 %. Выбери устройство на модуле MIDI to CV и нажми «Проверить».
+    given: [audio]
+    check: p6-01-midi-cv
+    hints:
+      "cable:1":
+        - Клавиши играют, а голос стоит на одной ноте.
+        - Какой выход MIDI to CV несёт высоту и в какой вход VCO она нужна?
+        - "`1V/octave pitch` у MIDI to CV → вход `1V/octave pitch` у VCO."
+      "cable:2":
+        - Огибающая не знает, когда нажата клавиша.
+        - Какой выход MIDI to CV даёт гейт и куда его подать?
+        - "`Gate` у MIDI to CV → вход `Gate` у ADSR."
+      "cable:3":
+        - Пила есть, но фильтр её не слышит.
+        - Какой выход VCO даёт пилу и какой вход у VCF принимает звук?
+        - "`Sawtooth` у VCO → вход `Audio` у VCF."
+      "cable:4":
+        - Фильтр стоит, но звук до VCA не доходит.
+        - Какой выход VCF ведёт дальше по пути звука?
+        - "`Lowpass filter` у VCF → вход `Channel` у VCA."
+      "cable:5":
+        - Звук есть всегда или его нет совсем.
+        - Что управляет громкостью VCA? Нужен вход управления, а не звука.
+        - "`Envelope` у ADSR → вход `CV` у VCA."
+      "cable:6":
+        - Голос собран, а тишина.
+        - Откуда звук выходит из VCA и куда должен прийти?
+        - "Выход `Channel` у VCA → `To \"device output 1\"` у Audio этого ряда."
+      "param:1":
+        - Фильтр звучит сам по себе.
+        - Посмотри на Resonance у VCF.
+        - Поставь Resonance на 50 % или ниже.
+      "module:midi":
+        - Модуля MIDI to CV нет в патче.
+        - Какой модуль превращает ноты в напряжения? Он в плагине Core.
+        - Добавь MIDI to CV на верстак и выбери на панели драйвер, устройство MiniLab mkII и канал.
+    faq:
+      - q: Все кабели на месте, проверка прошла, а звука нет. Почему?
+        a: Проверка не видит меню модуля. Выбери драйвер, устройство и канал на MIDI to CV. Если Gate не зажигается при нажатой клавише, MIDI в модуль не доходит.
+      - q: Проверка не видит MIDI. Как же она узнаёт, что голос работает?
+        a: Она смотрит только кабели и ручки, напряжения MIDI она не читает. Игру и звук проверяешь ты сам на слух.
+      - q: Можно ли поставить VCA Mix вместо VCA?
+        a: Для этой проверки нужен VCA — урок про него. Другие модули появятся в части 7.
+
+  - id: b9
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Клавиши нажимаются, огибающая открывается, но все ноты звучат на одной высоте.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1500" }, Resonance: { display: "20" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "60" }, Release: { display: "400" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    break: { remove_cable: [midi, 1V/octave pitch, vco, 1V/octave pitch] }
+    check: { kind: fixed, expect_cable: [midi, 1V/octave pitch, vco, 1V/octave pitch] }
+    hints:
+      fixed:
+        - Гейт работает, а высота не меняется. Кто сообщает VCO, какую ноту играть?
+        - Посмотри на вход 1V/octave pitch у VCO. Идёт ли в него кабель?
+        - Соедини `1V/octave pitch` у MIDI to CV с `1V/octave pitch` у VCO.
+    faq:
+      - q: Как понять по звуку, что нет высоты?
+        a: Каждая клавиша открывает звук, но тон не меняется. VCO играет ноту, которую задала его ручка Frequency, и не слышит MIDI.
+      - q: На Scope частота пилы не меняется. Это тот же признак?
+        a: Да. Если кабеля высоты нет, период пилы на экране один и тот же для любой клавиши.
+
+  - id: b10
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - **MIDI to CV** переводит сообщения клавиатуры в напряжения.
+      - **1V/octave pitch** — высота, 0 В для C4, ±1 В на октаву.
+      - **Gate** — 10 В, пока клавиша зажата. **Velocity** — сила нажатия.
+      - Драйвер, устройство и канал выбирают на самом модуле.
+      Сохрани патч: следующий урок продолжит с ним.
+      **Источники:** Core Modules, руководство VCV Rack; Phelan Kane, «Getting Started With VCV Rack 2» (Music Hackspace).
+    questions:
+      - q: "Что передают три выхода: 1V/octave pitch, Gate и Velocity?"
+        options:
+          - { text: "Высоту ноты, длительность нажатия и силу нажатия", correct: true, why: "Высота в 1V/oct, гейт держится пока клавиша зажата, велосити — сила от 0 до 10 В." }
+          - { text: "Три разные высоты", why: "Высоту несёт только первый выход. Остальные два говорят о нажатии." }
+          - { text: "Громкость, тембр и высоту", why: "MIDI to CV не меняет тембр и громкость сам, он выдаёт напряжения для других модулей." }
+      - q: Что нужно выбрать на модуле MIDI to CV, прежде чем он начнёт что-то выдавать?
+        options:
+          - { text: "Драйвер, устройство и MIDI-канал", correct: true, why: "Пока источник MIDI не выбран, модуль не получает нот и выходы стоят на нуле." }
+          - { text: "Форму волны", why: "Форма волны — ручки VCO. У MIDI to CV их нет." }
+          - { text: "Частоту дискретизации", why: "Это настройка аудиоинтерфейса, а не MIDI." }
+    next: |
+      # Дальше: 6.2
+      **Ручки контроллера на ручки модулей.** Шестнадцать ручек MiniLab начнут крутить фильтр голоса.
+    faq:
+      - q: Что повторить, если голос с клавиатуры не собирается?
+        a: "Урок 3.5 про путь звука и путь управления. Здесь меняется только источник: Push заменён на MIDI to CV."
+      - q: Зачем мне Velocity, если мы его не подключали в практике?
+        a: Он понадобится, когда захочешь выразительную игру. В части 8 велосити управляет громкостью баса и лида.

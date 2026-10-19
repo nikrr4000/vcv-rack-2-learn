@@ -1,0 +1,423 @@
+id: p8-05-lead-arp
+num: "8.5"
+part: 8
+title: Лид и арпеджио
+goal: Собрать лид, который сам перебирает ноты по такту в выбранной шкале или аккорде и звучит с эхом, лежащим на сетке такта.
+builds: Пятый инструмент трека. В уроке 9.3 лид встанет в ту же тональность, что бас и пэд.
+minutes: 45
+requires: [p5-03-quantizer, p4-04-randomness, p7-01-delay, p3-05-first-voice]
+glossary: [арпеджио, размах случайной мелодии, квантизатор, случайное напряжение, голос синтезатора, тональность, такт]
+sources: [sq-arp, ne-quantizers, omri-practical-course]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Лид и арпеджио
+    page: |
+      # 8.5 Лид и арпеджио
+      **Ты научишься:** превращать случайные числа в мелодию, которая не фальшивит, и в [[арпеджио]].
+      **Ты соберёшь:** Clocked → Random → 8vert → [[квантизатор|Quantizer]] → [[голос синтезатора|голос]] из 3.5 → Delay.
+      **Понадобится:** 45 минут и уроки про Random, квантизатор и эхо. Громкость держи низкой.
+      Патч понадобится в части 9, сохрани его в конце урока.
+    figure: { template: steps, values: [0, 7, 3, 12, 7, 5, 10, 3], gates: [1, 1, 1, 1, 1, 1, 1, 1], caption: "Восемь нот подряд. Квантизатор подгоняет каждую к ноте выбранной шкалы." }
+    faq:
+      - q: "Откуда берутся ноты, если секвенсора нет?"
+        a: "Их даёт Random: на каждом такте он выдаёт новое случайное напряжение. Квантизатор округляет его до ближайшей разрешённой ноты, и мелодия получается осмысленной."
+      - q: "Это уже арпеджио?"
+        a: "Нет. Арпеджио появляется, когда в квантизаторе остались только ноты одного аккорда. Пока разрешены все ноты шкалы, лид играет случайную мелодию."
+      - q: "Звук будет громким?"
+        a: "Пила с эхом бывает громче, чем кажется. Убавь громкость в системе и держи Level у VCA-1 около 80 %."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, о чём будет урок.
+    questions:
+      - q: "Что делает Quantizer в этой партии?"
+        free: true
+        options:
+          - { text: "Округляет случайное напряжение до ближайшей ноты шкалы", correct: true, why: "Так партия не фальшивит: каждая нота лежит внутри выбранной шкалы." }
+          - { text: "Делает случайные числа ещё более случайными", why: "Случайность даёт Random. Квантизатор, наоборот, сужает выбор до разрешённых нот." }
+          - { text: "Удлиняет каждую ноту", why: "Длину ноты задаёт огибающая. Квантизатор о времени ничего не знает." }
+      - q: "Как сузить размах случайных нот с десяти октав до двух?"
+        options:
+          - { text: "Ослабить выход Random ручкой Row 1 gain у 8vert", correct: true, why: "Random выдаёт до ±5 В. 8vert оставляет долю, и ноты ложатся в пару октав." }
+          - { text: "Убавить Level у VCA-1", why: "Level меняет громкость, а не высоту нот." }
+          - { text: "Убавить Master clock у Clocked", why: "Тактовая скорость влияет на темп, а не на размах нот." }
+      - q: "Как получить арпеджио, а не просто мелодию в тональности?"
+        options:
+          - { text: "Оставить в квантизаторе только ноты одного аккорда", correct: true, why: "Тогда лид перебирает ноты аккорда по одной на такт — это и есть арпеджио." }
+          - { text: "Поднять Feedback у Delay", why: "Feedback делает эхо длиннее. Ноты от него не меняются." }
+          - { text: "Поднять Resonance у VCF", why: "Резонанс — это тембр. Набор нот он не определяет." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Случайные ноты по правилам
+    page: |
+      # Случайные ноты по правилам
+      Мелодию можно строить из [[случайное напряжение|случайного напряжения]], пропущенного через фильтр правил.
+      Random выдаёт новое число на каждый [[такт]]. [[квантизатор|Квантизатор]] округляет его до ближайшей разрешённой ноты.
+      Чем меньше нот разрешено, тем музыкальнее и повторяемее партия.
+    page2: |
+      Если оставить ноты одного аккорда, получится [[арпеджио]] — ноты аккорда одна за другой.
+      Ширину диапазона задаёт 8vert: он ослабляет выход Random, и [[размах случайной мелодии|размах]] сужается до двух октав.
+      Всё идёт по [[такт|такту]] от Clocked: он запускает и Random, и огибающую. Ноты лежат в одной [[тональность|тональности]].
+    figure: { template: flow, layout: two-rows, nodes: [{ id: clk, label: Clocked, kind: gate }, { id: rnd, label: Random, kind: cv }, { id: att, label: 8vert, kind: cv }, { id: q, label: Quantizer, kind: cv }, { id: vco, label: VCO, kind: audio }, { id: env, label: ADSR, kind: cv }], edges: [{ from: clk, to: rnd, kind: gate }, { from: rnd, to: att, kind: cv }, { from: att, to: q, kind: cv }, { from: q, to: vco, kind: cv }, { from: clk, to: env, kind: gate }], caption: "Такт запускает Random и огибающую. Random идёт через 8vert и Quantizer в высоту VCO." }
+    simpler: "Представь игральную кость с нотами на гранях. Бросок даёт случайную ноту. Квантизатор — доска правил: если нота не из списка, он двигает её на ближайшую разрешённую."
+    faq:
+      - q: "Почему Random нельзя подать в VCO напрямую?"
+        a: "Ноты получатся нестройными: напряжение случайное, и между нотами будут промежуточные высоты. Квантизатор вставляет высоту в сетку полутонов."
+      - q: "Чем арпеджио отличается от мелодии?"
+        a: "В мелодии ноты берутся из шкалы, их семь и больше. В арпеджио разрешён один аккорд, обычно три-четыре ноты. Партия звучит как ритмический перебор одного созвучия."
+      - q: "А если нужен настоящий арпеджиатор?"
+        a: "Для VCV есть отдельные модули, которые берут аккорд с клавиатуры. В курсе принцип тот же: такт, ноты, длина. Поэтому подойдёт схема из случайных нот и квантизатора."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Эхо в такт
+    page: |
+      # Эхо в такт
+      Эхо украшает партию. Если подать такт на вход **Clock** у Delay, повторы лягут на ту же сетку, что и ноты.
+      С кабелем в **Clock** ручка **Time** перестаёт быть секундами: она множит длину такта.
+      Основные ручки: **Feedback** — сколько повторов, **Tone** — яркость повторов, **Mix** — доля эха в звуке.
+    figure: { template: clock, bpm: 240, divisions: [1, 2], bars: 2, caption: "Такт и его половинки: повторы эха ложатся на одну сетку с нотами." }
+    simpler: Представь, что кричишь в горах. Эхо возвращается не как попало, а в такт барабану. Delay с кабелем в Clock делает именно так.
+    faq:
+      - q: "Что такое Feedback у Delay?"
+        a: "Доля эха, которая возвращается в вход. При 40 % повторов немного, при 70 % и выше они накапливаются и заглушают партию. Держи ниже 70 %."
+      - q: "Что делает Tone?"
+        a: "Меняет яркость повторов. Влево повторы темнее и мягче, вправо — тоньше и ярче. Для лида подходит небольшой минус, около −30."
+      - q: "Почему эхо не слышно?"
+        a: "Проверь Mix у Delay: он должен быть выше нуля, и звук должен идти в Audio у Delay, а не мимо. В демо стоит 30 %."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Случайные ноты
+    page: |
+      # Случайные ноты
+      Метроном **LFO** даёт [[такт]]. Random берёт новую ноту, Quantizer прижимает её к ноте шкалы.
+      Нажми на клавиши Quantizer: оставь три ноты аккорда. Слышно арпеджио.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "4" } } }
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Shape: { display: "0" }, Random spread: { display: "60" }, Trigger probability: { display: "100" }, Offset: { display: "Bipolar" } } }
+      - { ref: att, plugin: Fundamental, slug: 8vert, params: { Row 1 gain: { raw: 0.2 } } }
+      - { ref: quant, plugin: Fundamental, slug: Quantizer, params: { Pre-offset: { display: "0" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "2500" }, Resonance: { display: "10" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "80" } } }
+    cables:
+      - { from: [lfo, Square], to: [rnd, Trigger] }
+      - { from: [lfo, Square], to: [env, Gate] }
+      - { from: [rnd, Stepped], to: [att, Row 1] }
+      - { from: [att, Row 1], to: [quant, 1V/octave pitch] }
+      - { from: [quant, Pitch], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: att, text: "**Row 1 gain** задаёт размах нот.", targets: [{ module: att, param: Row 1 gain }] }
+    faq:
+      - q: "Почему вместо Clocked здесь LFO?"
+        a: "Clocked занимает пол-ряда, и демо не помещалось бы. LFO на 4 Гц даёт такой же такт, как Master clock 240. В практике ты поставишь Clocked."
+      - q: "Партия фальшивит."
+        a: "Скорее всего, Quantizer пропущен или не в цепи. Проверь, что кабель Pitch идёт во вход 1V/octave pitch у VCO, а не Row 1 у 8vert."
+      - q: "Что делает Random spread?"
+        a: "Он задаёт, насколько новая нота может отличаться от предыдущей. При 100 % она прыгает через весь диапазон, при 20 % — идёт шагами по соседним нотам."
+
+  - id: b6
+    type: live
+    preset: live
+    title: Эхо на сетке
+    page: |
+      # Эхо на сетке
+      Одна нота, повторяемая по такту, плюс эхо. Первый вариант без кабеля в **Clock**, второй — с ним.
+      Подними **Feedback** до 60 %. Повторы тянутся дольше.
+      Подвинь **Tone** влево: повторы темнеют.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "4" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "80" } } }
+      - { ref: delay, plugin: Fundamental, slug: Delay, params: { Mix: { display: "30" }, Feedback: { display: "40" }, Tone: { display: "-30" } } }
+    cables:
+      - { from: [lfo, Square], to: [env, Gate] }
+      - { from: [lfo, Square], to: [delay, Clock] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [delay, Audio] }
+      - { from: [delay, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [delay, Mix], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: delay, text: "**Feedback** и **Mix** задают длину и силу эха.", targets: [{ module: delay, param: Feedback }, { module: delay, param: Mix }] }
+      - { after: delay, text: "Вход **Clock** привязывает повторы к такту.", targets: [{ module: delay, input: Clock }] }
+    faq:
+      - q: "Что показывает ручка Time, когда подключён Clock?"
+        a: "Она множит длину такта: вместо секунд ты выбираешь, сколько тактов лежит между повторами. Точные значения смотри на дисплее Delay."
+      - q: "Эхо звучит не в такт."
+        a: "Проверь, что кабель идёт из такта в Clock у Delay. Если вместо этого он пришёл в Audio, эхо вообще не появится."
+      - q: "Эхо заглушает ноту."
+        a: "Mix слишком высокий или Feedback больше 70 %. Верни Mix на 30 %, Feedback на 40 %."
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Random для арпеджио
+    page: |
+      # Random для арпеджио
+      Random из урока 4.4 даёт много выходов. Нам нужен Stepped — ступенчатые случайные числа.
+    module: { ref: rnd, plugin: Fundamental, slug: Random, params: { Shape: { display: "0" }, Random spread: { display: "60" }, Trigger probability: { display: "100" }, Offset: { display: "Bipolar" } } }
+    notes:
+      - { text: "Вход **Trigger**: сюда приходит такт.", targets: [{ module: rnd, input: Trigger }] }
+      - { text: "Выход **Stepped** держит число до следующего такта.", targets: [{ module: rnd, output: Stepped }] }
+      - { text: "**Shape** в ноль: ноты меняются сразу, без скольжения.", targets: [{ module: rnd, param: Shape }] }
+      - { text: "**Random spread** — размер скачков между нотами.", targets: [{ module: rnd, param: Random spread }] }
+      - { text: "**Trigger probability** — шанс новой ноты на такте.", targets: [{ module: rnd, param: Trigger probability }] }
+    faq:
+      - q: "Что будет, если Shape поднять до 100 %?"
+        a: "Между нотами появятся проходные ступени: мелодия начнёт скользить через соседние значения. Для чётких нот держи Shape в нуле."
+      - q: "Что делает Trigger probability?"
+        a: "Это шанс, что на такте возьмётся новая нота. При 100 % нота меняется каждый раз, при 50 % — примерно через раз, остальные такты повторяют старую."
+      - q: "Зачем Offset на Bipolar?"
+        a: "Bipolar даёт ±5 В, то есть ноты и выше, и ниже центра. Unipolar дал бы только положительные значения, и мелодия ушла бы вверх."
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Quantizer
+    page: |
+      # Quantizer
+      Модуль маленький, но решает, какие ноты вообще могут прозвучать.
+    module: { ref: quant, plugin: Fundamental, slug: Quantizer, params: { Pre-offset: { display: "0" } } }
+    notes:
+      - { text: "Вход **1V/octave pitch**: сюда приходит ослабленный Random.", targets: [{ module: quant, input: 1V/octave pitch }] }
+      - { text: "Выход **Pitch** идёт в высоту VCO.", targets: [{ module: quant, output: Pitch }] }
+      - { text: "**Pre-offset** сдвигает вход в полутонах до округления.", targets: [{ module: quant, param: Pre-offset }] }
+    later:
+      - { what: "Выбор шкалы клавишами на панели", lesson: "5.3" }
+    faq:
+      - q: "Как выбрать шкалу или аккорд?"
+        a: "Двенадцать клавиш на панели Quantizer включают и исключают ноты. Оставь три ноты аккорда, например до, ми-бемоль, соль, и получишь арпеджио."
+      - q: "Что делает Pre-offset?"
+        a: "Сдвигает входное напряжение на заданное число полутонов до округления. Нота, которая выпала бы на до, может превратиться в до-диез. Для лида обычно оставляют ноль."
+      - q: "Почему клавиши не видны в списке ручек?"
+        a: "Это не ручки-параметры, поэтому их нельзя задать числом. Нажми клавишу на панели рукой, и нота включится или выключится."
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Двигай **Row 1 gain** у 8vert от 10 до 40 %."
+        see: "Размах нот растёт от пары нот до двух октав."
+      - do: "Двигай **Random spread** от 100 до 20 %."
+        see: "Скачки превращаются в шаги по соседним нотам."
+      - do: "Поверни **Cutoff frequency** у VCF от 800 до 5000 Гц."
+        see: "Партия темнее или ярче."
+      - do: "Поставь **Feedback** на 20 %, потом на 60 %, и подними **Mix** до 45 %."
+        see: "Эхо тянется и слышно сильнее."
+      - do: "Поставь **Tone** на −60, потом на 60."
+        see: "Повторы темнее или тоньше."
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "4" } } }
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Shape: { display: "0" }, Random spread: { display: "60" }, Trigger probability: { display: "100" }, Offset: { display: "Bipolar" } } }
+      - { ref: att, plugin: Fundamental, slug: 8vert, params: { Row 1 gain: { raw: 0.2 } } }
+      - { ref: quant, plugin: Fundamental, slug: Quantizer, params: { Pre-offset: { display: "0" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "2500" }, Resonance: { display: "10" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "80" } } }
+      - { ref: delay, plugin: Fundamental, slug: Delay, params: { Mix: { display: "30" }, Feedback: { display: "40" }, Tone: { display: "-30" } } }
+    cables:
+      - { from: [lfo, Square], to: [rnd, Trigger] }
+      - { from: [lfo, Square], to: [env, Gate] }
+      - { from: [lfo, Square], to: [delay, Clock] }
+      - { from: [rnd, Stepped], to: [att, Row 1] }
+      - { from: [att, Row 1], to: [quant, 1V/octave pitch] }
+      - { from: [quant, Pitch], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [delay, Audio] }
+      - { from: [delay, Mix], to: [audio, "To \"device output 1\""] }
+    faq:
+      - q: "Партия стала одной нотой."
+        a: "Скорее всего, Row 1 gain у нуля, и Random не двигает высоту. Подними Row 1 gain хотя бы до 10 %."
+      - q: "Эхо заглушает партию."
+        a: "Feedback выше 70 % накапливает повторы. Верни Feedback к 40 %, Mix к 30 %, и партия снова будет читаться."
+      - q: "Слишком много нот, которые не нравятся."
+        a: "Выключи лишние клавиши Quantizer. Чем меньше нот осталось, тем предсказуемее и мелодичнее партия."
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — свой лид
+    task: |
+      Собери лид сам, между маркерами «Верстак».
+      1. Такт: `Clock 1` у **Clocked** → `Trigger` у **Random**, `Gate` у **ADSR** и `Clock` у **Delay**.
+      2. Ноты: `Stepped` → `Row 1` у **8vert**, `Row 1` → `1V/octave pitch` у **Quantizer**, `Pitch` → `1V/octave pitch` у VCO.
+      3. Голос: `Sawtooth` → `Audio` у VCF, `Lowpass filter` → `Channel` у VCA-1, `Envelope` → `CV`, `Channel` → `Audio` у Delay.
+      4. Эхо: `Mix` у Delay → вход 1 у Audio.
+      5. **Master clock** от 90, **Row 1 gain** 10–40 %, **Shape** до 20 %, **Feedback** до 70 %, **Mix** 15–60 %.
+    given: [audio]
+    check: p8-05-lead-arp
+    hints:
+      "cable:1":
+        - "Random не знает, когда брать новую ноту."
+        - "Какой выход Clocked даёт такт?"
+        - "`Clock 1` у Clocked → `Trigger` у Random."
+      "cable:2":
+        - "Огибающая не знает, когда начинать."
+        - "Куда ведёт такт, кроме Random?"
+        - "`Clock 1` у Clocked → `Gate` у ADSR."
+      "cable:3":
+        - "Случайные ноты слишком широкие."
+        - "Куда подать Stepped, чтобы сузить размах?"
+        - "`Stepped` у Random → `Row 1` у 8vert."
+      "cable:4":
+        - "Квантизатору нечего округлять."
+        - "Какой выход 8vert ведёт к квантизатору?"
+        - "`Row 1` (выход) у 8vert → `1V/octave pitch` у Quantizer."
+      "cable:5":
+        - "Ноты не доходят до высоты."
+        - "Какой выход Quantizer ведёт к VCO?"
+        - "`Pitch` у Quantizer → `1V/octave pitch` у VCO."
+      "cable:6":
+        - "Пила есть, но фильтр её не слышит."
+        - "Какой выход VCO даёт пилу?"
+        - "`Sawtooth` у VCO → `Audio` у VCF."
+      "cable:7":
+        - "До усилителя звук не доходит."
+        - "Какой выход VCF ведёт к VCA-1?"
+        - "`Lowpass filter` у VCF → `Channel` у VCA-1."
+      "cable:8":
+        - "Ноты не отделяются друг от друга."
+        - "Что управляет VCA-1 через вход CV?"
+        - "`Envelope` у ADSR → `CV` у VCA-1."
+      "cable:9":
+        - "Эхо не слышно."
+        - "Какой выход VCA-1 идёт в Delay?"
+        - "`Channel` у VCA-1 → `Audio` у Delay."
+      "cable:10":
+        - "Эхо не в такт."
+        - "Какой выход Clocked нужен в Clock у Delay?"
+        - "`Clock 1` у Clocked → `Clock` у Delay."
+      "cable:11":
+        - "Партия собрана, а тишина."
+        - "Откуда звук выходит из Delay?"
+        - "`Mix` у Delay → `To \"device output 1\"` у Audio."
+      "param:1":
+        - "Темп арпеджио слишком медленный."
+        - "Ручка Master clock у Clocked."
+        - "Подними Master clock хотя бы до 90."
+      "param:2":
+        - "Размах случайных нот вне рабочего диапазона."
+        - "Ручка Row 1 gain у 8vert."
+        - "Поставь Row 1 gain между 10 и 40 %."
+      "param:3":
+        - "Партия гудит, а не играет."
+        - "Ручка Sustain у ADSR."
+        - "Поставь Sustain не выше 40 %."
+      "param:4":
+        - "Эхо накапливается и заглушает партию."
+        - "Ручка Feedback у Delay."
+        - "Убавь Feedback до 70 % или ниже."
+      "param:5":
+        - "Эха нет или оно заглушает партию."
+        - "Ручка Mix у Delay."
+        - "Поставь Mix между 15 и 60 %."
+      "param:6":
+        - "Между нотами появляются проходные."
+        - "Ручка Shape у Random."
+        - "Поставь Shape до 20 %, лучше в ноль."
+      "probe:1":
+        - "Квантизатор выдаёт одну ноту."
+        - "Идёт ли Clocked, получает ли Random такт и выше ли нуля Row 1 gain?"
+        - "Проверь кабель `Clock 1` → `Trigger`, подними Row 1 gain и нажми «Проверить» ещё раз."
+      "probe:2":
+        - "Огибающая не поднимается."
+        - "Идёт ли Clocked и дошёл ли такт до Gate?"
+        - "`Clock 1` → `Gate` у ADSR и нажми «Проверить» ещё раз."
+    faq:
+      - q: "Какую шкалу выбрать?"
+        a: "Любую. Для арпеджио оставь три ноты аккорда, например до, ми-бемоль, соль. Проверка шкалу не видит, смотрит только, что высота меняется."
+      - q: "Clocked не идёт."
+        a: "Проверь Run: у нового Clocked он включён, не нажимай его вслепую. Если ход всё равно стоит, подай Master clock от 90 и убедись, что кабель Clock 1 воткнут."
+      - q: "Можно ли заменить Delay на Plateau?"
+        a: "Для проверки нужен именно Delay: он принимает такт. Реверберацию ты изучишь в уроке 7.2 и пэде 8.6."
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Этот лид играет одну и ту же ноту, хотя Random меняет числа.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "4" } } }
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Shape: { display: "0" }, Random spread: { display: "60" }, Trigger probability: { display: "100" }, Offset: { display: "Bipolar" } } }
+      - { ref: att, plugin: Fundamental, slug: 8vert, params: { Row 1 gain: { raw: 0.2 } } }
+      - { ref: quant, plugin: Fundamental, slug: Quantizer, params: { Pre-offset: { display: "0" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "80" } } }
+      - { ref: delay, plugin: Fundamental, slug: Delay, params: { Mix: { display: "30" }, Feedback: { display: "40" }, Tone: { display: "-30" } } }
+    cables:
+      - { from: [lfo, Square], to: [rnd, Trigger] }
+      - { from: [lfo, Square], to: [env, Gate] }
+      - { from: [lfo, Square], to: [delay, Clock] }
+      - { from: [rnd, Stepped], to: [att, Row 1] }
+      - { from: [att, Row 1], to: [quant, 1V/octave pitch] }
+      - { from: [quant, Pitch], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [delay, Audio] }
+      - { from: [delay, Mix], to: [audio, "To \"device output 1\""] }
+    break: { remove_cable: [quant, Pitch, vco, 1V/octave pitch] }
+    check: { kind: fixed, expect_cable: [quant, Pitch, vco, 1V/octave pitch] }
+    hints:
+      fixed:
+        - "Партия есть, а мелодии нет. Куда должны попадать ноты?"
+        - "Проследи выход Pitch у Quantizer."
+        - "Соедини `Pitch` у Quantizer с `1V/octave pitch` у VCO."
+    faq:
+      - q: "Почему без кабеля одна нота?"
+        a: "VCO без кабеля во входе 1V/octave pitch играет ноту по ручке Frequency. Random и Quantizer работают, но их результат никуда не приходит."
+      - q: "Как это услышать?"
+        a: "Ритм остаётся, эхо тоже, но все удары звучат на одной высоте. Мелодия пропала."
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Лид — случайные ноты через квантизатор: Random → 8vert → Quantizer → VCO.
+      - Row 1 gain задаёт размах нот, Random spread — прыгучесть, Shape в нуле.
+      - Если оставить ноты одного аккорда, получится арпеджио.
+      - Кабель с тактом в Clock у Delay кладёт эхо на сетку нот.
+      Сохрани патч как `vcv-8.5.vcv`: он понадобится в части 9.
+      **Источники:** документация SqHarmony (Squinky Labs), арпеджиатор. Блог Noise Engineering, «Getting Started: Quantizers». Omri Cohen, «Practical Modular».
+    questions:
+      - q: "Что меняется в эхе, когда в Clock у Delay приходит такт?"
+        options:
+          - { text: "Повторы ложатся на сетку такта", correct: true, why: "Ручка Time перестаёт быть секундами и множит такт. Эхо не расходится с нотами." }
+          - { text: "Эхо становится громче", why: "Громкость эха задаёт Mix. Такт на неё не влияет." }
+          - { text: "Эхо пропадает", why: "Эхо остаётся, меняется только то, как задаётся время между повторами." }
+    next: |
+      # Дальше: 8.6
+      **Пэд.** Голос из 3.5 растягивается на два осциллятора, медленную огибающую и реверберацию.
+    faq:
+      - q: "Что повторить, если лид фальшивит?"
+        a: "Проверь, что Pitch идёт в 1V/octave pitch у VCO, а не Row 1. Посмотри, какие клавиши включены на Quantizer."
+      - q: "Зачем сохранять патч?"
+        a: "В части 9 лид встанет в одну тональность с басом и пэдом. Файл `vcv-8.5.vcv` понадобится там как готовый инструмент."

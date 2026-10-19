@@ -2,8 +2,8 @@
  * Parameter resolver: a lesson's `display` target («261.63», «Enabled») → the raw param value,
  * using the live snapshots (display at min / mid / max, options):
  *   - switches: the option index;
- *   - numeric: linear or exponential interpolation when the snapshot's mid point fits that law
- *     (within 1 %), otherwise a calibration table measured on the live Rack
+ *   - numeric: a calibration table measured on the live Rack when there is one; otherwise linear or
+ *     exponential interpolation when the snapshot's mid point fits that law (within 1 %); otherwise an error
  *     (rack/course/calibration.json, written by calibrate.mjs).
  * Names are matched exactly as Rack prints them.
  */
@@ -71,7 +71,9 @@ export function resolveParam(plugin, slug, name, spec) {
 	// Exactly a value the snapshot saw: use that raw value (no rounding drift).
 	const seen = [[p.displayDefault, p.default], [p.display?.min, p.min], [p.display?.mid, (p.min + p.max) / 2], [p.display?.max, p.max]].find(([d]) => d !== undefined && num(d) === t);
 	if (seen) return { id: p.id, value: p.snap ? Math.round(seen[1]) : seen[1], display: text };
-	const law = lawOf(p);
+	// A measured table wins over a law guessed from three points (Clocked ratios fit a line by chance).
+	const measured = facts().calibration[`${plugin}/${slug}`]?.[name];
+	const law = measured ? null : lawOf(p);
 	const d = p.display;
 	let value = null;
 	if (law === "linear") value = p.min + ((t - num(d.min)) / (num(d.max) - num(d.min))) * (p.max - p.min);

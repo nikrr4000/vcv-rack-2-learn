@@ -1,0 +1,346 @@
+id: p4-04-randomness
+num: "4.4"
+part: 4
+title: Случайность
+goal: Получить из Random случайное напряжение, управлять частотой и прыгучестью и направить его на высоту и тембр.
+builds: Непредсказуемые ноты для лидов и дрожащий тембр для пэдов. В части 5 к случайности добавится квантайзер.
+minutes: 35
+requires: [p1-02-voltage]
+glossary: [случайное напряжение, вероятность триггера, Random spread, шум, 1V/oct, Offset]
+sources: [vcv-free-manual, mi-marbles, ne-quantizers]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Случайность
+    page: |
+      # 4.4 Случайность
+      **Ты научишься:** брать [[случайное напряжение]] из **Random** и управлять тем, как часто и как сильно оно меняется.
+      **Ты соберёшь:** случайную высоту ноты и дрожащий тембр.
+      **Понадобится:** 35 минут и урок 1.2 про напряжение.
+      Чистая случайность звучит хаотично. Поэтому её сначала масштабируют, а в части 5 подгонят под строй.
+    figure:
+      template: flow
+      layout: row
+      nodes:
+        - { id: rnd, label: Random, kind: cv }
+        - { id: res, label: Rescale, kind: cv }
+        - { id: vco, label: VCO pitch, kind: audio }
+      edges:
+        - { from: rnd, to: res, kind: cv }
+        - { from: res, to: vco, kind: cv }
+      caption: Случайное напряжение уменьшают и подают на высоту.
+    faq:
+      - q: Случайные ноты разве не ломают музыку?
+        a: Сырая случайность на высоте звучит хаотично. Поэтому её уменьшают, а в части 5 подгоняют под строй квантизатором. Для тембра случайность звучит мягче и сразу полезна.
+      - q: Зачем случайность в треке?
+        a: Для лида это непредсказуемые ноты, для пэда — дрожащий тембр, для текстур — живое движение без повторов. Ритм такого движения задаёшь сам.
+      - q: Это то же, что шум?
+        a: Нет. Шум меняется тысячи раз в секунду и звучит. Random меняет значение по тактам и держит его. Он нужен для управления.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы подскажут, на чём сделать упор.
+    questions:
+      - q: Чем выход Stepped у Random отличается от Smooth?
+        free: true
+        options:
+          - { text: "Stepped переходит ступенями, Smooth плавно идёт к тому же новому значению", correct: true, why: "Значение у них одно. Различается путь к нему: скачок или плавный переход." }
+          - { text: "Они выдают разные случайные числа", why: "Новое значение берётся одно на такт. Все выходы идут к нему, но разными путями." }
+          - { text: "Smooth тише", why: "Это не звук, а напряжение. Форма перехода не имеет отношения к громкости." }
+      - q: Random spread стоит на 0 %. Что с выходом?
+        options:
+          - { text: "Значение не меняется", correct: true, why: "Random spread — насколько новое значение независимо от прежнего. На 0 % оно полностью зависит от старого." }
+          - { text: "Выход уходит в ноль", why: "Эта ручка не задаёт размах напряжения. Она задаёт связь с предыдущим значением." }
+          - { text: "Значения становятся ещё случайнее", why: "Наоборот: на 100 % значение полностью случайное, на 0 % не меняется." }
+      - q: Stepped подан прямо в `1V/octave pitch` у VCO. Что слышно?
+        options:
+          - { text: "Ноты прыгают на несколько октав", correct: true, why: "Random даёт около ±5 В, а 1 В — это октава. Разброс получается до пяти октав в обе стороны." }
+          - { text: "Ноты в пределах одной октавы", why: "Размах по умолчанию большой, около ±5 В. Узкий диапазон надо задать самому." }
+          - { text: "Ничего, вход не принимает случайный сигнал", why: "Вход принимает любое CV. Для него Random — обычное напряжение." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Три вида случайного
+    page: |
+      # Три вида случайного
+      Эти три вещи путают.
+      [[шум|Шум]] из урока 2.5 — случайный сигнал на звуковой частоте. Он меняется тысячи раз в секунду и звучит.
+      **Random** — медленное случайное напряжение. Значение выбирается по тактам и держится до следующего. Это CV.
+      **Random Values** — семь случайных постоянных напряжений. Они меняются только по кнопке или триггеру.
+      Ни Random, ни Random Values сами не звучат. Их место на входах управления.
+    figure: { template: table, rows: [["Источник", "Меняется", "Звучит"], ["Шум", "тысячи раз в секунду", "да"], ["Random", "по тактам", "нет"], ["Random Values", "по триггеру", "нет"]], caption: "Три источника случайного: чем отличаются." }
+    simpler: Шум — это бесконечный дождь. Random — человек, который раз в пару секунд тянет карточку из колоды и держит её. Random Values — колода, где карточки меняют только по кнопке.
+    faq:
+      - q: Зачем Random, если есть шум?
+        a: Шум слишком быстрый, чтобы им управлять. Random берёт одно значение и держит его, поэтому подходит для высоты и тембра.
+      - q: Что значит «значение выбирается по тактам»?
+        a: Random ждёт импульс, на нём берёт новое число и держит до следующего. Такт он делает сам, по ручке Internal trigger rate, или берёт внешний.
+      - q: Чем Random Values отличается от Random?
+        a: Random выдаёт одно значение по такту. Random Values держит семь значений сразу и меняет их все по кнопке или триггеру.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Управляемая случайность
+    page: |
+      # Управляемая случайность
+      Чаще нужна не чистая случайность, а управляемая. Четыре вопроса задают четыре ручки.
+      Как часто выбирать? **Internal trigger rate**.
+      С какой [[вероятность триггера|вероятностью]] брать новое значение? **Trigger probability**. На 50 % половина тактов пропускается.
+      Насколько новое значение связано с прежним? **Random spread**. На 100 % значение полностью случайное, на 0 % не меняется.
+      Как переходить? **Shape**. На 0 % выходы прыгают, на 100 % идут к значению плавно.
+    figure: { template: steps, values: [4, 1, 6, 2, 5, 3, 7, 2], gates: [1, 1, 0, 1, 1, 0, 1, 1], caption: "Ряд случайных значений. Где гейт 0, там такт пропущен." }
+    simpler: Представь, что ты тянешь карточки. Частота такта — как часто тянешь. Вероятность — иногда пропускаешь ход. Random spread — берёшь любую карточку или близкую к прошлой. Shape — кладёшь карточку резко или подводишь плавно.
+    faq:
+      - q: Random spread — это размах напряжения?
+        a: Нет. Размах всегда около ±5 В. Random spread задаёт, насколько новое значение зависит от прежнего. Размах уменьшают позже, через Rescale.
+      - q: Что делает вероятность на 50 %?
+        a: На каждом такте Random бросает монету. Выпало — берёт новое значение и выдаёт импульс на выходе Trigger. Не выпало — держит старое.
+      - q: Зачем разные формы перехода?
+        a: Stepped резко меняет высоту — получаются отдельные ноты. Smooth плавно ведёт срез — получается дыхание. Выбор формы решает характер.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Высота и тембр
+    page: |
+      # Высота и тембр
+      **Stepped** идёт через **Rescale** на вход высоты VCO ([[1V/oct|1 В на октаву]]). **Smooth** ведёт срез VCF.
+      Слушай, как ноты меняются два раза в секунду, а тембр дрожит плавно.
+      На Scope канал 1 — Stepped, канал 2 — Smooth. Лесенка и плавная кривая идут к одним и тем же значениям.
+    modules:
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Internal trigger rate: { display: "2" }, Shape: { display: "100" }, Random spread: { display: "100" }, Trigger probability: { display: "100" }, Offset: Bipolar } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "20" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [rnd, Stepped], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [rnd, Smooth], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [rnd, Stepped], to: [scope, Ch 1] }
+      - { from: [rnd, Smooth], to: [scope, Ch 2] }
+    notes:
+      - { after: rnd, text: "**Internal trigger rate** 2 Гц: два шанса на новое значение в секунду.", targets: [{ module: rnd, param: Internal trigger rate }] }
+      - { after: res, text: "**Gain** 20 %: ±5 В превращаются в ±1 В, примерно в пределах октавы.", targets: [{ module: res, param: Gain }] }
+    faq:
+      - q: Почему Gain у Rescale 20 %, а не 100?
+        a: Random даёт около ±5 В, а 1 В на высоте — это октава. Без уменьшения ноты разбросаны на несколько октав, как в хаосе. На 20 % разброс около октавы.
+      - q: Как услышать, что ноты хаотичны?
+        a: Значения случайны, а строй не задан. Поэтому ноты могут оказаться между клавишами пианино. В части 5 квантизатор подгонит их под выбранный строй.
+      - q: Почему на Scope две линии идут к одним значениям?
+        a: Random берёт одно значение на такт. Stepped прыгает к нему, Smooth подходит плавно. Значения совпадают, различается путь.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: Панель Random
+    page: |
+      # Панель Random
+      **Random** собирает такт, вероятность, прыгучесть и форму перехода в одном модуле.
+    module: { ref: rnd, plugin: Fundamental, slug: Random }
+    notes:
+      - { text: "**Internal trigger rate** — внутренний такт, от 0,002 до 2000 Гц, по умолчанию 2 Гц. Вход **Trigger** отключает его.", targets: [{ module: rnd, param: Internal trigger rate }, { module: rnd, input: Trigger }] }
+      - { text: "**Trigger probability** — шанс взять новое значение на такте. Когда значение взято, на **Trigger** идёт импульс.", targets: [{ module: rnd, param: Trigger probability }, { module: rnd, output: Trigger }] }
+      - { text: "**Random spread** — насколько новое значение независимо от прежнего. Это не размах напряжения.", targets: [{ module: rnd, param: Random spread }] }
+      - { text: "**Shape** — как выходы идут к новому значению. 0 % — прыжок, 100 % — переход растянут.", targets: [{ module: rnd, param: Shape }] }
+      - { text: "Четыре выхода: **Stepped**, **Linear**, **Smooth**, **Exponential**. Значение одно, пути разные.", targets: [{ module: rnd, output: Stepped }, { module: rnd, output: Linear }, { module: rnd, output: Smooth }, { module: rnd, output: Exponential }] }
+      - { text: "**Offset**: Bipolar — ±5 В, Unipolar — 0…10 В.", targets: [{ module: rnd, param: Offset }] }
+    later:
+      - { what: Вход External — выборка-хранение, lesson: "4.5" }
+      - { what: Ручки CV и входы управления Random, lesson: "7.1" }
+    faq:
+      - q: Вход Trigger подключён, а внутренний такт не слышно. Почему?
+        a: Кабель в Trigger отключает внутренний такт. Новые значения берутся только по приходящим импульсам. Отключи кабель, и Random снова пойдёт сам.
+      - q: Что делает Linear и Exponential?
+        a: Они тоже идут к новому значению, но по прямой и по экспоненте. В этом уроке достаточно Stepped и Smooth.
+      - q: Выход Trigger — это звук?
+        a: Нет, это короткий импульс управления. Он появляется в момент, когда Random взял новое значение. Им можно запускать другие модули.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Random Values
+    page: |
+      # Панель Random Values
+      **Random Values** держит семь случайных постоянных напряжений. Они меняются только по запросу.
+    module: { ref: rv, plugin: Fundamental, slug: RandomValues }
+    notes:
+      - { text: "**Push** — кнопка: нажми, и все семь значений выбираются заново.", targets: [{ module: rv, param: Push }] }
+      - { text: "Вход **Trigger** делает то же самое по импульсу, например от LFO Square.", targets: [{ module: rv, input: Trigger }] }
+      - { text: "Семь выходов **Random 1** … **Random 7** независимы и постоянны между запросами.", targets: [{ module: rv, output: Random 1 }, { module: rv, output: Random 7 }] }
+    later:
+      - { what: Диапазон значений в контекстном меню, lesson: "7.1" }
+    faq:
+      - q: Значения не меняются, когда я ничего не трогаю. Это поломка?
+        a: Нет, так задумано. Random Values меняет значения только по кнопке Push или по импульсу на входе Trigger.
+      - q: Зачем семь выходов?
+        a: Чтобы разные цели получали свои независимые значения. Одно нажатие перетасует высоту, тембр и ещё пять параметров сразу.
+      - q: Как менять значения сами по такту?
+        a: Подай на Trigger медленный Square от LFO, например 0,5 Гц. Значения будут меняться раз в две секунды.
+
+  - id: b8
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поставь **Internal trigger rate** на 0,5, потом на 2, 8 и 30 Гц."
+        see: Ноты идут то редко, то частым лепетом, то трелью. На Scope лесенка всё чаще.
+      - do: "Поставь **Shape** на 100, потом на 50 и на 0 %."
+        see: Тембр дрожит то плавно, то рывками. На Scope кривая превращается в лесенку.
+      - do: "Поставь **Random spread** на 100, потом на 20 и на 0 %."
+        see: Сначала разные ноты, потом близкие, потом одна и та же. Значения на Scope прилипают друг к другу.
+      - do: "Поставь **Trigger probability** на 100, потом на 50 и на 10 %."
+        see: Ноты меняются реже, ритм рваный. Импульсов на выходе Trigger меньше.
+      - do: "Переключи **Offset** в Unipolar и обратно в Bipolar."
+        see: В Unipolar высота идёт только вверх от исходной. На Scope диапазон 0…10 В или ±5 В.
+    modules:
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Internal trigger rate: { display: "2" }, Shape: { display: "100" }, Random spread: { display: "100" }, Trigger probability: { display: "100" }, Offset: Bipolar } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "20" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [rnd, Stepped], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [rnd, Smooth], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [rnd, Stepped], to: [scope, Ch 1] }
+      - { from: [rnd, Smooth], to: [scope, Ch 2] }
+    notes:
+      - { after: rnd, text: "Все шаги — ручки Random.", targets: [{ module: rnd, param: Internal trigger rate }, { module: rnd, param: Shape }, { module: rnd, param: Random spread }, { module: rnd, param: Trigger probability }, { module: rnd, param: Offset }] }
+    faq:
+      - q: На 30 Гц ноты слились в трель. Это нормально?
+        a: Да. Значение меняется тридцать раз в секунду, и отдельные ноты уже не различить. Для мелодии держи частоту такта в пределах 1–10 Гц.
+      - q: Random spread на 0, и нота не меняется вовсе. Почему?
+        a: Random spread на 0 % значит, что новое значение полностью зависит от прежнего. Random стоит на месте. Подними Random spread, и ноты поедут.
+      - q: Я уменьшил вероятность, а ноты всё равно меняются.
+        a: "На 10 % новое значение берётся примерно на одном такте из десяти. Подожди несколько секунд или посмотри на выход Trigger: там видны импульсы."
+
+  - id: b9
+    type: practice
+    preset: practice
+    title: Практика — случайная высота и тембр
+    task: |
+      Собери случайную высоту и дрожащий тембр на верстаке между маркерами.
+      1. **Random**, **Rescale**, **VCO**, **VCF**.
+      2. `Stepped` → `Signal` у Rescale, `Signal` → `1V/octave pitch` у VCO.
+      3. **Gain** у Rescale — от 5 до 40 %. **Internal trigger rate** у Random — от 1 до 10 Гц.
+      4. `Smooth` → `Frequency` у VCF. `Sawtooth` у VCO → `Audio` у VCF.
+      5. `Lowpass filter` → `To "device output 1"` у Audio. Нажми «Проверить».
+    given: [audio]
+    check: p4-04-randomness
+    hints:
+      "cable:1":
+        - Случайные ноты нужно сначала уменьшить. Куда идёт Stepped?
+        - Какой вход у Rescale принимает сигнал?
+        - "`Stepped` у Random → вход `Signal` у Rescale."
+      "cable:2":
+        - Высота не меняется. Что управляет высотой?
+        - Какой вход у VCO отвечает за высоту?
+        - "`Signal` у Rescale → вход `1V/octave pitch` у VCO."
+      "cable:3":
+        - Тембр не дрожит. Какой выход Random плавный?
+        - Что у VCF управляет срезом?
+        - "`Smooth` у Random → вход `Frequency` у VCF."
+      "cable:4":
+        - В фильтр не приходит звук.
+        - Какой выход VCO даёт пилу?
+        - "`Sawtooth` у VCO → вход `Audio` у VCF."
+      "cable:5":
+        - Звука в колонках нет.
+        - Какой выход фильтра нужен?
+        - "`Lowpass filter` у VCF → вход `To \"device output 1\"` у Audio этого ряда."
+      "param:1":
+        - Значения должны меняться несколько раз в секунду.
+        - Посмотри на Internal trigger rate у Random.
+        - Поставь Internal trigger rate между 1 и 10 Гц.
+      "param:2":
+        - Скачок высоты слишком большой или Gain на нуле.
+        - Посмотри на Gain у Rescale. Random даёт около ±5 В, это ±5 октав.
+        - Поставь Gain у Rescale между 5 и 40 %.
+      "probe:1":
+        - Random не меняет значение.
+        - Не стоит ли Trigger probability на нуле, не слишком ли низкий Internal trigger rate?
+        - Подними Trigger probability и Internal trigger rate, потом проверь ещё раз.
+      "probe:2":
+        - На выходе фильтра нет сигнала.
+        - Идёт ли пила в Audio у VCF, а выход фильтра — в Audio?
+        - Проверь `Sawtooth` → `Audio` у VCF и `Lowpass filter` → `To \"device output 1\"`.
+    faq:
+      - q: Можно взять Linear вместо Stepped?
+        a: Проверка ждёт Stepped для высоты и Smooth для тембра. После проверки пробуй другие выходы и слушай разницу.
+      - q: Проверка говорит, что Random не меняет значение, а ноты слышно.
+        a: Ноты могут идти от VCO без модуляции. Проверь кабель из Stepped в Signal у Rescale и Trigger probability. Gain у Rescale по умолчанию 0.
+      - q: Звук слишком хаотичный. Что уменьшить?
+        a: "Gain у Rescale, чтобы разброс высоты был меньше. Можно ещё уменьшить Random spread: новые ноты станут ближе к прежним."
+
+  - id: b10
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Высота скачет на много октав, часть нот слышна как писк или низкий гул.
+      Найди одну неверную настройку и исправь её. Кабели трогать не нужно.
+    modules:
+      - { ref: rnd, plugin: Fundamental, slug: Random, params: { Internal trigger rate: { display: "2" }, Shape: { display: "100" }, Random spread: { display: "100" }, Trigger probability: { display: "100" }, Offset: Bipolar } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "20" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" } } }
+    cables:
+      - { from: [rnd, Stepped], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [rnd, Smooth], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [res, Signal], to: [scope, Ch 1] }
+    break: { set_param: { module: res, name: Gain, value: { display: "100" } } }
+    check: { kind: fixed, expect_param: { module: res, name: Gain, display_max: 40 } }
+    hints:
+      fixed:
+        - Посмотри на Scope. Каков размах лесенки по вертикали?
+        - Какое звено стоит между Random и входом высоты?
+        - Поставь Gain у Rescale не выше 40 %.
+    faq:
+      - q: Почему ноты скачут на много октав?
+        a: Random даёт около ±5 В, а вход высоты считает 1 В за октаву. На полном Gain получается до ±5 октав. Rescale уменьшает разброс.
+      - q: Надо ли выставлять Gain точно?
+        a: Нет, достаточно уложиться в диапазон 5–40 %. Чем меньше Gain, тем ближе ноты друг к другу.
+
+  - id: b11
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Random выдаёт медленное случайное напряжение. Шум звучит, Random только управляет.
+      - Четыре ручки: частота такта, вероятность, Random spread, Shape.
+      - Random spread — связь с прежним значением, а не размах.
+      - Случайное напряжение надо уменьшать перед входом высоты: ±5 В — это ±5 октав.
+      Сохрани патч: в части 5 к нему добавится квантизатор.
+      **Источники:** руководство VCV Rack Free (Random); документация Mutable Instruments Marbles; Noise Engineering, «Getting Started: Quantizers».
+    questions:
+      - q: Почему случайное напряжение надо масштабировать перед входом высоты?
+        options:
+          - { text: "Оно даёт около ±5 В, а это ±5 октав", correct: true, why: "На входе высоты каждый вольт — это октава. Без уменьшения разброс слишком велик." }
+          - { text: "Вход высоты не принимает случайные сигналы", why: "Принимает любое CV. Проблема только в слишком большом размахе." }
+          - { text: "Random слишком тихий", why: "Это напряжение, а не звук. Громкость тут ни при чём." }
+    next: |
+      # Дальше: 4.5
+      **Выборка-хранение, слайд, глайд.** Случайные значения станут плавными переходами между нотами.
+    faq:
+      - q: Что повторить, если запутался в ручках Random?
+        a: Блок «Управляемая случайность» и страницу Random. Каждую ручку можно покрутить в блоке «Покрути сам» и увидеть результат на Scope.
+      - q: Почему ноты не в строе?
+        a: Random не знает про строй. В части 5 ты поставишь квантизатор, и случайные ноты станут нотами выбранной гаммы.

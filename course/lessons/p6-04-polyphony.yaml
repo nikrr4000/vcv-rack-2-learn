@@ -1,0 +1,406 @@
+id: p6-04-polyphony
+num: "6.4"
+part: 6
+title: Полифония
+goal: "Сыграть аккорд голосом из урока 6.1: четыре ноты сразу на одном наборе модулей и одном кабеле."
+builds: Основа полифонического пэда из урока 8.6. Здесь ты учишься видеть голоса, разбирать кабель и сводить голоса в один сигнал.
+minutes: 40
+requires: [p6-01-midi-cv]
+glossary: [полифония, канал полифонического кабеля, "распределение нот: Rotate", сведение голосов, перегруз, запас по уровню]
+sources: [vcv-manual-polyphony, vcv-manual-core, vcv-voltage-standards]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Полифония
+    page: |
+      # 6.4 Полифония
+      **Ты научишься:** играть аккордами, не дублируя модули, и видеть отдельные голоса в **Viz**.
+      **Ты соберёшь:** голос из урока 6.1 на четыре ноты сразу, со сведением через **Sum**.
+      **Понадобится:** 40 минут, MiniLab mkII и тихая громкость.
+      Контроллера нет? Собери патч и пройди проверку. Число голосов в меню проверка не видит, а MIDI ей не нужен.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: midi, label: MIDI to CV, kind: cv }
+        - { id: vco, label: VCO, kind: audio }
+        - { id: vcf, label: VCF, kind: audio }
+        - { id: vca, label: VCA, kind: audio }
+        - { id: sum, label: Sum, kind: audio }
+        - { id: out, label: Audio, kind: audio }
+      edges:
+        - { from: midi, to: vco, kind: cv }
+        - { from: vco, to: vcf, kind: audio }
+        - { from: vcf, to: vca, kind: audio }
+        - { from: vca, to: sum, kind: audio }
+        - { from: sum, to: out, kind: audio }
+      caption: Один набор модулей на все голоса. Кабели несут до 16 каналов, Sum сводит их в один сигнал.
+    faq:
+      - q: Зачем мне полифония, если голос уже играет?
+        a: Моно-голос играет одну ноту. Аккорд, пэд и арпеджио требуют нескольких нот сразу. Полифония даёт их без копирования модулей.
+      - q: Нужно ли иметь контроллер для этого урока?
+        a: Для игры аккордом нужен. Для сборки патча и проверки — нет. Проверка читает кабели и ручки, а число каналов в меню MIDI to CV через Rack не видно.
+      - q: Что такое Viz и зачем он в уроке?
+        a: Это модуль, который показывает каждый канал кабеля отдельно. Через него видно, какие голоса сейчас играют. Ручек и выходов у него нет.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы подскажут, что повторить.
+    questions:
+      - q: Сколько каналов может нести один полифонический кабель в Rack?
+        free: true
+        options:
+          - { text: "До 16", correct: true, why: "Один кабель несёт до 16 независимых сигналов. Каждый называется каналом." }
+          - { text: "До 4, по числу голосов", why: "Число голосов выбираешь ты. Предел кабеля выше: шестнадцать каналов." }
+          - { text: "Столько, сколько кабелей рядом", why: "Полифонический кабель один. Он несёт каналы внутри себя, а не пучок отдельных кабелей." }
+      - q: Нужен ли отдельный VCO, VCF, VCA и ADSR для каждого из четырёх голосов?
+        options:
+          - { text: "Нет, один набор: модули сами обрабатывают каждый канал", correct: true, why: "Модуль Rack работает с каждым каналом кабеля отдельно. Копировать набор не нужно." }
+          - { text: "Да, по набору на голос", why: "В железном синтезаторе так бывает. В Rack один набор делает работу сразу для всех каналов." }
+          - { text: "Только VCO размножается", why: "Размножается не модуль, а каналы кабеля. Все модули цепочки обрабатывают их сами." }
+      - q: Четыре голоса звучат с хрипом на полной громкости. Что сделать?
+        options:
+          - { text: "Убавить Level у Sum", correct: true, why: "Голоса складываются по амплитуде и выходят за ±5 В. Level у Sum это уменьшает." }
+          - { text: "Поднять Resonance", why: "Резонанс не убирает перегрузку. Он делает звук острее." }
+          - { text: "Поставить Merge перед Audio", why: "Merge собирает каналы в кабель, а не складывает их. Складывает Sum." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Один кабель — до 16 голосов
+    page: |
+      # Один кабель — до 16 голосов
+      Монофонический синтезатор играет одну ноту. [[Полифония]] — несколько нот сразу.
+      В железе для этого нужен комплект оборудования на каждый голос. В Rack всё проще: один кабель несёт до 16 независимых сигналов.
+      Каждый такой сигнал — [[канал полифонического кабеля|канал]]. Полифонический кабель на экране рисуется толще.
+    page2: |
+      Каждый модуль цепочки обрабатывает каждый канал отдельно. Поэтому хватает одного VCO, одного VCF и одного VCA.
+      «Мозг» один, голосов столько, сколько каналов. Источник полифонии — **MIDI to CV**: число каналов задаёшь в его меню.
+      Внимание: одноканальный источник вроде Push действует на все голоса одинаково.
+    simpler: Один хор вместо четырёх солистов. Все поют по одной партитуре, а каждый берёт свою ноту. Партитура одна — это один набор модулей.
+    faq:
+      - q: Как отличить полифонический кабель от обычного?
+        a: Он нарисован толще. Если у кабеля один канал, он выглядит как обычный. Число каналов видно по Viz.
+      - q: Можно ли смешивать моно и поли в одной цепочке?
+        a: Можно. Одноканальный сигнал действует на все голоса одинаково. Например, один LFO будет качать фильтр у всех голосов сразу.
+      - q: Почему каналов не 100?
+        a: Предел кабеля в Rack — 16. Каждый канал стоит процессорного времени, поэтому ставь столько, сколько нужно, а не больше.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Куда попадает новая нота
+    page: |
+      # Куда попадает новая нота
+      Когда нот больше, чем каналов, и когда нота повторяется, модуль решает, на какой канал её отправить. Это [[распределение нот: Rotate|распределение нот]].
+      Режимов три. Выбираются они в контекстном меню **MIDI to CV**, пункты проверь у себя.
+      В моно, при Channels = 1, есть свои правила: какая нота выигрывает, если зажаты две. Список приоритетов зависит от версии Rack.
+    figure: { template: table, rows: [["Режим", "Что делает"], ["Rotate", "каждая новая нота идёт на следующий канал по кругу"], ["Reuse", "нота возвращается на канал, который у неё уже был"], ["Reset", "канал всегда первый свободный"]], caption: "Три режима распределения нот." }
+    simpler: Три способа рассадить гостей. Rotate — по кругу, каждого на следующий стул. Reuse — вернуть гостя на его прежнее место. Reset — сажать всех с первого свободного.
+    faq:
+      - q: Что произойдёт с пятой нотой, если каналов четыре?
+        a: Результат зависит от режима, и пока не проверено на твоей версии. Сыграй пять нот и смотри в Viz, на каком канале оказалась каждая.
+      - q: Какой режим выбрать для пэда?
+        a: "Для длинных нот обычно подходит Rotate: голоса не перебивают друг друга. Reuse полезен, когда нота повторяется. Выбери на слух и в Viz."
+      - q: Зачем знать про приоритеты в моно?
+        a: "Для баса. Если зажаты две клавиши, один из них выигрывает: последний, самый низкий, самый высокий или первый. Меню покажет, какие варианты есть."
+
+  - id: b5
+    type: story
+    preset: story
+    title: Сведение и уровень
+    page: |
+      # Сведение и уровень
+      Audio принимает один кабель, а голосов несколько. Модуль **Sum** складывает все каналы в один. Это [[сведение голосов]].
+      Складываются голоса по амплитуде, и громкость растёт вместе с числом голосов. Sum не делит сумму на число голосов.
+      Четыре сигнала по ±5 В в худшем случае дают ±20 В. Это выходит за [[запас по уровню|запас]] Rack, и слышен [[перегруз]] как хрип.
+    figure: { template: voltages, ranges: [{ label: "1 голос", min: -5, max: 5 }, { label: "4 голоса, Level 100 %", min: -20, max: 20 }, { label: "4 голоса, Level 25 %", min: -5, max: 5 }], caption: "Размах в худшем случае, когда пики голосов совпадают." }
+    simpler: Четыре человека говорят в один микрофон. Каждый нормально, а вместе слишком громко. Level у Sum — как уменьшить громкость микрофона, чтобы всем хватило.
+    faq:
+      - q: Какой Level ставить у Sum?
+        a: Для четырёх голосов обычно 25–35 %. Проверка в практике принимает от 10 до 50 %. Если хрип остался, убавь ещё.
+      - q: Что будет, если подать полифонический кабель на Audio без Sum?
+        a: Как именно Audio обработает каналы, пока не проверено. Надёжнее свести голоса через Sum, как в уроке.
+      - q: Можно ли поставить Sum до VCA?
+        a: Нет. Sum должен стоять после всех поголосных модулей, иначе огибающие голосов потеряются.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Четыре голоса
+    page: |
+      # Четыре голоса
+      Это голос из урока 6.1, а в конце цепочки стоят **Sum** и **Viz**.
+      Выбери на **MIDI to CV** драйвер, устройство и канал. Потом в контекстном меню поставь **Channels** = 1 и сыграй аккорд из трёх нот.
+      Затем поставь **Channels** = 4 и сыграй тот же аккорд. Viz покажет линию на каждый канал.
+      Контроллера нет? Звука не будет, но кабели и ручки те же, что в практике.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1500" }, Resonance: { display: "20" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "60" }, Release: { display: "500" } } }
+      - { ref: sum, plugin: Fundamental, slug: Sum, params: { Level: { display: "25" } } }
+      - { ref: viz, plugin: Fundamental, slug: Viz }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [sum, Polyphonic] }
+      - { from: [sum, Monophonic], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [viz, Polyphonic] }
+    notes:
+      - { after: midi, text: "**Channels** в контекстном меню задаёт число голосов. 1 — моно, 4 — четыре голоса.", targets: [{ module: midi, output: 1V/octave pitch }, { module: midi, output: Gate }] }
+      - { after: sum, text: "**Level** держит сумму в пределах. Подними до 100 % и услышишь хрип.", targets: [{ module: sum, param: Level }, { module: sum, input: Polyphonic }, { module: sum, output: Monophonic }] }
+      - { after: viz, text: "**Viz** показывает канал за каналом. Играющий голос виден отдельной линией.", targets: [{ module: viz, input: Polyphonic }] }
+    faq:
+      - q: Сыграл аккорд, а слышу одну ноту. Почему?
+        a: Channels, скорее всего, стоит на 1. Открой контекстное меню MIDI to CV и поставь 4. Каналы заведены на весь аккорд, а в моно звучит одна нота.
+      - q: Звук хрипит, особенно на аккордах. Что делать?
+        a: Убавь Level у Sum. Голоса складываются по амплитуде, и при 100 % сумма выходит за ±5 В. В демо стоит 25 %.
+      - q: Почему Viz показывает несколько линий, а я сыграл три ноты?
+        a: Viz рисует все каналы кабеля, включая свободные. Занятые каналы двигаются, свободные стоят на нуле.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Меню MIDI to CV для полифонии
+    page: |
+      # Меню MIDI to CV для полифонии
+      В уроке 6.1 мы играли в моно. Теперь заглянем в контекстное меню: там число голосов и режимы.
+    module: { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+    notes:
+      - { text: "**Channels** — число каналов: 1 для моно, от 2 до 16 для полифонии. Не бери больше, чем нужно: каждый канал стоит процессорного времени." }
+      - { text: "**Rotate, Reuse, Reset** — режимы распределения нот. Таблица в предыдущем ряду." }
+      - { text: "**1V/octave pitch, Gate, Velocity** — полифонические выходы: один канал на голос.", targets: [{ module: midi, output: 1V/octave pitch }, { module: midi, output: Gate }, { module: midi, output: Velocity }] }
+      - { text: "**Aftertouch** и **Retrigger** тоже полифонические.", targets: [{ module: midi, output: Aftertouch }, { module: midi, output: Retrigger }] }
+      - { text: "**Pitch wheel** и **Mod wheel** одноканальные: колёса действуют на все голоса сразу.", targets: [{ module: midi, output: Pitch wheel }, { module: midi, output: Mod wheel }] }
+    faq:
+      - q: Где найти Channels?
+        a: "В контекстном меню модуля MIDI to CV, правый щелчок по панели. Точное название пункта проверь в своей версии Rack: по руководству это Channels."
+      - q: Что делать, если нужен моно-бас с приоритетом нот?
+        a: Поставь Channels = 1 и посмотри в меню приоритеты нот. Какая нота выигрывает при двух зажатых клавишах, там и выбирается.
+      - q: Где остальное из меню?
+        a: Смещение октавы MIDI и сброс залипших нот (Panic) — тоже в меню. Точные названия пунктов зависят от версии Rack.
+
+  - id: b8
+    type: live
+    preset: live
+    title: Split и Merge
+    page: |
+      # Split и Merge
+      **Split** разбирает полифонический кабель на отдельные выходы по каналам. **Merge** собирает входы обратно в один кабель.
+      Здесь высота идёт в Split, каналы 1 и 2 перекрещены в Merge, и всё смотрит Viz. Поменяй кабели местами и сравни линии.
+      Звука в этом ряду нет: это эксперимент на экране.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: split, plugin: Fundamental, slug: Split }
+      - { ref: merge, plugin: Fundamental, slug: Merge }
+      - { ref: viz, plugin: Fundamental, slug: Viz }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [split, Polyphonic] }
+      - { from: [split, Channel 1], to: [merge, Channel 2] }
+      - { from: [split, Channel 2], to: [merge, Channel 1] }
+      - { from: [merge, Polyphonic], to: [viz, Polyphonic] }
+    notes:
+      - { after: split, text: "**Channel 1** и **Channel 2** — первые два канала. Нужно, чтобы вмешаться в отдельный голос.", targets: [{ module: split, input: Polyphonic }, { module: split, output: Channel 1 }, { module: split, output: Channel 2 }] }
+      - { after: merge, text: "**Merge** собирает каналы обратно. Кабель Channel 1 теперь идёт в Channel 2, и наоборот.", targets: [{ module: merge, input: Channel 1 }, { module: merge, input: Channel 2 }, { module: merge, output: Polyphonic }] }
+      - { after: viz, text: "В **Viz** первые два канала поменялись местами относительно входа.", targets: [{ module: viz, input: Polyphonic }] }
+    faq:
+      - q: Зачем разбирать кабель, если он и так играет?
+        a: "Чтобы вмешаться в один голос: подать его отдельно в Scope, в другой модуль или в свой выход Audio. Для обычной игры Split не нужен."
+      - q: Чем Merge отличается от Sum?
+        a: Merge только собирает кабели в один полифонический, голоса остаются раздельными. Sum складывает все каналы в один обычный сигнал.
+      - q: В Viz ничего не видно. Это ошибка?
+        a: Без нажатых клавиш на выходах 0 В, и линии стоят ровно. Нажми аккорд, когда MIDI to CV выбрал устройство и Channels больше 1.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Сыграй аккорд из трёх нот при **Channels** = 1, потом при **Channels** = 4."
+        see: В первом случае слышна одна нота, во втором все три вместе.
+      - do: "Переключай **Rotate**, **Reuse**, **Reset** и играй одну ноту много раз."
+        see: В Viz видно, на какой канал она падает. В Reset — всегда на первый свободный.
+      - do: "Подними **Level** у Sum от 10 до 100 % на аккорде из четырёх нот."
+        see: Громче, а выше 50 % начинается хрип.
+      - do: "Подними **Cutoff frequency** у VCF от 400 до 3000 Гц."
+        see: "Все голоса светлеют одновременно: фильтр один на все каналы."
+      - do: "Подними **Release** у ADSR со 100 до 2000 мс."
+        see: Отпущенные ноты затихают вперемешку с новыми, хвосты видны в Viz по голосам.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1500" }, Resonance: { display: "20" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "60" }, Release: { display: "500" } } }
+      - { ref: sum, plugin: Fundamental, slug: Sum, params: { Level: { display: "25" } } }
+      - { ref: viz, plugin: Fundamental, slug: Viz }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [sum, Polyphonic] }
+      - { from: [sum, Monophonic], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [viz, Polyphonic] }
+    notes:
+      - { after: sum, text: "Шаг 3 — эта ручка.", targets: [{ module: sum, param: Level }] }
+    faq:
+      - q: Нет контроллера. Что из шагов можно сделать?
+        a: Ручки Level, Cutoff frequency и Release крутить можно, но без нот результат не слышен. Вернись к шагам, когда подключишь клавиатуру.
+      - q: Почему при Reset одна нота всегда на первом канале?
+        a: Reset занимает каналы с первого свободного. Если первый свободен, нота идёт на него. Rotate при этом перебирает каналы по кругу.
+      - q: Звук хрипит уже на 50 %. Это нормально?
+        a: Граница зависит от силы нажатия и числа нот. На аккорде из четырёх громких нот хрип может начаться раньше. Убавь Level.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — четырёхголосый синтезатор
+    task: |
+      Собери полифонический голос сам, между маркерами «Верстак».
+      1. **MIDI to CV**, **VCO**, **VCF**, **VCA**, **ADSR**, **Sum** и **Viz**. В меню MIDI to CV поставь Channels = 4.
+      2. Высота и гейт: `1V/octave pitch` → `1V/octave pitch` у VCO, `Gate` → `Gate` у ADSR.
+      3. Путь звука: `Sawtooth` → `Audio` у VCF, `Lowpass filter` → `Channel` у VCA, `Envelope` → `CV` у VCA.
+      4. Сведение: `Channel` у VCA → `Polyphonic` у Sum, `Monophonic` у Sum → вход 1 у Audio. Тот же `Channel` у VCA → `Polyphonic` у Viz.
+      5. **Level** у Sum от 10 до 50 %, **Resonance** не выше 50 %. Нажми «Проверить».
+    given: [audio]
+    check: p6-04-polyphony
+    hints:
+      "cable:1":
+        - Клавиши играют, а голос стоит на одной ноте.
+        - Какой выход MIDI to CV несёт высоту и куда её подать?
+        - "`1V/octave pitch` у MIDI to CV → вход `1V/octave pitch` у VCO."
+      "cable:2":
+        - Огибающая не знает, когда нажата клавиша.
+        - Какой выход MIDI to CV даёт гейт?
+        - "`Gate` у MIDI to CV → вход `Gate` у ADSR."
+      "cable:3":
+        - Пила есть, но фильтр её не слышит.
+        - Какой выход VCO даёт пилу и какой вход у VCF принимает звук?
+        - "`Sawtooth` у VCO → вход `Audio` у VCF."
+      "cable:4":
+        - Фильтр стоит, но звук до VCA не доходит.
+        - Какой выход VCF ведёт дальше по пути звука?
+        - "`Lowpass filter` у VCF → вход `Channel` у VCA."
+      "cable:5":
+        - Звук есть всегда или его нет совсем.
+        - Что управляет громкостью VCA?
+        - "`Envelope` у ADSR → вход `CV` у VCA."
+      "cable:6":
+        - Голоса есть, а сводить нечем.
+        - Какой модуль сводит каналы в один?
+        - "`Channel` у VCA → вход `Polyphonic` у Sum. Один кабель несёт все голоса."
+      "cable:7":
+        - Sum собрал голоса, а до выхода они не идут.
+        - Куда нужен кабель от Sum?
+        - "`Monophonic` у Sum → `To \"device output 1\"` у Audio этого ряда."
+      "cable:8":
+        - Viz пока ничего не видит.
+        - Какому модулю нужно показать каналы?
+        - "`Channel` у VCA → вход `Polyphonic` у Viz."
+      "param:1":
+        - Хрип при аккорде.
+        - Голоса складываются по амплитуде. Посмотри на Level у Sum.
+        - Поставь Level у Sum между 10 и 50 %.
+      "param:2":
+        - Фильтры звучат сами по себе.
+        - Посмотри на Resonance у VCF.
+        - Поставь Resonance на 50 % или ниже.
+      "module:midi":
+        - Модуля MIDI to CV нет в патче.
+        - Какой модуль превращает ноты в напряжения? Он в плагине Core.
+        - Добавь MIDI to CV, выбери устройство и в контекстном меню Channels = 4.
+      "module:sum":
+        - Нечем свести голоса в один сигнал.
+        - Этот модуль лежит в плагине Fundamental и называется как действие.
+        - Добавь Sum после VCA.
+      "module:viz":
+        - Нечем смотреть на голоса.
+        - Этот модуль показывает каналы кабеля, у него один вход.
+        - Добавь Viz и подай в него Channel у VCA.
+    faq:
+      - q: Играет только одна нота при зажатом аккорде. Почему?
+        a: Проверка не видит число каналов в меню. Открой контекстное меню MIDI to CV и поставь Channels = 4. Тогда Viz покажет по линии на голос.
+      - q: Нужен ли отдельный Sum для Viz?
+        a: Нет. Viz смотрит на тот же Channel у VCA, который идёт в Sum. Достаточно второго кабеля от выхода VCA.
+      - q: Можно ли взять Merge вместо Sum?
+        a: "Нет. Merge собирает кабель, а не складывает голоса. Для Audio нужен Sum: проверка ждёт кабель Sum → Audio."
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Аккорд из четырёх нот хрипит, особенно на громких нотах.
+      Найди одну ошибку и исправь её одной ручкой.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1500" }, Resonance: { display: "20" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "60" }, Release: { display: "500" } } }
+      - { ref: sum, plugin: Fundamental, slug: Sum, params: { Level: { display: "25" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [sum, Polyphonic] }
+      - { from: [sum, Monophonic], to: [audio, "To \"device output 1\""] }
+    break: { set_param: { module: sum, name: Level, display: "100" } }
+    check: { kind: fixed, expect_param: { module: sum, name: Level, display_max: 50 } }
+    hints:
+      fixed:
+        - Четыре голоса складываются. Что решает, насколько громкой выйдет сумма?
+        - Посмотри на Level у Sum.
+        - Убавь Level у Sum до 50 % или ниже.
+    faq:
+      - q: Почему хрип только на аккорде, а на одной ноте нет?
+        a: Одна нота укладывается в ±5 В. Четыре ноты складываются по амплитуде и выходят за этот предел, поэтому звук срезается.
+      - q: Как это видно на Scope?
+        a: Если подключить Scope к Monophonic у Sum, пики срезаются на границах диапазона. Чем выше Level, тем больше срезано.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Один кабель несёт до 16 каналов, и каждый модуль обрабатывает их отдельно.
+      - Число голосов задаёшь в меню MIDI to CV через Channels.
+      - Split разбирает кабель на каналы, Merge собирает, Sum складывает в один сигнал.
+      - Level у Sum защищает от хрипа на аккордах.
+      Сохрани патч: он нужен в уроке 8.6.
+      **Источники:** Polyphony, Core Modules и Voltage Standards, руководство VCV Rack.
+    questions:
+      - q: Сколько каналов у полифонического кабеля и почему на четыре голоса не нужно четыре VCO?
+        options:
+          - { text: "До 16, и каждый модуль сам обрабатывает все каналы", correct: true, why: "Один VCO играет все голоса: у каждого канала своя высота, но набор модулей один." }
+          - { text: "До 4, по набору модулей на голос", why: "Предел выше четырёх. Набор модулей один и не копируется." }
+          - { text: "Любое число, пока хватает процессора", why: "Предел жёсткий: 16 каналов на кабель." }
+      - q: Зачем Sum нужен перед Audio и почему Level ниже 100 %?
+        options:
+          - { text: "Сводит голоса, а Level держит сумму в пределах ±5 В", correct: true, why: "Голоса складываются по амплитуде. Без уменьшения уровня сумма четырёх голосов превышает предел." }
+          - { text: "Он делает звук громче", why: "Sum складывает голоса, но Level при этом нужен, чтобы не превысить предел." }
+          - { text: "Он добавляет эффект хора", why: "Хор — отдельный эффект. Sum только складывает сигналы." }
+    next: |
+      # Дальше: 7.1
+      **Задержка.** Первый эффект части 7: эхо добавит голосу пространство.
+    faq:
+      - q: Чем Split отличается от Merge, а Sum от Merge?
+        a: Split разбирает кабель на выходы-каналы, Merge собирает входы в кабель. Sum складывает все каналы в один обычный сигнал, Merge их не складывает.
+      - q: Что повторить, если аккорд не играет?
+        a: "Урок 6.1: выбор устройства на MIDI to CV. Потом контекстное меню Channels: для аккорда нужно больше 1. И кабель Channel → Polyphonic у Sum."

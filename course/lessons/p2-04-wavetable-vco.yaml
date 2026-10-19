@@ -1,0 +1,297 @@
+id: p2-04-wavetable-vco
+num: "2.4"
+part: 2
+title: Wavetable VCO
+goal: Получить из Wavetable VCO звук, тембр которого сам движется во времени, и понять, чем он отличается от обычного VCO с фильтром.
+builds: Способ сделать пэд или лид, которые «дышат» без аккордов и реверберации. Пригодится в частях 4 и 8.
+minutes: 30
+requires: [p2-01-vco]
+glossary: [wavetable, положение в таблице, LFO, модуляция]
+sources: [vcv-free-manual, pc-learning-synthesis]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Wavetable VCO
+    page: |
+      # 2.4 Wavetable VCO
+      **Ты научишься:** выбирать волну в таблице ручкой **Wavetable position** и двигать её медленным **LFO**.
+      **Ты соберёшь:** Wavetable VCO, у которого тембр плывёт сам.
+      **Понадобится:** 30 минут и урок 2.1 про VCO.
+      Обычный VCO отдаёт четыре готовые формы. Здесь форма волны меняется плавно.
+    figure: { template: waveforms, shapes: [sine, triangle, saw, square], periods: 2, caption: Обычный VCO выбирает одну из четырёх форм. Wavetable VCO может переходить между многими. }
+    faq:
+      - q: Чем Wavetable VCO отличается от VCO из урока 2.1?
+        a: У VCO четыре фиксированные формы. У Wavetable VCO их десятки в таблице, и между соседними идёт плавный переход. Тембр можно двигать ручкой или модуляцией.
+      - q: Нужен ли фильтр, чтобы менять тембр?
+        a: Не обязательно. Тембр меняет сама волна, когда движется положение в таблице. Фильтр можно добавить сверху в части 3.
+      - q: Звук будет громким?
+        a: Начни с тихой громкости в системе и Level у Audio. Wavetable VCO отдаёт размах около ±5 В, как обычный VCO.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Неверный ответ покажет, что разобрать в уроке.
+    questions:
+      - q: Что такое Wavetable?
+        free: true
+        options:
+          - { text: Ряд коротких волн с плавным переходом между ними, correct: true, why: "Таблица хранит одноцикловые волны, одну за другой. Осциллятор читает любое место ряда, в том числе между волнами." }
+          - { text: Записанная мелодия, why: "Это сэмпл или луп. В таблице лежат отдельные одноцикловые волны, а не музыка." }
+          - { text: Набор фильтров, why: "Фильтр убирает гармоники из готового звука. Таблица меняет саму форму волны." }
+      - q: Что меняет ручка Wavetable position?
+        options:
+          - { text: "Форму волны, то есть тембр", correct: true, why: "Положение выбирает волну в таблице. Высота задаётся отдельно, частотой чтения." }
+          - { text: Высоту звука, why: "Высота — это Frequency и `1V/octave pitch`. Положение в таблице на неё не влияет." }
+          - { text: Громкость, why: "Размах остаётся около ±5 В. Меняется набор гармоник, а не уровень." }
+      - q: LFO подключён к Wavetable position, но Wavetable position CV стоит на 0 %. Что будет?
+        options:
+          - { text: Тембр не изменится, correct: true, why: "Глубина ноль, поэтому вход не действует. Кабель только доставляет сигнал." }
+          - { text: Тембр пройдёт весь диапазон, why: "Полный ход получится при 100 %. Кабель сам модуляцию не включает." }
+          - { text: Rack выдаст ошибку, why: "Rack ничего не проверяет. Нулевая глубина допустима, просто эффекта нет." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Таблица волн
+    page: |
+      # Таблица волн
+      Обычный VCO выдаёт одну из четырёх готовых форм. [[wavetable|Wavetable]]-осциллятор хранит таблицу: десятки одноцикловых волн подряд, от простых к сложным.
+      Параметр **положение** выбирает, какую страницу таблицы читать. Между соседними волнами идёт плавный переход.
+      [[положение в таблице|Положение в таблице]] меняет форму волны, а значит тембр. Высота задаётся отдельно: частотой чтения цикла, как у любого VCO.
+    figure: { template: waveforms, shapes: [sine, triangle, saw, square], periods: 2, caption: "Представь таблицу как ряд волн. Ручка выбирает место в ряду, между волнами переход плавный." }
+    simpler: Представь ряд фотографий одного лица, от спокойного до смеющегося. Ручка листает снимки. Между ними лицо меняется плавно, и ты видишь разные выражения.
+    faq:
+      - q: Какие волны лежат в таблице?
+        a: "Это зависит от загруженной таблицы. Сравни на слух и на Scope: в начале и конце хода ручки форма разная. Свою таблицу можно выбрать в контекстном меню модуля."
+      - q: Чем это лучше обычного VCO с фильтром?
+        a: Фильтр убирает гармоники у готового звука. Таблица меняет форму волны, и новые гармоники появляются сами. Обе техники можно использовать вместе.
+      - q: Положение в таблице влияет на высоту?
+        a: Нет. Высоту задают Frequency и вход `1V/octave pitch`. Положение меняет только окраску, число периодов на Scope остаётся тем же.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Движение тембра
+    page: |
+      # Движение тембра
+      Положение можно двигать рукой: ручка **Wavetable position** от 0 до 100 %.
+      Можно и [[модуляция|модуляцией]]. Медленный [[LFO]] на входе **Wavetable position** ходит по таблице сам, и тембр плывёт без твоего участия.
+      Входом управляет ручка **Wavetable position CV**. Это глубина от −100 до 100 %: сколько хода таблицы отдаёт модулятор. При 0 % вход молчит.
+      Скорость LFO решает характер: около 0,2 Гц тембр «дышит», около 8 Гц дрожит.
+    figure: { template: waveforms, shapes: [triangle], periods: 2, caption: "Треугольный LFO плавно ходит вверх и вниз. Так он водит положение по таблице." }
+    simpler: Представь регулятор громкости на радио, который ты крутишь пальцем. LFO — это рука, которая крутит его сама, медленно туда и обратно. Глубина — как далеко эта рука доходит.
+    faq:
+      - q: Вход подключён, а тембр не движется. Почему?
+        a: Скорее всего, Wavetable position CV стоит на 0 %. Подними эту ручку. Ещё проверь, что кабель идёт именно во вход Wavetable position.
+      - q: Что значит отрицательная глубина?
+        a: Модулятор переворачивается. Когда LFO идёт вверх, положение идёт вниз. Тембр движется в обратную сторону.
+      - q: Почему быстрый LFO даёт хрип?
+        a: Модулятор на звуковой скорости сам создаёт новые частоты, как при FM. Движение тембра превращается в шероховатость. Для «дыхания» держи LFO медленным.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Тембр движется
+    page: |
+      # Тембр движется
+      **Wavetable VCO** играет 261,63 Гц. Положение в таблице стоит на 0.
+      Покрути **Wavetable position** от 0 до 100 %. На Scope форма меняется, число периодов то же.
+      Потом верни ручку на 0 и подними **Wavetable position CV** до 100 %. `Triangle` от LFO сам водит положение по таблице.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.2" } } }
+      - { ref: wt, plugin: Fundamental, slug: VCO2, params: { Frequency: { display: "261.63" }, Wavetable position: { display: "0" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "20" }, Trigger: Enabled, Gain 1: { display: "10" }, Gain 2: { display: "10" } }
+    cables:
+      - { from: [lfo, Triangle], to: [wt, Wavetable position] }
+      - { from: [wt, Wavetable], to: [scope, Ch 1] }
+      - { from: [lfo, Triangle], to: [scope, Ch 2] }
+      - { from: [wt, Wavetable], to: [audio, "To \"device output 1\""] }
+    notes:
+      - after: lfo
+        text: "**Frequency** у LFO — скорость движения. Сейчас 0,2 Гц: один ход за 5 секунд."
+        targets: [{ module: lfo, param: Frequency }, { module: lfo, output: Triangle }]
+      - after: wt
+        text: "**Wavetable position** выбирает волну в таблице. Сейчас 0 %."
+        targets: [{ module: wt, param: Wavetable position }]
+      - after: wt
+        text: "**Wavetable position CV** — глубина. Пока 0 %: LFO подключён, но не двигает."
+        targets: [{ module: wt, param: Wavetable position CV }, { module: wt, input: Wavetable position }]
+    faq:
+      - q: Поднял Wavetable position CV, а звук не стал живым.
+        a: Проверь, что положение стоит на 0, а глубина близка к 100 %. Если положение уже на 100 %, модулятору некуда идти вверх.
+      - q: Что показывает линия Ch 2 на Scope?
+        a: Это `Triangle` от LFO, тот самый сигнал, который водит положение. По ней видно, куда сейчас смещается тембр.
+      - q: Звук на низких нотах слабее. Это поломка?
+        a: Нет. Форма волны из таблицы может быть простой или сложной, поэтому громкость на слух отличается. Размах на Scope остаётся около ±5 В.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: Панель Wavetable VCO
+    page: |
+      # Панель Wavetable VCO
+      Многое знакомо по обычному **VCO**: высота, Sync, FM. Новое здесь положение в таблице.
+    module: { ref: wt, plugin: Fundamental, slug: VCO2 }
+    notes:
+      - { text: "Единственный выход **Wavetable** отдаёт текущую волну.", targets: [{ module: wt, output: Wavetable }] }
+      - { text: "**Frequency** — от 3,4375 до 19912 Гц, шире, чем у VCO. Середина — 261,63 Гц. Вход `1V/octave pitch` задаёт высоту напряжением.", targets: [{ module: wt, param: Frequency }, { module: wt, input: 1V/octave pitch }] }
+      - { text: "**Wavetable position** — положение в таблице, от 0 до 100 %.", targets: [{ module: wt, param: Wavetable position }] }
+      - { text: "Вход **Wavetable position** и ручка **Wavetable position CV**: сигнал сдвигает положение, ручка задаёт глубину.", targets: [{ module: wt, input: Wavetable position }, { module: wt, param: Wavetable position CV }] }
+      - { text: "Вход **Sync** и переключатель **Sync**: Hard или Soft. Порядок значений обратный, чем у VCO.", targets: [{ module: wt, input: Sync }, { module: wt, param: Sync }] }
+      - { text: "**Frequency modulation** и **FM mode**: `1V/octave` или Through-zero linear. Второй режим в курсе не нужен.", targets: [{ module: wt, input: Frequency modulation }, { module: wt, param: Frequency modulation }, { module: wt, param: FM mode }] }
+    faq:
+      - q: Почему Sync здесь переключатель, а у VCO это Sync mode?
+        a: Названия разные, суть та же. Hard обрывает цикл, Soft разворачивает волну. Эффект виден только при кабеле во входе Sync.
+      - q: Где выбрать другую таблицу?
+        a: В контекстном меню модуля, правый щелчок по панели. Набор пунктов зависит от версии Rack, поэтому поищи пункт про таблицу волн.
+      - q: Что за безымянная ручка?
+        a: Это служебный параметр. Для курса она не нужна, оставь как есть.
+
+  - id: b7
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: Поверни **Wavetable position** от 0 до 100 % при глубине 0 %.
+        see: Тембр меняется постепенно, форма на Scope перестраивается. Число периодов то же.
+      - do: Верни положение на 0 и подними **Wavetable position CV** с 0 до 100 %.
+        see: При 0 % тембр неподвижен, при 100 % он ходит на полный диапазон.
+      - do: Поставь **Frequency** у LFO на 0,2, на 2 и на 8 Гц.
+        see: Сначала «дыхание», потом заметное движение, потом дрожащий тембр.
+      - do: Поставь **Wavetable position CV** на −100 %.
+        see: Движение идёт в обратную сторону.
+      - do: Поставь **Frequency** Wavetable VCO на 2093 Гц.
+        see: Та же волна на три октавы выше. На Scope периодов в 8 раз больше.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.2" } } }
+      - { ref: wt, plugin: Fundamental, slug: VCO2, params: { Frequency: { display: "261.63" }, Wavetable position: { display: "0" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "20" }, Trigger: Enabled, Gain 1: { display: "10" }, Gain 2: { display: "10" } }
+    cables:
+      - { from: [lfo, Triangle], to: [wt, Wavetable position] }
+      - { from: [wt, Wavetable], to: [scope, Ch 1] }
+      - { from: [lfo, Triangle], to: [scope, Ch 2] }
+      - { from: [wt, Wavetable], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: lfo, text: Шаг 3 — скорость LFO., targets: [{ module: lfo, param: Frequency }] }
+      - { after: wt, text: "Шаги 1, 2, 4 и 5 — ручки Wavetable VCO.", targets: [{ module: wt, param: Wavetable position }, { module: wt, param: Wavetable position CV }, { module: wt, param: Frequency }] }
+    faq:
+      - q: В шаге 1 тембр меняется не от простого к сложному, а наоборот.
+        a: Порядок волн зависит от таблицы. Главное — на слух и по Scope тембр меняется плавно, а число периодов остаётся прежним.
+      - q: При глубине 100 % тембр ходит туда-обратно, а не в одну сторону. Так и должно быть?
+        a: Да. Треугольник от LFO идёт вверх и вниз, положение идёт за ним. Если нужно движение в одну сторону, понадобится другая форма модулятора.
+      - q: Как поставить 2093 Гц?
+        a: Наведи курсор на ручку, и Rack покажет значение. Правый щелчок открывает поле для числа. Или подними ручку на три октавы выше середины.
+
+  - id: b8
+    type: practice
+    preset: practice
+    title: Практика — тембр, который двигается сам
+    task: |
+      Собери движущийся тембр между маркерами «Верстак».
+      1. Поставь **Wavetable VCO** и **LFO**.
+      2. `Triangle` у LFO → вход `Wavetable position`.
+      3. **Wavetable position CV** подними хотя бы до 30 %. **Frequency** у LFO — не быстрее 8 Гц.
+      4. `Wavetable` → `To "device output 1"` у Audio.
+      Потом нажми «Проверить». Изменяй начальное положение ручкой Wavetable position и сравни окраску.
+    given: [audio]
+    check: p2-04-wavetable-vco
+    hints:
+      "cable:1":
+        - Тембр не двигается. Что должно водить положение в таблице?
+        - Нужен LFO и вход положения у Wavetable VCO.
+        - "`Triangle` у LFO → вход `Wavetable position` у Wavetable VCO."
+      "cable:2":
+        - В колонках тишина.
+        - Куда уходит звук из Wavetable VCO?
+        - "Выход `Wavetable` → `To \"device output 1\"` у Audio."
+      "param:1":
+        - LFO подключён, а тембр едва двигается.
+        - Ручка глубины рядом со входом положения.
+        - Подними Wavetable position CV хотя бы до 30 %.
+      "param:2":
+        - Тембр дрожит, а не плывёт.
+        - Ручка Frequency у LFO.
+        - Поставь Frequency у LFO не выше 8 Гц, например 0,5 Гц.
+      "probe:1":
+        - LFO не движется.
+        - Подключён ли `Triangle` и не на минимуме ли Frequency?
+        - Проведи `Triangle` в `Wavetable position` и подними Frequency у LFO.
+      "probe:2":
+        - На выходе Wavetable нет сигнала.
+        - Идёт ли кабель из Wavetable в Audio?
+        - "Проведи `Wavetable` в `To \"device output 1\"` у Audio."
+    faq:
+      - q: Какой выход брать, у Wavetable VCO он один?
+        a: Да, у него единственный выход Wavetable. Звук берётся оттуда.
+      - q: Тембр двигается слишком мало.
+        a: Подними Wavetable position CV. Чем больше глубина, тем больше хода таблицы проходит LFO. Для разгона можно поставить 100 %.
+      - q: Нужно ли подключать Scope?
+        a: Не нужно, но полезно. Подключи Wavetable к Scope и смотри, как перестраивается форма волны.
+
+  - id: b9
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Вместо мягкого «дыхания» тембр хрипит и шероховат. На Scope линия LFO превратилась в частокол.
+      Найди одну настройку и исправь её.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - { ref: wt, plugin: Fundamental, slug: VCO2, params: { Frequency: { display: "261.63" }, Wavetable position CV: { display: "100" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "20" }, Trigger: Enabled, Gain 1: { display: "10" }, Gain 2: { display: "10" } }
+    cables:
+      - { from: [lfo, Triangle], to: [wt, Wavetable position] }
+      - { from: [wt, Wavetable], to: [scope, Ch 1] }
+      - { from: [lfo, Triangle], to: [scope, Ch 2] }
+      - { from: [wt, Wavetable], to: [audio, "To \"device output 1\""] }
+    break: { set_param: { module: lfo, name: Frequency, value: { display: "400" } } }
+    check: { kind: fixed, expect_param: { module: lfo, name: Frequency, display_max: 8 } }
+    hints:
+      fixed:
+        - Кабели на месте. Какой модуль сейчас слишком быстрый?
+        - Посмотри на ручку Frequency у LFO.
+        - Поставь Frequency у LFO не выше 8 Гц, например 2 Гц.
+    faq:
+      - q: Почему быстрый LFO даёт хрип?
+        a: Когда модулятор доходит до звуковой частоты, он сам создаёт новые частоты, как FM. Движение тембра превращается в шероховатую окраску.
+
+  - id: b10
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Wavetable VCO читает таблицу волн. **Положение** в ней меняет тембр, а не высоту.
+      - Wavetable position CV — глубина. При 0 % вход ничего не двигает.
+      - Медленный LFO на входе положения оживляет тембр. Быстрый превращает движение в хрип.
+      - Тембр можно менять и фильтром, и таблицей: это разные способы.
+      Сохрани патч: Ctrl+S сохраняет твою копию урока.
+      **Источники:** руководство VCV Free (Wavetable VCO); обзор осцилляторов из серии «Learning Synthesis» (Perfect Circuit).
+    questions:
+      - q: Как сделать, чтобы тембр медленно ходил по таблице сам?
+        options:
+          - { text: "LFO на вход положения и глубина выше нуля", correct: true, why: "Модулятор доставляется кабелем, а глубину задаёт Wavetable position CV. Без неё вход молчит." }
+          - { text: Поднять Frequency у VCO, why: "Frequency меняет высоту ноты, а не положение в таблице." }
+          - { text: Подключить Sync, why: "Sync перезапускает цикл волны. Положение в таблице он не двигает." }
+    next: |
+      # Дальше: 2.5
+      **Шум.** Семь цветов шума: материал для ветра, хэта и дыхания.
+    faq:
+      - q: Wavetable VCO заменяет обычный VCO?
+        a: Нет, они дополняют друг друга. Обычный VCO проще и точнее для баса. Wavetable хорош для живых тембров. Выбирай под задачу.
+      - q: Что повторить, если тембр не движется?
+        a: Ряд «Тембр движется». Проверь кабель в Wavetable position, ручку Wavetable position CV и скорость LFO.

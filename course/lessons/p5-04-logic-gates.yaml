@@ -1,0 +1,395 @@
+id: p5-04-logic-gates
+num: "5.4"
+part: 5
+title: Логика и гейты
+goal: Получить ритм без секвенсора из двух делений одного такта и превратить его в ровные гейты для огибающей.
+builds: Основа ритм-секции в части 9 — ударные там строятся из таких делений и логики.
+minutes: 35
+requires: [p5-01-clock-tempo]
+glossary: [логика гейтов, гейт, длина гейта, фронт сигнала, огибающая]
+sources: [vcv-free-manual, pc-learning-synthesis, pc-seq-without-seq]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Логика и гейты
+    page: |
+      # 5.4 Логика и гейты
+      **Ты научишься:** сравнивать два [[гейт|гейта]] правилами AND, OR и XOR и делать из результата ровные ноты модулем **Gates**.
+      **Ты соберёшь:** два деления **Clocked** → **Logic** → **Gates** → ADSR → VCA. Ритма в патче не записано, он рождается из двух тактов.
+      **Понадобится:** 35 минут и урок 5.1 про такт. Начни с тихой громкости.
+      Из [[логика гейтов|логики гейтов]] получается ритм, которого нет ни в одном из входов.
+    figure: { template: clock, bpm: 120, divisions: [2, 3], bars: 2, caption: "Два такта с разными периодами. Их совпадения и расхождения — материал для логики." }
+    faq:
+      - q: Как из двух ровных тактов получается неровный ритм?
+        a: Импульсы двух тактов то совпадают, то расходятся. Логика отмечает эти моменты, и на выходе появляется рисунок, которого не было ни у одного из входов.
+      - q: Нужен ли секвенсор для ритма?
+        a: Не обязательно. Такты, делители и логика дают ритм без него. Секвенсор удобнее для точной записи, логика — для живых генеративных рисунков.
+      - q: Что такое Gates, и зачем он после Logic?
+        a: Gates строит из каждого фронта новый гейт заданной длины. Тогда ноты выходят ровными, даже если на входе Logic были импульсы разной ширины.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про логику. Ошибаться можно: ответы покажут, что разобрать.
+    questions:
+      - q: Когда выход AND у Logic высокий?
+        free: true
+        options:
+          - { text: "Когда оба входа, A и B, высокие", correct: true, why: "AND — это «и»: нужны оба условия сразу." }
+          - { text: "Когда высокий хотя бы один вход", why: "Это OR — «или». AND строже: хватает не одного входа, а обоих." }
+          - { text: "Когда оба входа низкие", why: "Так работает NOR. AND при двух нулях тоже даёт ноль." }
+      - q: В A и B подали один и тот же такт и взяли XOR. Что на выходе?
+        options:
+          - { text: "Всегда ноль", correct: true, why: "XOR высокий, когда входы различаются. У одинаковых сигналов различий нет." }
+          - { text: "Тот же такт", why: "Повторять вход умеет кабель. XOR отвечает на вопрос «различаются ли входы»." }
+          - { text: "Такт вдвое чаще", why: "XOR не умножает частоту. Он сравнивает входы." }
+      - q: Зачем после Logic ставят Gates, а не подают результат сразу в огибающую?
+        options:
+          - { text: "Gates делает из каждого фронта гейт заданной длины", correct: true, why: "Ноты выходят одинаковой длины, ритм получается ровным." }
+          - { text: "Чтобы звук стал громче", why: "Гейт задаёт моменты и длительность, а не громкость." }
+          - { text: "Чтобы превратить гейт в аудио", why: "Гейты и звук — разные сигналы. Такого преобразования здесь нет." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Сравнение двух гейтов
+    page: |
+      # Сравнение двух гейтов
+      [[Гейт]] — сигнал «да или нет»: 10 В — да, 0 В — нет. Логика сравнивает два таких сигнала, A и B.
+      **AND** высокий, только когда да и у A, и у B. **OR** высокий, когда да хотя бы у одного.
+      **XOR** высокий, когда A и B различаются. **NOT** переворачивает сигнал: нет становится да.
+      Остальные выходы — те же правила с переворотом на выходе.
+    figure: { template: table, rows: [["A B", "AND", "OR", "XOR"], ["0 0", "0", "0", "0"], ["1 0", "0", "1", "1"], ["0 1", "0", "1", "1"], ["1 1", "1", "1", "0"]], caption: "Таблица ответов: 1 — гейт высокий, 0 — низкий." }
+    simpler: Представь два выключателя в комнате. AND горит, если нажаты оба. OR горит, если нажат любой. XOR горит, если нажат ровно один, как проходной выключатель на лестнице.
+    faq:
+      - q: В чём разница между OR и XOR?
+        a: Они расходятся в одной строке таблицы, когда оба входа высокие. OR при этом остаётся высоким, а XOR падает в ноль. В остальных случаях они одинаковы.
+      - q: Что значит «1» в таблице?
+        a: Высокий гейт, 10 В в Rack. Ноль — низкий, 0 В. Модуль считает вход высоким, когда напряжение выше порога, а точное значение не важно.
+      - q: Зачем нужны NOR, NAND и XNOR?
+        a: Это AND, OR и XOR, перевёрнутые на выходе. Пригодятся, когда нужен сигнал «не совпало», но запоминать их пока не нужно.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Фронты и длина гейта
+    page: |
+      # Фронты и длина гейта
+      У гейта два [[фронт сигнала|фронта]]: нарастающий, когда он поднимается с 0 до 10 В, и спадающий, когда падает обратно.
+      Модуль **Gates** ловит фронт и строит из него новый гейт нужной длины. Длина задаёт ручка **Gate length**.
+      [[Длина гейта]] определяет, насколько длинной будет нота.
+      Если подать в **Gates** результат Logic, все ноты ритма выйдут одинаковой длины, и [[огибающая]] отыграет их ровно.
+    figure: { template: clock, bpm: 120, divisions: [2, 3], bars: 2, caption: "Фронты двух тактов. Логика отмечает моменты, где они совпадают или расходятся." }
+    simpler: Представь, что щёлкаешь выключателем света. Gates каждый раз включает лампочку ровно на заданное время, как таймер на лестнице. Не важно, как долго ты держал выключатель.
+    faq:
+      - q: Чем фронт отличается от самого гейта?
+        a: Гейт — это состояние, высокое или низкое. Фронт — момент перехода из одного состояния в другое. Gates строит новые гейты по моментам нарастающего фронта.
+      - q: Что будет, если Gate length поставить очень большим?
+        a: Новый гейт начнётся раньше, чем старый закончится, и ноты сольются в сплошной звук. Для ритма держи длину заметно короче расстояния между импульсами.
+      - q: Нужно ли Gates, если логика уже дала гейт?
+        a: Необязательно, но полезно. Ширина гейта у Logic зависит от тактов на входе. Gates делает её одинаковой, и огибающая отрабатывает ноты ровно.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Таблица истинности
+    page: |
+      # Таблица истинности
+      Кнопка **Push** подаёт гейт A, кнопка **B** на модуле **Logic** задаёт гейт B. На **Scope** видны выходы **AND** и **XOR**.
+      Перебери четыре комбинации. Перед каждой предскажи, что покажут выходы, а потом проверь.
+      Гейт A держит переключатель **Hold** у Push.
+    modules:
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 0 } } }
+      - { ref: logic, plugin: Fundamental, slug: Logic, params: { B: { raw: 0 } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [push, Gate], to: [logic, A] }
+      - { from: [logic, AND], to: [scope, Ch 1] }
+      - { from: [logic, XOR], to: [scope, Ch 2] }
+    notes:
+      - { after: push, text: "**Hold** включён — A высокий. Выключен — низкий.", targets: [{ module: push, param: Hold }] }
+      - { after: logic, text: "Кнопка **B** заменяет второй кабель. Включи её — B станет высоким.", targets: [{ module: logic, param: B }] }
+      - { after: logic, text: "**AND** и **XOR** уходят на Scope: сравни линии с таблицей.", targets: [{ module: logic, output: AND }, { module: logic, output: XOR }] }
+    faq:
+      - q: Обе линии на Scope лежат на нуле. Это ошибка?
+        a: Нет. При A = 0 и B = 0 оба выхода должны быть низкими. Включи Hold или кнопку B, и одна из линий поднимется.
+      - q: Почему при двух включённых входах XOR упал, а AND поднялся?
+        a: AND ждёт оба входа высокими. XOR высокий только когда входы различаются, а теперь они одинаковы. Это единственная строка, где два выхода ведут себя противоположно.
+      - q: Что покажет OR вместо AND?
+        a: Линия поднимется, как только включён хоть один вход. Переставь кабель с AND на OR и повтори комбинацию «A включён, B выключен».
+
+  - id: b6
+    type: live
+    preset: live
+    title: Ритм из двух тактов
+    page: |
+      # Ритм из двух тактов
+      Два деления **Clocked** идут в **Logic**. Выход **XOR** даёт рисунок, которого нет ни в одном такте.
+      **Gates** делает ноты одинаковой длины, **ADSR** открывает **VCA**, и ты слышишь ритм.
+      Послушай рисунок несколько кругов. Потом поймай, где повторяется схема.
+    modules:
+      - { ref: clk, plugin: ImpromptuModular, slug: Clocked, params: { Master clock: { display: "120" }, Clk 1 ratio: { raw: 1 }, Clk 2 ratio: { raw: 2 } } }
+      - { ref: logic, plugin: Fundamental, slug: Logic }
+      - { ref: gates, plugin: Fundamental, slug: Gates, params: { Gate length: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [logic, A] }
+      - { from: [clk, Clock 2], to: [logic, B] }
+      - { from: [logic, XOR], to: [gates, Gate] }
+      - { from: [gates, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: clk, text: "**Clock 1** и **Clock 2** стоят на разных коэффициентах. Одинаковые дали бы тишину.", targets: [{ module: clk, param: Clk 1 ratio }, { module: clk, param: Clk 2 ratio }] }
+      - { after: gates, text: "**Gate length** — длина каждой ноты. Подними до 300 мс, и ноты станут длиннее.", targets: [{ module: gates, param: Gate length }] }
+    faq:
+      - q: Звука нет. Что проверить?
+        a: Возможно, Clocked остановлен. Кнопка Run переключает ход при каждом нажатии, нажми её один раз. Проверь и то, что коэффициенты Clk 1 и Clk 2 разные.
+      - q: Ритм кажется неровным. Так и должно быть?
+        a: "Да. Это синкопа: XOR отмечает моменты, где такты расходятся. Рисунок повторяется, но ноты стоят не на равных промежутках."
+      - q: Что изменится, если взять OR вместо XOR?
+        a: "Ритм станет плотнее: нота прозвучит, когда есть импульс хотя бы на одном такте. Переставь кабель с XOR на OR и сравни."
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Logic
+    page: |
+      # Панель Logic
+      **Logic** сравнивает два гейта. Выходов много, но работают всего четыре правила.
+    module: { ref: logic, plugin: Fundamental, slug: Logic }
+    notes:
+      - { text: "Входы **A** и **B** принимают гейты. Высокий вход — выше порога.", targets: [{ module: logic, input: A }, { module: logic, input: B }] }
+      - { text: "Кнопка **B** — ручной гейт B. Работает, пока в вход B нет кабеля.", targets: [{ module: logic, param: B }] }
+      - { text: "Выходы **OR**, **AND** и **XOR** — три правила, которые нужно запомнить.", targets: [{ module: logic, output: OR }, { module: logic, output: AND }, { module: logic, output: XOR }] }
+      - { text: "**NOT A** и **NOT B** — инвертированные входы: нет становится да.", targets: [{ module: logic, output: NOT A }, { module: logic, output: NOT B }] }
+      - { text: "**NOR**, **NAND** и **XNOR** — те же OR, AND и XOR, перевёрнутые на выходе.", targets: [{ module: logic, output: NOR }, { module: logic, output: NAND }, { module: logic, output: XNOR }] }
+    faq:
+      - q: Куда подавать выход Logic?
+        a: "Туда, куда подавали бы гейт: в Gates, в Gate у ADSR или в Trigger у других модулей. Логика выдаёт обычный гейт 0 и 10 В."
+      - q: Что будет, если оставить B без кабеля?
+        a: B читается с кнопки. Пока она отжата, B низкий. Так можно вручную проверить таблицу ответов.
+      - q: Зачем столько выходов, если нужны три?
+        a: Остальные — удобные сокращения. Например, NAND даёт «не оба сразу» без лишнего инвертора. Запоминать их все не нужно.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Панель Gates
+    page: |
+      # Панель Gates
+      **Gates** ловит фронты входного гейта и строит из них новые сигналы.
+    module: { ref: gates, plugin: Fundamental, slug: Gates }
+    notes:
+      - { text: "Вход **Gate** — исходный гейт, из него строится всё остальное.", targets: [{ module: gates, input: Gate }] }
+      - { text: "**Gate length** — длина нового гейта, от 1 мс до 10 с. Вход **Gate length** меняет её напряжением.", targets: [{ module: gates, param: Gate length }, { module: gates, input: Gate length }] }
+      - { text: "Выход **Gate** — новый гейт заданной длины на каждый нарастающий фронт.", targets: [{ module: gates, output: Gate }] }
+      - { text: "**Rising edge trigger** и **Falling edge trigger** — короткие импульсы на нарастающем и спадающем фронтах.", targets: [{ module: gates, output: Rising edge trigger }, { module: gates, output: Falling edge trigger }] }
+      - { text: "**Flip** и **Flop** переключаются на каждом фронте: это деление на два и его инверсия.", targets: [{ module: gates, output: Flip }, { module: gates, output: Flop }] }
+      - { text: "Кнопка и вход **Reset** возвращают **Flip** и **Flop** в исходное положение.", targets: [{ module: gates, param: Reset flip/flop }, { module: gates, input: Reset flip/flop }] }
+    later:
+      - { what: "Выход Gate delay", lesson: "9.2" }
+    faq:
+      - q: Чем выход Gate отличается от Rising edge trigger?
+        a: Gate держит 10 В столько, сколько задано в Gate length, а Rising edge trigger даёт только короткий импульс. Для огибающей подойдут оба, но ноты разной длины получаются от Gate.
+      - q: Что такое Flip и Flop?
+        a: Это деление такта на два. Flip меняет состояние на каждом фронте, Flop делает то же, но в противоположной фазе. Вместе они образуют пару для чередования.
+      - q: Зачем нужен сброс у Flip и Flop?
+        a: Чтобы выровнять Flip и Flop с остальным ритмом. После сброса Flip снова низкий, и счёт идёт с нуля.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Измени **Clk 2 ratio** на один щелчок."
+        see: "Рисунок ритма другой: нот стало больше или меньше."
+      - do: "Измени **Gate length** от 30 до 300 мс."
+        see: "Ноты короче или длиннее. Расположение нот не меняется."
+      - do: "Перенеси кабель с **XOR** на **AND**, потом на **OR**."
+        see: "На AND нот мало: такты редко совпадают. На OR ритм плотнее, чем у любого из входов."
+      - do: "Возьми **NOT A** вместо XOR."
+        see: "Ритм из пауз первого такта: ноты звучат там, где у A тишина."
+    modules:
+      - { ref: clk, plugin: ImpromptuModular, slug: Clocked, params: { Master clock: { display: "120" }, Clk 1 ratio: { raw: 1 }, Clk 2 ratio: { raw: 2 } } }
+      - { ref: logic, plugin: Fundamental, slug: Logic }
+      - { ref: gates, plugin: Fundamental, slug: Gates, params: { Gate length: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [logic, A] }
+      - { from: [clk, Clock 2], to: [logic, B] }
+      - { from: [logic, XOR], to: [gates, Gate] }
+      - { from: [gates, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: logic, text: "Шаг 3 — перенос кабеля на другой выход Logic.", targets: [{ module: logic, output: XOR }, { module: logic, output: AND }, { module: logic, output: OR }] }
+    faq:
+      - q: На AND почти ничего не слышно. Сломалось?
+        a: Нет. AND высокий только когда оба такта дают импульс сразу, а это бывает редко. Вернись на XOR или OR, и ритм вернётся.
+      - q: Я поставил оба Clk ratio одинаково, и звук пропал.
+        a: Так и должно быть. У одинаковых тактов XOR всегда ноль. Выбери разные коэффициенты, и ритм вернётся.
+      - q: Gate length не влияет на то, где стоят ноты. Почему?
+        a: Он задаёт только длину каждой ноты. Положение нот определяют фронты на входе Gates, то есть Logic и Clocked.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — свой ритм
+    task: |
+      Собери ритм из логики сам, между маркерами «Верстак».
+      1. **Clocked**, **Logic**, **Gates**, **ADSR**, **VCA**, **VCO**. Gate length — не больше 500 мс.
+      2. Ритм: `Clock 1` → `A` и `Clock 2` → `B` у Logic, `XOR` → `Gate` у Gates, `Gate` у Gates → `Gate` у ADSR.
+      3. Звук: `Envelope` → `CV` у VCA, `Sawtooth` у VCO → `Channel` у VCA, выход `Channel` → вход 1 у Audio.
+      4. Поставь у Clk 1 ratio и Clk 2 ratio разные значения. Убедись, что такт идёт, и нажми «Проверить».
+    given: [audio]
+    check: p5-04-logic-gates
+    hints:
+      "module:clk":
+        - Нужен источник тактов.
+        - Генератор такта из набора Impromptu Modular.
+        - "Поставь на верстак **Clocked**."
+      "module:logic":
+        - Нужно сравнить два такта.
+        - Модуль логики из набора Fundamental.
+        - "Поставь на верстак **Logic**."
+      "module:gates":
+        - Нужен модуль, который сделает ноты ровными.
+        - Он строит гейты заданной длины из фронтов.
+        - "Поставь на верстак **Gates**."
+      "module:env":
+        - Нужна огибающая для громкости.
+        - Огибающая из набора Fundamental.
+        - "Поставь на верстак **ADSR**."
+      "module:vca":
+        - Нужен усилитель, который решает, когда звучать.
+        - Усилитель из набора Fundamental.
+        - "Поставь на верстак **VCA**."
+      "module:vco":
+        - Нужен источник звука.
+        - Осциллятор из набора Fundamental.
+        - "Поставь на верстак **VCO**."
+      "module:out":
+        - Нужен выход звука.
+        - Модуль Audio уже стоит в ряду.
+        - "Не убирай Audio из ряда и подключай кабель к его первому входу."
+      "cable:1":
+        - Первое деление не дошло до логики.
+        - Какой выход Clocked даёт деление 1 и какой вход Logic принимает его?
+        - "`Clock 1` у Clocked → `A` у Logic."
+      "cable:2":
+        - Второе деление не дошло до логики.
+        - Рядом с A у Logic есть второй вход.
+        - "`Clock 2` у Clocked → `B` у Logic."
+      "cable:3":
+        - Логика не отдаёт результат.
+        - Какой выход Logic даёт ритм из различий?
+        - "`XOR` у Logic → `Gate` у Gates."
+      "cable:4":
+        - Гейт нужной длины не идёт в огибающую.
+        - Какой выход Gates ведёт к ADSR?
+        - "`Gate` у Gates → `Gate` у ADSR."
+      "cable:5":
+        - Звук не управляется огибающей.
+        - Что должно прийти на вход CV у VCA?
+        - "`Envelope` у ADSR → `CV` у VCA."
+      "cable:6":
+        - Пила не идёт в усилитель.
+        - Какой вход VCA принимает звук?
+        - "`Sawtooth` у VCO → `Channel` у VCA."
+      "cable:7":
+        - Голос собран, а тишина.
+        - Откуда звук выходит из VCA и куда он должен прийти?
+        - "`Channel` у VCA → `To \"device output 1\"` у Audio этого ряда."
+      "param:1":
+        - Гейт слишком длинный, ритм сливается.
+        - Посмотри на ручку Gate length у Gates.
+        - Поставь Gate length не больше 500 мс.
+      "probe:1":
+        - Огибающая не оживает.
+        - Идёт ли такт и разные ли деления у Clk 1 ratio и Clk 2 ratio?
+        - "Одинаковые деления дают XOR = 0: поставь разные. Убедись, что Clocked идёт: Run на идущем останавливает."
+    faq:
+      - q: Какие коэффициенты ставить?
+        a: Любые разные, например один на щелчок вправо от середины и один на два щелчка. Главное, чтобы Clk 1 ratio и Clk 2 ratio отличались, иначе XOR всегда ноль.
+      - q: Проверка видит огибающую, но я не слышу ритм.
+        a: Проверь кабель от VCA к Audio и громкость в системе. Проверка смотрит на напряжение огибающей, а не на выход звука.
+      - q: Можно взять OR вместо XOR?
+        a: Для проверки нужен XOR — урок про различия между тактами. OR попробуй в блоке «Покрути сам».
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Два такта идут, но ритм молчит.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: clk, plugin: ImpromptuModular, slug: Clocked, params: { Master clock: { display: "120" }, Clk 1 ratio: { raw: 1 }, Clk 2 ratio: { raw: 2 } } }
+      - { ref: logic, plugin: Fundamental, slug: Logic }
+      - { ref: gates, plugin: Fundamental, slug: Gates, params: { Gate length: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [logic, A] }
+      - { from: [clk, Clock 2], to: [logic, B] }
+      - { from: [logic, XOR], to: [gates, Gate] }
+      - { from: [gates, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    break: { remove_cable: [logic, XOR, gates, Gate] }
+    check: { kind: fixed, expect_cable: [logic, XOR, gates, Gate] }
+    hints:
+      fixed:
+        - Такты идут, а до Gates ничего не доходит. Что должно соединять Logic и Gates?
+        - Посмотри на вход Gate у Gates. Откуда на него идёт сигнал?
+        - "Соедини `XOR` у Logic с `Gate` у Gates."
+    faq:
+      - q: Такт идёт, а звука нет. Это значит, что Clocked сломан?
+        a: Нет. Clocked выдаёт импульсы, но логика не передаёт результат дальше. Ищи разрыв между Logic и Gates, а не в начале цепи.
+      - q: Как найти разрыв быстро?
+        a: "Иди по сигналу от начала: такты, логика, Gates, ADSR, VCA. На каком модуле картинка пропадает, перед тем и нет кабеля."
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - [[Логика гейтов]] сравнивает два гейта: AND — оба, OR — хотя бы один, XOR — разные.
+      - Два такта с разным делением через логику дают ритм без секвенсора.
+      - **Gates** строит из каждого фронта гейт заданной длины, и ноты выходят ровные.
+      - Одинаковые такты в XOR дают тишину.
+      **Источники:** руководство VCV Free (Logic, Gates); Perfect Circuit, серия «Learning Synthesis»; Perfect Circuit, «Sequencing Without Sequencers».
+    questions:
+      - q: Чем различаются выходы OR, AND и XOR?
+        options:
+          - { text: "OR — хотя бы один высокий, AND — оба, XOR — разные", correct: true, why: "Это три разных правила сравнения. Они расходятся в строках, где входы не равны или оба высокие." }
+          - { text: "Это одно и то же правило под разными названиями", why: "В таблице ответов выходы различаются в двух из четырёх строк." }
+          - { text: "OR и XOR одинаковы, AND отличается", why: "OR и XOR расходятся в строке, где оба входа высокие." }
+      - q: Почему ритм из XOR звучит ровнее после Gates?
+        options:
+          - { text: "Gates делает все ноты одинаковой длины", correct: true, why: "Длина нового гейта задана ручкой, а не зависит от ширины импульсов на входе." }
+          - { text: "Gates делает ноты громче", why: "Громкость задаёт VCA. Gates работает только с гейтами." }
+          - { text: "Gates сдвигает ноты на такт", why: "Gates не двигает ноты. Он строит гейты по фронтам." }
+    next: |
+      # Дальше: 5.5
+      **Последовательные переключатели.** Один такт будет по очереди выбирать из четырёх источников.
+    faq:
+      - q: Какие деления выбрать для интересного ритма?
+        a: Берут разные числа, которые не делятся друг на друга нацело, например два и три. Тогда рисунок повторяется реже, и ритм слышится сложнее.
+      - q: Что повторить, если ритм молчит?
+        a: Проверь, что деления у Clk 1 и Clk 2 разные, и что Clocked идёт. Затем пройди по цепи от Logic до Audio и найди разрыв.

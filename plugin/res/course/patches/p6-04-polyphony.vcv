@@ -1,0 +1,1320 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 604001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "dec49f1cf019",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 604002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 604005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 604006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 604009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604012,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b3",
+    "item": "page-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 604013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604016,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    4
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b5",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604017,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604018,
+   "plugin": "Core",
+   "model": "MIDIToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    21,
+    5
+   ]
+  },
+  {
+   "id": 604019,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    30,
+    5
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604020,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    39,
+    5
+   ]
+  },
+  {
+   "id": 604021,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.751938,
+     "id": 0
+    },
+    {
+     "value": 0.2,
+     "id": 2
+    }
+   ],
+   "pos": [
+    49,
+    5
+   ]
+  },
+  {
+   "id": 604022,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    57,
+    5
+   ]
+  },
+  {
+   "id": 604023,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.61928,
+     "id": 1
+    },
+    {
+     "value": 0.6,
+     "id": 2
+    },
+    {
+     "value": 0.674743,
+     "id": 3
+    }
+   ],
+   "pos": [
+    61,
+    5
+   ]
+  },
+  {
+   "id": 604024,
+   "plugin": "Fundamental",
+   "model": "Sum",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.25,
+     "id": 0
+    }
+   ],
+   "pos": [
+    71,
+    5
+   ]
+  },
+  {
+   "id": 604025,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    75,
+    5
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 604026,
+   "plugin": "Fundamental",
+   "model": "Viz",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    82,
+    5
+   ]
+  },
+  {
+   "id": 604027,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    86,
+    5
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 604036,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604037,
+   "plugin": "Core",
+   "model": "MIDIToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 604038,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    26,
+    6
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604039,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    35,
+    6
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 604040,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    6
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 604041,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    49,
+    6
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b7",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 604042,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    56,
+    6
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b7",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 604043,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b8",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604044,
+   "plugin": "Core",
+   "model": "MIDIToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    21,
+    7
+   ]
+  },
+  {
+   "id": 604045,
+   "plugin": "Fundamental",
+   "model": "Split",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    30,
+    7
+   ]
+  },
+  {
+   "id": 604046,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    36,
+    7
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604047,
+   "plugin": "Fundamental",
+   "model": "Merge",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    45,
+    7
+   ]
+  },
+  {
+   "id": 604048,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    51,
+    7
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b8",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 604049,
+   "plugin": "Fundamental",
+   "model": "Viz",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    60,
+    7
+   ]
+  },
+  {
+   "id": 604050,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    7
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b8",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 604055,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604056,
+   "plugin": "Core",
+   "model": "MIDIToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    21,
+    8
+   ]
+  },
+  {
+   "id": 604057,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    30,
+    8
+   ]
+  },
+  {
+   "id": 604058,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.751938,
+     "id": 0
+    },
+    {
+     "value": 0.2,
+     "id": 2
+    }
+   ],
+   "pos": [
+    40,
+    8
+   ]
+  },
+  {
+   "id": 604059,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    48,
+    8
+   ]
+  },
+  {
+   "id": 604060,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.61928,
+     "id": 1
+    },
+    {
+     "value": 0.6,
+     "id": 2
+    },
+    {
+     "value": 0.674743,
+     "id": 3
+    }
+   ],
+   "pos": [
+    52,
+    8
+   ]
+  },
+  {
+   "id": 604061,
+   "plugin": "Fundamental",
+   "model": "Sum",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.25,
+     "id": 0
+    }
+   ],
+   "pos": [
+    62,
+    8
+   ]
+  },
+  {
+   "id": 604062,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    66,
+    8
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604063,
+   "plugin": "Fundamental",
+   "model": "Viz",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    73,
+    8
+   ]
+  },
+  {
+   "id": 604072,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604073,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    19,
+    9
+   ]
+  },
+  {
+   "id": 604074,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    9
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b10",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 604075,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    68,
+    9
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b10",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 604076,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b11",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604077,
+   "plugin": "Core",
+   "model": "MIDIToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    15,
+    10
+   ]
+  },
+  {
+   "id": 604078,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    24,
+    10
+   ]
+  },
+  {
+   "id": 604079,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.751938,
+     "id": 0
+    },
+    {
+     "value": 0.2,
+     "id": 2
+    }
+   ],
+   "pos": [
+    34,
+    10
+   ]
+  },
+  {
+   "id": 604080,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    42,
+    10
+   ]
+  },
+  {
+   "id": 604081,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.61928,
+     "id": 1
+    },
+    {
+     "value": 0.6,
+     "id": 2
+    },
+    {
+     "value": 0.674743,
+     "id": 3
+    }
+   ],
+   "pos": [
+    46,
+    10
+   ]
+  },
+  {
+   "id": 604082,
+   "plugin": "Fundamental",
+   "model": "Sum",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    56,
+    10
+   ]
+  },
+  {
+   "id": 604090,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    60,
+    10
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b11",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604091,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    11
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b12",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604092,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    11
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b12",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 604093,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    11
+   ],
+   "data": {
+    "lesson": "p6-04-polyphony",
+    "block": "b12",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 604007,
+   "outputModuleId": 604005,
+   "outputId": 0,
+   "inputModuleId": 604006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604008,
+   "outputModuleId": 604005,
+   "outputId": 0,
+   "inputModuleId": 604006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604028,
+   "outputModuleId": 604018,
+   "outputId": 0,
+   "inputModuleId": 604020,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604029,
+   "outputModuleId": 604018,
+   "outputId": 1,
+   "inputModuleId": 604023,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604030,
+   "outputModuleId": 604020,
+   "outputId": 2,
+   "inputModuleId": 604021,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604031,
+   "outputModuleId": 604021,
+   "outputId": 0,
+   "inputModuleId": 604022,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604032,
+   "outputModuleId": 604023,
+   "outputId": 0,
+   "inputModuleId": 604022,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604033,
+   "outputModuleId": 604022,
+   "outputId": 0,
+   "inputModuleId": 604024,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604034,
+   "outputModuleId": 604024,
+   "outputId": 0,
+   "inputModuleId": 604005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604035,
+   "outputModuleId": 604022,
+   "outputId": 0,
+   "inputModuleId": 604026,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604051,
+   "outputModuleId": 604044,
+   "outputId": 0,
+   "inputModuleId": 604045,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604052,
+   "outputModuleId": 604045,
+   "outputId": 0,
+   "inputModuleId": 604047,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604053,
+   "outputModuleId": 604045,
+   "outputId": 1,
+   "inputModuleId": 604047,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604054,
+   "outputModuleId": 604047,
+   "outputId": 0,
+   "inputModuleId": 604049,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604064,
+   "outputModuleId": 604056,
+   "outputId": 0,
+   "inputModuleId": 604057,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604065,
+   "outputModuleId": 604056,
+   "outputId": 1,
+   "inputModuleId": 604060,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604066,
+   "outputModuleId": 604057,
+   "outputId": 2,
+   "inputModuleId": 604058,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604067,
+   "outputModuleId": 604058,
+   "outputId": 0,
+   "inputModuleId": 604059,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604068,
+   "outputModuleId": 604060,
+   "outputId": 0,
+   "inputModuleId": 604059,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604069,
+   "outputModuleId": 604059,
+   "outputId": 0,
+   "inputModuleId": 604061,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604070,
+   "outputModuleId": 604061,
+   "outputId": 0,
+   "inputModuleId": 604005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604071,
+   "outputModuleId": 604059,
+   "outputId": 0,
+   "inputModuleId": 604063,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604083,
+   "outputModuleId": 604077,
+   "outputId": 0,
+   "inputModuleId": 604078,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604084,
+   "outputModuleId": 604077,
+   "outputId": 1,
+   "inputModuleId": 604081,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604085,
+   "outputModuleId": 604078,
+   "outputId": 2,
+   "inputModuleId": 604079,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604086,
+   "outputModuleId": 604079,
+   "outputId": 0,
+   "inputModuleId": 604080,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604087,
+   "outputModuleId": 604081,
+   "outputId": 0,
+   "inputModuleId": 604080,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604088,
+   "outputModuleId": 604080,
+   "outputId": 0,
+   "inputModuleId": 604082,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 604089,
+   "outputModuleId": 604082,
+   "outputId": 0,
+   "inputModuleId": 604005,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

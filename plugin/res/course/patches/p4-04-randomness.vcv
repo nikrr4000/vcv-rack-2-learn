@@ -1,0 +1,1162 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 404001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "76c9e2600ec0",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 404002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 404005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 404006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 404009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404016,
+   "plugin": "Fundamental",
+   "model": "Random",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    },
+    {
+     "value": 1,
+     "id": 5
+    },
+    {
+     "value": 1,
+     "id": 4
+    },
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 404017,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    31,
+    4
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404018,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.2,
+     "id": 0
+    }
+   ],
+   "pos": [
+    38,
+    4
+   ]
+  },
+  {
+   "id": 404019,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    4
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 404020,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    51,
+    4
+   ]
+  },
+  {
+   "id": 404021,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    61,
+    4
+   ]
+  },
+  {
+   "id": 404022,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    69,
+    4
+   ]
+  },
+  {
+   "id": 404030,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404031,
+   "plugin": "Fundamental",
+   "model": "Random",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 404032,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    27,
+    5
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404033,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    36,
+    5
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 404034,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    45,
+    5
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 404035,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    54,
+    5
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b6",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 404036,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    63,
+    5
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b6",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 404037,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    70,
+    5
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b6",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 404038,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404039,
+   "plugin": "Fundamental",
+   "model": "RandomValues",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 404040,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    6
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404041,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    28,
+    6
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 404042,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    35,
+    6
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 404043,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404044,
+   "plugin": "Fundamental",
+   "model": "Random",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    },
+    {
+     "value": 1,
+     "id": 5
+    },
+    {
+     "value": 1,
+     "id": 4
+    },
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    21,
+    7
+   ]
+  },
+  {
+   "id": 404045,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    31,
+    7
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404046,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.2,
+     "id": 0
+    }
+   ],
+   "pos": [
+    38,
+    7
+   ]
+  },
+  {
+   "id": 404047,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    42,
+    7
+   ]
+  },
+  {
+   "id": 404048,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    52,
+    7
+   ]
+  },
+  {
+   "id": 404049,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    60,
+    7
+   ]
+  },
+  {
+   "id": 404057,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404058,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 404059,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    8
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b9",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 404060,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    8
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b9",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 404061,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404062,
+   "plugin": "Fundamental",
+   "model": "Random",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    },
+    {
+     "value": 1,
+     "id": 5
+    },
+    {
+     "value": 1,
+     "id": 4
+    },
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    15,
+    9
+   ]
+  },
+  {
+   "id": 404063,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    25,
+    9
+   ]
+  },
+  {
+   "id": 404064,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    29,
+    9
+   ]
+  },
+  {
+   "id": 404065,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    39,
+    9
+   ]
+  },
+  {
+   "id": 404066,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    47,
+    9
+   ]
+  },
+  {
+   "id": 404073,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    61,
+    9
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b10",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404074,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b11",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404075,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    10
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b11",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 404076,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    10
+   ],
+   "data": {
+    "lesson": "p4-04-randomness",
+    "block": "b11",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 404007,
+   "outputModuleId": 404005,
+   "outputId": 0,
+   "inputModuleId": 404006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404008,
+   "outputModuleId": 404005,
+   "outputId": 0,
+   "inputModuleId": 404006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404023,
+   "outputModuleId": 404016,
+   "outputId": 0,
+   "inputModuleId": 404018,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404024,
+   "outputModuleId": 404018,
+   "outputId": 0,
+   "inputModuleId": 404020,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404025,
+   "outputModuleId": 404016,
+   "outputId": 2,
+   "inputModuleId": 404021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404026,
+   "outputModuleId": 404020,
+   "outputId": 2,
+   "inputModuleId": 404021,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404027,
+   "outputModuleId": 404021,
+   "outputId": 0,
+   "inputModuleId": 404005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404028,
+   "outputModuleId": 404016,
+   "outputId": 0,
+   "inputModuleId": 404022,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404029,
+   "outputModuleId": 404016,
+   "outputId": 2,
+   "inputModuleId": 404022,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404050,
+   "outputModuleId": 404044,
+   "outputId": 0,
+   "inputModuleId": 404046,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404051,
+   "outputModuleId": 404046,
+   "outputId": 0,
+   "inputModuleId": 404047,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404052,
+   "outputModuleId": 404044,
+   "outputId": 2,
+   "inputModuleId": 404048,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404053,
+   "outputModuleId": 404047,
+   "outputId": 2,
+   "inputModuleId": 404048,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404054,
+   "outputModuleId": 404048,
+   "outputId": 0,
+   "inputModuleId": 404005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404055,
+   "outputModuleId": 404044,
+   "outputId": 0,
+   "inputModuleId": 404049,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404056,
+   "outputModuleId": 404044,
+   "outputId": 2,
+   "inputModuleId": 404049,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404067,
+   "outputModuleId": 404062,
+   "outputId": 0,
+   "inputModuleId": 404063,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404068,
+   "outputModuleId": 404063,
+   "outputId": 0,
+   "inputModuleId": 404064,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404069,
+   "outputModuleId": 404062,
+   "outputId": 2,
+   "inputModuleId": 404065,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404070,
+   "outputModuleId": 404064,
+   "outputId": 2,
+   "inputModuleId": 404065,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404071,
+   "outputModuleId": 404065,
+   "outputId": 0,
+   "inputModuleId": 404005,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 404072,
+   "outputModuleId": 404063,
+   "outputId": 0,
+   "inputModuleId": 404066,
+   "inputId": 0,
+   "color": "#C0583B"
+  }
+ ]
+}

@@ -1,0 +1,872 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 501001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "c841563b59f7",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 501002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 501005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 501006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 501009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501016,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    },
+    {
+     "value": 2,
+     "id": 2
+    },
+    {
+     "value": -2,
+     "id": 3
+    }
+   ],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 501017,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    4
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501018,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    51,
+    4
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 501019,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    60,
+    4
+   ]
+  },
+  {
+   "id": 501020,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    74,
+    4
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b5",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 501021,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    83,
+    4
+   ]
+  },
+  {
+   "id": 501026,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501027,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 501028,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    38,
+    5
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501029,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    47,
+    5
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 501030,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    58,
+    5
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 501031,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    67,
+    5
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b6",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 501032,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    76,
+    5
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b6",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 501033,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    85,
+    5
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b6",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 501034,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b7",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501035,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    },
+    {
+     "value": 2,
+     "id": 2
+    },
+    {
+     "value": -2,
+     "id": 3
+    }
+   ],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 501036,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    38,
+    6
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501037,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    45,
+    6
+   ]
+  },
+  {
+   "id": 501038,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    59,
+    6
+   ]
+  },
+  {
+   "id": 501043,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501044,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    17,
+    7
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b8",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 501045,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    60,
+    7
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b8",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 501046,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501047,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    },
+    {
+     "value": 2,
+     "id": 2
+    },
+    {
+     "value": -2,
+     "id": 3
+    }
+   ],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 501048,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    36,
+    8
+   ]
+  },
+  {
+   "id": 501049,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    50,
+    8
+   ]
+  },
+  {
+   "id": 501053,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    8
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501054,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b10",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501055,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    9
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b10",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 501056,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    9
+   ],
+   "data": {
+    "lesson": "p5-01-clock-tempo",
+    "block": "b10",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 501007,
+   "outputModuleId": 501005,
+   "outputId": 0,
+   "inputModuleId": 501006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501008,
+   "outputModuleId": 501005,
+   "outputId": 0,
+   "inputModuleId": 501006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501022,
+   "outputModuleId": 501016,
+   "outputId": 0,
+   "inputModuleId": 501019,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501023,
+   "outputModuleId": 501016,
+   "outputId": 1,
+   "inputModuleId": 501019,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501024,
+   "outputModuleId": 501016,
+   "outputId": 2,
+   "inputModuleId": 501021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501025,
+   "outputModuleId": 501016,
+   "outputId": 3,
+   "inputModuleId": 501021,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501039,
+   "outputModuleId": 501035,
+   "outputId": 0,
+   "inputModuleId": 501037,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501040,
+   "outputModuleId": 501035,
+   "outputId": 1,
+   "inputModuleId": 501037,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501041,
+   "outputModuleId": 501035,
+   "outputId": 2,
+   "inputModuleId": 501038,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501042,
+   "outputModuleId": 501035,
+   "outputId": 3,
+   "inputModuleId": 501038,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501050,
+   "outputModuleId": 501047,
+   "outputId": 0,
+   "inputModuleId": 501048,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501051,
+   "outputModuleId": 501047,
+   "outputId": 1,
+   "inputModuleId": 501048,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 501052,
+   "outputModuleId": 501047,
+   "outputId": 3,
+   "inputModuleId": 501049,
+   "inputId": 1,
+   "color": "#C0583B"
+  }
+ ]
+}

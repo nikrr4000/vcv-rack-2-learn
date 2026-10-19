@@ -1,0 +1,443 @@
+id: p8-04-bass
+num: "8.4"
+part: 8
+title: Бас, включая acid
+goal: Собрать бас на основе голоса из урока 3.5 и добавить три приёма — огибающую на срезе, акценты и слайд между нотами.
+builds: Четвёртый инструмент трека. В уроке 9.3 бас встанет в одну тональность с пэдом.
+minutes: 45
+requires: [p5-02-seq3, p4-05-sample-hold-slew, p3-05-first-voice]
+glossary: [голос синтезатора, глубина огибающей фильтра, акцент, acid-слайд, слайд, резонанс, секвенсор, транспонирование]
+sources: [mr-303-guide, mr-acid-howto, ne-acid-repetitor, omri-303]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Бас, включая acid
+    page: |
+      # 8.4 Бас, включая acid
+      **Ты научишься:** превращать [[голос синтезатора|голос]] из урока 3.5 в бас с «квакающим» фильтром, [[акцент|акцентами]] и [[слайд|слайдом]].
+      **Ты соберёшь:** SEQ 3 → Process → Octave → VCO → VCF → VCA-1 с ADSR на громкости и на срезе.
+      **Понадобится:** 45 минут и уроки про SEQ 3, слайд и первый голос. Громкость держи низкой.
+      Патч понадобится в части 9, сохрани его в конце урока.
+    faq:
+      - q: "Чем бас отличается от голоса из урока 3.5?"
+        a: "Это тот же голос: VCO, VCF, VCA и огибающая. Добавляются три приёма: огибающая ещё и на фильтре, акценты на выбранных шагах и слайд между нотами."
+      - q: "Что такое acid?"
+        a: "Стиль баса с резонансным фильтром, который «квакает» на каждой ноте, и скользящими переходами. Те же ручки дают и обычный бас, если резонанс и слайд опустить."
+      - q: "Звук будет громким?"
+        a: "Резонанс даёт пики выше обычного. Убавь громкость в системе и держи Level у VCA-1 около 70 %."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, о чём будет урок.
+    questions:
+      - q: "Чем бас с огибающей на срезе отличается от баса с постоянным срезом?"
+        free: true
+        options:
+          - { text: "Фильтр открывается на каждой ноте и закрывается к её концу", correct: true, why: "Огибающая двигает срез на каждой ноте, поэтому звук «квакает»." }
+          - { text: "Бас просто громче", why: "Громкостью управляет другой кабель, в CV у VCA-1. Огибающая на срезе меняет тембр." }
+          - { text: "Бас выше по высоте", why: "Огибающая на срезе не меняет ноты. Высоту задаёт мелодия на входе VCO." }
+      - q: "Что делает слайд на шаге с высоким CV 3?"
+        options:
+          - { text: "Высота скользит от предыдущей ноты к этой", correct: true, why: "Время перехода задаёт ручка Slew. Нота не прыгает, а плавно подтягивается." }
+          - { text: "Нота играет дольше", why: "Длина ноты зависит от огибающей. Слайд меняет только переход высоты." }
+          - { text: "Нота играет громче", why: "Слайд и акцент — разные приёмы. Слайд двигает высоту, акцент меняет тембр." }
+      - q: "Как сделать акцент только на некоторых шагах?"
+        options:
+          - { text: "Поставить ненулевое CV 2 на этих шагах", correct: true, why: "CV 2 идёт на Resonance. На шагах с ненулевым значением резонанс открывается, на остальных остаётся ноль." }
+          - { text: "Поднять Resonance ручкой", why: "Ручка действует на все ноты сразу. Акцент должен быть выборочным." }
+          - { text: "Добавить ещё один VCO", why: "Второй осциллятор делает звук толще, а не выделяет отдельные ноты." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Голос баса
+    page: |
+      # Голос баса
+      Бас — тот же [[голос синтезатора|голос]], что ты собрал в 3.5: VCO, VCF, VCA-1 и ADSR.
+      Меняются настройки. Пила, фильтр с небольшим [[резонанс|резонансом]], короткая нота: Decay и Release по 200 мс, **Sustain** в нуле.
+      Новое одно: [[огибающая]] идёт не только в **CV** у VCA-1, но и на вход **Frequency** у VCF. Каждая нота открывает фильтр и закрывает его к концу.
+    page2: |
+      Ручка **Cutoff frequency CV** у VCF задаёт [[глубина огибающей фильтра|глубину огибающей фильтра]]: на сколько огибающая уводит срез.
+      Чем она больше, тем сильнее «вау» на каждой ноте.
+      Чтобы голос звучал как бас, [[транспонирование|транспонируй]] мелодию на две октавы вниз модулем **Octave**.
+    figure: { template: flow, layout: row, nodes: [{ id: vco, label: VCO, kind: audio }, { id: vcf, label: VCF, kind: audio }, { id: vca, label: VCA-1, kind: audio }, { id: env, label: ADSR, kind: cv }], edges: [{ from: vco, to: vcf, kind: audio }, { from: vcf, to: vca, kind: audio }, { from: env, to: vcf, kind: cv }, { from: env, to: vca, kind: cv }], caption: "Огибающая управляет и громкостью, и срезом фильтра." }
+    simpler: Представь рот, который говорит «уа». Рот открывается и закрывается с каждым слогом. Фильтр с огибающей делает то же самое со звуком баса.
+    faq:
+      - q: "Зачем огибающая на срезе, если есть на громкости?"
+        a: "Огибающая на громкости делает ноту короткой, на срезе — «квакающей». Одна работает на длину, другая на тембр. Вместе они дают характер баса."
+      - q: "Почему Octave на −2?"
+        a: "Каждая единица сдвигает мелодию на октаву. Минус два — на две октавы вниз. Интервалы между нотами остаются теми же, меняется только регистр."
+      - q: "Почему Sustain в ноль?"
+        a: "Нота баса короткая и сама заканчивается. При ненулевом Sustain звук держался бы, пока идёт гейт, и бас потерял бы рубленый ритм."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Акцент и слайд
+    page: |
+      # Акцент и слайд
+      Два приёма делают бас живым.
+      **Акцент** — выбранная нота звучит резче. У нас акцент открывает [[резонанс]] фильтра на выбранных шагах: напряжение **CV 2** идёт на вход **Resonance**.
+      **Слайд** — высота не прыгает, а скользит к следующей ноте. Это [[acid-слайд]]. Его включает **CV 3**: на шагах с 10 В нота подтягивается.
+    page2: |
+      Скольжением занят Process. Его выход **Glide** скользит только пока **Gate** высокий. Выход **Slew** делает наоборот.
+      Время скольжения задаёт ручка **Slew** в мс на вольт.
+      Это упрощение классического баса: в оригинале акцент ещё добавляет громкость и глубину огибающей.
+    figure: { template: steps, values: [0, 0, 12, 7, 3, 0, 10, 7], gates: [1, 0, 1, 1, 1, 0, 1, 1], caption: "Мелодия на 8 шагов. Паузы на шагах 2 и 6, слайд на 3 и 7, акценты на 1, 4 и 7." }
+    simpler: Представь гитариста. Акцент — когда он ударяет по струне сильнее. Слайд — когда он ведёт палец по грифу от ноты к ноте.
+    faq:
+      - q: "Чем acid-слайд отличается от обычного портаменто?"
+        a: "Обычное портаменто скользит между всеми нотами. Acid-слайд работает только на помеченных шагах: на остальных высота прыгает. Поэтому мелодия остаётся чёткой."
+      - q: "Что делает выход Slew у Process?"
+        a: "Он скользит, когда Gate низкий. Для слайда нужно наоборот, поэтому берём Glide. Он скользит только на шагах с высоким CV 3."
+      - q: "Почему акцент только открывает резонанс?"
+        a: "Мы упрощаем схему. В оригинальном басу акцент ещё усиливает громкость, у нас — один приём. Это приближение, а не точная копия."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Квакающий голос
+    page: |
+      # Квакающий голос
+      Метроном **LFO** бьёт гейт два раза в секунду. VCO играет C2, пила идёт через VCF и VCA-1.
+      Поверни **Cutoff frequency CV** от 0 до 70 %. «Вау» на каждой ноте растёт.
+      Подними **Resonance** — звук становится острее.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "65.41" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "400" }, Resonance: { display: "35" }, Cutoff frequency CV: { display: "35" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+    cables:
+      - { from: [lfo, Square], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [env, Envelope], to: [vcf, Frequency] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: vcf, text: "**Cutoff frequency CV** — глубина огибающей фильтра.", targets: [{ module: vcf, param: Cutoff frequency CV }] }
+      - { after: env, text: "**Envelope** идёт и в VCA-1, и в **Frequency** у VCF.", targets: [{ module: env, output: Envelope }, { module: vcf, input: Frequency }] }
+    faq:
+      - q: "Почему VCO играет C2, а не C4?"
+        a: "Frequency у VCO стоит на 65,41 Гц. Это C2 — две октавы ниже C4. В следующих блоках тот же сдвиг делает модуль Octave."
+      - q: "Фильтр свистит. Что делать?"
+        a: "Опусти Resonance. Выше 70 % фильтр начинает звенеть сам, а в басу нужен небольшой резонанс. Около 35 % — хорошее начало."
+      - q: "Квакание слышно только на высоких нотах?"
+        a: "Нет, на каждой ноте. Если почти не слышно, подними Cutoff frequency CV до 50 % или снизь Cutoff frequency до 300 Гц."
+
+  - id: b6
+    type: live
+    preset: live
+    title: Мелодия и слайд
+    page: |
+      # Мелодия и слайд
+      [[секвенсор|Секвенсор]] SEQ 3 играет восемь шагов. Паузы на шагах 2 и 6. **CV 3** включает слайд на шагах 3 и 7.
+      Подними **Slew** у Process от 20 до 300 мс/В. Скольжение удлиняется.
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 0 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 0 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 1 step 3: { display: "1" }, CV 1 step 4: { display: "0.58" }, CV 1 step 5: { display: "0.25" }, CV 1 step 7: { display: "0.83" }, CV 1 step 8: { display: "0.58" }, CV 3 step 3: { display: "10" }, CV 3 step 7: { display: "10" } } }
+      - { ref: proc, plugin: Fundamental, slug: Process, params: { Slew: { display: "100" } } }
+      - { ref: oct, plugin: Fundamental, slug: Octave, params: { Shift: { display: "-2" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+    cables:
+      - { from: [seq, CV 1], to: [proc, Voltage] }
+      - { from: [seq, CV 3], to: [proc, Gate] }
+      - { from: [proc, Glide], to: [oct, 1V/octave pitch] }
+      - { from: [oct, Pitch], to: [vco, 1V/octave pitch] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: proc, text: "**Slew** — время скольжения в мс на вольт.", targets: [{ module: proc, param: Slew }] }
+      - { after: oct, text: "**Shift** −2 опускает мелодию на две октавы.", targets: [{ module: oct, param: Shift }] }
+    faq:
+      - q: "Почему мелодия в вольтах, а не в нотах?"
+        a: "CV 1 step задаёт высоту стандартом 1 В на октаву. 0 — C, 1 — C на октаву выше, 0,58 — G. Полутон — это 1/12 В."
+      - q: "Слайда не слышно. Что проверить?"
+        a: "Нужен кабель CV 3 в Gate у Process и значение около 10 В на шагах 3 и 7. Ещё поверни Slew к 200 мс/В, чтобы скольжение стало заметным."
+      - q: "Что делает Glide, когда CV 3 равен нулю?"
+        a: "Он повторяет вход Voltage без задержки: ноты прыгают. Скользить он начинает только на шагах, где Gate высокий."
+
+  - id: b7
+    type: live
+    preset: live
+    title: Акценты
+    page: |
+      # Акценты
+      Здесь та же мелодия, но без слайда. Напряжение **CV 2** идёт на **Resonance**: на шагах 1, 4 и 7 резонанс открывается.
+      Подними **CV 2 step 2** до 3 В. Ещё один шаг становится акцентным.
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 0 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 0 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 1 step 3: { display: "1" }, CV 1 step 4: { display: "0.58" }, CV 1 step 5: { display: "0.25" }, CV 1 step 7: { display: "0.83" }, CV 1 step 8: { display: "0.58" }, CV 2 step 1: { display: "3" }, CV 2 step 4: { display: "3" }, CV 2 step 7: { display: "3" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "65.41" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "400" }, Resonance: { display: "35" }, Cutoff frequency CV: { display: "35" }, Resonance CV: { display: "60" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+    cables:
+      - { from: [seq, CV 1], to: [vco, 1V/octave pitch] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [seq, CV 2], to: [vcf, Resonance] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [env, Envelope], to: [vcf, Frequency] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: seq, text: "**CV 2** на шагах 1, 4, 7 — 3 В: это акценты.", targets: [{ module: seq, output: CV 2 }] }
+      - { after: vcf, text: "**Resonance CV** — сколько CV 2 доходит до резонанса.", targets: [{ module: vcf, param: Resonance CV }] }
+    faq:
+      - q: "Акцента не слышно. Что проверить?"
+        a: "Проверь кабель CV 2 в Resonance у VCF и ручку Resonance CV. Если она в нуле, напряжение CV 2 не доходит до резонанса. Подними её до 60 %."
+      - q: "Почему акценты именно на 1, 4 и 7?"
+        a: "Так рисунок получается не механическим. Ты можешь поставить акценты на любые шаги: просто задай CV 2 step около 3 В, а на остальных оставь ноль."
+      - q: "Акцент стал визгом."
+        a: "Резонанс на пиках слишком велик. Опусти Resonance CV до 40 % или CV 2 на этом шаге до 2 В."
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Process — слайд
+    page: |
+      # Process — слайд
+      Process из урока 4.5 умеет много. Для баса нужны вход Voltage, Gate и выход Glide.
+    module: { ref: proc, plugin: Fundamental, slug: Process, params: { Slew: { display: "100" } } }
+    notes:
+      - { text: "Вход **Voltage**: сюда приходит мелодия CV 1.", targets: [{ module: proc, input: Voltage }] }
+      - { text: "Вход **Gate**: высокий уровень включает скольжение. Сюда идёт CV 3.", targets: [{ module: proc, input: Gate }] }
+      - { text: "**Slew** — время скольжения в мс на вольт.", targets: [{ module: proc, param: Slew }] }
+      - { text: "Выход **Glide** скользит, пока Gate высокий. Это acid-слайд.", targets: [{ module: proc, output: Glide }] }
+      - { text: "Выход **Slew** делает наоборот: скользит при низком Gate.", targets: [{ module: proc, output: Slew }] }
+    later:
+      - { what: "Sample & hold и Track & hold", lesson: "4.5" }
+    faq:
+      - q: "Почему Slew в миллисекундах на вольт?"
+        a: "Скольжение считается по размеру перехода. Нота на октаву выше — это 1 В, значит 100 мс. Нота на пять октав выше займёт 500 мс. Поэтому большие скачки скользят дольше."
+      - q: "Что будет, если подать мелодию в Slew, а не в Voltage?"
+        a: "Это вход управления временем скольжения, а не мелодии. Мелодия не пройдёт, и бас замолчит. Мелодия идёт только в Voltage."
+      - q: "Нужны ли остальные выходы Process?"
+        a: "Нет. Sample & hold и Track & hold нужны в других патчах. Для баса хватает Glide."
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Двигай **Cutoff frequency** у VCF от 200 до 1500 Гц."
+        see: "Бас темнее или светлее. Квакание остаётся."
+      - do: "Двигай **Cutoff frequency CV** от 0 до 70 %."
+        see: "От ровного баса к сильному «вау» на каждой ноте."
+      - do: "Подними **Resonance** от 10 до 70 %."
+        see: "От мягкого баса к визгу у среза."
+      - do: "Двигай **Slew** от 20 до 300 мс/В."
+        see: "Слайд короче или длиннее."
+      - do: "Поставь **Shift** у Octave на −3, потом на −1."
+        see: "Бас ниже или выше, интервалы те же."
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 0 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 0 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 1 step 3: { display: "1" }, CV 1 step 4: { display: "0.58" }, CV 1 step 5: { display: "0.25" }, CV 1 step 7: { display: "0.83" }, CV 1 step 8: { display: "0.58" }, CV 2 step 1: { display: "3" }, CV 2 step 4: { display: "3" }, CV 2 step 7: { display: "3" }, CV 3 step 3: { display: "10" }, CV 3 step 7: { display: "10" } } }
+      - { ref: proc, plugin: Fundamental, slug: Process, params: { Slew: { display: "100" } } }
+      - { ref: oct, plugin: Fundamental, slug: Octave, params: { Shift: { display: "-2" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "400" }, Resonance: { display: "35" }, Cutoff frequency CV: { display: "35" }, Resonance CV: { display: "60" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+    cables:
+      - { from: [seq, CV 1], to: [proc, Voltage] }
+      - { from: [proc, Glide], to: [oct, 1V/octave pitch] }
+      - { from: [oct, Pitch], to: [vco, 1V/octave pitch] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [env, Envelope], to: [vcf, Frequency] }
+      - { from: [seq, CV 3], to: [proc, Gate] }
+      - { from: [seq, CV 2], to: [vcf, Resonance] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: vcf, text: "Шаги 1–3 — ручки этого VCF.", targets: [{ module: vcf, param: Cutoff frequency }, { module: vcf, param: Cutoff frequency CV }, { module: vcf, param: Resonance }] }
+    faq:
+      - q: "Бас стал тише при низком Cutoff frequency."
+        a: "Низкая частота среза убирает верх, и звук становится тише и глуше. Подними Cutoff frequency или Level у VCA-1. Смотри, чтобы звук не хрипел."
+      - q: "Слайд перестал дотягиваться до нот."
+        a: "Slew слишком большой: переход длиннее шага. Опусти его до 100–150 мс/В, и скольжение успеет закончиться до следующей ноты."
+      - q: "Мелодия после Octave звучит слишком высоко. Что не так?"
+        a: "Проверь значение Shift: для баса нужно −2 или ниже. Ещё убедись, что кабель Pitch идёт во вход 1V/octave pitch у VCO, а не в обход Octave."
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — свой бас
+    task: |
+      Собери бас сам, между маркерами «Верстак».
+      1. Мелодия: `CV 1` → `Voltage` у Process, `Glide` → `1V/octave pitch` у Octave, `Pitch` → `1V/octave pitch` у VCO. **Shift** −1 или ниже.
+      2. Голос: `Sawtooth` → `Audio` у VCF, `Lowpass filter` → `Channel` у VCA-1, `Channel` → вход 1 у Audio.
+      3. Огибающая: `Trigger` → `Gate` у ADSR, `Envelope` → `CV` у VCA-1 и `Frequency` у VCF.
+      4. `CV 3` → `Gate` у Process, `CV 2` → `Resonance` у VCF.
+      5. Дай шагам разные ноты, на двух шагах поставь **CV 3** около 10 В. **Resonance** 25–85 %, **Cutoff frequency CV** от 15 %.
+    given: [audio]
+    check: p8-04-bass
+    hints:
+      "cable:1":
+        - "Мелодия не доходит до обработки."
+        - "Какой выход SEQ 3 даёт высоту?"
+        - "`CV 1` у SEQ 3 → `Voltage` у Process."
+      "cable:2":
+        - "Слайда нет, ноты прыгают."
+        - "Какой выход Process скользит при высоком Gate?"
+        - "`Glide` у Process → `1V/octave pitch` у Octave."
+      "cable:3":
+        - "Бас не опущен в нижний регистр."
+        - "Какой выход Octave ведёт к высоте VCO?"
+        - "`Pitch` у Octave → `1V/octave pitch` у VCO."
+      "cable:4":
+        - "Огибающая не знает, когда начинать."
+        - "Какой выход SEQ 3 отдаёт импульсы по шагам?"
+        - "`Trigger` у SEQ 3 → `Gate` у ADSR."
+      "cable:5":
+        - "Пила есть, но фильтр её не слышит."
+        - "Какой выход VCO даёт пилу?"
+        - "`Sawtooth` у VCO → `Audio` у VCF."
+      "cable:6":
+        - "До усилителя звук не доходит."
+        - "Какой выход VCF ведёт дальше?"
+        - "`Lowpass filter` у VCF → `Channel` у VCA-1."
+      "cable:7":
+        - "Нота не затухает или звука нет."
+        - "Что управляет громкостью VCA-1?"
+        - "`Envelope` у ADSR → `CV` у VCA-1."
+      "cable:8":
+        - "Бас не «квакает»."
+        - "Куда ещё подать огибающую, кроме VCA-1?"
+        - "`Envelope` у ADSR → `Frequency` у VCF."
+      "cable:9":
+        - "Слайд включается на всех шагах или ни на одном."
+        - "Какой ряд SEQ 3 решает, где слайд нужен?"
+        - "`CV 3` у SEQ 3 → `Gate` у Process."
+      "cable:10":
+        - "Акцент не слышен."
+        - "Какой ряд SEQ 3 ведёт на резонанс?"
+        - "`CV 2` у SEQ 3 → `Resonance` у VCF."
+      "cable:11":
+        - "Бас собран, а тишина."
+        - "Откуда звук выходит из VCA-1 и куда должен прийти?"
+        - "`Channel` у VCA-1 → `To \"device output 1\"` у Audio."
+      "param:1":
+        - "Темп слишком медленный."
+        - "Ручка Tempo у SEQ 3."
+        - "Подними Tempo хотя бы до 100."
+      "param:2":
+        - "Бас звучит слишком высоко."
+        - "Ручка Shift у Octave."
+        - "Поставь Shift на −1 или ниже."
+      "param:3":
+        - "Резонанс вне рабочего диапазона."
+        - "Ручка Resonance у VCF."
+        - "Поставь Resonance между 25 и 85 %."
+      "param:4":
+        - "Огибающая почти не двигает фильтр."
+        - "Ручка Cutoff frequency CV у VCF."
+        - "Подними Cutoff frequency CV хотя бы до 15 %."
+      "param:5":
+        - "Время слайда вне рабочего диапазона."
+        - "Ручка Slew у Process."
+        - "Поставь Slew между 20 и 400 мс/В."
+      "param:6":
+        - "Басовая нота держится."
+        - "Ручка Sustain у ADSR."
+        - "Поставь Sustain не выше 15 %, лучше в ноль."
+      "probe:1":
+        - "Мелодия стоит на месте."
+        - "Идёт ли секвенсор и разные ли значения у CV 1 step?"
+        - "Выставь у CV 1 step разные значения и нажми «Проверить» ещё раз."
+      "probe:2":
+        - "Огибающая не поднимается."
+        - "Горят ли кнопки триггеров и идёт ли секвенсор?"
+        - "Включи несколько кнопок Step N trigger и нажми «Проверить» ещё раз."
+      "probe:3":
+        - "Слайд не двигает высоту."
+        - "Есть ли шаги с высоким CV 3?"
+        - "Поставь CV 3 step около 10 В хотя бы на двух шагах."
+    faq:
+      - q: "Какую мелодию выбрать?"
+        a: "Любую. Для начала возьми ноты из демо: 0, 0, 1, 0,58, 0,25, 0, 0,83, 0,58 В. Паузы сделай кнопками триггеров на шагах 2 и 6."
+      - q: "Проверка не видит слайд."
+        a: "Glide двигается только на шагах с высоким CV 3 и разными нотами. Поставь CV 3 step около 10 В на двух шагах и убедись, что CV 1 идёт в Voltage."
+      - q: "Можно ли пропустить Octave?"
+        a: "Нет, проверка ждёт Octave в цепочке. К тому же бас без сдвига звучит как лид. Сдвинь мелодию на −1 или ниже."
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Этот бас играет мелодию, но не квакает.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 0 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 0 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 1 step 3: { display: "1" }, CV 1 step 4: { display: "0.58" }, CV 1 step 5: { display: "0.25" }, CV 1 step 7: { display: "0.83" }, CV 1 step 8: { display: "0.58" }, CV 2 step 1: { display: "3" }, CV 2 step 4: { display: "3" }, CV 2 step 7: { display: "3" }, CV 3 step 3: { display: "10" }, CV 3 step 7: { display: "10" } } }
+      - { ref: proc, plugin: Fundamental, slug: Process, params: { Slew: { display: "100" } } }
+      - { ref: oct, plugin: Fundamental, slug: Octave, params: { Shift: { display: "-2" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "400" }, Resonance: { display: "35" }, Cutoff frequency CV: { display: "35" }, Resonance CV: { display: "60" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+    cables:
+      - { from: [seq, CV 1], to: [proc, Voltage] }
+      - { from: [proc, Glide], to: [oct, 1V/octave pitch] }
+      - { from: [oct, Pitch], to: [vco, 1V/octave pitch] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [env, Envelope], to: [vcf, Frequency] }
+      - { from: [seq, CV 3], to: [proc, Gate] }
+      - { from: [seq, CV 2], to: [vcf, Resonance] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    break: { remove_cable: [env, Envelope, vcf, Frequency] }
+    check: { kind: fixed, expect_cable: [env, Envelope, vcf, Frequency] }
+    hints:
+      fixed:
+        - "Громкость бьёт, а тембр не меняется. Что ещё должна двигать огибающая?"
+        - "Проследи выход Envelope у ADSR. Он идёт только в VCA-1."
+        - "Соедини `Envelope` у ADSR с `Frequency` у VCF."
+    faq:
+      - q: "Почему без этого кабеля нет квакания?"
+        a: "Срез фильтра остаётся на месте, и огибающая меняет только громкость. Нота звучит ровным тембром, без движения «вау»."
+      - q: "Как услышать разницу?"
+        a: "Сравни одну и ту же ноту до и после кабеля. С кабелем звук в начале яркий и быстро темнеет, без него тембр не меняется."
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Бас — голос из урока 3.5 с огибающей ещё и на срезе фильтра.
+      - Cutoff frequency CV задаёт глубину огибающей, Resonance — остроту квакания.
+      - Акцент открывает резонанс на выбранных шагах: CV 2 → Resonance.
+      - Слайд скользит на шагах с высоким CV 3: Glide у Process, время — Slew.
+      Сохрани патч как `vcv-8.4.vcv`: он понадобится в части 9.
+      **Источники:** MusicRadar, «Producer's Guide to the Roland TB-303». MusicRadar, «Make an Acid Bassline». Блог Noise Engineering, «Gamut Repetitor Acid Basslines». Omri Cohen, «TB-303 in VCV Rack».
+    questions:
+      - q: "Чем отличаются выходы Slew и Glide у Process?"
+        options:
+          - { text: "Glide скользит при высоком Gate, Slew при низком", correct: true, why: "Для acid-слайда нужен Glide: он скользит только на шагах, где CV 3 высокий." }
+          - { text: "Slew скользит быстрее Glide", why: "Скорость задаёт ручка Slew, а не выбор выхода. Выходы различаются состоянием Gate." }
+          - { text: "Glide работает с аудио, Slew с CV", why: "Оба выхода работают с напряжением мелодии. Различает их Gate." }
+    next: |
+      # Дальше: 8.5
+      **Лид и арпеджио.** Тот же голос сыграет мелодию, а квантизатор подберёт ноты аккорда по очереди.
+    faq:
+      - q: "Что повторить, если бас не квакает?"
+        a: "Проверь кабель Envelope → Frequency у VCF и ручку Cutoff frequency CV. Если она у нуля, огибающая не двигает срез."
+      - q: "Зачем сохранять патч?"
+        a: "В части 9 бас встанет в одну тональность с пэдом. Файл `vcv-8.4.vcv` понадобится как готовый инструмент."

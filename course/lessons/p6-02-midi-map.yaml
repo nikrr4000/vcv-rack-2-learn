@@ -1,0 +1,395 @@
+id: p6-02-midi-map
+num: "6.2"
+part: 6
+title: Ручки контроллера на ручки модулей
+goal: "Привязать ручки MiniLab mkII к голосу двумя способами: напрямую к ручке модуля и через CV на кабеле."
+builds: Живой фильтр, который открывается рукой. Он пригодится в басе и лиде из части 8.
+minutes: 35
+requires: [p6-01-midi-cv]
+glossary: [MIDI CC, привязка, прямое управление ручкой, MIDI-канал]
+sources: [vcv-manual-core, kane-musichackspace]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Ручки контроллера на ручки модулей
+    page: |
+      # 6.2 Ручки контроллера на ручки модулей
+      **Ты научишься:** брать ручку контроллера двумя способами и понимать, чем они различаются.
+      **Ты соберёшь:** голос из урока 6.1, где одна ручка MiniLab крутит **Cutoff frequency** напрямую, а другая меняет резонанс через CV.
+      **Понадобится:** 35 минут, MiniLab mkII и тихая громкость.
+      Контроллера нет? Модули и кабели собрать можно, а проверка не использует MIDI. [[привязка|Привязку]] без ручек не проверить, это делается руками.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: knob, label: Ручка MiniLab, kind: cv }
+        - { id: map, label: MIDI Map, kind: cv }
+        - { id: cut, label: Cutoff frequency, kind: cv }
+        - { id: cc, label: MIDI CC to CV, kind: cv }
+        - { id: res, label: Resonance, kind: cv }
+      edges:
+        - { from: knob, to: map, kind: cv }
+        - { from: map, to: cut, kind: cv }
+        - { from: knob, to: cc, kind: cv }
+        - { from: cc, to: res, kind: cv }
+      caption: "Два пути одной ручки: сверху напрямую к ручке модуля, снизу через CV на кабеле."
+    faq:
+      - q: Зачем две разные ручки, если можно одну?
+        a: Каждая показывает свой способ. Одна крутит ручку модуля без кабеля, вторая даёт CV, который можно подать в любой вход. В практике ты соберёшь оба.
+      - q: Нужно ли знать номера CC у MiniLab?
+        a: Нет, для этого и есть привязка. Модуль сам запоминает, какая ручка двинулась. Номера зависят от пресета контроллера, поэтому заранее их знать не нужно.
+      - q: Что, если контроллера нет?
+        a: Кабели, ручки Resonance CV и модули MIDI Map и MIDI CC to CV ты поставишь без него. Проверка этого урока MIDI не читает. Привязывать ручки можно только с контроллером.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы подскажут, что повторить.
+    questions:
+      - q: Чем MIDI Map отличается от MIDI CC to CV?
+        free: true
+        options:
+          - { text: "Map крутит ручку без кабеля, CC to CV даёт CV на кабель", correct: true, why: "Первый двигает ручку на панели, второй выдаёт напряжение, которое идёт в любой вход." }
+          - { text: "Map для нот, CC to CV для ручек", why: "Ноты берёт MIDI to CV. Оба модуля здесь работают с ручками контроллера." }
+          - { text: "Это одно и то же", why: "Модули Core решают разные задачи. Один без портов, у другого шестнадцать выходов." }
+      - q: Как привязать ручку контроллера к ручке модуля в MIDI Map?
+        options:
+          - { text: "Выбрать ячейку, покрутить ручку контроллера, щёлкнуть по ручке модуля", correct: true, why: "Модуль запоминает движение и подписывает ячейку именем ручки, на которую ты щёлкнул." }
+          - { text: "Провести кабель от MIDI Map к модулю", why: "У MIDI Map нет портов. Он работает только через привязку на панели." }
+          - { text: "Ввести номер CC в таблицу", why: "Номер вводить не нужно: модуль услышит его сам, когда ты покрутишь ручку." }
+      - q: Cell 1 привязан и подключён к Resonance, но резонанс не меняется. Что проверить?
+        options:
+          - { text: "Ручку Resonance CV у VCF: на нуле CV не действует", correct: true, why: "Эта ручка задаёт, сколько CV доходит до резонанса. На нуле входной сигнал не влияет." }
+          - { text: "MIDI-канал клавиатуры", why: "Клавиши и ручки идут по разным путям. Проблема не в канале нот." }
+          - { text: "Level у Audio", why: "Громкость не связана с тем, доходит ли CV до резонанса." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Ручка шлёт число
+    page: |
+      # Ручка шлёт число
+      Когда ты крутишь ручку контроллера, он отправляет сообщение [[MIDI CC]]: «номер контроллера» и «значение» от 0 до 127.
+      У каждой ручки свой номер. Какой именно, зависит от пресета контроллера. Сообщения идут по одному из 16 [[MIDI-канал|MIDI-каналов]].
+      Чтобы Rack понял, какая ручка что делает, её нужно [[привязка|привязать]]. Модуль слушает, какой номер двинулся, и запоминает его.
+    page2: |
+      Привязать можно двумя способами.
+      Первый: к ручке модуля. Тогда ручка крутится сама — это [[прямое управление ручкой]], его делает **MIDI Map**.
+      Второй: к CV-выходу. Тогда сигнал идёт по кабелю куда угодно, его делает **MIDI CC to CV**.
+    simpler: Ручка контроллера — как пульт. Можно записать его кнопку на конкретную лампу (MIDI Map). Можно подключить пульт к розетке, а лампу взять любую (MIDI CC to CV).
+    faq:
+      - q: Что значит «значение 0…127»?
+        a: "Это положение ручки: крайнее левое даёт 0, крайнее правое — 127. Rack потом переводит число в положение ручки модуля или в напряжение."
+      - q: Почему в Rack нужно привязывать, а не выбрать ручку из списка?
+        a: Номера CC у разных пресетов и контроллеров разные. Привязка запоминает номер по факту, и тебе не нужно искать его в инструкции.
+      - q: Если сменить пресет на контроллере, привязка сломается?
+        a: Может. Номера CC поменяются, и модуль не узнает ручку. Тогда повтори привязку заново.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Когда что брать
+    page: |
+      # Когда что брать
+      **MIDI Map** подходит, когда нужна ручка на ручку: контроллер крутит Cutoff frequency, и панель модуля двигается вместе с ним.
+      **MIDI CC to CV** подходит, когда нужен сигнал на кабеле. Его можно ослабить, сложить с другим CV или подать сразу в несколько мест.
+      В этом уроке будут оба: Cutoff frequency через MIDI Map, Resonance через Cell 1.
+    figure: { template: table, rows: [["", "MIDI Map", "MIDI CC to CV"], ["Кабель", "не нужен", "нужен"], ["Что делает", "крутит ручку", "выдаёт CV"], ["Куда", "одна ручка", "любой вход"]], caption: "Два способа привязки в одной таблице." }
+    faq:
+      - q: Можно ли привязать одну ручку и к Map, и к CC to CV?
+        a: Можно, обе привязки сработают. Но ручка контроллера тогда будет двигать и ручку модуля, и CV сразу. Обычно хватает одного способа.
+      - q: Как ослабить CV от ячейки?
+        a: Через ручку CV на самом входе, как Resonance CV у VCF. Или поставь на пути модуль Rescale, он сузит диапазон 0…10 В.
+      - q: Какой способ проще?
+        a: MIDI Map проще, когда нужна одна ручка. MIDI CC to CV удобнее, когда ту же ручку надо отправить в разные места.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Ручка на ручку
+    page: |
+      # Ручка на ручку
+      Это голос из урока 6.1 и модуль **MIDI Map**. Кабеля к нему нет: он двигает ручки напрямую.
+      Выбери на MIDI Map и MIDI to CV [[драйвер и устройство MIDI|драйвер и устройство]], потом канал. Сыграй ноту.
+      Привяжи ручку: щёлкни по ячейке, покрути ручку MiniLab, щёлкни по **Cutoff frequency** у VCF.
+      Контроллера нет? Крути **Cutoff frequency** мышью: слышно то же самое, привязка только заменяет мышь.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: map, plugin: Core, slug: MIDI-Map }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "800" }, Resonance: { display: "10" }, Resonance CV: { display: "60" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "70" }, Release: { display: "400" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: map, text: "Ячейки привязки здесь. Портов у модуля нет, кабель к нему не нужен." }
+      - { after: vcf, text: "**Cutoff frequency** — ручка, на которую ты привязываешь контроллер.", targets: [{ module: vcf, param: Cutoff frequency }] }
+    faq:
+      - q: Покрутил ручку MiniLab, а Cutoff frequency не двигается. Что не так?
+        a: "Скорее всего, ячейка в MIDI Map пуста или привязана к другой ручке. Повтори по порядку: ячейка, ручка контроллера, ручка модуля. Проверь и устройство в меню."
+      - q: Cutoff frequency прыгнул сразу, как только я тронул ручку. Это нормально?
+        a: Да. В абсолютном режиме ручка модуля сразу встаёт в положение ручки контроллера. Чтобы прыжок был меньше, поставь обе ручки в похожие положения.
+      - q: Какую ручку контроллера выбрать?
+        a: Любую. Модуль запоминает ту, которой ты шевельнул после щелчка по ячейке. Номер CC знать не нужно.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Ручка через CV
+    page: |
+      # Ручка через CV
+      Тот же голос, но теперь с модулем **MIDI CC to CV**. Выход **Cell 1** уже идёт в **Resonance** у VCF.
+      Выбери на модуле драйвер, устройство и канал. Щёлкни по ячейке **Cell 1** и покрути другую ручку MiniLab.
+      Пока ручка не двигалась, выход может стоять на 0 В.
+      Контроллера нет? Крути **Resonance** мышью: Cell 1 без привязки молчит.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: cc, plugin: Core, slug: MIDICCToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "800" }, Resonance: { display: "10" }, Resonance CV: { display: "60" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "70" }, Release: { display: "400" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [cc, Cell 1], to: [vcf, Resonance] }
+    notes:
+      - { after: cc, text: "**Cell 1** — CV от привязанной ручки, он идёт в **Resonance**.", targets: [{ module: cc, output: Cell 1 }] }
+      - { after: vcf, text: "**Resonance CV** задаёт, сколько CV доходит до резонанса. На 0 ручка контроллера не слышна.", targets: [{ module: vcf, input: Resonance }, { module: vcf, param: Resonance CV }] }
+    faq:
+      - q: Привязал Cell 1, а резонанс не меняется. Почему?
+        a: Посмотри на ручку Resonance CV у VCF. Если она на нуле, CV до резонанса не доходит. В демо она стоит на 60 %.
+      - q: Чем это отличается от предыдущего блока на слух?
+        a: "Там двигалась ручка Cutoff frequency, здесь меняется Resonance. Разница в пути: прежде без кабеля, теперь через кабель Cell 1."
+      - q: Без контроллера что делать в этом блоке?
+        a: Крути Resonance и Resonance CV мышью. Привязка Cell 1 возможна только с контроллером.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель MIDI Map
+    page: |
+      # Панель MIDI Map
+      У модуля нет ни ручек, ни портов. Он весь состоит из меню и ряда ячеек.
+    module: { ref: map, plugin: Core, slug: MIDI-Map }
+    notes:
+      - { text: "**Верх панели** — драйвер, устройство и канал, как у MIDI to CV из урока 6.1." }
+      - { text: "**Ячейки** — каждая хранит одну привязку. Пустая ячейка называется «Unmapped»." }
+      - { text: "**Как привязать:** щёлкни по ячейке, покрути ручку контроллера, потом щёлкни по ручке на панели другого модуля. Ячейка получит её имя." }
+      - { text: "**Режим приёма** — в контекстном меню. Абсолютный подходит потенциометрам, относительный — бесконечным энкодерам." }
+    later:
+      - { what: "Привязка ручек к ударным и эффектам", lesson: "8.6" }
+    faq:
+      - q: Можно ли подключить кабель к MIDI Map?
+        a: Нет, у него нет портов. Он работает только через привязку на панели, поэтому проверить его можно только вращением ручки.
+      - q: Как узнать, что ячейка привязана?
+        a: Её название меняется на имя ручки, на которую ты щёлкнул. Пустая ячейка подписана «Unmapped». Если имя не изменилось, повтори шаги.
+      - q: Какие ручки MiniLab работают как энкодеры?
+        a: Это зависит от пресета контроллера. Пока не проверено на твоей модели. Если ручка ведёт себя странно, смени режим приёма в контекстном меню.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Панель MIDI CC to CV
+    page: |
+      # Панель MIDI CC to CV
+      Сетка ячеек 4 на 4 и шестнадцать выходов. Каждой ячейке соответствует свой выход.
+    module: { ref: cc, plugin: Core, slug: MIDICCToCVInterface }
+    notes:
+      - { text: "**Верх панели** — драйвер, устройство и канал, как у остальных MIDI-модулей." }
+      - { text: "**Ячейки** привязываются так же: щёлкни по ячейке и покрути ручку контроллера." }
+      - { text: "**Cell 1 … Cell 4** — первая строка. Cell 5 … Cell 16 идут дальше. Всего по выходу на каждую ручку.", targets: [{ module: cc, output: Cell 1 }, { module: cc, output: Cell 2 }, { module: cc, output: Cell 3 }, { module: cc, output: Cell 4 }] }
+      - { text: "**Диапазон 0…10 В:** крайнее левое положение ручки — 0 В, крайнее правое — 10 В.", targets: [{ module: cc, output: Cell 16 }] }
+      - { text: "**Smooth** в контекстном меню сглаживает скачки при быстром вращении." }
+    faq:
+      - q: Ячейка привязана, а выход стоит на нуле. Почему?
+        a: Пока ручка не двигалась, выход может быть на 0 В. Покрути ручку один раз, и напряжение появится. Если нет, проверь устройство и канал.
+      - q: 10 В — это много для входа Resonance?
+        a: Да, диапазон большой. Ручка Resonance CV у VCF уменьшает его, поэтому в демо она стоит на 60 %. Можно ещё поставить на пути Rescale.
+      - q: Почему Cell 1 не мешает Map, если ручка одна?
+        a: Это разные ручки контроллера. Если привязать одну ручку и к Map, и к ячейке, оба способа будут слушать её вместе.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Держи ноту и крути ручку, привязанную к **Cell 1**."
+        see: Звук окрашивается, на Scope виден пик на каждом периоде.
+      - do: "Поставь **Resonance CV** на 0."
+        see: Ручка контроллера двигается, а звук не меняется.
+      - do: "Поставь **Resonance CV** на минус 60."
+        see: Ручка действует в обратную сторону.
+      - do: "Верни **Resonance CV** на 60. Крути **Cutoff frequency** мышью или привязанной ручкой."
+        see: Звук идёт от тёмного к яркому, на Scope пила становится острее.
+      - do: "Подай **Mod wheel** из MIDI to CV в **Frequency** у VCF и подними **Cutoff frequency CV** до 50 %."
+        see: Сенсорная полоса открывает фильтр. Потом убери кабель.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: cc, plugin: Core, slug: MIDICCToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "800" }, Resonance: { display: "10" }, Resonance CV: { display: "60" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "70" }, Release: { display: "400" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [cc, Cell 1], to: [vcf, Resonance] }
+      - { from: [vca, Channel], to: [scope, Ch 1] }
+    notes:
+      - { after: vcf, text: "Шаги 2 и 3 — эта ручка.", targets: [{ module: vcf, param: Resonance CV }] }
+    faq:
+      - q: Нет контроллера. Что из шагов можно сделать?
+        a: Шаги 2–4 мышью. Но без привязанной ручки Cell 1 стоит на нуле, поэтому влияние Resonance CV не слышно. Привязка требует контроллера.
+      - q: Почему на минус 60 действие меняет направление?
+        a: Отрицательное значение Resonance CV инвертирует CV. Когда ручка контроллера растёт, резонанс уменьшается.
+      - q: После шага 5 фильтр остался открытым. Что вернуть?
+        a: Убери кабель Mod wheel и поставь Cutoff frequency CV на 0. Cutoff frequency снова будет зависеть только от своей ручки.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — настрой MiniLab на голос
+    task: |
+      Собери голос из урока 6.1 и добавь двух слушателей, между маркерами «Верстак».
+      1. Голос: `1V/octave pitch` → `1V/octave pitch` у VCO, `Gate` → `Gate` у ADSR, путь звука до первого входа Audio.
+      2. Добавь **MIDI Map**: привяжи ручку контроллера к **Cutoff frequency** у VCF.
+      3. Добавь **MIDI CC to CV**: привяжи другую ручку к Cell 1 и подключи `Cell 1` → `Resonance` у VCF.
+      4. Подними **Resonance CV** хотя бы до 30 % и нажми «Проверить».
+    given: [audio]
+    check: p6-02-midi-map
+    hints:
+      "cable:1":
+        - Клавиши играют, а голос стоит на одной ноте.
+        - Какой выход MIDI to CV несёт высоту и куда её подать?
+        - "`1V/octave pitch` у MIDI to CV → вход `1V/octave pitch` у VCO."
+      "cable:2":
+        - Огибающая не знает, когда нажата клавиша.
+        - Какой выход MIDI to CV даёт гейт?
+        - "`Gate` у MIDI to CV → вход `Gate` у ADSR."
+      "cable:3":
+        - Пила есть, но фильтр её не слышит.
+        - Какой выход VCO даёт пилу и какой вход у VCF принимает звук?
+        - "`Sawtooth` у VCO → вход `Audio` у VCF."
+      "cable:4":
+        - Фильтр стоит, но звук до VCA не доходит.
+        - Какой выход VCF ведёт дальше по пути звука?
+        - "`Lowpass filter` у VCF → вход `Channel` у VCA."
+      "cable:5":
+        - Звук есть всегда или его нет совсем.
+        - Что управляет громкостью VCA?
+        - "`Envelope` у ADSR → вход `CV` у VCA."
+      "cable:6":
+        - Голос собран, а тишина.
+        - Откуда звук выходит из VCA и куда должен прийти?
+        - "Выход `Channel` у VCA → `To \"device output 1\"` у Audio этого ряда."
+      "cable:7":
+        - Ручка контроллера не доходит до резонанса.
+        - Какой выход MIDI CC to CV соответствует привязанной ячейке?
+        - "`Cell 1` у MIDI CC to CV → вход `Resonance` у VCF."
+      "param:1":
+        - Кабель есть, а резонанс не меняется.
+        - Посмотри на ручку Resonance CV у VCF, она задаёт долю CV.
+        - Подними Resonance CV до 50–100 %.
+      "module:map":
+        - В патче нет модуля, который крутит ручку без кабеля.
+        - Он лежит в плагине Core и не имеет портов.
+        - "Добавь MIDI Map. Саму привязку проверь руками: покрути ручку контроллера и смотри на Cutoff frequency."
+      "module:cc":
+        - Для CV на кабеле нужен ещё один модуль.
+        - Он лежит в плагине Core и даёт выходы Cell.
+        - Добавь MIDI CC to CV и привяжи ячейку Cell 1.
+    faq:
+      - q: Проверка прошла, но Cutoff frequency не двигается от контроллера. Почему?
+        a: "Проверка не видит привязку: у MIDI Map нет портов. Покрути ручку и смотри на Cutoff frequency. Если стоит на месте, повтори привязку."
+      - q: Нужно ли подключать MIDI Map кабелем?
+        a: Нет. У него нет ни входов, ни выходов. Всё настраивается привязкой на панели.
+      - q: Можно ли привязать Resonance через MIDI Map вместо Cell 1?
+        a: Можно, но для проверки нужен кабель Cell 1 → Resonance. Здесь цель — освоить оба способа.
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Ручка контроллера двигается, Cell 1 даёт напряжение, а резонанс на слух не меняется.
+      Найди одну ошибку и исправь её.
+    modules:
+      - { ref: midi, plugin: Core, slug: MIDIToCVInterface }
+      - { ref: cc, plugin: Core, slug: MIDICCToCVInterface }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "800" }, Resonance: { display: "10" }, Resonance CV: { display: "60" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "70" }, Release: { display: "400" } } }
+    cables:
+      - { from: [midi, 1V/octave pitch], to: [vco, 1V/octave pitch] }
+      - { from: [midi, Gate], to: [env, Gate] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [cc, Cell 1], to: [vcf, Resonance] }
+    break: { set_param: { module: vcf, name: Resonance CV, display: "0" } }
+    check: { kind: fixed, expect_param: { module: vcf, name: Resonance CV, display_min: 30 } }
+    hints:
+      fixed:
+        - Кабель на месте, но звук не откликается. Что решает, сколько CV доходит до резонанса?
+        - Посмотри на ручку Resonance CV у VCF.
+        - Подними Resonance CV до 30 % или выше.
+    faq:
+      - q: Как понять, что вход есть, а ручка закрыла его?
+        a: Cell 1 меняется, когда крутишь ручку контроллера, а звук нет. Значит, CV доходит до VCF, но ручка Resonance CV не пускает его дальше.
+      - q: На Scope исчез пик на каждом периоде. Это тот же признак?
+        a: Да. Пик появлялся от резонанса. Когда CV до резонанса не доходит, пик пропадает.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Ручка контроллера шлёт **MIDI CC** — номер и значение от 0 до 127.
+      - **MIDI Map** крутит ручку модуля напрямую, без кабеля.
+      - **MIDI CC to CV** даёт CV 0…10 В на выходах Cell, их можно подать в любой вход.
+      - **Resonance CV** задаёт, сколько CV доходит до резонанса.
+      Сохрани патч: следующий урок продолжит с ним.
+      **Источники:** Core Modules, руководство VCV Rack; Phelan Kane, «Getting Started With VCV Rack 2» (Music Hackspace).
+    questions:
+      - q: В чём разница между MIDI Map и MIDI CC to CV?
+        options:
+          - { text: "Map крутит ручку без кабеля, CC to CV даёт CV для кабеля", correct: true, why: "Первый двигает ручку модуля, второй выдаёт напряжение, которое ты подаёшь куда угодно." }
+          - { text: "Map даёт ноты, CC to CV даёт ручки", why: "Ноты даёт MIDI to CV. Оба модуля здесь работают только с ручками." }
+          - { text: "Разницы нет", why: "Разница есть: у MIDI Map нет портов, у MIDI CC to CV шестнадцать выходов." }
+      - q: Что делает ручка Resonance CV и почему на нуле Cell 1 ничего не меняет?
+        options:
+          - { text: "Задаёт долю CV, и на нуле до резонанса ничего не доходит", correct: true, why: "Ручка работает как регулятор глубины: 0 — CV отрезан, 100 % — доходит весь." }
+          - { text: "Задаёт саму частоту резонанса", why: "Частота резонанса — это Cutoff frequency. Resonance CV только регулирует вход." }
+          - { text: "Меняет номер CC у ячейки", why: "Номер хранится в ячейке. Ручка на VCF его не трогает." }
+    next: |
+      # Дальше: 6.3
+      **Пэды как триггеры.** Восемь пэдов MiniLab запустят огибающие и сыграют ударные.
+    faq:
+      - q: Почему привязку нельзя проверить кабелем?
+        a: "У MIDI Map нет портов, а номер CC хранится внутри ячейки. Проверять приходится вращением ручки: она либо двигает ручку модуля, либо нет."
+      - q: Что повторить, если привязка не получается?
+        a: "Урок 6.1: выбор драйвера, устройства и канала на модуле. Если устройство не выбрано, ни один MIDI-модуль ничего не получит."

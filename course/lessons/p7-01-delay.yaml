@@ -1,0 +1,308 @@
+id: p7-01-delay
+num: "7.1"
+part: 7
+title: Задержка
+goal: Поставить Delay за голосом так, чтобы эхо шло точно в такт клоку, и настроить число повторов, их тембр и долю эха.
+builds: Эхо оживит лид из части 8 и пригодится при сборке трека в части 9.
+minutes: 30
+requires: [p5-01-clock-tempo]
+glossary: [задержка, обратная связь, сухой и мокрый сигнал, синхронизация с тактом]
+sources: [vcv-free-manual, sos-modular-effects]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Задержка
+    page: |
+      # 7.1 Задержка
+      **Ты научишься:** ставить [[задержка|задержку]] за голосом, регулировать число повторов и вести эхо в такт.
+      **Ты соберёшь:** щипок из VCO, ADSR и VCA, а за ним Delay, который слушает клок из Clocked.
+      **Понадобится:** 30 минут и урок 5.1 про такт и темп. Перед первым звуком убавь громкость.
+      Это первая из двух «пространственных» частей будущего трека.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: voice, label: Голос, kind: audio }
+        - { id: delay, label: Delay, kind: audio }
+        - { id: out, label: Audio, kind: audio }
+        - { id: clk, label: Clocked, kind: gate }
+      edges:
+        - { from: voice, to: delay, kind: audio }
+        - { from: delay, to: out, kind: audio }
+        - { from: clk, to: delay, kind: gate }
+      caption: Звук идёт через Delay в Audio, а клок говорит Delay, как часто повторять.
+    faq:
+      - q: Зачем мне Delay, если есть реверберация?
+        a: Задержка даёт отдельные чёткие повторы, реверберация — размытый хвост. Повторы в такт делают ритм богаче, и этим пользуются в лиде и в басе.
+      - q: Какие модули нужны для урока?
+        a: Голос из VCO, ADSR и VCA, источник такта Clocked и сам Delay. В демо всё уже собрано, а в практике ты поставишь Delay за своим голосом.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про эхо. Ответы покажут, что стоит запомнить.
+    questions:
+      - q: Что делает ручка Feedback у Delay?
+        free: true
+        options:
+          - { text: "Возвращает часть эха на вход, и повторы идут серией", correct: true, why: "Каждая копия отправляет часть себя на вход, поэтому за одним повтором идёт следующий, тише предыдущего." }
+          - { text: "Удлиняет время задержки", why: "Время задаёт Time. Feedback решает, сколько повторов получится, а не как далеко они стоят." }
+          - { text: "Делает исходный звук громче", why: "Исходный звук обратная связь не трогает. Она работает только с эхом." }
+      - q: Что меняется, когда в вход Clock подключён кабель?
+        options:
+          - { text: "Time множит или делит такт, и эхо идёт в темпе", correct: true, why: "Время повтора вычисляется из частоты клока, поэтому при смене темпа эхо идёт за ним." }
+          - { text: "Ничего, Time остаётся в секундах", why: "Без клока Time в секундах. С кабелем в Clock ручка работает иначе." }
+          - { text: "Clock заменяет вход Audio", why: "Audio — звук, который задерживаем. Clock — только счёт времени, звук через него не идёт." }
+      - q: Mix стоит на 0 %. Что на выходе Mix?
+        options:
+          - { text: "Только исходный звук, эха нет", correct: true, why: "Mix — баланс между сухим и мокрым. На 0 % слышен один сухой звук." }
+          - { text: "Только эхо", why: "Только эхо будет на 100 %. На 0 % оно полностью убрано." }
+          - { text: "Тишина", why: "Mix не общая громкость. Это баланс сухого и мокрого, сухой звук остаётся." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Копия, которая опаздывает
+    page: |
+      # Копия, которая опаздывает
+      Эхо — копия звука, которая приходит позже оригинала. Два числа определяют всё.
+      Первое — время: через сколько приходит копия. Второе — [[обратная связь]]: какая доля копии возвращается на вход и рождает следующую.
+      При обратной связи 50 % каждый повтор вдвое тише предыдущего. При 100 % повторы почти не затихают.
+      Исходный звук без эффекта — [[сухой и мокрый сигнал|сухой]], повторы — **мокрые**. Вместе их мешает ручка **Mix**.
+    figure: { template: steps, values: [10, 5, 2.5, 1.25, 0.6, 0.3], gates: [1, 1, 1, 1, 1, 1], caption: "Исходный звук и повторы при Feedback 50 %. Высота столбика — громкость." }
+    simpler: Крикни в ущелье. Ты слышишь свой голос снова, но тише. Гора вернула часть звука, и так несколько раз подряд. Feedback — это насколько гора возвращает.
+    faq:
+      - q: Чем эхо отличается от второго такого же звука?
+        a: Эхо приходит позже и тише, а его громкость падает с каждым повтором. Второй звук с тем же временем и уровнем не затихал бы.
+      - q: Почему при Feedback 100 % эхо не кончается?
+        a: Каждый повтор возвращает на вход всю свою громкость, и ничто не убывает. Поэтому для живого звука держат Feedback заметно ниже 100 %.
+      - q: Сухой и мокрый — это два звука на двух выходах?
+        a: "У Delay да: выход Mix даёт смесь, выход Wet — один эффект. На ручке Mix ты выбираешь, сколько мокрого добавить к сухому."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Эхо в такт
+    page: |
+      # Эхо в такт
+      На 120 BPM четверть длится 0,5 с. Эхо с временем 0,5 с попадает ровно на следующую долю.
+      Подбирать секунды на слух неудобно, и при смене темпа всё съедет.
+      Поэтому у Delay есть вход **Clock**. Подключи туда [[такт|клок]], и ручка **Time** перестанет быть секундами: она множит или делит частоту клока.
+      Так работает [[синхронизация с тактом]]. Темп поменялся — эхо пошло за ним само.
+    figure: { template: clock, bpm: 120, divisions: [1, 2], bars: 2, caption: "Клок 120 BPM и его деление. Повтор на следующей доле совпадает с ударом клока." }
+    simpler: Танцуешь под метроном. Хлопок через секунду после ноты не попадёт в ритм, если метроном ускорился. Clock делает так, что хлопок сам идёт за метрономом.
+    faq:
+      - q: Что показывает ручка Time, когда подключён клок?
+        a: "Я не стану угадывать число. Подключи кабель, поверни Time и посмотри на дисплей: там уже не секунды. Ручка выбирает долю или кратное от такта."
+      - q: Можно ли держать Clock подключённым и всё равно задать секунды?
+        a: Нет. С кабелем в Clock время берётся из такта. Чтобы вернуть секунды, выдерни кабель.
+      - q: Откуда взять клок?
+        a: В этом уроке клок даёт Clocked. Выход Clock 1 уже идёт в ADSR, и тот же выход подключаешь в Clock у Delay.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Щипок и эхо
+    page: |
+      # Щипок и эхо
+      Clocked бьёт каждую долю и запускает короткую ноту. За ней стоит Delay.
+      Кабеля в **Clock** пока нет, поэтому **Time** задаёт секунды: 0,37 с. Эхо ложится между долями.
+      Поверни **Feedback** от 40 к 70 %: повторов больше. К нулю: остаётся один.
+    modules:
+      - { ref: clk, plugin: ImpromptuModular, slug: Clocked }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "150" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: delay, plugin: Fundamental, slug: Delay, params: { Time: { display: "0.37" }, Feedback: { display: "40" }, Tone: { display: "0" }, Mix: { display: "40" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Triangle], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [delay, Audio] }
+      - { from: [delay, Mix], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: clk, text: "**Clock 1** даёт гейт каждую долю.", targets: [{ module: clk, output: Clock 1 }] }
+      - { after: delay, text: "**Feedback** — сколько эха возвращается. Крути от 40 к 70 %.", targets: [{ module: delay, param: Feedback }] }
+      - { after: delay, text: "**Mix** — баланс сухого и эха.", targets: [{ module: delay, param: Mix }] }
+    faq:
+      - q: Почему звук щёлкает и обрывается?
+        a: "Нота короткая: Sustain у ADSR стоит на 0, и звук затихает сразу после атаки и спада. Это щипок, он нужен, чтобы эхо было слышно отдельно."
+      - q: Я не слышу эха. Что проверить?
+        a: "Посмотри на Mix у Delay: на 0 % эха нет. Подними его до 40 % и проверь кабель из VCA в Audio у Delay."
+      - q: Почему повторы не совпадают с ударами?
+        a: В Clock нет кабеля, и Time стоит на 0,37 с, а доля длится 0,5 с. В следующем блоке ты подключишь клок и это исправишь.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: Панель Delay
+    page: |
+      # Панель Delay
+      Обойдём главные органы управления.
+      Ручки CV и вход **Time** с `1V/oct` пока оставим.
+    module: { ref: delay, plugin: Fundamental, slug: Delay }
+    notes:
+      - { text: "Вход **Audio** — что задерживаем. **Mix** — сухое плюс эхо, **Wet** — одно эхо.", targets: [{ module: delay, input: Audio }, { module: delay, output: Mix }, { module: delay, output: Wet }] }
+      - { text: "**Time** — пауза от 1 мс до 10 с. Шкала экспоненциальная: середина ручки — 0,1 с.", targets: [{ module: delay, param: Time }] }
+      - { text: "**Feedback** — доля эха, возвращённая на вход: от 0 до 100 %.", targets: [{ module: delay, param: Feedback }] }
+      - { text: "**Tone** — фильтр на эхе. Влево повторы темнеют, вправо тончают, ноль — без фильтра.", targets: [{ module: delay, param: Tone }] }
+      - { text: "**Mix**: 0 % — только сухой звук, 100 % — только эхо.", targets: [{ module: delay, param: Mix }] }
+      - { text: "**Clock** — вход такта. С кабелем Time работает от клока, без кабеля — в секундах.", targets: [{ module: delay, input: Clock }] }
+    later:
+      - { what: "Входы CV и аттенюверторы Time CV, Feedback CV, Tone CV, Mix CV", lesson: "8.5" }
+    faq:
+      - q: Чем выход Mix отличается от Wet?
+        a: Mix отдаёт сухой звук с эхом в пропорции ручки Mix. Wet — только эхо, без исходника. Для обычной задержки бери Mix.
+      - q: Что делает Tone?
+        a: Это фильтр, но только на эхо. Влево повторы темнеют с каждым кругом, вправо становятся тоньше. Исходный звук остаётся прежним.
+      - q: Что значит экспоненциальная шкала Time?
+        a: Ручка равномерно проходит по октавам времени, а не по секундам. Поэтому середина — 0,1 с, а не 5 с. Малые времена получают много места на ручке.
+
+  - id: b7
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Подними **Feedback** с 0 до 80 %."
+        see: "Повторов становится больше, каждый тише предыдущего. Выше 90 % эхо перестанет гаснуть."
+      - do: "Двигай **Tone** от −100 % до +100 %."
+        see: "Слева повторы глуше, справа тоньше и звонче. Сравни их по ходу."
+      - do: "Двигай **Mix** от 0 до 100 %."
+        see: "Звук идёт от сухого к одному эху. Выход Wet на Scope остаётся эхом."
+      - do: "Подключи **Clock 1** у Clocked в **Clock** у Delay, затем двигай **Time**."
+        see: "Найди положение, где повтор совпадает с ударом клока."
+      - do: "Поставь **Master clock** на 90, затем на 140 BPM."
+        see: "Эхо идёт за клоком само, Time трогать не надо."
+    modules:
+      - { ref: clk, plugin: ImpromptuModular, slug: Clocked }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "150" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: delay, plugin: Fundamental, slug: Delay, params: { Time: { display: "0.37" }, Feedback: { display: "40" }, Tone: { display: "0" }, Mix: { display: "40" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Triangle], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [delay, Audio] }
+      - { from: [delay, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [scope, Ch 1] }
+      - { from: [delay, Wet], to: [scope, Ch 2] }
+    notes:
+      - { after: scope, text: "**Ch 1** — щипок, **Ch 2** — одно эхо.", targets: [{ module: scope, input: Ch 1 }, { module: scope, input: Ch 2 }] }
+    faq:
+      - q: Я подключил Clock, но не слышу разницы.
+        a: Поверни Time. С кабелем эта ручка выбирает долю такта, и звук меняется скачками, а не плавно. Если эха нет совсем, проверь Mix.
+      - q: Эхо стало громче и забило ноту. Что сделать?
+        a: Убавь Feedback или Mix. Много повторов на высоком Mix складываются с сухим звуком и мешают ему.
+
+  - id: b8
+    type: practice
+    preset: practice
+    title: Практика — эхо в такт
+    task: |
+      Поставь Delay за голосом так, чтобы эхо шло в такт Clocked.
+      1. На верстак: **VCO**, **ADSR**, **VCA-1**, **Clocked** и **Delay**.
+      2. Голос: VCO → VCA-1, `Envelope` → `CV` у VCA-1, `Clock 1` → `Gate` у ADSR.
+      3. Эффект: выход `Channel` у VCA-1 → `Audio` у Delay, `Clock 1` → `Clock` у Delay.
+      4. Выход `Mix` у Delay → вход 1 у Audio.
+      5. **Feedback** не выше 80 %, **Mix** от 20 до 80 %. Нажми «Проверить».
+    given: [audio]
+    check: p7-01-delay
+    hints:
+      "cable:1":
+        - Задержке нечего повторять.
+        - Откуда выходит звук голоса, и какой вход у Delay принимает звук?
+        - "Выход `Channel` у VCA-1 → вход `Audio` у Delay."
+      "cable:2":
+        - Эхо идёт само по себе, не в такт.
+        - Есть ли кабель в Clock, и не попал ли он в Time?
+        - "`Clock 1` у Clocked → вход `Clock` у Delay, не в `Time`."
+      "cable:3":
+        - Эффект собран, а в Audio пусто.
+        - С какого выхода Delay брать смесь сухого и эха?
+        - "Выход `Mix` у Delay → вход 1 у Audio."
+      "param:1":
+        - Повторы почти не гаснут.
+        - Посмотри на Feedback у Delay.
+        - Поставь Feedback на 80 % или ниже.
+      "param:2":
+        - Эха почти нет, или пропал сухой звук.
+        - Посмотри на положение Mix.
+        - Поставь Mix между 20 и 80 %.
+      "probe:1":
+        - На выходе Mix нет сигнала.
+        - "Играет ли голос: идёт ли клок и дошёл ли звук до входа Audio?"
+        - Запусти Clocked и проверь кабель из VCA-1 в Audio у Delay.
+    faq:
+      - q: Можно ли взять голос из урока 3.5?
+        a: Можно. Главное, чтобы голос играл от гейта, а его выход был подключён в Audio у Delay. Здесь проще взять VCO, ADSR и VCA-1 с Clocked.
+      - q: Проверка говорит, что на Mix нет сигнала, а я слышу звук.
+        a: Скорее всего, звук идёт мимо Delay, например напрямую из VCA в Audio. Убедись, что именно выход Mix у Delay подключён к Audio.
+      - q: Нужно ли подключать Scope?
+        a: Не нужно, но полезно. Подай выход Wet в Scope и смотри, попадают ли повторы на удары клока.
+
+  - id: b9
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Эхо стоит на месте: смени **Master clock** у Clocked, а повторы не следуют за темпом.
+      Найди одну ошибку и исправь её.
+    modules:
+      - { ref: clk, plugin: ImpromptuModular, slug: Clocked }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "150" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: delay, plugin: Fundamental, slug: Delay, params: { Feedback: { display: "40" }, Tone: { display: "0" }, Mix: { display: "40" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Triangle], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [delay, Audio] }
+      - { from: [delay, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [clk, Clock 1], to: [delay, Clock] }
+    notes:
+      - { after: delay, text: "Здесь что-то не так.", targets: [{ module: delay, input: Clock }] }
+    break: { remove_cable: [clk, Clock 1, delay, Clock] }
+    check: { kind: fixed, expect_cable: [clk, Clock 1, delay, Clock] }
+    hints:
+      fixed:
+        - Что говорит Delay, как часто повторять, когда темп меняется?
+        - Посмотри на вход Clock у Delay.
+        - "Соедини `Clock 1` у Clocked со входом `Clock` у Delay."
+    faq:
+      - q: Почему без кабеля Clock эхо не меняется со сменой темпа?
+        a: Без клока время задаёт ручка Time в секундах. Секунды не зависят от Master clock, поэтому смена темпа ничего не меняет.
+
+  - id: b10
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - **Delay** возвращает копию звука позже оригинала. Время и обратная связь определяют всё.
+      - **Feedback** делает из одного повтора серию. Выше 90 % она почти не гаснет.
+      - **Mix** смешивает сухой звук с эхом. Выход **Wet** отдаёт одно эхо.
+      - Кабель в **Clock** привязывает эхо к такту. Темп поменялся, эхо пошло за ним.
+      Сохрани патч как `vcv-7.1.vcv`.
+      **Источники:** руководство VCV Free (Fundamental), раздел Delay; William Stokes, «Getting Wet: Using Effects» (Sound On Sound).
+    questions:
+      - q: Зачем подключать клок в Clock, если Time можно выставить руками?
+        options:
+          - { text: "Эхо идёт за темпом само", correct: true, why: "Время берётся из такта, поэтому при смене BPM повторы остаются на долях." }
+          - { text: "Так эхо становится громче", why: "Громкость эха задают Feedback и Mix. Клок на неё не влияет." }
+          - { text: "Так исчезает сухой звук", why: "Сухой звук остаётся. Clock меняет только способ задать время." }
+    next: |
+      # Дальше: 7.2
+      **Реверберация.** Повторы станут частыми и размытыми, и звук получит комнату.
+    faq:
+      - q: Что повторить, если эхо не гаснет?
+        a: Посмотри на Feedback. Выше 90 % повторы почти не затихают. Вернись к блоку про копию, которая опаздывает.
+      - q: Чем эхо поможет в треке?
+        a: Оно заполняет паузы в лиде и добавляет ритмический рисунок. В части 8 ты поставишь его за лидом, в части 9 сведёшь с остальным.

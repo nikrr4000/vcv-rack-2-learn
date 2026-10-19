@@ -1,0 +1,379 @@
+id: p8-03-hihats
+num: "8.3"
+part: 8
+title: Хэты
+goal: Собрать хэт из шума и фильтра верхних частот, который бывает закрытым и открытым, а следующий удар обрывает хвост предыдущего.
+builds: Третий инструмент ритм-секции. В уроке 9.2 хэты встанут поверх бочки и малого барабана.
+minutes: 35
+requires: [p2-05-noise, p3-04-adsr]
+glossary: [закрытый и открытый хэт, чок, длина хвоста, цвет шума, фильтр верхних частот, шум, огибающая]
+sources: [ne-hats, sos-38, sos-39]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Хэты
+    page: |
+      # 8.3 Хэты
+      **Ты научишься:** собирать хэт из [[шум|шума]] и делать из него короткий закрытый и длинный открытый звук.
+      **Ты соберёшь:** Noise → VCF → VCA-1, где длину хвоста выбирает напряжение от SEQ 3.
+      **Понадобится:** 35 минут, уроки про шум и ADSR. Громкость держи низкой.
+      Патч понадобится в части 9, сохрани его в конце урока.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: noise, label: Noise, kind: audio }
+        - { id: vcf, label: VCF, kind: audio }
+        - { id: vca, label: VCA-1, kind: audio }
+        - { id: out, label: Audio, kind: audio }
+        - { id: seq, label: SEQ 3, kind: gate }
+        - { id: env, label: ADSR, kind: cv }
+      edges:
+        - { from: noise, to: vcf, kind: audio }
+        - { from: vcf, to: vca, kind: audio }
+        - { from: vca, to: out, kind: audio }
+        - { from: seq, to: env, kind: gate }
+        - { from: env, to: vca, kind: cv }
+      caption: "Шум идёт сверху, секвенсор и огибающая управляют снизу. Длину хвоста задаёт CV 2 у SEQ 3."
+    faq:
+      - q: "Хэт — всего лишь шипение?"
+        a: "Почти. Хэт — это шум без низа, очень короткий или протяжный. Весь характер задают фильтр и длина огибающей, поэтому патч состоит всего из пяти модулей."
+      - q: "Где в патче ритм?"
+        a: "Ритм задаёт SEQ 3: выход Trigger запускает огибающую на каждом шаге. Какие шаги закрытые, а какие открытые, выбирает напряжение CV 2 на каждом шаге."
+      - q: "Звук будет громким?"
+        a: "Высокий шум режет слух. Убавь громкость в системе перед первым ударом, а ручку Level у VCA-1 держи около 60 %."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, о чём будет урок.
+    questions:
+      - q: "Чем в нашем патче закрытый хэт отличается от открытого?"
+        free: true
+        options:
+          - { text: "Длиной хвоста огибающей", correct: true, why: "Тембр шума и фильтр те же. Меняется только то, как долго звучит хвост." }
+          - { text: "Открытый хэт берёт другой цвет шума", why: "Источник один. Цвет шума меняет тембр, но не отличает открытый хэт от закрытого." }
+          - { text: "У открытого хэта громче Level у VCA-1", why: "Открытый хэт не громче, а длиннее. Level отвечает за общую громкость." }
+      - q: "Зачем после Noise стоит фильтр верхних частот?"
+        options:
+          - { text: "Убрать низ и оставить тонкое шипение", correct: true, why: "Хэт — самый верхний звук установки. Низ шума превращается в гул, который мешает бочке." }
+          - { text: "Убрать звук из левого канала", why: "За стерео фильтр не отвечает. Он режет частоты, а не каналы." }
+          - { text: "Сделать шум тише", why: "Фильтр верхних частот убирает часть энергии, но громкость регулируется отдельно, на VCA-1." }
+      - q: "Что должно случиться с хвостом открытого хэта, если сразу следом прозвучит закрытый?"
+        options:
+          - { text: "Хвост обрывается", correct: true, why: "Следующий удар перезапускает огибающую с коротким хвостом. Так работает чок." }
+          - { text: "Хвост доигрывает до конца поверх нового удара", why: "У нас один ADSR на оба хэта: новый запуск заменяет старый хвост." }
+          - { text: "Хвост обрывает Release у VCA-1", why: "У VCA-1 нет своей огибающей. Хвост ведёт ADSR перед ним." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Закрытый и открытый
+    page: |
+      # Закрытый и открытый
+      Хэт — две металлические тарелки на стойке. При ударе их колебания хаотичны, без чётких гармоник, это почти шум.
+      Если тарелки сжаты педалью, звук короткий и сухой — [[закрытый и открытый хэт|закрытый хэт]].
+      Если тарелки приоткрыты, они звенят и затухают долго — открытый хэт.
+      В нашем патче обе версии идут из одного шума через [[фильтр верхних частот]]. Различает их только [[длина хвоста]], а [[цвет шума]] меняет лишь тембр.
+    figure: { template: adsr, a: 0.002, d: 0.04, s: 0, r: 0.04, gate: 0.05, markers: true, caption: "Закрытый хэт: короткая огибающая. У открытого хвост в несколько раз длиннее." }
+    simpler: Представь крышку на кастрюле. Закрытая крышка глушит звон. Приоткрытая оставляет шипение, которое тянется дольше.
+    faq:
+      - q: "Почему хэт берут из шума, а не из VCO?"
+        a: "Колебания тарелок неточны и без чётких высот. Шум хорошо имитирует это. Более сложные хэты строят из двух неточно настроенных осцилляторов, но для курса достаточно шума."
+      - q: "Что такое цвет шума?"
+        a: "Название шума по распределению энергии по частотам. White noise — ровный по всем частотам, Violet noise — смещён в верх. Для хэта подходят оба, сравнишь их в «Покрути сам»."
+      - q: "Нужен ли отдельный хэт для открытого и закрытого?"
+        a: "Нет. В курсе один набор модулей, а звук меняется напряжением CV 2. Так проще собрать и настроить."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Длину хвоста выбирает CV
+    page: |
+      # Длину хвоста выбирает CV
+      Хэт нужен то коротким, то длинным, а [[огибающая]] одна. Хвост удлиняет напряжение **CV 2** от SEQ 3.
+      Ноль вольт на шаге — хэт закрытый. Около трёх вольт — открытый.
+      Напряжение идёт в оба входа огибающей: **Decay** и **Release**. На коротком триггере хвост ведёт Release, на длинном — Decay.
+    page2: |
+      Силу влияния задают ручки **Decay CV** и **Release CV**: они показывают, какая доля напряжения доходит до времени.
+      [[чок|Чок]] получается сам. Любой следующий триггер перезапускает огибающую, и хвост открытого хэта обрывается.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: seq, label: SEQ 3, kind: gate }
+        - { id: env, label: ADSR, kind: cv }
+        - { id: vca, label: VCA-1, kind: audio }
+      edges:
+        - { from: seq, to: env, kind: gate }
+        - { from: seq, to: env, kind: cv }
+        - { from: env, to: vca, kind: cv }
+      caption: "Trigger запускает огибающую, CV 2 меняет длину её хвоста."
+    simpler: Представь педаль. Нажата — хэт закрыт и звучит коротко. Отпущена — хэт открыт и звенит. Напряжение CV 2 нажимает педаль на каждом шаге.
+    faq:
+      - q: "Почему CV 2 надо подать и в Decay, и в Release?"
+        a: "Триггер короткий, и хвост ведёт Release, а не Decay. Если подать CV только в Decay, открытые хэты останутся короткими. Нужны оба входа."
+      - q: "Что делает Decay CV?"
+        a: "Это ручка-аттенюатор перед входом Decay. Чем она выше, тем сильнее напряжение CV 2 удлиняет Decay. При нуле вход никак не влияет."
+      - q: "Что такое чок?"
+        a: "Обрыв хвоста открытого хэта следующим ударом. На настоящей установке это делает педаль. У нас он получается сам: новый триггер перезапускает единственную огибающую."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Хэты в ряд
+    page: |
+      # Хэты в ряд
+      SEQ 3 играет восемь шагов. Шаги 4 и 8 открытые, остальные закрытые.
+      Подними **Decay CV** и **Release CV** у ADSR, и открытые хэты станут длиннее.
+      Сними кабели CV 2 с Decay и Release: все хэты снова одинаковые.
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 2 step 4: { display: "3" }, CV 2 step 8: { display: "3" } } }
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "6000" }, Resonance: { display: "0" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "40" }, Sustain: { display: "0" }, Release: { display: "40" }, Decay CV: { display: "60" }, Release CV: { display: "60" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "60" }, Response mode: { display: "Exponential" } } }
+    cables:
+      - { from: [noise, White noise], to: [hpf, Audio] }
+      - { from: [hpf, Highpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [seq, CV 2], to: [env, Decay] }
+      - { from: [seq, CV 2], to: [env, Release] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: seq, text: "**CV 2** на шагах 4 и 8 — 3 В: эти хэты открытые.", targets: [{ module: seq, output: CV 2 }] }
+      - { after: env, text: "**Decay CV** и **Release CV** задают, насколько CV 2 удлиняет хвост.", targets: [{ module: env, param: Decay CV }, { module: env, param: Release CV }] }
+    faq:
+      - q: "Секвенсор не играет. Что проверить?"
+        a: "Проверь, что на SEQ 3 горят кнопки триггеров (Step N trigger) и модуль работает. Run не нажимай вслепую: он переключает ход и может остановить секвенсор."
+      - q: "Открытый хэт не длиннее закрытого."
+        a: "Скорее всего, Decay CV и Release CV у нуля или кабели CV 2 не дошли до Decay и Release. Подними обе ручки хотя бы до 30 %."
+      - q: "Почему Tempo 480?"
+        a: "Шаг секвенсора идёт на каждый такт, поэтому 480 BPM даёт восемь шагов в секунду. Это ритм шестнадцатых при 120 BPM."
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: ADSR хэта
+    page: |
+      # ADSR хэта
+      Тот же модуль, что в предыдущих уроках. Новое — два входа CV, на которые приходит длина хвоста.
+    module: { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "40" }, Sustain: { display: "0" }, Release: { display: "40" }, Decay CV: { display: "60" }, Release CV: { display: "60" } } }
+    notes:
+      - { text: "**Decay** и **Release** равны: хвост одинаков при любом гейте.", targets: [{ module: env, param: Decay }, { module: env, param: Release }] }
+      - { text: "**Sustain** в ноль: хэт не держится.", targets: [{ module: env, param: Sustain }] }
+      - { text: "**Decay CV** — доля напряжения CV 2, которая доходит до Decay.", targets: [{ module: env, param: Decay CV }] }
+      - { text: "**Release CV** — то же для Release. На коротком триггере он важнее.", targets: [{ module: env, param: Release CV }] }
+      - { text: "Входы **Decay** и **Release** принимают CV 2.", targets: [{ module: env, input: Decay }, { module: env, input: Release }] }
+    faq:
+      - q: "Почему Attack минимальный?"
+        a: "Хэт начинается резко. Чем короче Attack, тем «острее» удар. При 20–30 мс хэт звучал бы мягко, как подушка."
+      - q: "Что произойдёт, если Decay CV поставить в 100 %?"
+        a: "Напряжение CV 2 в 3 В сильнее удлинит хвост. Открытый хэт станет совсем долгим, и его может оборвать только следующий удар."
+      - q: "Что будет, если Release CV отрицательный?"
+        a: "CV 2 начнёт укорачивать хвост, а не удлинять. Для хэтов нужно положительное значение."
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: SEQ 3 как источник хэтов
+    page: |
+      # SEQ 3 как источник хэтов
+      Тебе нужны три вещи: ритм, длина хвоста и ход секвенсора.
+    module: { ref: seq, plugin: Fundamental, slug: SEQ3 }
+    notes:
+      - { text: "**Tempo** — скорость шагов.", targets: [{ module: seq, param: Tempo }] }
+      - { text: "**Step N trigger** — кнопка шага. Включённая даёт удар.", targets: [{ module: seq, param: Step 1 trigger }] }
+      - { text: "**CV 2 step 4** — 0 для закрытого, около 3 В для открытого.", targets: [{ module: seq, param: CV 2 step 4 }] }
+      - { text: "Выход **Trigger** запускает огибающую.", targets: [{ module: seq, output: Trigger }] }
+      - { text: "Выход **CV 2** несёт длину хвоста.", targets: [{ module: seq, output: CV 2 }] }
+    faq:
+      - q: "Что делает кнопка Run?"
+        a: "Run запускает и останавливает ход секвенсора. Новый SEQ 3 в этом патче уже идёт. Если нажать Run, шаги встанут, и тишина покажется поломкой."
+      - q: "Сколько шагов использовать?"
+        a: "Ручка Steps задаёт длину цикла: 8 — полный круг, меньше — короче. Для хэтов нужны все 8: закрытые на ровных шагах, открытые на 4 и 8."
+      - q: "Можно ли сделать открытые хэты на других шагах?"
+        a: "Можно. Поставь CV 2 step N в 3 В на нужном шаге и верни 0 В на остальных. Паттерн в практике твой."
+
+  - id: b8
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Двигай **Cutoff frequency** у VCF от 2000 до 8000 Гц."
+        see: "Хэт переходит от плотного «чика» к тонкому шипению."
+      - do: "Двигай **Decay CV** и **Release CV** от 20 до 100 %."
+        see: "Открытый хэт тянется дольше, закрытые не меняются."
+      - do: "Поставь **CV 2 step 4** на 0 и на 5 В."
+        see: "Шаг 4 становится закрытым или очень длинным."
+      - do: "Переставь кабель шума с White noise на Violet noise."
+        see: "Хэт тоньше и холоднее."
+      - do: "Подними **Resonance** у VCF от 0 до 30 %."
+        see: "У среза появляется звон, хэт металличнее."
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 2 step 4: { display: "3" }, CV 2 step 8: { display: "3" } } }
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "6000" }, Resonance: { display: "0" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "40" }, Sustain: { display: "0" }, Release: { display: "40" }, Decay CV: { display: "60" }, Release CV: { display: "60" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "60" }, Response mode: { display: "Exponential" } } }
+    cables:
+      - { from: [noise, White noise], to: [hpf, Audio] }
+      - { from: [hpf, Highpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [seq, CV 2], to: [env, Decay] }
+      - { from: [seq, CV 2], to: [env, Release] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: hpf, text: "Шаги 1 и 5 — ручки этого VCF.", targets: [{ module: hpf, param: Cutoff frequency }, { module: hpf, param: Resonance }] }
+    faq:
+      - q: "Хэт режет слух. Как смягчить?"
+        a: "Опусти Cutoff frequency до 3000–4000 Гц и Level у VCA-1 до 40–50 %. Тогда хэт станет плотнее и тише."
+      - q: "Открытый хэт звучит как закрытый."
+        a: "Проверь Decay CV и Release CV. Если они у нуля, CV 2 не влияет на хвост. Подними обе ручки хотя бы до 30 %."
+      - q: "Что меняет Resonance?"
+        a: "Он усиливает звук вокруг частоты среза и добавляет «звон». В небольшом количестве хэт становится металличнее. При больших значениях фильтр начинает свистеть."
+
+  - id: b9
+    type: practice
+    preset: practice
+    title: Практика — свои хэты
+    task: |
+      Собери хэты сам, между маркерами «Верстак».
+      1. **Noise**, **VCF**, **VCA-1**, **ADSR** и **SEQ 3**.
+      2. Звук: `White noise` → `Audio` у VCF, `Highpass filter` → `Channel` у VCA-1, `Channel` → вход 1 у Audio.
+      3. Управление: `Envelope` → `CV` у VCA-1, `Trigger` у SEQ 3 → `Gate` у ADSR, `CV 2` → `Decay` и `Release`.
+      4. **Cutoff frequency** от 4000 Гц, **Sustain** не выше 10 %, **Decay CV** и **Release CV** от 30 %.
+      5. Включи кнопки шагов и дай шагам разные **CV 2 step**: 0 и около 3 В.
+    given: [audio]
+    check: p8-03-hihats
+    hints:
+      "cable:1":
+        - "Хэту нужен шум."
+        - "Какой выход Noise даёт белый шум?"
+        - "`White noise` у Noise → `Audio` у VCF."
+      "cable:2":
+        - "Хэт должен быть тонким, без низа."
+        - "Какой выход VCF пропускает верх?"
+        - "`Highpass filter` у VCF → `Channel` у VCA-1."
+      "cable:3":
+        - "Хэт звучит без конца или молчит."
+        - "Что управляет громкостью VCA-1 по времени?"
+        - "`Envelope` у ADSR → `CV` у VCA-1."
+      "cable:4":
+        - "Огибающая не знает, когда начинать."
+        - "Какой выход SEQ 3 отдаёт импульсы по шагам?"
+        - "`Trigger` у SEQ 3 → `Gate` у ADSR."
+      "cable:5":
+        - "Все хэты одной длины."
+        - "Что у SEQ 3 может менять Decay шаг за шагом?"
+        - "`CV 2` у SEQ 3 → `Decay` у ADSR."
+      "cable:6":
+        - "Закрытые хэты звучат как открытые."
+        - "На коротком триггере хвост ведёт Release. Куда ещё подать CV 2?"
+        - "`CV 2` у SEQ 3 → `Release` у ADSR."
+      "cable:7":
+        - "Хэт собран, а тишина."
+        - "Откуда звук выходит из VCA-1 и куда должен прийти?"
+        - "`Channel` у VCA-1 → `To \"device output 1\"` у Audio."
+      "param:1":
+        - "Хэт гулкий, в шуме остался низ."
+        - "Ручка Cutoff frequency у VCF."
+        - "Подними Cutoff frequency хотя бы до 4000 Гц."
+      "param:2":
+        - "Хэт держится, пока идёт гейт."
+        - "Ручка Sustain у ADSR."
+        - "Поставь Sustain не выше 10 %, лучше в ноль."
+      "param:3":
+        - "CV 2 не меняет длину хвоста."
+        - "Ручка Decay CV у ADSR."
+        - "Подними Decay CV хотя бы до 30 %."
+      "param:4":
+        - "Открытые хэты остались короткими."
+        - "Ручка Release CV у ADSR."
+        - "Подними Release CV хотя бы до 30 %."
+      "probe:1":
+        - "Огибающая не поднимается."
+        - "Идёт ли секвенсор и горят ли кнопки триггеров?"
+        - "Включи несколько кнопок Step N trigger у SEQ 3 и нажми «Проверить» ещё раз."
+      "probe:2":
+        - "CV 2 стоит на одном значении, все хэты одинаковы."
+        - "Какие ручки CV 2 step отвечают за длину хвоста?"
+        - "Дай шагам разные CV 2 step: 0 для закрытого, около 3 В для открытого."
+    faq:
+      - q: "Какой паттерн выбрать?"
+        a: "Любой. Попробуй закрытые на шагах 1–3 и 5–7, открытые на 4 и 8. Проверке нужно только, чтобы у CV 2 были разные значения."
+      - q: "Проверка не видит секвенсор."
+        a: "Убедись, что у SEQ 3 включены кнопки шагов и модуль идёт. Проверка опрашивает Envelope у ADSR. Если секвенсор стоит, огибающая не поднимается."
+      - q: "Можно взять Clocked вместо SEQ 3?"
+        a: "Для проверки нужен SEQ 3: она читает его выход CV 2. С Clocked ты сможешь собрать ритм, но длину хвоста по шагам не задашь."
+
+  - id: b10
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Все хэты стали короткими, открытые тоже.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 2 step 4: { display: "3" }, CV 2 step 8: { display: "3" } } }
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "6000" }, Resonance: { display: "0" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "40" }, Sustain: { display: "0" }, Release: { display: "40" }, Decay CV: { display: "60" }, Release CV: { display: "60" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "60" }, Response mode: { display: "Exponential" } } }
+    cables:
+      - { from: [noise, White noise], to: [hpf, Audio] }
+      - { from: [hpf, Highpass filter], to: [vca, Channel] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [seq, CV 2], to: [env, Decay] }
+      - { from: [seq, CV 2], to: [env, Release] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 2\""] }
+    break: { remove_cable: [seq, CV 2, env, Release] }
+    check: { kind: fixed, expect_cable: [seq, CV 2, env, Release] }
+    hints:
+      fixed:
+        - "Открытые хэты почти не длиннее закрытых. Что ведёт хвост на коротком триггере?"
+        - "Посмотри на входы Decay и Release у ADSR."
+        - "Соедини `CV 2` у SEQ 3 с `Release` у ADSR."
+    faq:
+      - q: "Почему без Release хвост остаётся коротким?"
+        a: "Триггер длится около 1 мс, и после него хвост ведёт Release. CV 2 влияет на Decay, но тот работает только при долгом гейте."
+      - q: "Как это отличить на слух?"
+        a: "Открытые шаги 4 и 8 звучат почти как остальные. Удлинение хвоста почти пропало, хотя CV 2 на этих шагах по-прежнему 3 В."
+
+  - id: b11
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Хэт — шум через фильтр верхних частот и короткую огибающую.
+      - Закрытый и открытый хэт отличает длина хвоста, а не тембр.
+      - CV 2 у SEQ 3 идёт в Decay и в Release: на коротком триггере хвост ведёт Release.
+      - Чок получается сам: новый триггер перезапускает единственную огибающую.
+      Сохрани патч как `vcv-8.3.vcv`: он понадобится в части 9.
+      **Источники:** блог Noise Engineering, «Creating FM Hats». Sound On Sound, «Synthesizing Realistic Cymbals» и «Practical Cymbal Synthesis».
+    questions:
+      - q: "Почему CV 2 нужно подать и в Decay, и в Release?"
+        options:
+          - { text: "Короткий триггер: хвост ведёт Release, а не Decay", correct: true, why: "Триггер длится 1 мс, и после него огибающая идёт в Release. Без этого входа открытые хэты не удлиняются." }
+          - { text: "Так звук становится выше", why: "Высоту задаёт источник звука, а не огибающая. Здесь CV 2 меняет только время." }
+          - { text: "Так хэт становится громче", why: "Громкость не меняется: меняется только длина хвоста." }
+    next: |
+      # Дальше: 8.4
+      **Бас, включая acid.** Голос из урока 3.5 станет низким инструментом с секвенсором и скользящими нотами.
+    faq:
+      - q: "Что повторить, если открытый хэт не звучит?"
+        a: "Проверь кабели CV 2 в Decay и Release. Обе ручки CV у ADSR должны стоять выше 30 %. У шагов 4 и 8 нужно около 3 В."
+      - q: "Зачем сохранять патч?"
+        a: "В части 9 хэты окажутся в ритм-секции. Файл `vcv-8.3.vcv` понадобится как готовый инструмент."

@@ -37,8 +37,12 @@ const { snapshots, glossary, quotes, course, sources } = facts();
 const BANNED = ["давай разберёмся", "давайте разберёмся", "важно отметить", "стоит отметить", "как мы видим", "итак", "в этом уроке мы", "следует", "является", "являются", "осуществляет", "данный", "данная", "данное", "данные", "это просто", "легко"];
 const ACRONYMS = new Set("VCO VCF VCA LFO ADSR CV MIDI Rack VCV Free Pro Fundamental Core Audio Scope BPM HP OK DC FM PWM XY S&H MCP USB VST DAW Atlas Plateau Clouds Clocked Recorder SEQ Mix Mixer Push Noise Octave Quantizer Viz Logic Compare Gates Mutes Merge Split Sum Rescale Random Pulses Process Delay Fade MidSide Mult Wavetable Valley Mutable Instruments ImpromptuModular AudibleInstruments Impromptu Neural Harmonics Ctrl Cmd Shift Alt Enter Esc Tab macOS Windows Linux Library Manual Sound On Sound Synth Secrets Gordon Reid Chris Meyer Learning Modular Doepfer Omri Cohen Music Hackspace samesound zwook Geogenik A4 C4 C3 C5 A3 A5 E4 G4 dB V ms Hz kHz".split(" "));
 
+// Rack 2 menu and dialog labels, controller and audio words the course names on purpose. Not in the
+// module snapshots, so listed here; anything else Latin is still reported.
+const UI_WORDS = "File Edit View Engine Help New Open Save as Load Undo Redo Duplicate Delete Preset Update all Add Included Library Unmapped Channels Rotate Reuse Reset Panic Driver Device Append Output Block Recording Heartbeat Mid Side MidSide mono stereo wet dry WAV VU dBFS Eurorack MiniLab mkII Arturia aftertouch velocity acid Pan law vcvrack com Es".split(" ");
+
 function latinWhitelist() {
-	const w = new Set(ACRONYMS);
+	const w = new Set([...ACRONYMS, ...UI_WORDS]);
 	for (const s of Object.values(snapshots)) {
 		for (const t of [s.name, s.slug, s.plugin, ...(s.params || []).flatMap((p) => [p.name, ...(p.options || [])]), ...(s.inputs || []).map((p) => p.name), ...(s.outputs || []).map((p) => p.name)])
 			for (const word of String(t || "").split(/[^A-Za-z0-9&/]+/)) if (word) w.add(word);
@@ -143,7 +147,11 @@ function validateLesson(L) {
 			if (!/[А-Яа-яЁё]/.test(s) && latin.filter((w) => !LATIN_OK.has(w)).length >= 3 && t.kind !== "page") E(t.where, `an English sentence in learner text: «${s.slice(0, 60)}»`);
 		}
 		if (!t.where.endsWith(".page") || !/Источники/.test(t.text)) {
-			for (const w of prose.match(/[A-Za-z][A-Za-z0-9&]*/g) || []) if (!LATIN_OK.has(w) && w.length > 1) Wn(t.where, `Latin word «${w}» is not a Rack name (check the spelling against the snapshot)`);
+			// Whole tokens first («8vert», «1V/octave», «Mid/Side»), then their slash-separated parts; notes like C2 or G5 are fine.
+			for (const tok of prose.match(/[A-Za-z0-9][A-Za-z0-9&/]*/g) || []) {
+				if (!/[A-Za-z]/.test(tok) || LATIN_OK.has(tok) || /^[A-G][#b]?-?\d$/.test(tok)) continue;
+				for (const w of tok.split("/")) if (/[A-Za-z]/.test(w) && w.length > 1 && !LATIN_OK.has(w) && !LATIN_OK.has(w.replace(/^\d+/, "")) && !/^[A-G][#b]?-?\d$/.test(w)) Wn(t.where, `Latin word «${w}» is not a Rack name (check the spelling against the snapshot)`);
+			}
 		}
 		// Quotes: straight double quotes with 4+ words must be verified quotes.
 		for (const m of String(t.text).matchAll(/"([^"]{12,})"/g)) {

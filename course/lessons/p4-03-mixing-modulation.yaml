@@ -1,0 +1,377 @@
+id: p4-03-mixing-modulation
+num: "4.3"
+part: 4
+title: Смешивание и масштабирование модуляции
+goal: Сложить несколько модуляций в одну, регулировать вклад каждой и не давать сумме выходить за нужные пределы.
+builds: "Приём для любой цели: медленный ход, быстрая рябь и верхняя граница в одном сигнале. Он нужен басу и лиду в части 8."
+minutes: 35
+requires: [p4-01-lfo, p1-04-knob-cv]
+glossary: [сумма модуляций, глубина как произведение, ограничение диапазона модуляции, смещение, нормализация входа, аттенюверт, LFO]
+sources: [sos-09, sos-10, mn-maths, vcv-free-manual]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Смешивание и масштабирование
+    page: |
+      # 4.3 Смешивание и масштабирование модуляции
+      **Ты научишься:** складывать несколько [[LFO]] в один сигнал и ограничивать его сверху.
+      **Ты соберёшь:** два LFO через **CV Mix** и **Rescale** ведут срез фильтра.
+      **Понадобится:** 35 минут, урок 4.1 и урок 1.4 про аттенюаторы.
+      Одной цели обычно мало одной модуляции. Здесь научишься управлять вкладом каждой.
+    figure:
+      template: flow
+      layout: row
+      nodes:
+        - { id: slow, label: LFO медленный, kind: cv }
+        - { id: fast, label: LFO быстрый, kind: cv }
+        - { id: mix, label: CV Mix, kind: cv }
+        - { id: res, label: Rescale, kind: cv }
+        - { id: vcf, label: VCF, kind: audio }
+      edges:
+        - { from: slow, to: mix, kind: cv }
+        - { from: fast, to: mix, kind: cv }
+        - { from: mix, to: res, kind: cv }
+        - { from: res, to: vcf, kind: cv }
+      caption: Два модулятора складываются, потом сумма ограничивается и идёт на фильтр.
+    faq:
+      - q: Зачем складывать модуляции, если можно взять один LFO?
+        a: Один LFO даёт ровное качание. Медленный ход плюс быстрая рябь звучат живее. Сумму двух сигналов делает CV Mix.
+      - q: Чем это отличается от урока 1.4?
+        a: "Там был один сигнал и один аттенюверт. Здесь источников несколько, и у каждого своя ручка Level. Идея та же: масштаб и сумма."
+      - q: Обязательно ли ограничивать сумму?
+        a: Не обязательно, но полезно. Два сигнала вместе могут уйти выше, чем нужно цели. Rescale ставит верхнюю границу, и фильтр не откроется слишком широко.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, на что смотреть в уроке.
+    questions:
+      - q: Два LFO идут в CV Mix, Level 1 и Level 2 по 100 %. Что на выходе Mix?
+        free: true
+        options:
+          - { text: "Сумма двух сигналов, она может быть вдвое больше каждого", correct: true, why: "Микшер складывает входы. С двумя сигналами по 100 % сумма может достичь удвоенного размаха." }
+          - { text: "Среднее двух сигналов", why: "CV Mix складывает, а не усредняет. Среднее получилось бы вдвое меньше суммы." }
+          - { text: "Больший из двух сигналов", why: "Выбор максимума делает другой тип модулей. CV Mix складывает значения." }
+      - q: Level 2 у CV Mix стоит на −50 %. Что с вторым сигналом?
+        options:
+          - { text: "Он вдвое слабее и перевёрнут", correct: true, why: "Минус переворачивает сигнал, 50 % уменьшают его вдвое. Это аттенювертер на входе." }
+          - { text: "Он выключен", why: "Выключает 0 %. Отрицательные значения переворачивают сигнал, а не гасят его." }
+          - { text: "Он вдвое громче", why: "Level не усиливает выше 100 %. Знак минус означает инверсию." }
+      - q: У Rescale Maximum 4 В, а сигнал доходит до 8 В. Что на выходе?
+        options:
+          - { text: "Верх срезан на 4 В, выше сигнал не поднимается", correct: true, why: "Maximum — верхняя граница выхода. Всё, что выше, превращается в 4 В." }
+          - { text: "Весь сигнал уменьшен вдвое", why: "Уменьшение вдвое делает Gain. Maximum не масштабирует, а срезает верх." }
+          - { text: "Выход выключается", why: "Rescale ничего не выключает. Он держит сигнал внутри границ." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Три вопроса к модуляции
+    page: |
+      # Три вопроса к модуляции
+      К любой модуляции стоит задать три вопроса.
+      **Сколько?** Это масштаб: ручки Level у CV Mix и Gain у Rescale.
+      **От какого значения и до какого?** Это [[смещение]] и границы: Offset, Minimum, Maximum.
+      **Сколько источников?** Это [[сумма модуляций|сумма]]: несколько сигналов в один.
+      Это те же умножение и сложение, что в уроке 1.4. Просто источников теперь больше одного.
+    figure: { template: flow, layout: row, nodes: [{ id: src, label: Источники, kind: cv }, { id: scale, label: Масштаб, kind: cv }, { id: sum, label: Сумма, kind: cv }, { id: lim, label: Границы, kind: cv }, { id: tgt, label: Цель, kind: audio }], edges: [{ from: src, to: scale, kind: cv }, { from: scale, to: sum, kind: cv }, { from: sum, to: lim, kind: cv }, { from: lim, to: tgt, kind: cv }], caption: "Путь модуляции: источники, масштаб, сумма, границы, цель." }
+    simpler: "Представь микшерный пульт для ручки. Каждый источник идёт на свой фейдер, фейдеры складываются в одну дорожку, а на выходе стоит ограничитель громкости. Так и здесь: у каждого сигнала свой Level."
+    faq:
+      - q: Чем масштаб отличается от смещения?
+        a: Масштаб делает сигнал больше или меньше по размаху. Смещение двигает всю кривую вверх или вниз, не меняя размаха.
+      - q: Что значит «границы»?
+        a: Это нижний и верхний пределы, за которые сигнал не выйдет. У Rescale они называются Minimum и Maximum. Всё выше или ниже превращается в границу.
+      - q: Можно ли подать три и больше сигналов?
+        a: У CV Mix три входа. Если нужно больше, поставь второй CV Mix и пусти Mix первого в один из входов второго.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Глубина как произведение
+    page: |
+      # Глубина как произведение
+      Модуляция идёт по цепочке: LFO, Level, Gain у Rescale, ручка CV на цели.
+      Звенья не складываются, а перемножаются. Итоговая [[глубина как произведение|глубина — произведение]] всех звеньев.
+      Если одно звено равно нулю, вся модуляция гаснет. Остальные ручки можно крутить сколько угодно, ничего не изменится.
+      Поэтому при «не работает» проверяй все ручки по цепочке: нет ли нуля.
+    figure: { template: table, rows: [["Звено", "Значение"], ["LFO", "10 В"], ["Level 1", "60 %"], ["Gain", "100 %"], ["Результат", "6 В"]], caption: "Размах 10 В, 60 % и 100 %: на выходе 6 В. Любой ноль даёт 0 В." }
+    simpler: Представь трубу с несколькими кранами подряд. Вода пройдёт, только если открыты все. Закрыт один — воды нет, как бы широко ни были открыты остальные.
+    faq:
+      - q: Почему не сумма, а произведение?
+        a: "Каждое звено пропускает долю сигнала. Доли перемножаются: половина от половины даёт четверть. Поэтому ручки по цепочке усиливают или ослабляют друг друга."
+      - q: Я всё подключил, а срез не двигается. Где искать?
+        a: Пройди по цепочке и найди ноль. Чаще всего это Level у CV Mix, Gain у Rescale или ручка Cutoff frequency CV у VCF.
+      - q: Gain у Rescale по умолчанию 0. Это ошибка?
+        a: Нет, так задумано. Пока Gain на 0, Rescale ничего не пропускает. Подними его до нужного значения, например до 100 %.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Ход плюс рябь
+    page: |
+      # Ход плюс рябь
+      Два LFO идут в **CV Mix**. Медленный треугольник даёт ход, быстрый синус — рябь. Сумма идёт в **Rescale**, потом на срез VCF.
+      Слушай, как срез медленно ходит вверх и вниз, а поверх него бежит мелкая дрожь.
+      Поверни **Level 2** у CV Mix от 0 к 60 %. Рябь растёт, а потом заглушает ход. Картинку суммы покажет Scope в блоке «Покрути сам».
+    modules:
+      - { ref: slow, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.5" }, Offset: Unipolar } }
+      - { ref: fast, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "6" }, Offset: Unipolar } }
+      - { ref: mix, plugin: Fundamental, slug: CVMix, params: { Level 1: { display: "60" }, Level 2: { display: "20" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "100" }, Maximum: { display: "4" }, Minimum: { display: "-10" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+    cables:
+      - { from: [slow, Triangle], to: [mix, CV 1] }
+      - { from: [fast, Sine], to: [mix, CV 2] }
+      - { from: [mix, Mix], to: [res, Signal] }
+      - { from: [res, Signal], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mix, text: "**Level 1** — вклад хода, **Level 2** — вклад ряби. Сейчас 60 % и 20 %.", targets: [{ module: mix, param: Level 1 }, { module: mix, param: Level 2 }] }
+      - { after: mix, text: "Выход **Mix** — сумма обоих сигналов.", targets: [{ module: mix, output: Mix }] }
+      - { after: res, text: "**Maximum** 4 В срезает верх суммы: фильтр не откроется выше.", targets: [{ module: res, param: Maximum }] }
+    faq:
+      - q: Где слышна рябь?
+        a: Срез фильтра быстро дрожит поверх медленного хода. Если не слышно, подними Level 2 или проверь, что Cutoff frequency CV у VCF не нулевой.
+      - q: Почему Frequency у быстрого LFO 6 Гц, а у медленного 0,5?
+        a: Разница в скорости разделяет роли. Медленный даёт ход за пару секунд, быстрый добавляет мелкую рябь поверх него.
+      - q: Как увидеть сумму на экране?
+        a: В блоке «Покрути сам» есть Scope. Канал 1 показывает сумму с выхода Mix, канал 2 — выход Rescale. Там видно, как рябь ложится на ход.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: Панель CV Mix
+    page: |
+      # Панель CV Mix
+      **CV Mix** складывает до трёх управляющих сигналов. У каждого входа своя ручка.
+      Пустой вход получает 10 В сам: это [[нормализация входа]].
+    module: { ref: mix, plugin: Fundamental, slug: CVMix }
+    notes:
+      - { text: "Три входа **CV 1**, **CV 2**, **CV 3**.", targets: [{ module: mix, input: CV 1 }, { module: mix, input: CV 2 }, { module: mix, input: CV 3 }] }
+      - { text: "**Level 1**, **Level 2**, **Level 3** — вклад каждого входа, от −100 до +100 %. Минус переворачивает сигнал.", targets: [{ module: mix, param: Level 1 }, { module: mix, param: Level 2 }, { module: mix, param: Level 3 }] }
+      - { text: "Выход **Mix** — сумма трёх сигналов после своих Level.", targets: [{ module: mix, output: Mix }] }
+    later:
+      - { what: Другие микшеры и мастер-шина, lesson: "7.1" }
+    faq:
+      - q: Вход CV 3 пустой, а на выходе постоянное напряжение. Откуда?
+        a: Пустой вход CV Mix получает 10 В сам по себе. Если Level у него не нулевой, на сумму идёт постоянное смещение. На 20 % это 2 В.
+      - q: Что значит отрицательный Level?
+        a: Сигнал перевёрнут. На −60 % он вдвое слабее, чем при 60 %, и идёт вниз там, где был вверх. Срез сначала закрывается, потом открывается.
+      - q: Чем CV Mix отличается от аудиомикшера?
+        a: Принцип тот же, сумма входов. Но CV Mix рассчитан на управляющие сигналы, а не на звук, и у него есть отрицательные Level.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Rescale
+    page: |
+      # Панель Rescale
+      **Rescale** масштабирует сигнал, сдвигает его и ограничивает границами: это [[ограничение диапазона модуляции|ограничение диапазона]]. Для отдельного ослабления или переворота одного сигнала есть [[аттенюверт|аттенювертер]] из урока 1.4.
+    module: { ref: res, plugin: Fundamental, slug: Rescale }
+    notes:
+      - { text: "**Gain** — масштаб, от −100 до +100 %. На 0 % выход молчит.", targets: [{ module: res, param: Gain }] }
+      - { text: "**Offset** сдвигает весь сигнал вверх или вниз, от −10 до +10 В.", targets: [{ module: res, param: Offset }] }
+      - { text: "**Maximum** — верхняя граница выхода, по умолчанию +10 В.", targets: [{ module: res, param: Maximum }] }
+      - { text: "**Minimum** — нижняя граница, по умолчанию −10 В.", targets: [{ module: res, param: Minimum }] }
+      - { text: "Вход и выход **Signal** — сюда приходит сумма и отсюда уходит результат.", targets: [{ module: res, input: Signal }, { module: res, output: Signal }] }
+    faq:
+      - q: В каком порядке Rescale всё делает?
+        a: "В уроке считаем так: сначала Gain, потом Offset, потом границы. Точный порядок в твоей версии проверь, поглядев на Scope после выхода Signal."
+      - q: Зачем ограничивать верх перед фильтром?
+        a: Без границы сумма может открыть фильтр слишком широко. Maximum не даёт срезу уйти выше нужной точки, и звук остаётся в нужном диапазоне.
+      - q: Что делает Offset у Rescale, если у LFO уже есть Offset?
+        a: Offset у LFO двигает один сигнал. Offset у Rescale двигает уже готовую сумму. Первый работает на входе цепочки, второй — на выходе.
+
+  - id: b8
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поставь **Level 1** у CV Mix на 0, потом на 60 и 100 %."
+        see: Срез ходит всё шире. На Scope сумма растёт.
+      - do: "Поставь **Level 2** на 0, потом на 20 и 60 %."
+        see: К основному ходу добавляется рябь. На 60 % она перекрывает ход.
+      - do: "Поставь **Level 1** на −60 %."
+        see: Ход идёт в обратную сторону. Срез сначала закрывается, потом открывается.
+      - do: "Поставь **Maximum** у Rescale на 10, потом на 4 и на 1 В."
+        see: Срез открывается всё меньше. На Scope верх кривой срезан полкой.
+      - do: "Поставь **Offset** у Rescale на −2, потом на 0 и на 2 В."
+        see: Весь диапазон среза сдвигается ниже или выше. На Scope вся кривая уезжает.
+      - do: "Поставь **Gain** у Rescale на 50, потом на 0 %."
+        see: Модуляция слабеет и исчезает. На Scope плоская линия.
+    modules:
+      - { ref: slow, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.5" }, Offset: Unipolar } }
+      - { ref: fast, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "6" }, Offset: Unipolar } }
+      - { ref: mix, plugin: Fundamental, slug: CVMix, params: { Level 1: { display: "60" }, Level 2: { display: "20" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "100" }, Maximum: { display: "4" }, Minimum: { display: "-10" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [slow, Triangle], to: [mix, CV 1] }
+      - { from: [fast, Sine], to: [mix, CV 2] }
+      - { from: [mix, Mix], to: [res, Signal] }
+      - { from: [res, Signal], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [mix, Mix], to: [scope, Ch 1] }
+      - { from: [res, Signal], to: [scope, Ch 2] }
+    notes:
+      - { after: mix, text: "Шаги 1–3 — ручки CV Mix.", targets: [{ module: mix, param: Level 1 }, { module: mix, param: Level 2 }] }
+      - { after: res, text: "Шаги 4–6 — ручки Rescale. Канал 2 Scope показывает его выход.", targets: [{ module: res, param: Maximum }, { module: res, param: Offset }, { module: res, param: Gain }] }
+    faq:
+      - q: Level 1 на −60 %, а звук почти тот же. Это нормально?
+        a: Да. Форма сигнала осталась, но перевернулась. Слышно, что срез сначала закрывается, потом открывается. Сравни на Scope оба положения.
+      - q: Поставил Maximum 1 В, и срез почти не двигается. Почему?
+        a: Верх суммы срезан на 1 В, и сигнал почти весь лежит на этой полке. Фильтр открывается совсем чуть-чуть.
+      - q: Gain на 0, на Scope плоская линия. Где ошибка?
+        a: Ошибки нет. На 0 % звено умножает сигнал на ноль. Подними Gain, и модуляция вернётся.
+
+  - id: b9
+    type: practice
+    preset: practice
+    title: Практика — два LFO на один срез
+    task: |
+      Собери сумму из двух LFO на верстаке между маркерами.
+      1. **LFO** ×2, **CV Mix**, **Rescale**, **VCO**, **VCF**.
+      2. Медленный `Triangle` → `CV 1`, быстрый `Sine` → `CV 2`. Frequency медленного — не выше 1 Гц, быстрого — не ниже 3 Гц.
+      3. **Level 1** — от 30 до 100 %, **Level 2** — от 5 до 40 %.
+      4. `Mix` → `Signal` у Rescale, `Signal` → `Frequency` у VCF. **Gain** — не ниже 90 %, **Maximum** — не выше 6 В.
+      5. `Sawtooth` → `Audio` у VCF, `Lowpass filter` → `To "device output 1"` у Audio. Нажми «Проверить».
+    given: [audio]
+    check: p4-03-mixing-modulation
+    hints:
+      "cable:1":
+        - Медленной волны в сумме нет. Куда должен идти Triangle медленного LFO?
+        - Какой вход у CV Mix первый?
+        - "`Triangle` медленного LFO → вход `CV 1` у CV Mix."
+      "cable:2":
+        - Быстрой ряби в сумме нет. Куда должен идти Sine быстрого LFO?
+        - Какой вход у CV Mix второй?
+        - "`Sine` быстрого LFO → вход `CV 2` у CV Mix."
+      "cable:3":
+        - Сумма не доходит до ограничителя.
+        - Какой выход у CV Mix и какой вход у Rescale?
+        - "`Mix` у CV Mix → вход `Signal` у Rescale."
+      "cable:4":
+        - Фильтр не получает модуляцию.
+        - Какой вход VCF отвечает за срез?
+        - "`Signal` у Rescale → вход `Frequency` у VCF."
+      "cable:5":
+        - В фильтр не приходит звук.
+        - Какой выход VCO даёт пилу?
+        - "`Sawtooth` у VCO → вход `Audio` у VCF."
+      "cable:6":
+        - Звука в колонках нет.
+        - Какой выход фильтра нужен?
+        - "`Lowpass filter` у VCF → вход `To \"device output 1\"` у Audio этого ряда."
+      "param:1":
+        - Основная волна должна быть медленной.
+        - Посмотри на Frequency у того LFO, что идёт в CV 1.
+        - Поставь Frequency медленного LFO не выше 1 Гц.
+      "param:2":
+        - Рябь должна быть заметно быстрее хода.
+        - Посмотри на Frequency у LFO, что идёт в CV 2.
+        - Поставь Frequency быстрого LFO не ниже 3 Гц.
+      "param:3":
+        - Ход должен главенствовать.
+        - Посмотри на Level 1 у CV Mix.
+        - Поставь Level 1 от 30 до 100 %.
+      "param:4":
+        - Рябь должна быть слабее хода.
+        - Посмотри на Level 2 у CV Mix.
+        - Поставь Level 2 от 5 до 40 %.
+      "param:5":
+        - Если Gain у Rescale около нуля, сигнал умножен на ноль.
+        - Посмотри на Gain у Rescale.
+        - Подними Gain не ниже 90 %.
+      "param:6":
+        - До скольки вольт ограничиваем срез?
+        - Посмотри на Maximum у Rescale.
+        - Поставь Maximum не выше 6 В.
+      "probe:1":
+        - Сумма не движется.
+        - Оба ли LFO подключены и не в нуле ли Level?
+        - Проверь кабели в `CV 1` и `CV 2`, подними Level 1 и Level 2.
+      "probe:2":
+        - На выходе фильтра нет сигнала.
+        - Идёт ли пила в Audio у VCF, а выход фильтра — в Audio?
+        - Проверь `Sawtooth` → `Audio` у VCF и `Lowpass filter` → `To \"device output 1\"`.
+    faq:
+      - q: Gain у Rescale стоит на 0 по умолчанию. Это ошибка модуля?
+        a: Нет, так он и устроен. На 0 % сигнал не проходит. Подними Gain до 90 % и выше, и модуляция пойдёт.
+      - q: Можно взять другие формы LFO?
+        a: Проверка ждёт Triangle в CV 1 и Sine в CV 2. После проверки пробуй любые формы и смотри на Scope, как меняется сумма.
+      - q: Нужен ли аттенювертер в этой схеме?
+        a: Не нужен. Это необязательное дополнение. Поставь его между Rescale и VCF и посмотри, как он ослабляет сигнал.
+
+  - id: b10
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Сумма на входе Rescale движется, а срез фильтра застыл. Звук есть, движения в нём нет.
+      Найди одну неверную настройку и исправь её. Кабели трогать не нужно.
+    modules:
+      - { ref: slow, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.5" }, Offset: Unipolar } }
+      - { ref: fast, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "6" }, Offset: Unipolar } }
+      - { ref: mix, plugin: Fundamental, slug: CVMix, params: { Level 1: { display: "60" }, Level 2: { display: "20" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "100" }, Maximum: { display: "4" }, Minimum: { display: "-10" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency CV: { display: "50" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [slow, Triangle], to: [mix, CV 1] }
+      - { from: [fast, Sine], to: [mix, CV 2] }
+      - { from: [mix, Mix], to: [res, Signal] }
+      - { from: [res, Signal], to: [vcf, Frequency] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [audio, "To \"device output 1\""] }
+      - { from: [mix, Mix], to: [scope, Ch 1] }
+      - { from: [res, Signal], to: [scope, Ch 2] }
+    break: { set_param: { module: res, name: Gain, value: { display: "0" } } }
+    check: { kind: fixed, expect_param: { module: res, name: Gain, display_min: 90 } }
+    hints:
+      fixed:
+        - Сравни два канала на Scope. Где сигнал есть, а где пропадает?
+        - Какое звено между Mix и фильтром может обнулить модуляцию?
+        - Подними Gain у Rescale до 100 %.
+    faq:
+      - q: Почему из-за одной ручки пропала вся модуляция?
+        a: Звенья цепочки перемножаются. Gain на 0 % умножает сумму на ноль, и дальше идёт плоская линия. Остальные ручки уже ничего не меняют.
+      - q: Как быстро найти такой ноль?
+        a: Смотри на Scope после каждого звена. Где линия движется, а следующая плоская, там ноль. Здесь это выход Signal у Rescale.
+
+  - id: b11
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Модуляция проходит три вопроса: сколько, от какого значения до какого, сколько источников.
+      - CV Mix складывает до трёх сигналов, у каждого свой Level от −100 до +100 %.
+      - Rescale масштабирует, сдвигает и ограничивает: Gain, Offset, Minimum, Maximum.
+      - Глубина — произведение звеньев. Любой ноль гасит модуляцию.
+      Сохрани патч: схема «два LFO, сумма, граница» нужна дальше.
+      **Источники:** Sound On Sound, «Synth Secrets», статьи про VCA и про модуляцию; Make Noise, руководство MATHS; руководство VCV Rack Free.
+    questions:
+      - q: Что делает Maximum у Rescale и зачем ставить его перед фильтром?
+        options:
+          - { text: "Срезает сигнал сверху и не даёт фильтру открыться шире", correct: true, why: "Maximum — верхняя граница выхода. Фильтр остаётся в нужном диапазоне при любой сумме." }
+          - { text: "Усиливает сигнал до максимума", why: "Усилением занимается Gain. Maximum ничего не усиливает, а ограничивает." }
+          - { text: "Включает вход Signal", why: "Вход работает всегда. Maximum только определяет предел выхода." }
+    next: |
+      # Дальше: 4.4
+      **Случайность.** Модулятором станет не волна, а случайное напряжение: каждый такт новое значение.
+    faq:
+      - q: Что повторить, если запутался в цепочке?
+        a: Урок 1.4 про аттенюаторы и смещение, а в этом уроке блок про глубину как произведение. Пройди по цепочке и найди ручку на нуле.
+      - q: Нужен ли аттенювертер в этой схеме?
+        a: Не обязателен. Он удобен, когда нужно отдельно ослабить или перевернуть один сигнал до сумматора.

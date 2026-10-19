@@ -35,8 +35,8 @@ Read this first after a compaction or restart; continue from the first task that
 | W5 | 5.1 pilot p1-01 + full QA | DONE | 0c6ef47 | validate 0/0, compile 0/0, live verify 4/4 blocks, template checks ok, harness previews checked; in-Rack run → rack-test.mjs (owner) |
 | W5 | 5.2 pilot p3-05 | DONE | 0c6ef47 | same: live verify 3/3, template checks ok |
 | W6 | tutor runtime, /api/rack/*, stub, tests | DONE | 2db443c | TUTOR.md 600 words; runner + probe-and-fallback; /api/rack/*; vault note log; tutor model/effort in Settings; tests 14/14 (`node --test app/server/rack/rack.test.mjs`, servers 5185/5186), all server tests 87/87, web e2e-vcv ok; real CLI flags UNVERIFIED (open issue) |
-| W7 | parts 0–9 | TODO | | |
-| W8 | Atlas companion | DONE | (W8 commit) | «Модульный синтез» shows Rack progress (block N of M, learned, last lesson), note links (obsidian://), «Как заниматься в Rack» (#/vcv/rack), tutor indicator; old web lesson kept as a «веб-урок» link; checked in the browser on test server 5185; tests 87/87, e2e-vcv ok |
+| W7 | parts 0–9 | DONE | (W7 commit) | 10 writer subagents (sonnet), 50 lessons + 2 pilots = 52 lessons, 576 blocks; validate 0 errors / 23 warnings (titles, sites, old anatomy coverage); compile 0/0; gates 0; template checks 102/102; text areas 0 overflow in both themes (new build gate); live verify 190/256 blocks — all 66 failures are silent outputs (no MIDI device, Push/Pulses need a press, Clocked stopped when built over REST, SEQ 3 1 ms triggers missed by 100 ms sampling, breaks in debug blocks), every param matched its target |
+| W8 | Atlas companion | DONE | 2515e38 | «Модульный синтез» shows Rack progress (block N of M, learned, last lesson), note links (obsidian://), «Как заниматься в Rack» (#/vcv/rack), tutor indicator; old web lesson kept as a «веб-урок» link; checked in the browser on test server 5185; tests 87/87, e2e-vcv ok |
 | W9 | whole-course QA, read-through | TODO | | |
 | W10 | owner-install.sh, final build, REPORT, OWNER_CHECKLIST | TODO | | |
 
@@ -54,13 +54,23 @@ Read this first after a compaction or restart; continue from the first task that
 - `app/dist` was rebuilt (`vite build`, 2026-10-20 02:17) to check W8 in the browser. If the owner's Atlas service on 5175 serves this checkout, it already serves the new UI; with the old server process the Rack parts degrade (no tutor line, no Rack progress) until the service restarts.
 - Long mono values (more than 12 characters, e.g. `To "device output 1"`) may break at spaces; short ones (`440 Гц`) never break. Same in C++ and Node.
 
+- Fixes after W7 (main session): 0.4 anatomy of a second MCP Server → a story block (a second MCP Server in a lesson patch could fight for port 2600); three debug checks matched the wrong one of two identical modules and passed on the broken patch (4.5, 8.2, 9.3) → a pinning cable added to the check; Task width is now chosen by the compiler (14/16/18/20 HP) from a model of TaskView (title, steps, text, «Проверить» bar), 3 try blocks merged to 5 steps; validator compares whole tokens («8vert», «1V/octave», «Mid/Side») and knows Rack menu words; template checks: one module per ref, fine parameter search, snapshot points for non-linear params, display_in repair; resolver: a measured table wins over a guessed law.
+- Clocked ratio table measured live (session row, module deleted): raw −34…34 → −96…−1.5, 1, 1.5…96 (35 values, sign = side). Stored in rack/course/calibration.json; 5.1 now uses display ±2. Which side divides is UNVERIFIED (the clock did not run when built over REST, see below).
+
 ## Open issues
+
+- **Clocked built over REST does not tick**: outputs stay at 10 V before and after a Run press (session row, 2026-10-20). The card says a new Clocked runs; this is unconfirmed, so lessons now say «Run переключает ход; если такт стоит, нажми Run» instead of «новый Clocked уже идёт». Owner checklist: open 5.1, check that the clock runs, and which side of Clk ratio divides.
 
 - **The test Rack instance cannot start inside the sandbox** (2026-10-20, two tries, 20 s and 60 s): Rack 2.6.6 with `-u rack/.rack-test` hangs at `Creating RtAudio Core Audio driver` (XPC «Connection invalid» for hiservices; CoreAudio is not reachable from the sandbox). `audio::init()` / `rtaudioInit()` run even in headless mode, so `-h` and `-t` cannot work either. Per plan §8: in-Rack checks move to the owner's checklist; Rack is not run outside the sandbox.
   - Fallback for visual QA and text-overflow checks: an offscreen **render harness** (`rack/plugin/tests/render/`) that compiles the plugin's Rack-free view/draw code with the real nanovg.c + fontstash from VCV's fork (`VCVRack/nanovg@0bebdb3`, the submodule pinned by Rack v2.6.6; zlib licence) and a small software rasterizer backend → PNG (stb_image_write). Same font files and same fontstash measuring as in Rack, so line breaks and overflow match.
   - The dev bridge and `rack/scripts/rack-test.mjs` are still built so the owner can run the in-Rack QA in one command outside the sandbox (OWNER_CHECKLIST).
 
 - **The real tutor CLI flags are unverified**: the session may not run `claude`. The argv follows the plan (§7.2); the runner drops `--exclude-dynamic-system-prompt-sections`, `--permission-prompts`, `--effort`, `--append-system-prompt-file` (→ `--append-system-prompt`) one by one on «unknown option» and logs it to `APP_STATE_DIR/rack-tutor.jsonl`. Tested with the stub only → OWNER_CHECKLIST (first real question; check the log for `fallback`). With `cwd` `vcv/tutor/run/` and `--setting-sources local`, memory files (CLAUDE.md of REPO and of the owner's home) may still be loaded by the CLI; not controllable from the flags the plan lists.
+
+## Measurements for REPORT
+
+- Tutor latency, stub path (5 runs, `TutorRunner` + `vcv/tutor/stub-claude.mjs`, delta pause 0): process start → warm-up answered 26–27 ms; message sent → first chunk 0.3 ms, whole reply 0.3–0.4 ms. In Rack the plugin polls every 250 ms, so the first chunk shows within ≤ 250 ms of arriving at the server. Real model: start + MCP connect + warm-up happen at lesson open, not on the first question.
+- owner-install.sh: dry run and a real run tested with `HOME=rack/.fakehome` (fake AtlasTutor and Atlas folders backed up, new Atlas copied; launchctl line only printed in the dry run).
 
 ## Background processes
 

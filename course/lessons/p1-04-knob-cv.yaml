@@ -1,0 +1,364 @@
+id: p1-04-knob-cv
+num: "1.4"
+part: 1
+title: Ручка + CV
+goal: "Уменьшать, переворачивать, сдвигать и обрезать управляющее напряжение, чтобы оно двигало параметр ровно в нужных пределах."
+builds: "Ежедневную работу с источниками движения: LFO в части 4, огибающие в части 3 и секвенсор в части 5. Так вибрато становится аккуратным, а не сиреной."
+minutes: 30
+requires: [p1-02-voltage]
+glossary: [аттенюатор, аттенюверт, смещение, ограничение диапазона, нормализация входа, LFO]
+sources: [vcv-free-manual, mn-maths, pc-learning-synthesis]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Ручка + CV
+    page: |
+      # 1.4 Ручка + CV
+      **Ты научишься:** ослаблять, переворачивать, сдвигать и обрезать сигнал, который двигает параметр.
+      **Ты соберёшь:** [[LFO]] → CV Mix → Rescale → VCO: высота качается не выше двух октав над исходной.
+      **Понадобится:** 30 минут. В конце звук с покачиванием высоты, начни с тихой громкости.
+    figure: { template: flow, nodes: [{ id: lfo, label: LFO, kind: cv }, { id: mix, label: CV Mix, kind: cv }, { id: res, label: Rescale, kind: cv }, { id: vco, label: VCO, kind: audio }, { id: out, label: Audio, kind: audio }], edges: [{ from: lfo, to: mix, kind: cv }, { from: mix, to: res, kind: cv }, { from: res, to: vco, kind: cv }, { from: vco, to: out, kind: audio }], layout: row, caption: "Путь сигнала урока: тонкие линии — CV, толстые — звук." }
+    faq:
+      - q: Зачем возиться с размахом CV, если у модуля есть своя ручка?
+        a: Ручка двигает параметр один раз, а CV двигает его всё время. Размах и положение CV решают, насколько далеко и в какую сторону уйдёт параметр.
+      - q: Что такое LFO, я его ещё не проходил?
+        a: Пока это источник медленной волны 0…10 В. Подробно он будет в уроке 4.1, здесь он нужен только как движущееся напряжение.
+      - q: Звук будет громким?
+        a: Нет, если начать с тихой громкости. Демо звучит только в активном ряду, а уровень задаёт ручка Level у Audio.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про то, как приручить управляющее напряжение. Ошибаться можно.
+    questions:
+      - q: LFO даёт 0…10 В, а для вибрато нужно около ±0,1 В. Что поставить между ними?
+        free: true
+        options:
+          - { text: "Аттенюатор, он ослабит сигнал в десятки раз", correct: true, why: "Размах нужно уменьшить, а аттенюатор для этого и существует. Ручка на несколько процентов оставит доли вольта." }
+          - { text: "Усилитель", why: "Усилитель делает сигнал больше. Тут нужно обратное." }
+          - { text: "Другую форму волны у LFO", why: "Форма волны меняет рисунок, а не размах. Размах от формы не зависит." }
+      - q: Чем аттенюверт отличается от аттенюатора?
+        options:
+          - { text: "Умеет ещё и переворачивать сигнал", correct: true, why: "Его ручка идёт от −100 до +100 %. Отрицательные значения дают зеркальную копию." }
+          - { text: "Усиливает сигнал выше исходного", why: "Приставка «верт» значит «переверни», а не «усиль». Выше 100 % он не идёт." }
+          - { text: "Пропускает только положительные значения", why: "Это ограничитель диапазона. Аттенюверт пропускает любые, но умеет менять знак." }
+      - q: Что делает смещение, или offset?
+        options:
+          - { text: "Прибавляет к сигналу постоянное напряжение", correct: true, why: "Форма волны остаётся прежней, весь график сдвигается вверх или вниз." }
+          - { text: "Убирает из сигнала всё лишнее", why: "Это фильтрация. Смещение ничего не убирает, а только добавляет вольты." }
+          - { text: "Меняет частоту сигнала", why: "Частота остаётся той же. Смещение двигает график по вертикали, а не по времени." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Ослабить и перевернуть
+    page: |
+      # Ослабить и перевернуть
+      LFO отдаёт 0…10 В. Для мягкого вибрато нужна доля вольта. Между ними ставят регулятор глубины.
+      [[аттенюатор|Аттенюатор]] уменьшает сигнал: ручка идёт от 0 до 100 %. [[аттенюверт|Аттенюверт]] делает то же и умеет переворачивать: от −100 до +100 %.
+      Минус 100 % даёт зеркальную копию. Где волна росла, там она падает.
+      Доля сигнала, которая доходит до цели, — глубина модуляции. В этом уроке её задают CV Mix и 8vert.
+      Многие модули уже имеют аттенюверт внутри. У VCO ручка **Frequency modulation** от −100 до +100 % работает именно так.
+    figure: { template: voltages, ranges: [{ label: LFO, min: 0, max: 10 }, { label: "50 %", min: 0, max: 5 }, { label: "-50 %", min: -5, max: 0 }], caption: "Один LFO после Level 100 %, 50 % и −50 %: размах и знак." }
+    simpler: Кран на кухне. Напор в трубе — сигнал, кран — аттенюатор. Прикрыл, и воды меньше. Аттенюверт — кран, который ещё умеет пустить воду в обратную сторону.
+    faq:
+      - q: Чем аттенюатор отличается от усилителя?
+        a: "Аттенюатор только ослабляет: от 0 до 100 % исходного размаха. Усилитель умножает на число больше единицы. Регуляторы этого урока выше 100 % не идут."
+      - q: Зачем переворачивать сигнал?
+        a: Чтобы двигать цель в обратную сторону. Пока одна цель растёт вместе с волной, другая падает. Так, например, один LFO открывает и закрывает два параметра зеркально.
+      - q: Что значит «глубина»?
+        a: Доля сигнала, которая дошла до цели. При 50 % на цель попадает половина размаха LFO, при 10 % — десятая часть.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Сдвинуть и обрезать
+    page: |
+      # Сдвинуть и обрезать
+      Иногда важен не только размах, но и положение. [[смещение|Смещение]], или offset, прибавляет к сигналу постоянное напряжение.
+      Форма остаётся той же, график целиком уезжает вверх или вниз.
+      [[ограничение диапазона|Ограничение диапазона]] не пропускает значения за границами. Всё выше **Maximum** срезается, всё ниже **Minimum** тоже.
+      Так модуляция не уйдёт дальше, например, двух вольт.
+      Rescale делает это в таком порядке: умножает на **Gain**, прибавляет **Offset**, потом обрезает по границам.
+    figure: { template: voltages, ranges: [{ label: LFO, min: 0, max: 10 }, { label: "Offset -2", min: -2, max: 8 }, { label: "Maximum 2", min: 0, max: 2 }], caption: "Сдвиг на −2 В и срез на 2 В: что остаётся от диапазона 0…10 В." }
+    simpler: "Сигнал — человек на лестнице. Смещение поднимает или опускает его на этаж. Ограничитель — потолок и пол: выше потолка не выйти, ниже пола не спуститься."
+    faq:
+      - q: Смещение меняет форму волны?
+        a: Нет. Все точки сдвигаются на одну величину, форма и размах те же. Меняется только то, где график лежит по вертикали.
+      - q: Как срез выглядит на Scope?
+        a: Верхушка волны превращается в плоскую полку на уровне Maximum. Если сигнал управляет высотой, нота дойдёт до предела и там задержится.
+      - q: Зачем и Offset, и Minimum с Maximum?
+        a: Offset двигает сигнал целиком, а границы обрезают то, что вышло за пределы. Вместе они «поставили в нужное место» и «не дали уйти дальше».
+
+  - id: b5
+    type: live
+    preset: live
+    title: Level режет глубину
+    page: |
+      # Level режет глубину
+      Здесь LFO пока чёрный ящик: медленная волна 0…10 В. Подробно он будет в уроке 4.1.
+      На Scope две линии. Ch 1 — волна прямо из LFO. Ch 2 — та же волна после **CV Mix** на 50 %.
+      Поверни **Level 1** на 100, потом на −50. Волна растёт, потом переворачивается.
+      Пустые входы CV Mix сами подают 10 В — это [[нормализация входа|нормализация]]. Поэтому Level у пустого входа сдвигает волну.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" }, Offset: Unipolar } }
+      - { ref: mix, plugin: Fundamental, slug: CVMix, params: { Level 1: { display: "50" }, Level 2: { display: "0" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "500" }, Trigger: Disabled, Gain 1: { display: "20" }, Gain 2: { display: "20" } }
+    cables:
+      - { from: [lfo, Sine], to: [scope, Ch 1] }
+      - { from: [lfo, Sine], to: [mix, CV 1] }
+      - { from: [mix, Mix], to: [scope, Ch 2] }
+    notes:
+      - { after: lfo, text: "Медленная волна 0…10 В: **Offset** стоит в Unipolar.", targets: [{ module: lfo, param: Offset }] }
+      - { after: mix, text: "**Level 1** на 50: до `Ch 2` доходит половина размаха.", targets: [{ module: mix, param: Level 1 }] }
+      - { after: mix, text: "Пустой **CV 2** сам подаёт 10 В, и **Level 2** сдвигает волну.", targets: [{ module: mix, input: CV 2 }, { module: mix, param: Level 2 }] }
+      - { after: scope, text: "`Ch 1` — исходник, `Ch 2` — после CV Mix.", targets: [{ module: scope, input: Ch 1 }, { module: scope, input: Ch 2 }] }
+    faq:
+      - q: Волна на Ch 2 вдвое ниже. Куда делась вторая половина?
+        a: "Level 1 на 50 % умножил сигнал на 0,5. Ничего не потерялось: размах ослаблен ровно вдвое, форма и частота те же."
+      - q: Почему только что поставленный CV Mix молчит?
+        a: Все три Level стоят на 0 %, и ни один сигнал не доходит до выхода. Подними нужный Level, и волна появится.
+      - q: Откуда напряжение, если на CV 2 нет кабеля?
+        a: Пустой вход подаёт сам 10 В. Это называется нормализацией входа. Level 2 на 20 % даёт плюс 2 В, и вся волна поднимается на два вольта.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: Панель CV Mix
+    page: |
+      # Панель CV Mix
+      CV Mix складывает до трёх сигналов, у каждого свой Level. Результат выходит одним кабелем.
+    module: { ref: mix, plugin: Fundamental, slug: CVMix }
+    notes:
+      - { text: "Входы **CV 1**, **CV 2** и **CV 3** — три источника.", targets: [{ module: mix, input: CV 1 }, { module: mix, input: CV 2 }, { module: mix, input: CV 3 }] }
+      - { text: "**Level 1** — уровень первого входа, от −100 до +100 %. По умолчанию 0 %.", targets: [{ module: mix, param: Level 1 }] }
+      - { text: "**Level 2** и **Level 3** работают так же для своих входов.", targets: [{ module: mix, param: Level 2 }, { module: mix, param: Level 3 }] }
+      - { text: "Выход **Mix** — сумма трёх сигналов с учётом уровней.", targets: [{ module: mix, output: Mix }] }
+    later:
+      - { what: "Сведение нескольких модуляторов", lesson: "4.3" }
+    faq:
+      - q: Может ли CV Mix сделать сигнал больше исходного?
+        a: Нет. Level идёт от −100 до +100 %, то есть сигнал только ослабляется или переворачивается.
+      - q: Как сложить два LFO?
+        a: Один LFO в CV 1, другой в CV 2, оба Level подними. Выход Mix даст сумму двух сигналов.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Rescale
+    page: |
+      # Панель Rescale
+      Rescale ослабляет, сдвигает и обрезает сигнал за один проход. Только что поставленный Rescale молчит: Gain стоит на 0 %.
+    module: { ref: res, plugin: Fundamental, slug: Rescale }
+    notes:
+      - { text: "Вход **Signal** принимает исходное CV.", targets: [{ module: res, input: Signal }] }
+      - { text: "**Gain** — масштаб от −100 до +100 %. На нуле сигнал не проходит.", targets: [{ module: res, param: Gain }] }
+      - { text: "**Offset** прибавляет постоянное напряжение, от −10 до +10 В.", targets: [{ module: res, param: Offset }] }
+      - { text: "**Maximum** — верхняя граница. Всё выше срезается. По умолчанию 10 В.", targets: [{ module: res, param: Maximum }] }
+      - { text: "**Minimum** — нижняя граница. По умолчанию −10 В.", targets: [{ module: res, param: Minimum }] }
+      - { text: "Выход **Signal** — результат: Gain, Offset, срез.", targets: [{ module: res, output: Signal }] }
+    faq:
+      - q: Я подключил Rescale, а на выходе только прямая линия. Почему?
+        a: Скорее всего, Gain на 0 %. Сигнал умножен на ноль, остался только Offset. Подними Gain до 100 %.
+      - q: Какая граница главнее, Minimum или Maximum?
+        a: Они независимы. Maximum не пускает значения вверх, Minimum — вниз. Если нужен диапазон от 0 до 2 В, ставь Minimum 0 и Maximum 2.
+
+  - id: b8
+    type: live
+    preset: live
+    title: Срез на высоте
+    page: |
+      # Срез на высоте
+      Теперь та же волна управляет высотой. LFO идёт через CV Mix в Rescale, оттуда на вход высоты VCO.
+      Maximum стоит на 2 В: нота поднимается не выше двух октав над 261,63 Гц. Верхушка волны срезана, на Scope видна полка.
+      Сравни на слух: растёт нота плавно или упирается в потолок?
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" }, Offset: Unipolar } }
+      - { ref: mix, plugin: Fundamental, slug: CVMix, params: { Level 1: { display: "50" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "100" }, Offset: { display: "0" }, Maximum: { display: "2" }, Minimum: { display: "0" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "500" }, Trigger: Disabled, Gain 1: { display: "20" } }
+    cables:
+      - { from: [lfo, Sine], to: [mix, CV 1] }
+      - { from: [mix, Mix], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [res, Signal], to: [scope, Ch 1] }
+      - { from: [vco, Sine], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mix, text: "**Level 1** на 50: LFO ослаблен до 0…5 В.", targets: [{ module: mix, param: Level 1 }] }
+      - { after: res, text: "**Maximum** на 2: всё выше срезается.", targets: [{ module: res, param: Maximum }] }
+      - { after: vco, text: "Вольты из Rescale идут в `1V/octave pitch`: 1 В — октава.", targets: [{ module: vco, input: 1V/octave pitch }] }
+      - { after: scope, text: "Полка на уровне 2 В — след среза.", targets: [{ module: scope, input: Ch 1 }] }
+    faq:
+      - q: Нота поднимается и замирает. Так должно быть?
+        a: Да. Когда волна достигает Maximum, Rescale перестаёт её поднимать, и высота стоит на пределе до тех пор, пока волна не пойдёт вниз.
+      - q: Почему высота качается вверх, а не вокруг исходной?
+        a: LFO в режиме Unipolar даёт только положительные вольты, то есть только повышение. Чтобы качать в обе стороны, нужен сдвиг на минус или режим Bipolar.
+      - q: Слишком резкое покачивание. Что уменьшить?
+        a: Level 1 у CV Mix, например до 10 %. Размах сигнала уменьшится, высота будет колебаться на доли октавы.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поверни **Level 1** у CV Mix от 0 до 100, потом до −100."
+        see: Размах на Ch 1 растёт, потом волна переворачивается вниз от нуля.
+      - do: "Подними **Level 2** с 0 до 30 при пустом входе CV 2. Верни в 0."
+        see: Линия на Ch 1 поднимается, форма та же. Вольты берутся из нормализации входа.
+      - do: "Уменьши **Maximum** у Rescale с 10 до 1."
+        see: Верхушка волны на Ch 2 срезается всё ниже. На слух высота перестаёт расти.
+      - do: "Сдвинь **Offset** у Rescale на −2, потом на 2."
+        see: Вся волна на Ch 2 уезжает вниз или вверх, форма остаётся.
+      - do: "Поверни **Gain** у Rescale от 100 до 50 и до −100."
+        see: Размах на Ch 2 уменьшается, затем волна переворачивается.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" }, Offset: Unipolar } }
+      - { ref: mix, plugin: Fundamental, slug: CVMix, params: { Level 1: { display: "50" }, Level 2: { display: "0" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "100" }, Offset: { display: "0" }, Maximum: { display: "10" }, Minimum: { display: "-10" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "500" }, Trigger: Disabled, Gain 1: { display: "20" }, Gain 2: { display: "20" } }
+    cables:
+      - { from: [lfo, Sine], to: [mix, CV 1] }
+      - { from: [mix, Mix], to: [res, Signal] }
+      - { from: [mix, Mix], to: [scope, Ch 1] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [res, Signal], to: [scope, Ch 2] }
+      - { from: [vco, Sine], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mix, text: "Шаги 1 и 2 — здесь.", targets: [{ module: mix, param: Level 1 }, { module: mix, param: Level 2 }] }
+      - { after: res, text: "Шаги 3, 4 и 5 — здесь.", targets: [{ module: res, param: Maximum }, { module: res, param: Offset }, { module: res, param: Gain }] }
+    faq:
+      - q: Ничего не меняется, когда я кручу Maximum.
+        a: Пока размах волны меньше Maximum, срезать нечего. Сделай Level 1 больше или опусти Maximum ниже вершины волны.
+      - q: Как вернуть ручку на исходное значение?
+        a: Двойной щелчок по ручке сбрасывает её на значение по умолчанию. Точное число можно вписать через правый щелчок.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — высота в рамках
+    task: |
+      Собери вибрато, которое не уходит выше двух октав над исходной нотой.
+      1. Поставь между маркерами **LFO**, **CV Mix**, **Rescale** и **VCO**.
+      2. `Sine` у LFO → `CV 1` у CV Mix. `Mix` → `Signal` у Rescale.
+      3. `Signal` у Rescale → `1V/octave pitch` у VCO. `Sine` у VCO → Audio этого ряда.
+      4. **Level 1** — около 50. **Gain** у Rescale — 100. **Maximum** — около 2.
+      Потом нажми «Проверить» и объясни в чате, что делает каждый из трёх регуляторов.
+    given: [audio]
+    check: p1-04-knob-cv
+    hints:
+      "cable:1":
+        - Через что идёт модуляция?
+        - Выход LFO идёт в первый вход CV Mix.
+        - "Кабель из `Sine` у LFO во вход `CV 1` у CV Mix."
+      "cable:2":
+        - Что обрезает диапазон?
+        - Выход CV Mix идёт в Rescale.
+        - "Кабель из `Mix` у CV Mix во вход `Signal` у Rescale."
+      "cable:3":
+        - Что управляет высотой VCO?
+        - Выход Rescale идёт во вход высоты VCO.
+        - "Кабель из `Signal` у Rescale во вход `1V/octave pitch` у VCO."
+      "cable:4":
+        - Слышно ли результат?
+        - Звук VCO идёт в Audio.
+        - "Кабель из `Sine` у VCO во вход `To \"device output 1\"` у Audio."
+      "param:1":
+        - Сколько процентов сигнала доходит до Rescale?
+        - Ручка Level 1 у CV Mix, она по умолчанию на нуле.
+        - Поставь Level 1 около 50.
+      "param:2":
+        - Что пропускает сигнал через Rescale?
+        - Если Gain на нуле, сигнал умножен на ноль.
+        - Поверни Gain у Rescale до 100 %.
+      "param:3":
+        - До скольких вольт ограничиваем?
+        - Ручка Maximum у Rescale.
+        - Поставь Maximum около 2.
+      "probe:1":
+        - Двигается ли сигнал после Rescale?
+        - Он должен качаться от 0 до 2 В. Проверь Level 1 и Gain.
+        - Подними Level 1 и Gain, потом нажми «Проверить» ещё раз.
+    faq:
+      - q: Звука нет, хотя всё подключено.
+        a: Проверь Level у Audio и Level 1 у CV Mix. Если Level 1 на 0 %, LFO не доходит до Rescale, а высота стоит на исходной ноте.
+      - q: Нужно ли ставить Minimum?
+        a: Нет. LFO в режиме Unipolar не уходит ниже 0 В, а Minimum по умолчанию −10 В, так что нижний срез не мешает.
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Кабели на месте, но высота VCO не качается: на Scope ровная линия.
+      Найди одну неверную настройку и исправь её. Кабели трогать не нужно.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" }, Offset: Unipolar } }
+      - { ref: mix, plugin: Fundamental, slug: CVMix, params: { Level 1: { display: "50" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "100" }, Offset: { display: "0" }, Maximum: { display: "2" }, Minimum: { display: "0" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "500" }, Trigger: Disabled, Gain 1: { display: "20" } }
+    cables:
+      - { from: [lfo, Sine], to: [mix, CV 1] }
+      - { from: [mix, Mix], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [res, Signal], to: [scope, Ch 1] }
+      - { from: [vco, Sine], to: [audio, "To \"device output 1\""] }
+    break: { set_param: { module: res, name: Gain, value: { display: "0" } } }
+    check: { kind: fixed, expect_param: { module: res, name: Gain, display_min: 90 } }
+    hints:
+      fixed:
+        - Модуляция доходит до Rescale, а на выходе её нет. Что могло её обнулить?
+        - Посмотри на ручку Gain у Rescale.
+        - Поставь Gain на 100 %.
+    faq:
+      - q: Куда делась модуляция, если кабели на месте?
+        a: Gain на 0 % умножает сигнал на ноль. Остаётся только Offset, поэтому линия ровная. Кабель цел, но сигнала на нём нет.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - **Аттенюатор** ослабляет от 0 до 100 %, **аттенюверт** ещё и переворачивает, от −100 до +100 %.
+      - **Смещение** прибавляет постоянное напряжение, **ограничение диапазона** срезает всё за границами.
+      - CV Mix сводит до трёх сигналов. Rescale делает Gain, Offset и срез за один проход.
+      - Пустой вход CV Mix сам подаёт 10 В.
+      Сохрани патч: Ctrl+S сохраняет твою копию урока.
+      **Источники:** документация VCV Rack, раздел Free (8vert, CV Mix, Rescale); Make Noise, руководство MATHS; Perfect Circuit, серия «Learning Synthesis».
+    questions:
+      - q: Чем Offset отличается от Maximum у Rescale?
+        options:
+          - { text: "Offset сдвигает весь сигнал, Maximum срезает всё выше границы", correct: true, why: "Сдвиг сохраняет форму, срез её меняет: верхушка становится полкой." }
+          - { text: "Они делают одно и то же", why: "Offset прибавляет вольты ко всем точкам. Maximum меняет только те, что выше границы." }
+      - q: Почему только что поставленный CV Mix молчит?
+        options:
+          - { text: "Все Level стоят на 0 %", correct: true, why: "Каждый вход умножен на свой Level. Нули дают нуль на выходе, пока не поднимешь нужный." }
+          - { text: "У него нет питания", why: "Питание не при чём. Модуль работает, но сигнал на выходе нулевой, пока Level на нуле." }
+    next: |
+      # Дальше: 1.5
+      Теперь у тебя есть все виды сигналов. Научимся записывать патч картой: откуда сигнал идёт и куда приходит.
+    faq:
+      - q: Нужно ли помнить порядок операций в Rescale?
+        a: Достаточно помнить, что сначала Gain, потом Offset, потом срез. Если сомневаешься, проверь на Scope по картинке.
+      - q: Что повторить, если не уверен?
+        a: Вернись к ряду «Level режет глубину». Поверни Level 1 и посмотри на разницу между Ch 1 и Ch 2.

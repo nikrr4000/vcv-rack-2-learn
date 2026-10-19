@@ -24,7 +24,7 @@ const num = (s) => Number.parseFloat(String(s).replace(",", "."));
 
 function displayOf(key, p, raw) {
 	if (Array.isArray(p.options)) return p.options[Math.round(raw - p.min)] ?? "";
-	const law = lawOf(p);
+	const law = calibration[key]?.[p.name] ? null : lawOf(p);
 	const t = (raw - p.min) / (p.max - p.min);
 	const a = num(p.display?.min);
 	const b = num(p.display?.max);
@@ -36,6 +36,14 @@ function displayOf(key, p, raw) {
 		for (const row of table) if (Math.abs(row[0] - raw) < Math.abs(best[0] - raw)) best = row;
 		return best[1];
 	}
+	// No law, no table: the points the snapshot saw (exact), else piecewise-linear between them.
+	const seen = [[p.min, p.display?.min], [(p.min + p.max) / 2, p.display?.mid], [p.max, p.display?.max], [p.default, p.displayDefault]]
+		.filter(([, d]) => d !== undefined && Number.isFinite(num(d)))
+		.map(([r, d]) => [r, num(d)])
+		.sort((x, y) => x[0] - y[0]);
+	const hit = seen.find(([r]) => Math.abs(r - raw) < 1e-6);
+	if (hit) return String(hit[1]);
+	for (let i = 0; i + 1 < seen.length; i++) if (raw >= seen[i][0] && raw <= seen[i + 1][0]) return String(seen[i][1] + ((raw - seen[i][0]) / (seen[i + 1][0] - seen[i][0])) * (seen[i + 1][1] - seen[i][1]));
 	return p.displayDefault ?? "";
 }
 
@@ -84,7 +92,11 @@ for (const id of ids) {
 			if (it.mode === "debug") {
 				// Repair the break: the expected cable(s) and param(s).
 				const ref = Object.fromEntries((it.check.modules || []).map((m) => [m.ref, null]));
-				for (const m of patch.modules.filter((x) => scope.includes(x.id))) for (const k of Object.keys(ref)) if (!ref[k] && it.check.modules.find((x) => x.ref === k)?.slug === m.model) ref[k] = m;
+				// Each module takes one ref (two VCOs → vco_a, vco_b in patch order).
+				for (const m of patch.modules.filter((x) => scope.includes(x.id))) {
+					const k = Object.keys(ref).find((r) => !ref[r] && it.check.modules.find((x) => x.ref === r)?.slug === m.model);
+					if (k) ref[k] = m;
+				}
 				const extra = [];
 				const over = {};
 				const ec = Array.isArray(it.check.expect_cable?.[0]) ? it.check.expect_cable : it.check.expect_cable ? [it.check.expect_cable] : [];
@@ -100,12 +112,12 @@ for (const id of ids) {
 					const m = ref[p.module];
 					const sp = snapshots[`${m.plugin}/${m.model}`].params.find((x) => x.name === p.name);
 					if (p.display_in && sp.options) over[`${m.id}:${sp.id}`] = sp.min + sp.options.indexOf(p.display_in[0]);
-					else if (p.display_in) over[`${m.id}:${sp.id}`] = sp.min;
 					else {
-						for (let k = 0; k <= 200; k++) {
-							const v = sp.min + ((sp.max - sp.min) * k) / 200;
+						for (let k = 0; k <= 20000; k++) {
+							const v = sp.min + ((sp.max - sp.min) * k) / 20000;
 							const d = num(displayOf(`${m.plugin}/${m.model}`, sp, v));
-							if ((p.display_min === undefined || d >= p.display_min) && (p.display_max === undefined || d <= p.display_max)) {
+							const inList = !p.display_in || p.display_in.some((x) => num(x) === d);
+							if (inList && (p.display_min === undefined || d >= p.display_min) && (p.display_max === undefined || d <= p.display_max)) {
 								over[`${m.id}:${sp.id}`] = v;
 								break;
 							}

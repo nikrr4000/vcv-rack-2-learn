@@ -1,0 +1,436 @@
+id: p9-05-mix-record
+num: "9.5"
+part: 9
+title: Сведение, запись, разбор
+goal: Свести партии с запасом по уровню, добавить реверберацию на посыле и записать весь трек в файл.
+builds: Законченный трек в файле и письменный разбор патча. Это последний урок курса.
+minutes: 55
+requires: [p9-04-arrangement, p7-05-recording]
+glossary: [сведение, посыл и возврат, мастер-уровень, запас по уровню, запись в файл, разбор патча, перегруз, шина]
+sources: [vcv-recorder, vcv-voltage-standards, dewald-gain]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Сведение, запись, разбор
+    page: |
+      # 9.5 Сведение, запись, разбор
+      **Ты научишься:** ставить уровни партий, вести [[реверберация|реверберацию]] через [[посыл и возврат]] и писать трек без [[перегруз|перегруза]].
+      **Ты соберёшь:** две [[шина|шины]], Plateau на посыле и Recorder на выходе.
+      **Понадобится:** 55 минут и патч из 9.4.
+      В конце у тебя будет файл трека на две с небольшим минуты и [[разбор патча]] от агента.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: parts, label: Партии, kind: audio }
+        - { id: master, label: VCA Mix, kind: audio }
+        - { id: plate, label: Plateau, kind: audio }
+        - { id: bus, label: "Mix L R", kind: audio }
+        - { id: out, label: Audio, kind: audio }
+        - { id: rec, label: Recorder, kind: audio }
+      edges:
+        - { from: parts, to: master, kind: audio }
+        - { from: master, to: bus, kind: audio }
+        - { from: master, to: plate, kind: audio }
+        - { from: plate, to: bus, kind: audio }
+        - { from: bus, to: out, kind: audio }
+        - { from: bus, to: rec, kind: audio }
+      caption: Сухой звук идёт на шины напрямую, реверберация возвращается в те же шины.
+    faq:
+      - q: Агент услышит мой микс?
+        a: Нет. Агент читает ручки, кабели и напряжения. Звук он не слышит и файл не открывает. О красоте звучания он спросит у тебя.
+      - q: Зачем писать в файл, если можно слушать в Rack?
+        a: Файл фиксирует результат. Ты сможешь послушать его вне Rack и послать другим. Запись также показывает перегрузы, которые на слух можно пропустить.
+      - q: Что такое разбор патча?
+        a: "Письменный анализ готового патча: уровни, запас, кабели, что проверено по числам, что нет. Его делает агент, а решения принимаешь ты."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про реверберацию, запись и уровень. Ответы подскажут, что повторить.
+    questions:
+      - q: Plateau стоит на посыле, его выход возвращается в шину. Какие Dry level и Wet level нужны?
+        free: true
+        options:
+          - { text: "Dry около 0, Wet около 100 %", correct: true, why: "Сухой звук уже идёт в сумму напрямую. С возврата нужен только эффект." }
+          - { text: "Dry 100 %, Wet 50 % — как по умолчанию", why: "Настройки по умолчанию рассчитаны на другое включение. На возврате сухой звук пойдёт дважды." }
+          - { text: "Оба на 100 %", why: "Больше обоих не значит лучше. Сухой звук удвоится и сумма станет громче." }
+      - q: К Recorder подключён только вход Left/mono. Что получится?
+        options:
+          - { text: "Моно-файл с одним каналом", correct: true, why: "Стерео получается только с обоими входами. Без Right запись моно." }
+          - { text: "Стерео, где правый канал тихий", why: "Правый вход сам не берёт левый." }
+          - { text: "Тишина, пока не подключён Right", why: "Recorder пишет и один канал." }
+      - q: Пик суммы на мастере ±8 В. Что это значит для записи?
+        options:
+          - { text: "Запас до 10 В около 2 дБ, мастер лучше убавить", correct: true, why: "Запас мал. На громких местах можно упереться в предел и получить перегруз." }
+          - { text: "Отлично, чем ближе к 10 В, тем лучше", why: "Максимум — не цель. Перегруз остаётся в файле жёстким искажением." }
+          - { text: "Recorder сам убавит, перегруза не будет", why: "Запись не выравнивает уровень. Она пишет то, что пришло." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Четыре шага сведения
+    page: |
+      # Четыре шага сведения
+      [[сведение|Сведение]] в этом уроке — четыре шага.
+      Уровни партий: около −10 dB на канал и 0 dB на **Mix level**.
+      Реверберация на посыле. [[мастер-уровень|Мастер-уровень]] с запасом. [[запись в файл|Запись]] в стерео.
+      Правило −10 dB — старт курса, а не закон. Пики разных партий не совпадают.
+    figure: { template: mixer, channels: [{ label: ударные, level: 3.5 }, { label: бас, level: 3 }, { label: пэд, level: 2.5 }, { label: сумма, level: 5 }], headroom: 10, caption: "Четыре партии и сумма с запасом до 10 В." }
+    simpler: Как громкость голосов в хоре. Если каждый поёт вполсилы, вместе выходит громко, но зал не оглох. Если все кричат, вместе будет перегруз.
+    faq:
+      - q: Откуда взялось −10 dB?
+        a: Это стартовая точка курса. Номинал звука ±5 В, предел 10 В. Четыре партии по −10 dB дают сумму около ±5 В. Подстрой по числам, когда услышишь.
+      - q: Сводить нужно по напряжению или на слух?
+        a: По напряжению проверяй запас, на слух выбирай баланс. Агент помогает с первым, а со вторым помогаешь себе ты.
+      - q: Почему не поставить все каналы на 0 dB?
+        a: Четыре партии по 0 dB складываются в сумму выше предела. Сначала режь каналы, потом добавляй мастер.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Реверберация на посыле
+    page: |
+      # Реверберация на посыле
+      [[посыл и возврат|Посыл]] — ответвление партии на эффект. Возврат — вывод эффекта обратно в сумму.
+      Выход **Channel 3** у VCA Mix идёт в **Left** у Plateau. Выходы **Left** и **Right** Plateau возвращаются в обе шины.
+      Сухой звук идёт в сумму напрямую. У Plateau остаётся **Dry level** около 0 и **Wet level** около 100 %.
+    figure:
+      template: flow
+      layout: row
+      nodes:
+        - { id: ch3, label: "Channel 3", kind: audio }
+        - { id: plate, label: Plateau, kind: audio }
+        - { id: busl, label: "Mix L", kind: audio }
+        - { id: busr, label: "Mix R", kind: audio }
+      edges:
+        - { from: ch3, to: plate, kind: audio }
+        - { from: plate, to: busl, kind: audio }
+        - { from: plate, to: busr, kind: audio }
+      caption: Партия уходит на Plateau после своей ручки и возвращается в обе шины.
+    simpler: Эхо в зале. Ты поёшь прямо в зал, а часть голоса уходит в соседний зал и возвращается позже. Громкость возврата ты задаёшь отдельно.
+    faq:
+      - q: Почему посыл берут с Channel 3, а не с Mix?
+        a: Выход Channel 3 стоит после ручки уровня партии. С Mix на реверберацию ушла бы вся сумма. Нам нужна только партия, которой нужна глубина.
+      - q: Что будет, если оставить Dry level на 100 %?
+        a: Сухой звук уйдёт в сумму второй раз. Пик шины вырастет, баланс изменится. Оставь Dry около 0.
+      - q: Почему возвращать надо в обе шины?
+        a: У Plateau два выхода, левый и правый. Каждый идёт в свою шину. Тогда реверберация стерео.
+
+  - id: b5
+    type: story
+    preset: story
+    title: Запас на мастере
+    page: |
+      # Запас на мастере
+      Две шины Mix — левая и правая. В канал 1 приходит сухой мастер, в канал 2 — возврат Plateau.
+      Выходы шин идут в оба выхода Audio и в **Left/mono** и **Right** у Recorder.
+      [[запас по уровню|Запас]] в dB считают от пика и предела 10 В. Пик 5 В даёт −6 dB, пик 8 В — около −2 dB.
+      Для железа советуют делать выходы горячими. В цифровом Rack важнее запас: [[перегруз]] остаётся в файле.
+    figure: { template: table, rows: [[Пик, Запас, Вывод], ["5 В", "−6 dB", хорошо], ["8 В", "−2 dB", "мало"], ["10 В", "0 dB", предел]], caption: "Запас относительно полной шкалы 10 В." }
+    simpler: Коробка и вещи. Пик — высота вещей. Если высота совпадает с крышкой, любая лишняя вещь не закроется. Запас — свободное место под крышкой.
+    faq:
+      - q: Почему 10 В — предел?
+        a: Полная шкала цифрового выхода в Rack соответствует 10 В. Выше сигнал срезается, и в звуке появляется жёсткое искажение.
+      - q: Что такое dBFS?
+        a: Децибелы относительно полной шкалы. 0 dBFS — предел, всё ниже — отрицательное число. Чем ближе к 0, тем меньше запас.
+      - q: Агент видит пики отдельных партий?
+        a: Только если выход Channel N подключён к чему-нибудь. Выход сообщает напряжение только с кабелем.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Уровни партий
+    page: |
+      # Уровни партий
+      Два VCO играют две партии. VCA Mix держит их на −10 dB, **Mix level** стоит на 0 dB.
+      Сумма идёт в левую шину и в Audio. Начни с тихой громкости.
+      Подними **Mix level** до +6 dB и вернись: пик растёт примерно вдвое.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "196" } } }
+      - { ref: master, plugin: Fundamental, slug: VCMixer, params: { Channel 1 level: { display: "-10" }, Channel 3 level: { raw: 0.3162 }, Mix level: { display: "0" } } }
+      - { ref: busl, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [master, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [master, Channel 3] }
+      - { from: [master, Mix], to: [busl, Channel 1] }
+      - { from: [busl, Mix], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: master, text: "**Channel N level** — уровень партии, **Mix level** — сумма.", targets: [{ module: master, param: Channel 1 level }, { module: master, param: Mix level }] }
+      - { after: busl, text: "**Level** шины — 100 %.", targets: [{ module: busl, param: Level }] }
+    faq:
+      - q: Почему звук такой тихий?
+        a: Каналы стоят на −10 dB, а Audio — на 0 dB выхода. Это запас. Поднимай громкость в системе, а не уровни партий.
+      - q: Что, если звук искажается?
+        a: Опусти Mix level на 0 dB или ниже. Если искажение остаётся, опусти каналы партий.
+      - q: Нужны ли две шины?
+        a: Для стерео — да. Левая и правая шины повторяют друг друга по входам. В этом демо только левая для простоты.
+
+  - id: b7
+    type: live
+    preset: live
+    title: Посыл на реверберацию
+    page: |
+      # Посыл на реверберацию
+      Партия **Channel 3** уходит на Plateau после своей ручки. Возврат идёт в канал 2 обеих шин.
+      Шины идут в Audio и в Recorder. Запись не включена: кнопку **Record** жмёшь только ты.
+      **Dry level** около 0, **Wet level** около 100 %.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "196" } } }
+      - { ref: master, plugin: Fundamental, slug: VCMixer, params: { Channel 1 level: { display: "-10" }, Channel 3 level: { raw: 0.3162 }, Mix level: { display: "0" } } }
+      - { ref: plate, plugin: Valley, slug: Plateau, params: { Dry level: { display: "0" }, Wet level: { display: "100" } } }
+      - { ref: busl, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+      - { ref: busr, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+      - { ref: rec, plugin: VCV-Recorder, slug: Recorder }
+    cables:
+      - { from: [vco1, Sawtooth], to: [master, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [master, Channel 3] }
+      - { from: [master, Mix], to: [busl, Channel 1] }
+      - { from: [master, Mix], to: [busr, Channel 1] }
+      - { from: [master, Channel 3], to: [plate, Left] }
+      - { from: [plate, Left], to: [busl, Channel 2] }
+      - { from: [plate, Right], to: [busr, Channel 2] }
+      - { from: [busl, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [busr, Mix], to: [audio, "To \"device output 2\""] }
+      - { from: [busl, Mix], to: [rec, Left/mono] }
+      - { from: [busr, Mix], to: [rec, Right] }
+    notes:
+      - { after: plate, text: "**Wet level** — сколько реверберации.", targets: [{ module: plate, param: Wet level }] }
+      - { after: rec, text: "Агент **Record** не нажимает.", targets: [{ module: rec, param: Record }] }
+    faq:
+      - q: Реверберации не слышно. Почему?
+        a: "Проверь кабели Channel 3 → Left у Plateau и Left/Right → каналы 2 шин. Потом посмотри на Wet level: он должен быть около 100 %."
+      - q: Звук стал громче, чем без реверберации. Это ошибка?
+        a: Нет. Реверберация добавляет энергию. Если запас стал малым, опусти Mix level или Wet level.
+      - q: Почему Recorder подключён, а запись не идёт?
+        a: Запись включает кнопка Record, и жмёшь её только ты. Подключённые входы просто ждут.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Панель Plateau
+    page: |
+      # Панель Plateau
+      Пластинчатая реверберация. Для сведения нужны пять ручек и четыре порта.
+    module: { ref: plate, plugin: Valley, slug: Plateau }
+    notes:
+      - { text: "**Dry level** — сухой звук на выходе. На возврате около 0.", targets: [{ module: plate, param: Dry level }] }
+      - { text: "**Wet level** — реверберация на выходе. На возврате около 100 %.", targets: [{ module: plate, param: Wet level }] }
+      - { text: "**Size** — размер «пластины», **Decay** — время затухания хвоста.", targets: [{ module: plate, param: Size }, { module: plate, param: Decay }] }
+      - { text: "**Pre-delay** — пауза до начала хвоста, от 0 до 500 мс.", targets: [{ module: plate, param: Pre-delay }] }
+      - { text: "Вход **Left** принимает посыл.", targets: [{ module: plate, input: Left }] }
+      - { text: "Выходы **Left** и **Right** возвращаются в шины.", targets: [{ module: plate, output: Left }, { module: plate, output: Right }] }
+    faq:
+      - q: Размер и Decay — одно и то же?
+        a: Нет. Size задаёт «размер комнаты», Decay — как долго звучит хвост. В плотной секции длинный хвост забивает бочку, в брейке он уместен.
+      - q: Что делает Pre-delay?
+        a: Откладывает начало реверберации. Партия звучит отчётливо, а хвост подходит чуть позже. Для плотных секций полезно.
+      - q: Нужен ли правый вход Plateau?
+        a: Для моно-посыла нет. Подключён только Left, Plateau сам делает стерео на выходе.
+
+  - id: b9
+    type: anatomy
+    preset: anatomy
+    title: Панель Recorder
+    page: |
+      # Панель Recorder
+      Рекордер пишет сигнал со своих входов на диск. Агент кнопки Record не нажимает.
+    module: { ref: rec, plugin: VCV-Recorder, slug: Recorder }
+    notes:
+      - { text: "Вход **Left/mono**: левый канал. Один он даст моно-файл.", targets: [{ module: rec, input: Left/mono }] }
+      - { text: "Вход **Right**: правый канал. Вместе с левым — стерео.", targets: [{ module: rec, input: Right }] }
+      - { text: "**Level** — уровень записи, по умолчанию 0 dB. Красный VU — слишком горячо.", targets: [{ module: rec, param: Level }] }
+      - { text: "**Record** начинает и останавливает запись. Нажимаешь только ты.", targets: [{ module: rec, param: Record }] }
+      - { text: "**Gate** и **Trigger** запускают запись сигналом. В треке оставь их пустыми.", targets: [{ module: rec, input: Gate }, { module: rec, input: Trigger }] }
+    faq:
+      - q: Где найти записанный файл?
+        a: "Папку и формат задаёт контекстное меню Recorder. Пункты меню проверь на экране: названия зависят от версии. Файлы нумеруются по порядку."
+      - q: Какой формат выбрать?
+        a: Для записи без потерь подойдёт WAV с высокой разрядностью, например 24 бита. Если места мало, выбери то, что предлагает меню.
+      - q: Что значит красный VU?
+        a: Сигнал на входе слишком горячий. Опусти Mix level у мастера, а не только Level у Recorder.
+
+  - id: b10
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поверни **Wet level** у Plateau с 100 до 30."
+        see: Реверберации меньше. На 100 % она максимальна для этой схемы.
+      - do: "Подними **Dry level** у Plateau до 100."
+        see: Сухой звук идёт в сумму второй раз, пик шины растёт. Верни к нулю.
+      - do: "Измени **Decay** у Plateau на низкое и высокое значение."
+        see: Хвост короче и длиннее. В плотной секции длинный хвост мешает бочке.
+      - do: "Подними **Mix level** у VCA Mix до +6 dB."
+        see: Пик шины растёт примерно вдвое. Верни не выше 0 dB.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "196" } } }
+      - { ref: master, plugin: Fundamental, slug: VCMixer, params: { Channel 1 level: { display: "-10" }, Channel 3 level: { raw: 0.3162 }, Mix level: { display: "0" } } }
+      - { ref: plate, plugin: Valley, slug: Plateau, params: { Dry level: { display: "0" }, Wet level: { display: "100" } } }
+      - { ref: busl, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+      - { ref: busr, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [master, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [master, Channel 3] }
+      - { from: [master, Mix], to: [busl, Channel 1] }
+      - { from: [master, Mix], to: [busr, Channel 1] }
+      - { from: [master, Channel 3], to: [plate, Left] }
+      - { from: [plate, Left], to: [busl, Channel 2] }
+      - { from: [plate, Right], to: [busr, Channel 2] }
+      - { from: [busl, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [busr, Mix], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: plate, text: "Шаги 1–3: ручки Plateau.", targets: [{ module: plate, param: Wet level }, { module: plate, param: Dry level }, { module: plate, param: Decay }] }
+    faq:
+      - q: Wet level 30, а реверберация осталась громкой. Почему?
+        a: Хвост зависит ещё от Size и Decay. Опусти Decay, и реверберация станет короче.
+      - q: Dry level 100 — звук стал громче или хуже?
+        a: "Громче и ближе: сухой звук удвоился. Баланс между партиями и реверберацией сместился. Верни Dry около 0."
+      - q: Mix level +6 dB — всё искажено.
+        a: Запас пропал. Верни Mix level на 0 dB или ниже. Если нужно громче, поднимай громкость в системе.
+
+  - id: b11
+    type: practice
+    preset: practice
+    title: Практика — сведи и запиши трек
+    task: |
+      Допиши в патч 9.4 сведение и запись.
+      1. **Mix level** у VCA Mix не выше 0 dB, партии около −10 dB.
+      2. `Channel 3` (пэд) → `Left` у Plateau. **Dry level** не выше 5 %, **Wet level** не ниже 95 %.
+      3. `Mix` мастера → `Channel 1` обеих шин. `Left` и `Right` Plateau → `Channel 2` левой и правой шин.
+      4. Шины → оба выхода Audio и `Left/mono` и `Right` у Recorder.
+      5. В меню Recorder задай папку. Нажми Reset у Clocked, Record, дождись конца и нажми Record снова.
+    given: [audio]
+    check: p9-05-mix-record
+    hints:
+      "cable:1":
+        - Левая шина не получает сухой сигнал.
+        - Какой выход VCA Mix несёт сумму партий?
+        - "`Mix` у VCA Mix → `Channel 1` левого Mix."
+      "cable:2":
+        - Правая шина не получает сухой сигнал.
+        - Тот же выход мастера нужен и справа.
+        - "`Mix` у VCA Mix → `Channel 1` правого Mix."
+      "cable:3":
+        - Реверберации нечего обрабатывать.
+        - Какой выход VCA Mix отдаёт партию после её ручки?
+        - "`Channel 3` у VCA Mix → вход `Left` у Plateau."
+      "cable:4":
+        - Левый выход реверберации не вернулся.
+        - Какой вход левой шины свободен?
+        - "`Left` у Plateau → `Channel 2` левого Mix."
+      "cable:5":
+        - Правый выход реверберации не вернулся.
+        - Какой вход правой шины свободен?
+        - "`Right` у Plateau → `Channel 2` правого Mix."
+      "cable:6":
+        - Слева ничего не слышно.
+        - Куда идёт выход левой шины?
+        - "`Mix` левого Mix → `To \"device output 1\"` у Audio."
+      "cable:7":
+        - Справа ничего не слышно.
+        - Куда идёт выход правой шины?
+        - "`Mix` правого Mix → `To \"device output 2\"` у Audio."
+      "cable:8":
+        - Recorder запишет тишину слева.
+        - Какой вход Recorder принимает левый канал?
+        - "`Mix` левого Mix → `Left/mono` у Recorder."
+      "cable:9":
+        - Файл будет моно.
+        - Какой вход Recorder принимает правый канал?
+        - "`Mix` правого Mix → `Right` у Recorder."
+      "param:1":
+        - На запись пойдёт горячий сигнал.
+        - Что стоит на Mix level?
+        - Поставь **Mix level** мастера не выше 0 dB.
+      "param:2":
+        - Сухой звук пойдёт в сумму дважды.
+        - Что стоит на Dry level у Plateau?
+        - Поставь **Dry level** не выше 5 %.
+      "param:3":
+        - На возврате нужен почти только эффект.
+        - Что стоит на Wet level у Plateau?
+        - Поставь **Wet level** не ниже 95 %.
+      "probe:1":
+        - На шине нет сигнала.
+        - Звучат ли партии и не стоят ли каналы на минус бесконечности?
+        - Подключи партии к каналам VCA Mix и подними **Channel N level**.
+    faq:
+      - q: Агент слышит записанный файл?
+        a: "Нет. Он не открывает файл и не слышит звук. Файл слушаешь ты и отвечаешь агенту: нет ли щелчков на смене секций, не забивает ли бас бочку, не тонет ли пэд."
+      - q: Запись не начинается.
+        a: Проверь, что нажата кнопка Record у Recorder и что в меню задана папка. Входы Left/mono и Right должны быть подключены.
+      - q: Как понять, что запас достаточный?
+        a: "Посмотри на VU у Recorder: он не должен краснеть. Пик на выходе шин должен быть заметно ниже 10 В. Лучше около 5 В."
+
+  - id: b12
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Звук искажается, а Scope показывает пик почти до 10 В.
+      Найди одну ошибку и исправь её одним поворотом ручки.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "196" } } }
+      - { ref: master, plugin: Fundamental, slug: VCMixer, params: { Channel 1 level: { display: "-10" }, Channel 3 level: { raw: 0.3162 }, Mix level: { display: "0" } } }
+      - { ref: busl, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope }
+    cables:
+      - { from: [vco1, Sawtooth], to: [master, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [master, Channel 3] }
+      - { from: [master, Mix], to: [busl, Channel 1] }
+      - { from: [busl, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [busl, Mix], to: [scope, Ch 1] }
+    break: { set_param: { module: master, name: Mix level, value: { display: "6.0206" } } }
+    check: { kind: fixed, expect_param: { module: master, name: Mix level, display_max: 0 } }
+    hints:
+      fixed:
+        - Сумма стала громче, а запас пропал.
+        - Какая ручка двигает всю сумму сразу?
+        - Верни **Mix level** у VCA Mix не выше 0 dB.
+    faq:
+      - q: Почему Mix level, а не уровни партий?
+        a: Mix level двигает всю сумму сразу. Если сумма стала горячей, убавь мастер. Баланс между партиями при этом сохранится.
+      - q: Что будет, если записать такой сигнал?
+        a: Красный VU и перегруз в файле. Жёсткое искажение уже не исправить. Лучше убавить мастер до записи.
+
+  - id: b13
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Партии около −10 dB, **Mix level** не выше 0 dB. Это старт для сведения.
+      - Реверберация на посыле: **Channel 3** в Plateau, возврат в обе шины, Dry около 0, Wet около 100 %.
+      - Запас в dB равен 20, умноженному на десятичный логарифм отношения пика к 10 В. Чем он больше, тем безопаснее запись.
+      - Recorder пишет стерео при двух подключённых входах. Record жмёшь ты.
+      - Агент читает числа. Звучание оцениваешь ты.
+      **Источники:** документация VCV Recorder; VCV Rack Manual, «Voltage Standards»; Gahlord Dewald, «Modular live performance: controlling volume».
+    questions:
+      - q: Зачем реверберации на посыле Dry около 0 и Wet около 100 %?
+        options:
+          - { text: "Сухой звук уже идёт в сумму, с возврата нужен только эффект", correct: true, why: "Иначе сухой звук суммируется дважды: пик растёт, баланс смещается." }
+          - { text: "Так Plateau звучит громче", why: "Громкость зависит от уровней. Dry и Wet отвечают за состав сигнала." }
+          - { text: "Plateau не работает при других настройках", why: "Работает. Но на посыле другие значения дают удвоенный сухой звук." }
+      - q: Что агент может проверить в патче по числам?
+        options:
+          - { text: "Уровни, запас, кабели и параметры", correct: true, why: "Это числа и соединения. Звучание и красоту микса он не слышит." }
+          - { text: "Красоту микса и баланс на слух", why: "Агент не слышит звук. Это твоя часть." }
+          - { text: "Содержимое записанного файла", why: "Файл агент не открывает." }
+    next: |
+      # Дальше: свои треки
+      Курс закончен. Дальше ты собираешь свои треки и просишь агента разобрать патч: уровни, запас, кабели. Звук оцениваешь ты.
+    faq:
+      - q: Что сохранить в конце курса?
+        a: "Патч под номером 9.5 и файл записи. Это твой первый законченный трек. В нём есть все части курса: звук, время, управление, аранжировка и сведение."
+      - q: С чего начать свой трек?
+        a: С каркаса из 9.1. Подставь свои инструменты, выбери тональность и план секций. Уровни проверяй по числам, как в этом уроке.

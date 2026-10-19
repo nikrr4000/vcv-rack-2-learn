@@ -1,0 +1,393 @@
+id: p2-02-pwm-sync-fm
+num: "2.2"
+part: 2
+title: PWM, синхронизация, FM
+goal: Оживить прямоугольник модуляцией ширины импульса, заставить один VCO рвать цикл другого и объяснить, чем FM отличается от вибрато.
+builds: Три способа сделать один VCO интересным без фильтра. На них держатся живой лид и звонкие тембры в части 8.
+minutes: 40
+requires: [p2-01-vco]
+glossary: [модуляция, LFO, ширина импульса, PWM, жёсткая и мягкая синхронизация, ведущий и ведомый осциллятор, FM, вибрато, боковые полосы]
+sources: [vcv-free-manual, sos-10, sos-12, omri-practical-course]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: PWM, синхронизация, FM
+    page: |
+      # 2.2 PWM, синхронизация, FM
+      **Ты научишься:** менять ширину импульса медленным **LFO**, синхронизировать два **VCO** и слышать разницу между [[вибрато]] и [[FM]].
+      **Ты соберёшь:** живой прямоугольник и пару VCO с жёсткой синхронизацией.
+      **Понадобится:** 40 минут и урок 2.1 про VCO.
+      Три приёма меняют звук одного VCO без фильтра и огибающих.
+    figure: { template: waveforms, shapes: [square, saw], periods: 3, caption: Прямоугольник и пила — две формы, на которых строятся приёмы урока. }
+    faq:
+      - q: Зачем столько приёмов для одного VCO?
+        a: Каждый даёт свою окраску. PWM «дышит», синхронизация кричит, FM звенит. Позже ты сможешь выбрать приём под задачу, а не искать его на слух.
+      - q: Что такое LFO и зачем он здесь?
+        a: Это генератор очень низкой частоты. Он не звучит, а двигает ручки других модулей. В этом уроке он качает ширину импульса и частоту. Подробно в уроке 4.1.
+      - q: Звук будет громким?
+        a: Убавь громкость в системе и Level у Audio. Шум синхронизации и FM бывает резким. Демо звучит только в активном ряду.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ошибаться можно, ответы покажут, что разобрать.
+    questions:
+      - q: Что меняет PWM на выходе Square?
+        free: true
+        options:
+          - { text: "Долю периода, когда сигнал наверху, то есть тембр", correct: true, why: "Меняется ширина импульса, а период тот же. Нота остаётся, окраска звука другая." }
+          - { text: "Высоту ноты", why: "Частота повторов не меняется. Ширина импульса и частота — разные вещи." }
+          - { text: "Громкость звука", why: "Размах остаётся около ±5 В. Узкий импульс выглядит слабее, но уровень пиков тот же." }
+      - q: VCO B синхронизирован от VCO A и настроен выше. Что задаёт высоту звука?
+        options:
+          - { text: "Ведущий VCO A", correct: true, why: "Ведомый сбрасывает цикл по сигналу ведущего. Ведущий задаёт ноту, ведомый добавляет окраску." }
+          - { text: "Ведомый VCO B", why: "Звук идёт с его выхода, но его цикл обрывается. Высоту определяет ведущий." }
+          - { text: "Среднее двух частот", why: "Частоты не усредняются. Ведущий принудительно перезапускает ведомого, и нота идёт за ним." }
+      - q: Чем FM на звуковой частоте отличается от вибрато?
+        options:
+          - { text: "Рождает новые частоты и меняет тембр", correct: true, why: "Медленная модуляция качает высоту. На звуковой скорости появляются боковые частоты." }
+          - { text: "Меняет громкость, а не высоту", why: "FM управляет частотой. Громкостью занимается модуляция амплитуды." }
+          - { text: "Просто громче, чем вибрато", why: "Дело в скорости модулятора, а не в громкости. Скорость решает, качание это или новый тембр." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Модуляция и PWM
+    page: |
+      # Модуляция и PWM
+      [[модуляция|Модуляция]] — когда один сигнал двигает параметр другого. Двигает **модулятор**, двигается **цель**.
+      Гордон Рид называет модуляцию так: "the magic ingredient that makes all the other elements sound interesting".
+      Чаще всего модулятор — [[LFO]]. Он устроен как VCO, но очень медленный и сам не звучит.
+      [[PWM]] — модуляция [[ширина импульса|ширины импульса]]. Это доля периода, когда прямоугольник «наверху». При 50 % получается ровный меандр.
+      Нота не меняется, меняется тембр. Если ширину качает LFO, звук «дышит», как хор.
+    figure: { template: table, rows: [["Ширина", "Форма", "Что сравнить"], ["10 %", "узкий импульс", "тонкий тембр"], ["50 %", "меандр", "полный тембр"], ["90 %", "широкий импульс", "как при 10 %"]], caption: "Ширина меняет тембр, высота остаётся прежней." }
+    simpler: Представь лампу, которая мигает 261 раз в секунду. Горит она то дольше, то короче. Частота мигания та же, а свет разный.
+    faq:
+      - q: Почему 10 % и 90 % звучат похоже?
+        a: Это зеркальные формы. Одна получается из другой переворотом, а набор гармоник у них одинаковый. Поэтому тембр совпадает, хотя на экране картинки разные.
+      - q: PWM работает на пиле или синусе?
+        a: Нет. Ширина импульса есть только у прямоугольника, поэтому PWM слышно на выходе Square. Остальные выходы VCO от Pulse width не меняются.
+      - q: Чем PWM лучше двух VCO?
+        a: Нужен один VCO и один LFO. Эффект хора получается без второго генератора, и тембр медленно движется сам.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Синхронизация и FM
+    page: |
+      # Синхронизация
+      Два VCO: [[ведущий и ведомый осциллятор|ведущий]] и ведомый. Выход ведущего идёт во вход **Sync** ведомого.
+      В начале каждого периода ведущего ведомый обрывает цикл и начинает заново. Это [[жёсткая и мягкая синхронизация|жёсткая синхронизация]] (Hard).
+      Высоту теперь задаёт ведущий. Ведомый, настроенный выше, добавляет окраску: чем выше он, тем резче звук.
+      Режим Soft разворачивает волну вместо обрыва. Звук мягче.
+    page2: |
+      # FM
+      [[FM]] — модулятор двигает частоту другого VCO, несущей.
+      Медленный модулятор малой глубины, около 5 Гц, даёт [[вибрато]]. Высота качается, но остаётся нотой.
+      Модулятор на звуковой частоте работает иначе. Вокруг несущей рождаются новые частоты, [[боковые полосы]]. Тембр становится звонким, как колокол.
+      Граница одна: скорость модулятора. Медленно слышно качание, быстро слышно новый тембр.
+    simpler: Представь метроном и певца. Метроном щёлкает, и певец каждый раз начинает фразу заново. Темп задаёт метроном, а как звучит певец, решает его собственный голос.
+    faq:
+      - q: Почему ведомый звучит не на своей высоте?
+        a: Он не успевает дойти до конца цикла, ведущий сбрасывает его раньше. Поэтому слышна нота ведущего. Высота ведомого влияет только на окраску.
+      - q: В чём разница между Hard и Soft?
+        a: Hard обрывает цикл, и звук резкий. Soft разворачивает волну, и звук мягче. Эффект слышен только когда в Sync воткнут кабель.
+      - q: Модуляция частоты и вибрато — это одно и то же?
+        a: Механизм один, отличается скорость. Медленный модулятор качает высоту, быстрый создаёт боковые частоты и меняет тембр.
+
+  - id: b5
+    type: live
+    preset: live
+    title: PWM на слух и на экране
+    page: |
+      # PWM на слух и на экране
+      **VCO** играет прямоугольник. **LFO** с выхода `Triangle` качает его ширину.
+      Ширина на экране гуляет, а нота остаётся той же. Глубину задаёт ручка **Pulse width modulation**, сейчас 80 %.
+      Слушай, как звук «дышит». Потом подними **Frequency** у LFO до 10 Гц и сравни.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" }, Pulse width: { display: "50" }, Pulse width modulation: { display: "80" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "20" }, Trigger: Enabled, Gain 1: { display: "10" } }
+    cables:
+      - { from: [lfo, Triangle], to: [vco, Pulse width modulation] }
+      - { from: [vco, Square], to: [scope, Ch 1] }
+      - { from: [vco, Square], to: [audio, "To \"device output 1\""] }
+    notes:
+      - after: vco
+        text: "**Pulse width modulation** — глубина. При 0 % кабель ничего не двигает."
+        targets: [{ module: vco, param: Pulse width modulation }, { module: vco, input: Pulse width modulation }]
+      - after: lfo
+        text: "**Frequency** у LFO — скорость «дыхания». Сейчас 2 Гц."
+        targets: [{ module: lfo, param: Frequency }, { module: lfo, output: Triangle }]
+    faq:
+      - q: На экране ширина прыгает, а я хочу плавно.
+        a: Скорость качания задаёт Frequency у LFO. Поставь меньше 1 Гц, и ширина поплывёт медленно. Заодно проверь, что Time у Scope около 20 мс.
+      - q: Звук «дышит» слишком сильно. Как убавить?
+        a: Уменьши Pulse width modulation. При 0 % модуляции нет, при 100 % ширина ходит на полный диапазон.
+      - q: Нота изменилась, когда я качнул ширину. Это нормально?
+        a: "Нота не меняется. Меняется тембр, и ухо иногда принимает это за сдвиг высоты. Проверь по Scope: число периодов на экране то же."
+
+  - id: b6
+    type: live
+    preset: live
+    title: Синхронизация двух VCO
+    page: |
+      # Синхронизация двух VCO
+      Верхний VCO — ведущий, 261,63 Гц. Его `Square` идёт во вход **Sync** нижнего. Нижний — ведомый, звучит его `Sawtooth`.
+      Подними **Frequency** ведомого до 800, потом до 1500 Гц. Нота остаётся на 261,63 Гц, звук «кричит».
+      Переключи **Sync mode** в Soft и сравни.
+    modules:
+      - { ref: master, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: slave, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "367.7" }, Sync mode: Hard } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "10" }, Trigger: Enabled, Gain 1: { display: "10" }, Gain 2: { display: "10" } }
+    cables:
+      - { from: [master, Square], to: [slave, Sync] }
+      - { from: [slave, Sawtooth], to: [scope, Ch 1] }
+      - { from: [master, Sawtooth], to: [scope, Ch 2] }
+      - { from: [slave, Sawtooth], to: [audio, "To \"device output 1\""] }
+    notes:
+      - after: slave
+        text: "Ведущий задаёт ноту. Его `Square` управляет синхронизацией."
+        targets: [{ module: master, output: Square }, { module: slave, input: Sync }]
+      - after: slave
+        text: "**Frequency** ведомого меняет окраску, а не ноту."
+        targets: [{ module: slave, param: Frequency }]
+      - after: slave
+        text: "**Sync mode**: Hard обрывает цикл, Soft разворачивает волну."
+        targets: [{ module: slave, param: Sync mode }]
+    faq:
+      - q: Звука почти нет или он слишком тонкий.
+        a: Проверь, что кабель идёт из ведущего во вход Sync ведомого, а не наоборот. Звучит ведомый, поэтому звуковой кабель берётся с его выхода.
+      - q: На Scope картинка у ведомого рваная. Это поломка?
+        a: Нет, так выглядит синхронизация. Ведомый обрывается в начале каждого периода ведущего. Такая «обрубленная» пила и даёт резкий тембр.
+      - q: Что будет, если ведомый ниже ведущего?
+        a: Эффект исчезает. Ведомый успевает пройти цикл целиком, ведущий лишь перезапускает его. Для яркого «крика» держи ведомого выше.
+
+  - id: b7
+    type: live
+    preset: live
+    title: Вибрато и FM
+    page: |
+      # Вибрато и FM
+      Несущая — верхний **VCO** на 261,63 Гц. Его **Frequency modulation** качает `Sine` от LFO со скоростью 5 Гц. Глубина 5 %.
+      Слышно вибрато. Теперь перенеси кабель в `Sine` нижнего VCO на 523,25 Гц и подними глубину до 30 %.
+      Появится звон. Переключи **FM mode** в Linear и сравни.
+    modules:
+      - { ref: carrier, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" }, Frequency modulation: { display: "5" }, FM mode: 1V/octave } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "5" }, Offset: Bipolar } }
+      - { ref: mod, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "523.25" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "20" }, Trigger: Enabled, Gain 1: { display: "10" } }
+    cables:
+      - { from: [lfo, Sine], to: [carrier, Frequency modulation] }
+      - { from: [carrier, Sine], to: [scope, Ch 1] }
+      - { from: [carrier, Sine], to: [audio, "To \"device output 1\""] }
+    notes:
+      - after: carrier
+        text: "**Frequency modulation** — глубина. Вход ничего не двигает при 0 %."
+        targets: [{ module: carrier, param: Frequency modulation }, { module: carrier, input: Frequency modulation }]
+      - after: carrier
+        text: "**FM mode**: `1V/octave` даёт мягкие сдвиги высоты, Linear — более резкую смену тембра."
+        targets: [{ module: carrier, param: FM mode }]
+      - after: mod
+        text: "LFO играет роль медленного модулятора, нижний VCO — быстрого."
+        targets: [{ module: lfo, output: Sine }, { module: mod, output: Sine }]
+    faq:
+      - q: Я не слышу вибрато, нота ровная.
+        a: Проверь глубину у Frequency modulation. При 0 % кабель не действует. И убедись, что LFO подключён к входу Frequency modulation, а не к Sync.
+      - q: После переноса кабеля звук стал грубым. Почему?
+        a: Модулятор теперь на звуковой частоте и создаёт боковые полосы. Это уже не вибрато, а смена тембра. Уменьши глубину, и звон станет мягче.
+      - q: Чем отличаются `1V/octave` и Linear?
+        a: В режиме `1V/octave` модулятор сдвигает высоту по экспоненте, как pitch-CV. В Linear сдвиг линейный, и тембр меняется заметнее. Сравни оба режима на слух.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Новые входы VCO
+    page: |
+      # Новые входы VCO
+      В уроке 2.1 мы пропустили половину панели. Теперь она нужна.
+      Входы и ручки сгруппированы по трём приёмам.
+    module: { ref: vco, plugin: Fundamental, slug: VCO }
+    notes:
+      - { text: "**Pulse width** — ширина прямоугольника на Square: от 1 до 99 %, по умолчанию 50 %.", targets: [{ module: vco, param: Pulse width }] }
+      - { text: "**Pulse width modulation**: ручка — глубина от −100 до 100 %, вход принимает модулятор.", targets: [{ module: vco, param: Pulse width modulation }, { module: vco, input: Pulse width modulation }] }
+      - { text: "Вход **Sync** принимает ведущий сигнал. Эффект виден только при подключённом кабеле.", targets: [{ module: vco, input: Sync }] }
+      - { text: "**Sync mode**: Soft разворачивает волну, Hard обрывает цикл. По умолчанию Hard.", targets: [{ module: vco, param: Sync mode }] }
+      - { text: "**Frequency modulation**: вход принимает модулятор, ручка задаёт глубину от −100 до 100 %.", targets: [{ module: vco, param: Frequency modulation }, { module: vco, input: Frequency modulation }] }
+      - { text: "**FM mode**: `1V/octave` или Linear. Это закон, по которому модулятор сдвигает частоту.", targets: [{ module: vco, param: FM mode }] }
+    later:
+      - { what: "LFO целиком: Offset, Invert, Reset, Clock и остальные входы", lesson: "4.1" }
+    faq:
+      - q: Как включить модуляцию, если вход подключён, а звук не меняется?
+        a: Подними ручку глубины рядом со входом. У Pulse width modulation и Frequency modulation при 0 % кабель не действует, у Sync глубины нет.
+      - q: Что значит отрицательная глубина?
+        a: "Ручка работает как аттенювертор. Минус переворачивает модулятор: когда он идёт вверх, параметр идёт вниз. Подробнее про это в уроке 1.4."
+      - q: Зачем у FM два режима?
+        a: Они по-разному считают сдвиг частоты. `1V/octave` подходит для вибрато и сдвигов высоты, Linear — для звонких тембров. Выбирай по звуку.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: Поверни **Pulse width** от 1 до 99 % при **Pulse width modulation** 0 %.
+        see: Импульс сужается и расширяется, нота та же. Тембр у краёв тоньше.
+      - do: Подними **Pulse width modulation** до 100 %.
+        see: Ширина всё сильнее гуляет вместе с LFO, хор усиливается.
+      - do: Поставь **Frequency** у LFO на 0,5, потом на 10 Гц.
+        see: Сначала медленное «дыхание», потом дрожание.
+      - do: Подними **Frequency** ведомого до 800 Гц.
+        see: Нота остаётся на высоте ведущего, звук «кричит». На Scope цикл ведомого обрывается.
+      - do: Переключи **Sync mode** в Soft и обратно в Hard.
+        see: Soft звучит мягче, Hard резче.
+    modules:
+      - { ref: slave, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" }, Pulse width modulation: { display: "0" }, Sync mode: Hard } }
+      - { ref: master, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "20" }, Trigger: Enabled, Gain 1: { display: "10" } }
+    cables:
+      - { from: [lfo, Triangle], to: [slave, Pulse width modulation] }
+      - { from: [master, Square], to: [slave, Sync] }
+      - { from: [slave, Square], to: [scope, Ch 1] }
+      - { from: [slave, Square], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: slave, text: "Шаги 1, 2, 4 и 5 — ручки этого ведомого VCO.", targets: [{ module: slave, param: Pulse width }, { module: slave, param: Pulse width modulation }, { module: slave, param: Frequency }, { module: slave, param: Sync mode }] }
+      - { after: lfo, text: Шаг 3 — скорость LFO., targets: [{ module: lfo, param: Frequency }] }
+    faq:
+      - q: Пока ведомый на 261,63 Гц, синхронизации не слышно. Почему?
+        a: Обе частоты совпадают, и обрыв цикла приходится на его естественный конец. Подними Frequency ведомого, и эффект появится.
+      - q: Pulse width крутится, а ширина не гуляет сама.
+        a: Это ручка базовой ширины, на ней ширина стоит ровно. Качает её LFO через Pulse width modulation. Подними глубину этой ручки.
+      - q: Звук режет уши. Что убавить?
+        a: Убавь Level у Audio. Квадратная волна с синхронизацией яркая и кажется громче синуса при том же размахе.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — живой лид
+    task: |
+      Собери живой прямоугольник с синхронизацией между маркерами «Верстак».
+      1. Поставь **VCO** («ведомый»), второй **VCO** («ведущий») и **LFO**.
+      2. `Triangle` у LFO → `Pulse width modulation` у ведомого. Ручку **Pulse width modulation** подними хотя бы до 30 %.
+      3. `Square` ведущего → `Sync` ведомого. **Sync mode** — Hard, **Frequency** ведомого не ниже 300 Гц.
+      4. `Square` ведомого → `To "device output 1"` у Audio. **Frequency** у LFO — от 0,1 до 8 Гц.
+      Потом нажми «Проверить».
+    given: [audio]
+    check: p2-02-pwm-sync-fm
+    hints:
+      "cable:1":
+        - Ширина импульса не гуляет. Кто должен ею управлять?
+        - Нужен LFO и вход PWM у ведомого VCO.
+        - "Выход `Triangle` у LFO → вход `Pulse width modulation` у ведомого VCO."
+      "cable:2":
+        - Синхронизации нет. Кто даёт ведомому сигнал начала цикла?
+        - Ведущий VCO и вход Sync ведомого.
+        - "`Square` ведущего → вход `Sync` ведомого."
+      "cable:3":
+        - В колонках тишина.
+        - Звучит ведомый, звук берётся с его выхода.
+        - "`Square` ведомого → `To \"device output 1\"` у Audio."
+      "param:1":
+        - LFO подключён, а эффекта мало. Сколько глубины?
+        - Ручка Pulse width modulation у ведомого VCO.
+        - Подними Pulse width modulation хотя бы до 30 %.
+      "param:2":
+        - Синхронизация слабая или мягкая?
+        - Переключатель Sync mode у ведомого VCO.
+        - Поставь Sync mode в Hard.
+      "param:3":
+        - Ведомый не выше ведущего?
+        - Ручка Frequency у ведомого VCO.
+        - Подними Frequency ведомого до 300 Гц или выше.
+      "param:4":
+        - LFO качает слишком быстро или не качает?
+        - Ручка Frequency у LFO.
+        - Поставь Frequency у LFO между 0,1 и 8 Гц, например 2 Гц.
+      "probe:1":
+        - LFO не движется.
+        - Подключён ли `Triangle` у LFO и не стоит ли Frequency на минимуме?
+        - Подключи `Triangle` к входу PWM и подними Frequency у LFO до 1–3 Гц.
+      "probe:2":
+        - На Square ведомого нет сигнала.
+        - Идёт ли кабель из Square ведомого в Audio?
+        - "Проведи `Square` ведомого в `To \"device output 1\"` у Audio."
+    faq:
+      - q: Какой VCO ведущий, а какой ведомый?
+        a: Ведущий отдаёт Square во вход Sync. Ведомый принимает Sync, на него идёт LFO и с него берётся звук. Ведомый должен быть настроен выше.
+      - q: Проверка не засчитывает частоту ведомого.
+        a: Для проверки нужно не ниже 300 Гц. Ведущий оставь на 261,63 Гц. Если ведомый ниже, синхронизация даст мало окраски.
+      - q: Нужен ли Scope?
+        a: Не обязателен, но полезен. Подключи Square ведомого к Scope и смотри, как ширина импульса гуляет.
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Кабель от LFO на месте, но ширина импульса на Scope не гуляет, и хора в звуке нет.
+      Найди одну настройку и исправь её.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" }, Pulse width: { display: "50" }, Pulse width modulation: { display: "80" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - ref: scope
+        plugin: Fundamental
+        slug: Scope
+        params: { Time: { display: "20" }, Trigger: Enabled, Gain 1: { display: "10" } }
+    cables:
+      - { from: [lfo, Triangle], to: [vco, Pulse width modulation] }
+      - { from: [vco, Square], to: [scope, Ch 1] }
+      - { from: [vco, Square], to: [audio, "To \"device output 1\""] }
+    break: { set_param: { module: vco, name: Pulse width modulation, value: { display: "0" } } }
+    check: { kind: fixed, expect_param: { module: vco, name: Pulse width modulation, display_min: 30 } }
+    hints:
+      fixed:
+        - LFO качается, кабель на месте. Что решает, насколько вход действует?
+        - Посмотри на ручку рядом со входом Pulse width modulation.
+        - Подними Pulse width modulation у VCO хотя бы до 30 %.
+    faq:
+      - q: Почему кабель есть, а модуляции нет?
+        a: Глубина стоит на 0 %, вход выключен по эффекту. Кабель только доставляет сигнал, а сколько из него использовать, решает ручка.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - **PWM** меняет ширину импульса. Тембр движется, нота остаётся.
+      - При жёсткой синхронизации высоту задаёт ведущий VCO, окраску — ведомый.
+      - FM медленная даёт вибрато, на звуковой скорости рождает новые частоты и меняет тембр.
+      - Кабель на входе работает только при ненулевой глубине.
+      Сохрани патч: Ctrl+S сохраняет твою копию урока.
+      **Источники:** Gordon Reid, «Synth Secrets», ч. 10 и 12 (Sound On Sound); руководство VCV Free; Omri Cohen, «Getting Practical with Modular Synthesis in VCV Rack 2».
+    questions:
+      - q: LFO идёт в Pulse width modulation, глубина 0 %. Что слышно?
+        options:
+          - { text: "Ничего не меняется", correct: true, why: "Глубина ноль, поэтому вход не действует. Сигнал до модуля доходит, но ручка его не пропускает." }
+          - { text: "Ширина гуляет на полный диапазон", why: "Полный диапазон при 100 %. Кабель сам модуляцию не включает." }
+          - { text: "Нота дрожит", why: "Ширина импульса на высоту не влияет. Дрожание дала бы модуляция частоты." }
+    next: |
+      # Дальше: 2.3
+      **Два генератора.** Сложим два VCO в один звук и разберём расстройку, биения и интервалы.
+    faq:
+      - q: Как не перепутать PWM, Sync и FM?
+        a: Смотри на вход. Pulse width modulation меняет ширину, Sync перезапускает цикл, Frequency modulation двигает частоту. Название входа подсказывает приём.
+      - q: Что повторить, если Sync не получается?
+        a: Ряд «Синхронизация двух VCO». Убедись, что кабель идёт из ведущего в Sync ведомого и что ведомый настроен выше.

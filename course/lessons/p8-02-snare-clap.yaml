@@ -1,0 +1,433 @@
+id: p8-02-snare-clap
+num: "8.2"
+part: 8
+title: Малый барабан и клэп
+goal: Собрать малый барабан из тона и шума с двумя короткими огибающими, а клэп — из шума и серии быстрых перезапусков огибающей.
+builds: Второй инструмент трека. В уроке 9.2 малый барабан и клэп встанут на слабые доли ритм-секции.
+minutes: 40
+requires: [p2-05-noise, p3-04-adsr]
+glossary: [тон и шум в барабане, баланс тона и шума, клэп как серия ретриггеров, ретриггер, шум, фильтр верхних частот, огибающая]
+sources: [sos-35, sos-36, ne-clap]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Малый барабан и клэп
+    page: |
+      # 8.2 Малый барабан и клэп
+      **Ты научишься:** собирать малый барабан из тона и [[шум|шума]] и клэп из серии быстрых перезапусков.
+      **Ты соберёшь:** две ветки — тон (VCO) и шум (Noise → VCF) — и Mixer, который их складывает.
+      **Понадобится:** 40 минут, уроки про шум и ADSR. Громкость в системе держи низкой.
+      Патч понадобится в части 9, сохрани его в конце урока.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: vco, label: VCO, kind: audio }
+        - { id: noise, label: Noise, kind: audio }
+        - { id: vcf, label: VCF, kind: audio }
+        - { id: mix, label: Mixer, kind: audio }
+        - { id: env1, label: ADSR тона, kind: cv }
+        - { id: env2, label: ADSR шума, kind: cv }
+      edges:
+        - { from: vco, to: mix, kind: audio }
+        - { from: noise, to: vcf, kind: audio }
+        - { from: vcf, to: mix, kind: audio }
+        - { from: env1, to: vco, kind: cv }
+        - { from: env2, to: vcf, kind: cv }
+      caption: "Две ветки с разными огибающими: тон под VCO, шум под VCF. Сверху они складываются в Mixer."
+    faq:
+      - q: "Почему малый барабан не делают из одного шума?"
+        a: "Одного шума мало: получится шипение без корпуса. Тон даёт «бум» барабана, шум даёт струны. Вместе выходит удар с хрустом, который узнают как малый барабан."
+      - q: "Клэп — это тоже барабан?"
+        a: "По звуку это хлопок ладоней. Схема другая: нет тона, только шум, а огибающая перезапускается несколько раз подряд. В уроке два инструмента на общем шуме."
+      - q: "Звук будет громким?"
+        a: "Шум бывает неожиданно громким. Убавь громкость в системе и подними её, когда услышишь первый удар. Ряд звучит только пока активен."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, о чём будет урок.
+    questions:
+      - q: "Почему малый барабан собирают из тона и шума, а не из одного шума?"
+        free: true
+        options:
+          - { text: "Тон даёт корпус, шум даёт струны", correct: true, why: "Тон — «бум» барабана, шум — дребезг струн. Вместе получается удар с хрустом." }
+          - { text: "Шум громче тона, его надо прикрыть", why: "Тон нужен ради тембра, а не ради громкости. Уровни настраиваются отдельно." }
+          - { text: "Noise в Rack не умеет затухать", why: "Затухает не шум, а усилитель после него. Шум можно гасить огибающей через VCA-1." }
+      - q: "Чему равен Sustain у обоих ADSR малого барабана?"
+        options:
+          - { text: "Нулю — барабан не держится, пока идёт гейт", correct: true, why: "Малый барабан — одиночный удар. Без выдержки звук затихает сам, как бы долго ни шёл гейт." }
+          - { text: "Максимуму, чтобы звук держался до конца гейта", why: "Это сделает из удара длинный шум. У барабана выдержки нет." }
+          - { text: "Пятидесяти процентам, как по умолчанию", why: "Настройки по умолчанию подходят не для всех инструментов. Для ударных Sustain почти всегда в нуле." }
+      - q: "Что отличает клэп от малого барабана в огибающей шума?"
+        options:
+          - { text: "Огибающая перезапускается несколько раз за десятки миллисекунд", correct: true, why: "Несколько быстрых пиков дают «много ладоней». После последнего идёт общий хвост." }
+          - { text: "У клэпа выше тон", why: "Различает их форма огибающей, а не высота. У клэпа тона нет вовсе." }
+          - { text: "У клэпа нет шума", why: "Наоборот: клэп целиком строится на шуме и фильтре." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Два звука в одном ударе
+    page: |
+      # Два звука в одном ударе
+      Малый барабан — это два звука одновременно.
+      Первый: корпус барабана, затухающий средний [[тон и шум в барабане|тон]]. Второй: струны под нижней мембраной. Они дребезжат и дают шум.
+      Удар должен звучать сразу и не держаться. В Rack это два ADSR с **Sustain** в нуле: один гасит тон, другой — шум.
+      Шум проходит [[фильтр верхних частот]], остаётся хруст без гула.
+    page2: |
+      Громкость двух веток задаёт [[баланс тона и шума]].
+      В нашем патче баланс стоит не в Mixer, а в ручках **Level** у двух VCA-1: у Mixer одна общая Level.
+      Чем сильнее удар, тем громче барабан. В патче громкость будет выше с большим Level.
+    figure: { template: adsr, a: 0.002, d: 0.2, s: 0, r: 0.2, gate: 0.25, markers: true, caption: "Огибающая шума: резкий старт и спад без выдержки. Для тона она короче." }
+    simpler: Представь барабан, по которому бьют палочкой. Дерево звенит коротко и низко, а струны под ним шуршат чуть дольше.
+    faq:
+      - q: "Зачем фильтр верхних частот у шума?"
+        a: "Низ шума превращается в гул, а он мешает бочке и тону барабана. Фильтр верхних частот срезает низ, остаётся хруст. Cutoff frequency держи не ниже 800 Гц."
+      - q: "Почему огибающие у тона и шума разной длины?"
+        a: "Корпус барабана затухает быстро, струны дребезжат дольше. Тон гаси за 90 мс, шум — за 200 мс. Тогда удар звучит плотно в начале и шуршит в конце."
+      - q: "Что такое белый шум?"
+        a: "Шум, в котором все частоты равны по силе. На выходе White noise у Noise он звучит как шипение. Остальные цвета шума нужны в уроках 8.3 и 8.7."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Клэп — серия перезапусков
+    page: |
+      # Клэп — серия перезапусков
+      Клэп — это «много рук»: несколько быстрых всплесков шума с интервалом в миллисекунды, потом общий хвост.
+      Для такого звука [[огибающая|огибающую]] [[ретриггер|перезапускают]] несколько раз, пока гейт ещё высок. Это [[клэп как серия ретриггеров|клэп как серия ретриггеров]].
+      У ADSR для этого есть вход **Retrigger**. Каждый импульс на нём запускает атаку заново.
+      Источник перезапусков — LFO на 100 Гц, ритм по гейту задаёт второй LFO.
+    page2: |
+      Гейт нужен короткий, около 30 мс: за это время успевают три-четыре перезапуска.
+      Хвост после последнего пика ведёт **Release**.
+      В Rack у VCF нет отдельного полосового выхода. Берём **Highpass filter** и умеренный **Resonance**. Это приближение курса.
+    figure: { template: clock, bpm: 120, divisions: [1, 2, 4], bars: 2, caption: "Лента импульсов: чем гуще перезапуски, тем больше «ладошек» в клэпе." }
+    simpler: Один хлопок звучит как «пак». Если несколько человек хлопают чуть вразнобой, выходит «тррак». Перезапуски огибающей делают то же самое.
+    faq:
+      - q: "Чем Retrigger отличается от Gate?"
+        a: "Gate запускает огибающую по переднему фронту и отпускает по заднему. Retrigger перезапускает атаку, пока гейт ещё высок. Один гейт плюс серия импульсов на Retrigger — это серия пиков."
+      - q: "Сколько «ладошек» должно быть?"
+        a: "Обычно три-четыре. Больше пиков — клэп густой и растянутый, меньше — один хлопок. Меняй Frequency у LFO-перезапуска и слушай, как меняется звук."
+      - q: "Почему в клэпе нет тона?"
+        a: "Хлопок ладоней состоит из шума. Тон добавил бы мелодичность, которой в хлопке нет. Поэтому клэп берёт ту же ветку шума, что и малый барабан."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Малый барабан
+    page: |
+      # Малый барабан
+      Метроном **LFO** даёт гейт два раза в секунду на оба ADSR.
+      Опусти **Level** у VCA-1 шума в 0. Остаётся «бум» без хруста.
+      Подними Level до 100 %: появляется хруст. Теперь двигай Level у тона и слушай баланс.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - { ref: tone, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "180" } } }
+      - { ref: tenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "90" }, Sustain: { display: "0" }, Release: { display: "90" } } }
+      - { ref: tvca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "3000" }, Resonance: { display: "15" } } }
+      - { ref: nenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: nvca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: mix, plugin: Fundamental, slug: Mixer, params: { Level: { display: "60" } } }
+    cables:
+      - { from: [lfo, Square], to: [tenv, Gate] }
+      - { from: [lfo, Square], to: [nenv, Gate] }
+      - { from: [tone, Triangle], to: [tvca, Channel] }
+      - { from: [tenv, Envelope], to: [tvca, CV] }
+      - { from: [noise, White noise], to: [hpf, Audio] }
+      - { from: [hpf, Highpass filter], to: [nvca, Channel] }
+      - { from: [nenv, Envelope], to: [nvca, CV] }
+      - { from: [tvca, Channel], to: [mix, Channel 1] }
+      - { from: [nvca, Channel], to: [mix, Channel 2] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: nvca, text: "**Level** шума задаёт хруст.", targets: [{ module: nvca, param: Level }] }
+    faq:
+      - q: "Я убрал шум, а барабан всё равно звучит. Это нормально?"
+        a: "Да. Остаётся ветка тона — «бум» барабана. Он короткий и мягкий. Верни Level шума, и появится хруст."
+      - q: "Почему Level у Mixer на 60 %?"
+        a: "Шум и тон вместе дают много громкости. Mixer на 60 % оставляет запас по уровню, и выход Audio не перегружается."
+      - q: "Зачем два ADSR, если гейт один?"
+        a: "Один гейт запускает оба ADSR, а настройки у них разные. Тон гаснет за 90 мс, шум — за 200 мс. Поэтому две ветки звучат по-разному."
+
+  - id: b6
+    type: live
+    preset: live
+    title: Клэп
+    page: |
+      # Клэп
+      Тот же шум и фильтр, но другая огибающая. Первый **LFO** даёт короткий гейт, второй на 100 Гц — серию импульсов на **Retrigger**.
+      Меняй **Frequency** у второго LFO от 30 до 200 Гц. Ладошек становится меньше или больше.
+    modules:
+      - { ref: lfog, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" }, Pulse width: { display: "6" } } }
+      - { ref: lfor, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "100" } } }
+      - { ref: cenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "1" }, Decay: { display: "15" }, Sustain: { display: "0" }, Release: { display: "150" } } }
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "3000" }, Resonance: { display: "15" } } }
+      - { ref: cvca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+    cables:
+      - { from: [lfog, Square], to: [cenv, Gate] }
+      - { from: [lfor, Square], to: [cenv, Retrigger] }
+      - { from: [noise, White noise], to: [hpf, Audio] }
+      - { from: [hpf, Highpass filter], to: [cvca, Channel] }
+      - { from: [cenv, Envelope], to: [cvca, CV] }
+      - { from: [cvca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [cvca, Channel], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: lfor, text: "**Frequency** — сколько перезапусков в секунду.", targets: [{ module: lfor, param: Frequency }] }
+      - { after: cenv, text: "**Retrigger** перезапускает атаку при высоком гейте.", targets: [{ module: cenv, input: Retrigger }] }
+    faq:
+      - q: "Почему гейт такой короткий?"
+        a: "У первого LFO узкий импульс: Pulse width 6 % при 2 Гц даёт гейт около 30 мс. За это время успевают три-четыре перезапуска. Расширь импульс, и ладошек станет больше."
+      - q: "Клэп звучит как один хлопок. Что не так?"
+        a: "Скорее всего, Frequency у второго LFO слишком низкая. Подними её до 100 Гц и убедись, что его Square идёт в Retrigger, а не в Gate."
+      - q: "Можно ли взять Gates вместо второго LFO?"
+        a: "Для гейта на 30 мс — можно: Gates умеет делать гейт заданной длины. Но серию импульсов на Retrigger он не даёт, здесь нужен LFO."
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: VCF как фильтр верхних частот
+    page: |
+      # VCF как ФВЧ
+      VCF у тебя знаком по урокам про фильтры. Здесь он работает наоборот: срезает низ шума.
+    module: { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "3000" }, Resonance: { display: "15" } } }
+    notes:
+      - { text: "Вход **Audio**: сюда идёт шум от Noise.", targets: [{ module: hpf, input: Audio }] }
+      - { text: "Выход **Highpass filter** пропускает верх. Он идёт на VCA-1.", targets: [{ module: hpf, output: Highpass filter }] }
+      - { text: "**Cutoff frequency** — граница. Около 3000 Гц хруст, выше — шипение.", targets: [{ module: hpf, param: Cutoff frequency }] }
+      - { text: "**Resonance** держи небольшим, около 15 %.", targets: [{ module: hpf, param: Resonance }] }
+    faq:
+      - q: "Почему не Lowpass filter?"
+        a: "Он срезает верх и оставляет гул. Малому барабану нужен хруст, поэтому берём Highpass filter: он режет низ и пропускает верх."
+      - q: "Что будет, если поднять Cutoff frequency до 8000 Гц?"
+        a: "Шум станет тонким и шипящим, хруст уйдёт. Звук будет больше похож на хэт, чем на малый барабан."
+      - q: "Нужно ли подключать Cutoff frequency CV?"
+        a: "Нет. Частота среза в этом уроке постоянная, вход управления не трогаем."
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: ADSR для барабана и клэпа
+    page: |
+      # ADSR для барабана и клэпа
+      Все три огибающие — один и тот же модуль с разными настройками. У клэпа добавляется вход **Retrigger**.
+    module: { ref: cenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "1" }, Decay: { display: "15" }, Sustain: { display: "0" }, Release: { display: "150" } } }
+    notes:
+      - { text: "**Attack** — минимум, чтобы удар был резким.", targets: [{ module: cenv, param: Attack }] }
+      - { text: "**Decay** клэпа — 15 мс: каждый пик короткий.", targets: [{ module: cenv, param: Decay }] }
+      - { text: "**Sustain** — ноль, как у барабана.", targets: [{ module: cenv, param: Sustain }] }
+      - { text: "**Release** — хвост клэпа после последнего пика.", targets: [{ module: cenv, param: Release }] }
+      - { text: "**Retrigger** принимает серию быстрых импульсов.", targets: [{ module: cenv, input: Retrigger }] }
+    faq:
+      - q: "Почему у барабана Decay и Release одинаковые?"
+        a: "Если гейт длинный, хвост ведёт Decay. Если короткий — Release. Равные значения дают один звук в обоих случаях."
+      - q: "Что делает Retrigger, если гейт не подан?"
+        a: "По карточке модуля Retrigger перезапускает атаку, пока гейт высок. Без гейта не рассчитывай на серию пиков: подай гейт на Gate."
+      - q: "Можно ли одним ADSR вести и тон, и шум?"
+        a: "Можно, но тогда тон и шум затухают одинаково. Два ADSR дают два хвоста разной длины — звук ближе к настоящему барабану."
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Подними **Cutoff frequency** у VCF от 800 до 8000 Гц."
+        see: "Хруст превращается в шипение."
+      - do: "Поверни **Frequency** у VCO от 120 до 300 Гц."
+        see: "Меняется высота корпуса, шум остаётся прежним."
+      - do: "Двигай **Decay** у ADSR шума от 100 до 500 мс."
+        see: "Шум тянется короче или дольше."
+      - do: "Опусти **Level** у VCA-1 тона до 20 %."
+        see: "Барабан превращается в чистый шум, похожий на рассыпанный песок."
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - { ref: tone, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "180" } } }
+      - { ref: tenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "90" }, Sustain: { display: "0" }, Release: { display: "90" } } }
+      - { ref: tvca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "3000" }, Resonance: { display: "15" } } }
+      - { ref: nenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: nvca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: mix, plugin: Fundamental, slug: Mixer, params: { Level: { display: "60" } } }
+    cables:
+      - { from: [lfo, Square], to: [tenv, Gate] }
+      - { from: [lfo, Square], to: [nenv, Gate] }
+      - { from: [tone, Triangle], to: [tvca, Channel] }
+      - { from: [tenv, Envelope], to: [tvca, CV] }
+      - { from: [noise, White noise], to: [hpf, Audio] }
+      - { from: [hpf, Highpass filter], to: [nvca, Channel] }
+      - { from: [nenv, Envelope], to: [nvca, CV] }
+      - { from: [tvca, Channel], to: [mix, Channel 1] }
+      - { from: [nvca, Channel], to: [mix, Channel 2] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: nenv, text: "Шаг 3 — ручка этого ADSR.", targets: [{ module: nenv, param: Decay }] }
+    faq:
+      - q: "Поднял Cutoff frequency до максимума, а шум не стал ярче."
+        a: "У VCF верхний предел 8000 Гц, дальше ручка не идёт. Ярче можно сделать сдвигом баланса: подними Level у VCA-1 шума."
+      - q: "Какую высоту тона выбрать?"
+        a: "Для малого барабана 180–250 Гц. Ниже 120 Гц барабан начнёт звучать как том. Выше 300 Гц — как тонкая коробка."
+      - q: "Звук хрипит. Что делать?"
+        a: "Опусти Level у Mixer: сумма тона и шума слишком громкая. Начни с 40 % и поднимай, пока не услышишь запас."
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — свой барабан
+    task: |
+      Собери малый барабан сам, между маркерами «Верстак».
+      1. Тон: `Triangle` у **VCO** → `Channel` у **VCA-1**, `Envelope` у **ADSR** → `CV`.
+      2. Шум: `White noise` у **Noise** → `Audio` у **VCF**, `Highpass filter` → `Channel` у второго **VCA-1**, свой ADSR → `CV`.
+      3. Ветки в **Mixer**: `Channel 1` и `Channel 2`, `Mix` → вход 1 у Audio.
+      4. **Frequency** 120–300 Гц, **Cutoff frequency** от 800 Гц, **Sustain** не выше 10 %, **Decay** шума 100–500 мс.
+      5. Запусти ритм: LFO `Square` → `Gate` обоих ADSR. Клэп — по желанию, по образцу из урока.
+    given: [audio]
+    check: p8-02-snare-clap
+    hints:
+      "cable:1":
+        - "Тон барабана не доходит до усилителя."
+        - "Какой выход VCO даёт треугольник?"
+        - "`Triangle` у VCO → `Channel` у VCA-1 тона."
+      "cable:2":
+        - "Тон не затухает или молчит."
+        - "Что открывает VCA-1 на короткое время?"
+        - "`Envelope` у ADSR тона → `CV` у VCA-1 тона."
+      "cable:3":
+        - "Шум не идёт в фильтр."
+        - "Какой выход Noise даёт белый шум?"
+        - "`White noise` у Noise → `Audio` у VCF."
+      "cable:4":
+        - "Фильтр срезает не то."
+        - "Какой выход VCF пропускает верх?"
+        - "`Highpass filter` у VCF → `Channel` у VCA-1 шума."
+      "cable:5":
+        - "Шум звучит без конца или молчит."
+        - "Какая огибающая должна открывать VCA-1 шума?"
+        - "`Envelope` у ADSR шума → `CV` у VCA-1 шума."
+      "cable:6":
+        - "Тона нет в миксе."
+        - "В какой вход Mixer идёт VCA-1 тона?"
+        - "`Channel` у VCA-1 тона → `Channel 1` у Mixer."
+      "cable:7":
+        - "Шума нет в миксе."
+        - "В какой вход Mixer идёт VCA-1 шума?"
+        - "`Channel` у VCA-1 шума → `Channel 2` у Mixer."
+      "cable:8":
+        - "Барабан собран, а тишина."
+        - "Откуда выходит сумма Mixer и куда она должна прийти?"
+        - "`Mix` у Mixer → `To \"device output 1\"` у Audio."
+      "param:1":
+        - "Тон лежит не в рабочем диапазоне."
+        - "Ручка Frequency у VCO."
+        - "Поставь Frequency между 120 и 300 Гц."
+      "param:2":
+        - "В шуме остался низ."
+        - "Ручка Cutoff frequency у VCF."
+        - "Подними Cutoff frequency хотя бы до 800 Гц."
+      "param:3":
+        - "Тон барабана держится, пока идёт гейт."
+        - "Ручка Sustain у ADSR тона."
+        - "Поставь Sustain не выше 10 %, лучше в ноль."
+      "param:4":
+        - "Шум держится, пока идёт гейт."
+        - "Ручка Sustain у ADSR шума."
+        - "Поставь Sustain не выше 10 %, лучше в ноль."
+      "param:5":
+        - "Хвост шума вне рабочего диапазона."
+        - "Ручка Decay у ADSR шума."
+        - "Поставь Decay между 100 и 500 мс."
+      "probe:1":
+        - "Огибающая шума не поднимается."
+        - "Идёт ли ритм и доходит ли он до Gate у ADSR шума?"
+        - "Подай `Square` у LFO в `Gate` у ADSR шума и нажми «Проверить» ещё раз."
+      "probe:2":
+        - "Огибающая тона не поднимается."
+        - "Подключён ли Gate тона к тому же источнику?"
+        - "Подай ритм и в `Gate` у ADSR тона."
+    faq:
+      - q: "Проверка не смотрит на клэп. Как его проверить?"
+        a: "Клэп проверяй на слух и на Scope. Подай огибающую на Scope и посчитай пики за один хлопок: их должно быть три-четыре."
+      - q: "Какой источник ритма взять?"
+        a: "Любой, который даёт гейт: LFO Square, SEQ 3, Clocked или Push с Hold. Проверка смотрит на огибающую, а не на источник."
+      - q: "Можно ли взять один VCA-1 для обеих веток?"
+        a: "Проверка ждёт два VCA-1, по одному на ветку. Так у каждой ветки своя огибающая и свой уровень."
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      У этого барабана шум не затухает: после каждого удара шипение остаётся.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "2" } } }
+      - { ref: tone, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "180" } } }
+      - { ref: tenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "90" }, Sustain: { display: "0" }, Release: { display: "90" } } }
+      - { ref: tvca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "70" } } }
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: hpf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "3000" }, Resonance: { display: "15" } } }
+      - { ref: nenv, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "2" }, Decay: { display: "200" }, Sustain: { display: "0" }, Release: { display: "200" } } }
+      - { ref: nvca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: mix, plugin: Fundamental, slug: Mixer, params: { Level: { display: "60" } } }
+    cables:
+      - { from: [lfo, Square], to: [tenv, Gate] }
+      - { from: [lfo, Square], to: [nenv, Gate] }
+      - { from: [tone, Triangle], to: [tvca, Channel] }
+      - { from: [tenv, Envelope], to: [tvca, CV] }
+      - { from: [noise, White noise], to: [hpf, Audio] }
+      - { from: [hpf, Highpass filter], to: [nvca, Channel] }
+      - { from: [nenv, Envelope], to: [nvca, CV] }
+      - { from: [tvca, Channel], to: [mix, Channel 1] }
+      - { from: [nvca, Channel], to: [mix, Channel 2] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 2\""] }
+    break: { remove_cable: [nenv, Envelope, nvca, CV] }
+    check: { kind: fixed, expect_cable: [[hpf, Highpass filter, nvca, Channel], [nenv, Envelope, nvca, CV]] }
+    hints:
+      fixed:
+        - "Шум звучит непрерывно. Кто должен закрывать VCA-1 шума после удара?"
+        - "Проследи выход ADSR шума."
+        - "Соедини `Envelope` у ADSR шума с `CV` у VCA-1 шума."
+    faq:
+      - q: "Почему без кабеля в CV шум не затухает?"
+        a: "У VCA-1 вход CV без кабеля считается полностью открытым. Шум идёт всегда, а огибающая не может его гасить."
+      - q: "Как отличить этот сбой на слух?"
+        a: "Тон барабана звучит коротко, а шум идёт сплошной полосой между ударами. Хруста нет, есть ровное шипение."
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Малый барабан — тон (корпус) плюс шум (струны) с двумя короткими ADSR и **Sustain** в нуле.
+      - Шум идёт через фильтр верхних частот: остаётся хруст без гула.
+      - Баланс тона и шума задают ручки Level у двух VCA-1, а не Mixer.
+      - Клэп — шум, огибающая которого перезапускается через **Retrigger**, пока гейт короткий.
+      Сохрани патч как `vcv-8.2.vcv`: он понадобится в части 9.
+      **Источники:** Sound On Sound, «Synthesizing Drums: The Snare Drum» и «Practical Snare Drum Synthesis». Блог Noise Engineering, «The Sound of One Synth Clapping».
+    questions:
+      - q: "Чем регулируется баланс тона и шума, если у Mixer одна общая Level?"
+        options:
+          - { text: "Ручками Level у двух VCA-1", correct: true, why: "Каждая ветка заканчивается своим VCA-1, его Level задаёт долю этой ветки в миксе." }
+          - { text: "Ручкой Level у Mixer", why: "Она одна на весь микс: меняет общую громкость, а не баланс." }
+          - { text: "Cutoff frequency у VCF", why: "Это граница фильтра, то есть яркость шума, а не его громкость." }
+    next: |
+      # Дальше: 8.3
+      **Хэты.** Тот же шум, другой цвет и очень короткая огибающая. Открытый и закрытый хэт делят одну огибающую.
+    faq:
+      - q: "Что повторить, если барабан не хрустит?"
+        a: "Проверь Highpass filter у VCF и Level у VCA-1 шума. Если шум тихий, подними Level у VCA-1 шума и Cutoff frequency."
+      - q: "Зачем сохранять патч?"
+        a: "В части 9 барабан и клэп попадут в ритм-секцию. Файл `vcv-8.2.vcv` понадобится там как готовый инструмент."

@@ -1,0 +1,386 @@
+id: p4-06-crossfade-compare
+num: "4.6"
+part: 4
+title: Кроссфейд и сравнение
+goal: Плавно переводить звук от одного источника к другому и превращать непрерывный сигнал в гейт по порогу.
+builds: Переезд между тембрами в пэде и лиде и гейты, которые запускают события сами. Логика гейтов продолжится в части 5.
+minutes: 35
+requires: [p3-03-vca]
+glossary: [кроссфейд, компаратор, порог, гейт, LFO]
+sources: [vcv-free-manual, omri-vca-course, pc-learning-synthesis]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Кроссфейд и сравнение
+    page: |
+      # 4.6 Кроссфейд и сравнение
+      **Ты научишься:** плавно переходить между двумя источниками и получать [[гейт]] из любого медленного сигнала [[LFO]].
+      **Ты соберёшь:** два тембра, которые перетекают друг в друга, и гейт из треугольника LFO.
+      **Понадобится:** 35 минут и урок 3.3 про VCA.
+      Два модуля решают две задачи: плавно между и когда и если.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: a, label: VCO A, kind: audio }
+        - { id: b, label: VCO B, kind: audio }
+        - { id: fade, label: Fade, kind: audio }
+        - { id: lfo, label: LFO, kind: cv }
+        - { id: cmp, label: Compare, kind: gate }
+      edges:
+        - { from: a, to: fade, kind: audio }
+        - { from: b, to: fade, kind: audio }
+        - { from: lfo, to: fade, kind: cv }
+        - { from: lfo, to: cmp, kind: cv }
+      caption: LFO двигает фейдер между двумя тембрами и подаёт сигнал в Compare.
+    faq:
+      - q: Зачем мне кроссфейд, если можно переключить кабель?
+        a: Переключение кабеля даёт щелчок и резкую смену. Кроссфейд сначала слышен один источник, потом смесь, потом второй. Переход происходит плавно.
+      - q: Что такое компаратор?
+        a: Модуль, который сравнивает два напряжения и выдаёт гейт, когда одно больше другого. Из плавной волны получаются ровные включения и выключения.
+      - q: Эти два модуля связаны между собой?
+        a: "Напрямую нет. Они решают разные задачи: фейдер плавно смешивает, компаратор резко включает. Сходятся они только в этом уроке, на одном LFO."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы подскажут, чему посвящён урок.
+    questions:
+      - q: Fade стоит на Crossfade 50 %, в Ch 1 пила, в Ch 2 прямоугольник. Что на выходе Ch 1?
+        free: true
+        options:
+          - { text: "Среднее двух сигналов", correct: true, why: "На 50 % оба входа смешиваются поровну. Выход Ch 1 несёт полусумму пилы и прямоугольника." }
+          - { text: "Только пила", why: "Только пила была бы на 0 %. На 50 % слышны оба источника." }
+          - { text: "Тишина", why: "Фейдер ничего не гасит. В центре просто поровну звучат оба сигнала." }
+      - q: LFO идёт в Crossfade, но Crossfade CV стоит на 0 %. Что будет?
+        options:
+          - { text: "Фейдер не двигается и стоит там, где ручка Crossfade", correct: true, why: "Crossfade CV задаёт глубину входа. На 0 % LFO ничего не двигает." }
+          - { text: "Фейдер ходит на весь диапазон", why: "Кабель сам по себе ничего не включает. Нужна глубина на ручке Crossfade CV." }
+          - { text: "Оба выхода замолчат", why: "Нулевая глубина не ломает сигнал. Модуль просто не слышит вход Crossfade." }
+      - q: LFO Triangle (0…10 В) идёт в A, B offset 5 В. Когда A>B высокий?
+        options:
+          - { text: "Когда треугольник выше 5 В, примерно полцикла", correct: true, why: "Гейт A>B высокий, пока A больше порога. Треугольник выше 5 В половину цикла." }
+          - { text: "Весь цикл", why: "Гейт включён только, пока A больше B. Кабель сам по себе его не держит." }
+          - { text: "Только в момент пересечения порога", why: "Это был бы триггер. A>B остаётся высоким всё время, пока условие верно." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Кроссфейд
+    page: |
+      # Кроссфейд
+      [[кроссфейд|Кроссфейд]] — плавный переход между двумя источниками. Сначала слышен первый, потом смесь, потом второй.
+      У модуля **Fade** положение задаёт **Crossfade**. На 0 % вход **Ch 1** идёт на выход **Ch 1**, на 100 % выходы меняются местами.
+      На 50 % на обоих выходах среднее двух входов.
+      Пока один источник становится громче, второй тише. Поэтому нет щелчка, как при смене кабеля.
+    figure: { template: table, rows: [["Crossfade", "На выходе Ch 1"], ["0 %", "только вход 1"], ["50 %", "среднее входов"], ["100 %", "только вход 2"]], caption: "Что слышно на выходе Ch 1 при трёх положениях фейдера." }
+    simpler: Представь два крана с водой в один бак. Один открываешь, другой закрываешь. Посередине идёт вода из обоих. Резко переключить краны нельзя, поэтому и не бывает рывка.
+    faq:
+      - q: Почему на 50 % не слышно ничего лишнего?
+        a: В центре звучат оба источника поровну. Это не тишина и не потеря звука, просто смесь. Подвигай Crossfade и услышишь, как один вытесняет другой.
+      - q: Чем выходы Ch 1 и Ch 2 отличаются?
+        a: Это разные смеси тех же входов. У Ch 1 доля первого уменьшается с ростом Crossfade, у Ch 2 доля первого растёт. Для кроссфейда бери один выход.
+      - q: Названия входов и выходов совпадают. Как не перепутать?
+        a: Входы Ch 1 и Ch 2 внизу слева, выходы Ch 1 и Ch 2 внизу справа. Кабели от VCO идут во входы, а выход Ch 1 уходит в Audio.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Сравнение
+    page: |
+      # Сравнение
+      Сравнение — обратная операция. Из непрерывного сигнала получается дискретный.
+      [[компаратор|Компаратор]] смотрит на два напряжения, **A** и **B**. Когда A больше B, он поднимает гейт до 10 В. Это выход **A>B**.
+      [[порог|Порог]] B задаёт ручка **B offset**. Чем он выше, тем короче гейт.
+      Так любой LFO или огибающая сами запускают события: ноту, ритм, смену тембра.
+    figure: { template: voltages, ranges: [{ label: "Triangle LFO", min: 0, max: 10 }, { label: "Порог 3…7 В", min: 3, max: 7 }, { label: "Гейт A>B", min: 0, max: 10 }], caption: "Треугольник идёт от 0 до 10 В, порог лежит внутри. Гейт A>B высок, пока треугольник выше порога." }
+    simpler: Представь воду в ванне. Порог — риска на стенке. Пока уровень выше риски, горит лампочка. Опустился ниже, лампочка гаснет. Компаратор следит за риской и зажигает лампочку.
+    faq:
+      - q: Чем гейт отличается от триггера?
+        a: Триггер — короткий импульс в момент события. Гейт держится высоким всё время, пока условие верно. A>B остаётся на 10 В, пока A больше B.
+      - q: Что будет, если порог выше размаха сигнала?
+        a: Гейт не включится ни разу. Если LFO Unipolar идёт от 0 до 10 В, то порог выше 10 В недостижим. B offset в Compare ограничен ±10 В.
+      - q: Зачем выходы A<B, Clip gate и Limit gate?
+        a: A<B — обратный гейт. Clip gate высок, когда A вне диапазона от −B до +B. Limit gate — обратный к нему. Для этого урока достаточно A>B.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Перетекание тембров
+    page: |
+      # Перетекание тембров
+      Два **VCO** идут в **Fade**: пила в **Ch 1**, прямоугольник в **Ch 2**. Выход **Ch 1** уходит в Audio.
+      Медленный треугольник от **LFO** ведёт фейдер. Тембр сам перетекает от пилы к прямоугольнику и обратно.
+      Попробуй руками: сними кабель в **Crossfade** и двигай ручку от 0 до 100 %.
+    modules:
+      - { ref: vcoa, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcob, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: fade, plugin: Fundamental, slug: Fade, params: { Crossfade: { display: "0" }, Crossfade CV: { display: "100" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.3" }, Offset: Unipolar } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [vcoa, Sawtooth], to: [fade, Ch 1] }
+      - { from: [vcob, Square], to: [fade, Ch 2] }
+      - { from: [fade, Ch 1], to: [audio, "To \"device output 1\""] }
+      - { from: [lfo, Triangle], to: [fade, Crossfade] }
+      - { from: [fade, Ch 1], to: [scope, Ch 1] }
+      - { from: [lfo, Triangle], to: [scope, Ch 2] }
+    notes:
+      - { after: fade, text: "Пила в **Ch 1**, прямоугольник в **Ch 2**. Это входы Fade.", targets: [{ module: fade, input: Ch 1 }, { module: fade, input: Ch 2 }] }
+      - { after: fade, text: "**Crossfade CV** на 100 %: LFO двигает фейдер по всему диапазону.", targets: [{ module: fade, param: Crossfade CV }, { module: fade, input: Crossfade }] }
+      - { after: lfo, text: "**Frequency** 0,3 Гц: один переход занимает несколько секунд.", targets: [{ module: lfo, param: Frequency }] }
+    faq:
+      - q: Тембр не переходит. Что проверить?
+        a: "Подними Crossfade CV у Fade: на 0 % LFO фейдер не двигает. Потом проверь, что Triangle идёт именно во вход Crossfade."
+      - q: Почему на Scope форма перетекает плавно?
+        a: Канал 1 показывает выход Ch 1. По мере роста Crossfade пила уходит, а прямоугольник приходит. Между ними видна смесь.
+      - q: Почему LFO на 0,3 Гц?
+        a: Так переход растянут на несколько секунд, и его хорошо слышно. На 6 Гц тембр уже мерцает, а не перетекает.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Гейт из треугольника
+    page: |
+      # Гейт из треугольника
+      **LFO** отдаёт треугольник в **A** у **Compare**. Порог — **B offset** 5 В.
+      Выход **A>B** запускает **ADSR**, огибающая открывает **VCA**, VCO звучит короткой нотой.
+      Слушай: нота запускается каждый раз, когда треугольник поднимается выше порога. Поверни B offset к 7 и к 3 В.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "1" }, Offset: Unipolar } }
+      - { ref: cmp, plugin: Fundamental, slug: Compare, params: { B offset: { display: "5" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "0" }, Release: { display: "400" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [cmp, A] }
+      - { from: [cmp, A>B], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: cmp, text: "**B offset** 5 В: порог посередине размаха 0…10 В. Гейт высок около половины цикла.", targets: [{ module: cmp, param: B offset }] }
+      - { after: cmp, text: "**A>B** — гейт: высокий, пока A больше B.", targets: [{ module: cmp, output: A>B }] }
+      - { after: env, text: "Гейт приходит на **Gate** у ADSR и запускает огибающую.", targets: [{ module: env, input: Gate }] }
+    faq:
+      - q: Ноты нет совсем. Что проверить?
+        a: Посмотри на B offset у Compare. Если порог выше размаха треугольника, гейт не включается. Поставь около 5 В и проверь, что Triangle идёт в A.
+      - q: Почему нота короткая, хотя гейт длинный?
+        a: У ADSR Sustain стоит на 0, и после Decay громкость падает в ноль, даже пока гейт держится. Нота звучит коротко.
+      - q: Что изменится при B offset 7 или 3 В?
+        a: На 7 В гейт короче, нот меньше по времени. На 3 В гейт длиннее. Порог выше — гейт короче.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Fade
+    page: |
+      # Панель Fade
+      **Fade** — кроссфейдер на два входа и два выхода.
+    module: { ref: fade, plugin: Fundamental, slug: Fade }
+    notes:
+      - { text: "**Crossfade** — положение фейдера от 0 до 100 %, по умолчанию 50 %.", targets: [{ module: fade, param: Crossfade }] }
+      - { text: "**Crossfade CV** — глубина входа, от −100 до +100 %. На 0 % вход молчит.", targets: [{ module: fade, param: Crossfade CV }] }
+      - { text: "Вход **Crossfade** принимает CV, например от LFO.", targets: [{ module: fade, input: Crossfade }] }
+      - { text: "Входы **Ch 1** и **Ch 2** — два источника.", targets: [{ module: fade, input: Ch 1 }, { module: fade, input: Ch 2 }] }
+      - { text: "Выходы **Ch 1** и **Ch 2** — две смеси. Для кроссфейда бери один.", targets: [{ module: fade, output: Ch 1 }, { module: fade, output: Ch 2 }] }
+    later:
+      - { what: Панорама моно-источника — один вход и два выхода, lesson: "7.4" }
+      - { what: Закон панорамы в контекстном меню, lesson: "7.4" }
+    faq:
+      - q: Что делает выход Ch 2?
+        a: "Он даёт обратную смесь: когда на Ch 1 больше первого источника, на Ch 2 больше второго. Для кроссфейда достаточно Ch 1."
+      - q: Фейдер на 0 %, а слышен второй источник. Почему?
+        a: Скорее всего, кабель в Audio взят с выхода Ch 2. На Ch 2 при 0 % слышен второй источник. Перенеси кабель на Ch 1.
+      - q: Можно ли ввести в Fade только один источник?
+        a: Можно. Тогда Fade работает как панорама между двумя выходами. Об этом урок 7.4.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Панель Compare
+    page: |
+      # Панель Compare
+      **Compare** сравнивает два напряжения и выдаёт гейты и CV.
+    module: { ref: cmp, plugin: Fundamental, slug: Compare }
+    notes:
+      - { text: "Входы **A** и **B**. A — сравниваемый сигнал, B — порог.", targets: [{ module: cmp, input: A }, { module: cmp, input: B }] }
+      - { text: "**B offset** — порог от −10 до +10 В. Если B пуст, это сам порог. Если кабель есть, ручка добавляется к нему.", targets: [{ module: cmp, param: B offset }] }
+      - { text: "Гейты **A>B** и **A<B**: высокие, пока A больше или меньше B.", targets: [{ module: cmp, output: A>B }, { module: cmp, output: A<B }] }
+      - { text: "**Clip gate** высок, когда A вне диапазона от −B до +B. **Limit gate** — наоборот.", targets: [{ module: cmp, output: Clip gate }, { module: cmp, output: Limit gate }] }
+      - { text: "**Maximum** и **Minimum** — большее и меньшее из A и B.", targets: [{ module: cmp, output: Maximum }, { module: cmp, output: Minimum }] }
+      - { text: "**Clip** — A, ограниченное от −B до +B. **Limit** — та часть A, что вышла за эти границы.", targets: [{ module: cmp, output: Clip }, { module: cmp, output: Limit }] }
+    faq:
+      - q: Какой выход брать для гейта?
+        a: A>B. Он высокий, пока A больше порога. A<B даёт то же наоборот. Остальные выходы нужны для особых задач.
+      - q: Я подключил кабель в B, и порог сдвинулся. Почему?
+        a: Когда B занят, ручка B offset добавляется к приходящему напряжению. Без кабеля она сама задаёт порог.
+      - q: Что будет, если LFO Bipolar, а порог 0 В?
+        a: "Порог 0 В режет Bipolar пополам. Unipolar он не режет совсем: сигнал всегда выше нуля. Поэтому при Unipolar порог нужен выше нуля."
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Сними кабель с **Crossfade** и двигай **Crossfade** у Fade от 0 до 25, 50, 75 и 100 %."
+        see: Сначала пила, потом смесь, потом прямоугольник. На Scope форма меняется с пилы на прямоугольник.
+      - do: "Верни кабель. Поставь **Crossfade CV** на 0, 50, 100 и −100 %."
+        see: На 0 тембр стоит, на 50 ходит наполовину, на 100 во всю ширину. На −100 идёт в обратную сторону.
+      - do: "Поставь **Frequency** у LFO на 0,1, потом на 1 и на 6 Гц."
+        see: Переход становится быстрее, на 6 Гц тембр мерцает.
+      - do: "Поставь **B offset** у Compare на 2, потом на 5 и на 8 В."
+        see: Гейт всё короче. На Scope прямоугольник сужается.
+      - do: "Перенеси кабель с **A>B** на **A<B**."
+        see: Гейт зеркальный. На Scope включения там, где раньше были паузы.
+    modules:
+      - { ref: vcoa, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcob, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: fade, plugin: Fundamental, slug: Fade, params: { Crossfade: { display: "0" }, Crossfade CV: { display: "100" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.3" }, Offset: Unipolar } }
+      - { ref: cmp, plugin: Fundamental, slug: Compare, params: { B offset: { display: "5" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [vcoa, Sawtooth], to: [fade, Ch 1] }
+      - { from: [vcob, Square], to: [fade, Ch 2] }
+      - { from: [fade, Ch 1], to: [audio, "To \"device output 1\""] }
+      - { from: [lfo, Triangle], to: [fade, Crossfade] }
+      - { from: [lfo, Triangle], to: [cmp, A] }
+      - { from: [cmp, A>B], to: [scope, Ch 1] }
+    notes:
+      - { after: fade, text: "Шаги 1 и 2 — ручки Fade.", targets: [{ module: fade, param: Crossfade }, { module: fade, param: Crossfade CV }] }
+      - { after: lfo, text: "Шаг 3 — скорость LFO.", targets: [{ module: lfo, param: Frequency }] }
+      - { after: cmp, text: "Шаги 4 и 5 — Compare. Канал 1 Scope показывает гейт.", targets: [{ module: cmp, param: B offset }, { module: cmp, output: A>B }] }
+    faq:
+      - q: Сняла кабель с Crossfade, а Crossfade CV на 100 % ничего не делает. Это нормально?
+        a: Да. Crossfade CV меняет только глубину входа. Без кабеля вход молчит, и положение задаёт одна ручка Crossfade.
+      - q: На B offset 8 В гейт почти пропал. Почему?
+        a: Треугольник поднимается выше 8 В лишь на небольшой части цикла. Гейт получается коротким. Чем выше порог, тем меньше времени сигнал над ним.
+      - q: Где слышен гейт?
+        a: На слух его нет, он управляющий. В этом блоке его видно на Scope. В предыдущем блоке гейт запускал ADSR, и это было слышно как нота.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — переход и гейт
+    task: |
+      Собери переход между тембрами и гейт из сравнения на верстаке между маркерами.
+      1. Два **VCO**, **Fade**, **LFO**, **Compare**, **Scope**.
+      2. `Sawtooth` первого → `Ch 1` (вход) у Fade, `Square` второго → `Ch 2` (вход).
+      3. `Ch 1` (выход) у Fade → `To "device output 1"` у Audio.
+      4. `Triangle` у LFO → `Crossfade` у Fade. **Crossfade CV** — не ниже 30 %.
+      5. Этот же `Triangle` → `A` у Compare, `A>B` → `Ch 1` у Scope. **B offset** — от 3 до 7 В. Нажми «Проверить».
+    given: [audio]
+    check: p4-06-crossfade-compare
+    hints:
+      "cable:1":
+        - Первый тембр не попал в фейдер.
+        - Какой вход Fade принимает первый источник?
+        - "`Sawtooth` у первого VCO → вход `Ch 1` у Fade."
+      "cable:2":
+        - Второго тембра нет.
+        - Какой вход Fade принимает второй источник?
+        - "`Square` у второго VCO → вход `Ch 2` у Fade."
+      "cable:3":
+        - Звука нет.
+        - Какой выход Fade идёт в Audio?
+        - "Выход `Ch 1` у Fade → вход `To \"device output 1\"` у Audio этого ряда."
+      "cable:4":
+        - Тембры не перетекают сами.
+        - Что двигает фейдер?
+        - "`Triangle` у LFO → вход `Crossfade` у Fade."
+      "cable:5":
+        - Сравнивать нечего.
+        - Какой вход Compare принимает сигнал?
+        - "`Triangle` у LFO → вход `A` у Compare."
+      "cable:6":
+        - Гейта не видно.
+        - Какой выход Compare даёт гейт «A больше B»?
+        - "Выход `A>B` у Compare → вход `Ch 1` у Scope."
+      "param:1":
+        - LFO подключён, но фейдер почти не двигается.
+        - Посмотри на Crossfade CV у Fade.
+        - Поставь Crossfade CV не ниже 30 %.
+      "param:2":
+        - Порог должен лежать внутри размаха треугольника.
+        - Посмотри на B offset у Compare.
+        - Поставь B offset между 3 и 7 В.
+      "probe:1":
+        - На выходе Ch 1 у Fade нет сигнала.
+        - Оба ли VCO подключены в Fade и идёт ли Ch 1 в Audio?
+        - Проверь кабели в `Ch 1` и `Ch 2` у Fade и выход `Ch 1` в Audio.
+      "probe:2":
+        - Гейт A>B не переключается.
+        - Идёт ли Triangle в A, и лежит ли порог внутри размаха?
+        - Соедини `Triangle` с `A` у Compare и поставь B offset между 3 и 7 В.
+    faq:
+      - q: В Fade два входа и два выхода с одинаковыми именами. Как не запутаться?
+        a: Пила и прямоугольник идут во входы Ch 1 и Ch 2. В Audio идёт выход Ch 1. Входы и выходы расположены в разных частях панели.
+      - q: Проверка говорит, что гейт не переключается, а LFO идёт.
+        a: Проверь B offset. Треугольник от 0 до 10 В, порог должен лежать между 3 и 7 В. На 0 или 10 В гейт почти не меняется.
+      - q: Нужен ли Scope для проверки?
+        a: Да, в проверке есть кабель A>B в Scope. Он показывает ширину гейта. Меняй B offset и смотри, как она меняется.
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Нота запустилась один раз и больше не повторяется. Гейт A>B всё время высокий.
+      Найди одну неверную настройку и исправь её. Кабели трогать не нужно.
+    modules:
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "1" }, Offset: Unipolar } }
+      - { ref: cmp, plugin: Fundamental, slug: Compare, params: { B offset: { display: "5" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "0" }, Release: { display: "400" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [cmp, A] }
+      - { from: [cmp, A>B], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    break: { set_param: { module: cmp, name: B offset, value: { display: "-10" } } }
+    check: { kind: fixed, expect_param: { module: cmp, name: B offset, display_min: 3, display_max: 7 } }
+    hints:
+      fixed:
+        - Подумай, когда гейт может высоким оставаться всегда.
+        - Сравни порог на B offset с размахом треугольника 0…10 В.
+        - Поставь B offset у Compare между 3 и 7 В.
+    faq:
+      - q: Почему гейт всё время высокий?
+        a: Порог на −10 В лежит ниже всего треугольника, который идёт от 0 до 10 В. A всегда больше B, и A>B не опускается.
+      - q: А если порог выше 10 В?
+        a: Тогда A никогда не превысит B, и гейт останется низким. Нота не запустится ни разу. Рабочий порог лежит внутри размаха сигнала.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Кроссфейд плавно переводит звук между двумя источниками. Crossfade задаёт положение, Crossfade CV — глубину LFO.
+      - На 50 % на обоих выходах среднее двух входов.
+      - Compare делает гейт из плавного сигнала. A>B высок, пока A больше порога B offset.
+      - Чем выше порог, тем короче гейт. Порог вне размаха сигнала даёт либо постоянный, либо нулевой гейт.
+      Сохрани патч: часть 4 закончена, дальше такт и логика.
+      **Источники:** руководство VCV Rack Free (Fade, Compare); Omri Cohen, курс по VCA; Perfect Circuit, «Learning Synthesis: Logic».
+    questions:
+      - q: Что делает B offset у Compare и как влияет на гейт?
+        options:
+          - { text: "Задаёт порог, чем он выше, тем короче гейт", correct: true, why: "Гейт A>B высок, пока A выше порога. Выше порог, меньше времени сигнал над ним." }
+          - { text: "Делает гейт громче", why: "Гейт всегда 0 или 10 В. Ручка двигает порог, а не уровень гейта." }
+          - { text: "Выбирает форму LFO", why: "Форма задаётся выходом LFO. B offset относится к Compare." }
+    next: |
+      # Дальше: 5.1
+      **Такт и темп.** Гейты станут тактом: появится клок, темп и деление.
+    faq:
+      - q: Что повторить, если гейт не включается?
+        a: Блок про сравнение и панель Compare. Проверь, что порог лежит внутри размаха сигнала и что Triangle подключён к A.
+      - q: Где пригодится кроссфейд дальше?
+        a: "В пэдах и лидах: плавный переезд между тембрами по LFO. Ещё в панораме моно-источника в уроке 7.4."

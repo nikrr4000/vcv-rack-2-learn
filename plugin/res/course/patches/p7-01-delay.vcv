@@ -1,0 +1,1077 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 701001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "266f764c757b",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 701002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 701005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 701006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 701009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701016,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 701017,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    42,
+    4
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701018,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.544023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    49,
+    4
+   ]
+  },
+  {
+   "id": 701019,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    59,
+    4
+   ]
+  },
+  {
+   "id": 701020,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    69,
+    4
+   ]
+  },
+  {
+   "id": 701021,
+   "plugin": "Fundamental",
+   "model": "Delay",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.64205,
+     "id": 0
+    },
+    {
+     "value": 0.4,
+     "id": 1
+    },
+    {
+     "value": 0.5,
+     "id": 2
+    },
+    {
+     "value": 0.4,
+     "id": 3
+    }
+   ],
+   "pos": [
+    73,
+    4
+   ]
+  },
+  {
+   "id": 701022,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    83,
+    4
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 701023,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    90,
+    4
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b5",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 701029,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701030,
+   "plugin": "Fundamental",
+   "model": "Delay",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 701031,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    27,
+    5
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701032,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    36,
+    5
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 701033,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    45,
+    5
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 701034,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    52,
+    5
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b6",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 701035,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    61,
+    5
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b6",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 701036,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    68,
+    5
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b6",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 701037,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b7",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701038,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 701039,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.544023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    38,
+    6
+   ]
+  },
+  {
+   "id": 701040,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    48,
+    6
+   ]
+  },
+  {
+   "id": 701041,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    58,
+    6
+   ]
+  },
+  {
+   "id": 701042,
+   "plugin": "Fundamental",
+   "model": "Delay",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.64205,
+     "id": 0
+    },
+    {
+     "value": 0.4,
+     "id": 1
+    },
+    {
+     "value": 0.5,
+     "id": 2
+    },
+    {
+     "value": 0.4,
+     "id": 3
+    }
+   ],
+   "pos": [
+    62,
+    6
+   ]
+  },
+  {
+   "id": 701043,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    72,
+    6
+   ]
+  },
+  {
+   "id": 701044,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    86,
+    6
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701052,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701053,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    7
+   ]
+  },
+  {
+   "id": 701054,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    7
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b8",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 701055,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    7
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b8",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 701056,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701057,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 701058,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.544023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    36,
+    8
+   ]
+  },
+  {
+   "id": 701059,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    46,
+    8
+   ]
+  },
+  {
+   "id": 701060,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    56,
+    8
+   ]
+  },
+  {
+   "id": 701061,
+   "plugin": "Fundamental",
+   "model": "Delay",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.4,
+     "id": 1
+    },
+    {
+     "value": 0.5,
+     "id": 2
+    },
+    {
+     "value": 0.4,
+     "id": 3
+    }
+   ],
+   "pos": [
+    60,
+    8
+   ]
+  },
+  {
+   "id": 701067,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    70,
+    8
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701068,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b10",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701069,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    9
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b10",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 701070,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    9
+   ],
+   "data": {
+    "lesson": "p7-01-delay",
+    "block": "b10",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 701007,
+   "outputModuleId": 701005,
+   "outputId": 0,
+   "inputModuleId": 701006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701008,
+   "outputModuleId": 701005,
+   "outputId": 0,
+   "inputModuleId": 701006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701024,
+   "outputModuleId": 701016,
+   "outputId": 1,
+   "inputModuleId": 701018,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701025,
+   "outputModuleId": 701018,
+   "outputId": 0,
+   "inputModuleId": 701020,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701026,
+   "outputModuleId": 701019,
+   "outputId": 1,
+   "inputModuleId": 701020,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701027,
+   "outputModuleId": 701020,
+   "outputId": 0,
+   "inputModuleId": 701021,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701028,
+   "outputModuleId": 701021,
+   "outputId": 0,
+   "inputModuleId": 701005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701045,
+   "outputModuleId": 701038,
+   "outputId": 1,
+   "inputModuleId": 701039,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701046,
+   "outputModuleId": 701039,
+   "outputId": 0,
+   "inputModuleId": 701041,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701047,
+   "outputModuleId": 701040,
+   "outputId": 1,
+   "inputModuleId": 701041,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701048,
+   "outputModuleId": 701041,
+   "outputId": 0,
+   "inputModuleId": 701042,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701049,
+   "outputModuleId": 701042,
+   "outputId": 0,
+   "inputModuleId": 701005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701050,
+   "outputModuleId": 701041,
+   "outputId": 0,
+   "inputModuleId": 701043,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701051,
+   "outputModuleId": 701042,
+   "outputId": 1,
+   "inputModuleId": 701043,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701062,
+   "outputModuleId": 701057,
+   "outputId": 1,
+   "inputModuleId": 701058,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701063,
+   "outputModuleId": 701058,
+   "outputId": 0,
+   "inputModuleId": 701060,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701064,
+   "outputModuleId": 701059,
+   "outputId": 1,
+   "inputModuleId": 701060,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701065,
+   "outputModuleId": 701060,
+   "outputId": 0,
+   "inputModuleId": 701061,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 701066,
+   "outputModuleId": 701061,
+   "outputId": 0,
+   "inputModuleId": 701005,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

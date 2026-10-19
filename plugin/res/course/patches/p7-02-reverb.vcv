@@ -1,0 +1,1283 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 702001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "77064118eb2f",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 702002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 702005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 702006,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 702007,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    84,
+    0
+   ]
+  },
+  {
+   "id": 702010,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702011,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702012,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702013,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702014,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702015,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702016,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702017,
+   "plugin": "Fundamental",
+   "model": "Push",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 702018,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    4
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702019,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.544023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    32,
+    4
+   ]
+  },
+  {
+   "id": 702020,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    42,
+    4
+   ]
+  },
+  {
+   "id": 702021,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    52,
+    4
+   ]
+  },
+  {
+   "id": 702022,
+   "plugin": "Valley",
+   "model": "Plateau",
+   "version": "2.4.5",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 0.15,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.3,
+     "id": 5
+    },
+    {
+     "value": 0.36997,
+     "id": 7
+    }
+   ],
+   "pos": [
+    56,
+    4
+   ]
+  },
+  {
+   "id": 702023,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    69,
+    4
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 702024,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    76,
+    4
+   ]
+  },
+  {
+   "id": 702025,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    90,
+    4
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b5",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 702033,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702034,
+   "plugin": "Valley",
+   "model": "Plateau",
+   "version": "2.4.5",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 702035,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    30,
+    5
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702036,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    37,
+    5
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 702037,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    46,
+    5
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 702038,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    53,
+    5
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b6",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 702039,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    60,
+    5
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b6",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 702040,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    67,
+    5
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b6",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 702041,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702042,
+   "plugin": "Valley",
+   "model": "Plateau",
+   "version": "2.4.5",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 702043,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    30,
+    6
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702044,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    39,
+    6
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 702045,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    48,
+    6
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 702046,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    55,
+    6
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b7",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 702047,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    62,
+    6
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b7",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 702048,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    69,
+    6
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b7",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 702049,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702050,
+   "plugin": "Fundamental",
+   "model": "Push",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    21,
+    7
+   ]
+  },
+  {
+   "id": 702051,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.544023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    25,
+    7
+   ]
+  },
+  {
+   "id": 702052,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    35,
+    7
+   ]
+  },
+  {
+   "id": 702053,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    45,
+    7
+   ]
+  },
+  {
+   "id": 702054,
+   "plugin": "Valley",
+   "model": "Plateau",
+   "version": "2.4.5",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 0.15,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.3,
+     "id": 5
+    },
+    {
+     "value": 0.36997,
+     "id": 7
+    }
+   ],
+   "pos": [
+    49,
+    7
+   ]
+  },
+  {
+   "id": 702055,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    62,
+    7
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702056,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    69,
+    7
+   ]
+  },
+  {
+   "id": 702064,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702065,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 702066,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    8
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b9",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 702067,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    8
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b9",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 702068,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702069,
+   "plugin": "Fundamental",
+   "model": "Push",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    15,
+    9
+   ]
+  },
+  {
+   "id": 702070,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.544023,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    19,
+    9
+   ]
+  },
+  {
+   "id": 702071,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    29,
+    9
+   ]
+  },
+  {
+   "id": 702072,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    39,
+    9
+   ]
+  },
+  {
+   "id": 702073,
+   "plugin": "Valley",
+   "model": "Plateau",
+   "version": "2.4.5",
+   "params": [
+    {
+     "value": 0.6,
+     "id": 0
+    },
+    {
+     "value": 0.7,
+     "id": 1
+    },
+    {
+     "value": 0.04,
+     "id": 2
+    },
+    {
+     "value": 0.7,
+     "id": 5
+    },
+    {
+     "value": 0.54995,
+     "id": 7
+    }
+   ],
+   "pos": [
+    43,
+    9
+   ]
+  },
+  {
+   "id": 702079,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    56,
+    9
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b10",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702080,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b11",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702081,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    10
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b11",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 702082,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    10
+   ],
+   "data": {
+    "lesson": "p7-02-reverb",
+    "block": "b11",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 702008,
+   "outputModuleId": 702005,
+   "outputId": 0,
+   "inputModuleId": 702007,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702009,
+   "outputModuleId": 702006,
+   "outputId": 0,
+   "inputModuleId": 702007,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702026,
+   "outputModuleId": 702017,
+   "outputId": 1,
+   "inputModuleId": 702019,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702027,
+   "outputModuleId": 702019,
+   "outputId": 0,
+   "inputModuleId": 702021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702028,
+   "outputModuleId": 702020,
+   "outputId": 1,
+   "inputModuleId": 702021,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702029,
+   "outputModuleId": 702021,
+   "outputId": 0,
+   "inputModuleId": 702022,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702030,
+   "outputModuleId": 702022,
+   "outputId": 0,
+   "inputModuleId": 702005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702031,
+   "outputModuleId": 702022,
+   "outputId": 1,
+   "inputModuleId": 702006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702032,
+   "outputModuleId": 702022,
+   "outputId": 0,
+   "inputModuleId": 702024,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702057,
+   "outputModuleId": 702050,
+   "outputId": 1,
+   "inputModuleId": 702051,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702058,
+   "outputModuleId": 702051,
+   "outputId": 0,
+   "inputModuleId": 702053,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702059,
+   "outputModuleId": 702052,
+   "outputId": 1,
+   "inputModuleId": 702053,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702060,
+   "outputModuleId": 702053,
+   "outputId": 0,
+   "inputModuleId": 702054,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702061,
+   "outputModuleId": 702054,
+   "outputId": 0,
+   "inputModuleId": 702005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702062,
+   "outputModuleId": 702054,
+   "outputId": 1,
+   "inputModuleId": 702006,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702063,
+   "outputModuleId": 702054,
+   "outputId": 0,
+   "inputModuleId": 702056,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702074,
+   "outputModuleId": 702069,
+   "outputId": 1,
+   "inputModuleId": 702070,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702075,
+   "outputModuleId": 702070,
+   "outputId": 0,
+   "inputModuleId": 702072,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702076,
+   "outputModuleId": 702071,
+   "outputId": 1,
+   "inputModuleId": 702072,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702077,
+   "outputModuleId": 702073,
+   "outputId": 0,
+   "inputModuleId": 702005,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 702078,
+   "outputModuleId": 702073,
+   "outputId": 1,
+   "inputModuleId": 702006,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

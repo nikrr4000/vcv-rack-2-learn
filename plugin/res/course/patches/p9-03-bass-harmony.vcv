@@ -1,0 +1,1359 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 903001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "964cdc6bda97",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 903002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 903005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 903006,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 903007,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    84,
+    0
+   ]
+  },
+  {
+   "id": 903010,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903011,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903012,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903013,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903014,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903015,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903016,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903017,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    4
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b5",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903018,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903019,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    }
+   ],
+   "pos": [
+    21,
+    5
+   ]
+  },
+  {
+   "id": 903020,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 8,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    },
+    {
+     "value": 0.1667,
+     "id": 5
+    },
+    {
+     "value": 0.3333,
+     "id": 6
+    },
+    {
+     "value": 0.1667,
+     "id": 7
+    },
+    {
+     "value": 0,
+     "id": 8
+    },
+    {
+     "value": 0.5833,
+     "id": 9
+    },
+    {
+     "value": 0.4167,
+     "id": 10
+    },
+    {
+     "value": 0.0833,
+     "id": 11
+    }
+   ],
+   "pos": [
+    42,
+    5
+   ]
+  },
+  {
+   "id": 903021,
+   "plugin": "Fundamental",
+   "model": "Quantizer",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    65,
+    5
+   ]
+  },
+  {
+   "id": 903022,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    69,
+    5
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903023,
+   "plugin": "Fundamental",
+   "model": "Octave",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -2,
+     "id": 0
+    }
+   ],
+   "pos": [
+    76,
+    5
+   ]
+  },
+  {
+   "id": 903024,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    80,
+    5
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 903025,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    87,
+    5
+   ]
+  },
+  {
+   "id": 903033,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903034,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    }
+   ],
+   "pos": [
+    21,
+    6
+   ]
+  },
+  {
+   "id": 903035,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 4,
+     "id": 3
+    },
+    {
+     "value": 0.75,
+     "id": 4
+    },
+    {
+     "value": 0.4167,
+     "id": 5
+    },
+    {
+     "value": 0,
+     "id": 6
+    },
+    {
+     "value": 0.5833,
+     "id": 7
+    }
+   ],
+   "pos": [
+    42,
+    6
+   ]
+  },
+  {
+   "id": 903036,
+   "plugin": "Fundamental",
+   "model": "Quantizer",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    65,
+    6
+   ]
+  },
+  {
+   "id": 903037,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    69,
+    6
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903038,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    76,
+    6
+   ]
+  },
+  {
+   "id": 903039,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 7.000432,
+     "id": 2
+    }
+   ],
+   "pos": [
+    86,
+    6
+   ]
+  },
+  {
+   "id": 903047,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b8",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903048,
+   "plugin": "Fundamental",
+   "model": "Quantizer",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    7
+   ]
+  },
+  {
+   "id": 903049,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    7
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903050,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    28,
+    7
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b8",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 903051,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    35,
+    7
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b8",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 903052,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b9",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903053,
+   "plugin": "Fundamental",
+   "model": "Octave",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    8
+   ]
+  },
+  {
+   "id": 903054,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    8
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903055,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    28,
+    8
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b9",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 903056,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    37,
+    8
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b9",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 903057,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    44,
+    8
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b9",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 903058,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903059,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    9
+   ]
+  },
+  {
+   "id": 903060,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 8,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    },
+    {
+     "value": 0.1667,
+     "id": 5
+    },
+    {
+     "value": 0.3333,
+     "id": 6
+    },
+    {
+     "value": 0.1667,
+     "id": 7
+    },
+    {
+     "value": 0,
+     "id": 8
+    },
+    {
+     "value": 0.5833,
+     "id": 9
+    },
+    {
+     "value": 0.4167,
+     "id": 10
+    },
+    {
+     "value": 0.0833,
+     "id": 11
+    }
+   ],
+   "pos": [
+    36,
+    9
+   ]
+  },
+  {
+   "id": 903061,
+   "plugin": "Fundamental",
+   "model": "Quantizer",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    59,
+    9
+   ]
+  },
+  {
+   "id": 903062,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    63,
+    9
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b10",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903063,
+   "plugin": "Fundamental",
+   "model": "Octave",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -2,
+     "id": 0
+    }
+   ],
+   "pos": [
+    70,
+    9
+   ]
+  },
+  {
+   "id": 903064,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    74,
+    9
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b10",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 903065,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    81,
+    9
+   ]
+  },
+  {
+   "id": 903073,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b11",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903074,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    15,
+    10
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b11",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 903075,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    58,
+    10
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b11",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 903076,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    11
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b12",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903077,
+   "plugin": "ImpromptuModular",
+   "model": "Clocked",
+   "version": "2.5.0",
+   "params": [
+    {
+     "value": 120,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    11
+   ]
+  },
+  {
+   "id": 903078,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 4,
+     "id": 3
+    },
+    {
+     "value": 0.75,
+     "id": 4
+    },
+    {
+     "value": 0.4167,
+     "id": 5
+    },
+    {
+     "value": 0,
+     "id": 6
+    },
+    {
+     "value": 0.5833,
+     "id": 7
+    }
+   ],
+   "pos": [
+    36,
+    11
+   ]
+  },
+  {
+   "id": 903079,
+   "plugin": "Fundamental",
+   "model": "Quantizer",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    59,
+    11
+   ]
+  },
+  {
+   "id": 903080,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    63,
+    11
+   ]
+  },
+  {
+   "id": 903081,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 7.000432,
+     "id": 2
+    }
+   ],
+   "pos": [
+    73,
+    11
+   ]
+  },
+  {
+   "id": 903088,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    83,
+    11
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b12",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903089,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    12
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b13",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903090,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    12
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b13",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 903091,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    12
+   ],
+   "data": {
+    "lesson": "p9-03-bass-harmony",
+    "block": "b13",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 903008,
+   "outputModuleId": 903005,
+   "outputId": 0,
+   "inputModuleId": 903007,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903009,
+   "outputModuleId": 903006,
+   "outputId": 0,
+   "inputModuleId": 903007,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903026,
+   "outputModuleId": 903019,
+   "outputId": 1,
+   "inputModuleId": 903020,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903027,
+   "outputModuleId": 903019,
+   "outputId": 4,
+   "inputModuleId": 903020,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903028,
+   "outputModuleId": 903020,
+   "outputId": 1,
+   "inputModuleId": 903021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903029,
+   "outputModuleId": 903021,
+   "outputId": 0,
+   "inputModuleId": 903023,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903030,
+   "outputModuleId": 903023,
+   "outputId": 0,
+   "inputModuleId": 903025,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903031,
+   "outputModuleId": 903025,
+   "outputId": 2,
+   "inputModuleId": 903005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903032,
+   "outputModuleId": 903025,
+   "outputId": 2,
+   "inputModuleId": 903006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903040,
+   "outputModuleId": 903034,
+   "outputId": 1,
+   "inputModuleId": 903035,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903041,
+   "outputModuleId": 903034,
+   "outputId": 4,
+   "inputModuleId": 903035,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903042,
+   "outputModuleId": 903035,
+   "outputId": 1,
+   "inputModuleId": 903036,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903043,
+   "outputModuleId": 903036,
+   "outputId": 0,
+   "inputModuleId": 903038,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903044,
+   "outputModuleId": 903036,
+   "outputId": 0,
+   "inputModuleId": 903039,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903045,
+   "outputModuleId": 903038,
+   "outputId": 2,
+   "inputModuleId": 903005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903046,
+   "outputModuleId": 903039,
+   "outputId": 2,
+   "inputModuleId": 903006,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903066,
+   "outputModuleId": 903059,
+   "outputId": 1,
+   "inputModuleId": 903060,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903067,
+   "outputModuleId": 903059,
+   "outputId": 4,
+   "inputModuleId": 903060,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903068,
+   "outputModuleId": 903060,
+   "outputId": 1,
+   "inputModuleId": 903061,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903069,
+   "outputModuleId": 903061,
+   "outputId": 0,
+   "inputModuleId": 903063,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903070,
+   "outputModuleId": 903063,
+   "outputId": 0,
+   "inputModuleId": 903065,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903071,
+   "outputModuleId": 903065,
+   "outputId": 2,
+   "inputModuleId": 903005,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903072,
+   "outputModuleId": 903065,
+   "outputId": 2,
+   "inputModuleId": 903006,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903082,
+   "outputModuleId": 903077,
+   "outputId": 1,
+   "inputModuleId": 903078,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903083,
+   "outputModuleId": 903077,
+   "outputId": 4,
+   "inputModuleId": 903078,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903084,
+   "outputModuleId": 903078,
+   "outputId": 1,
+   "inputModuleId": 903079,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903085,
+   "outputModuleId": 903079,
+   "outputId": 0,
+   "inputModuleId": 903080,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903086,
+   "outputModuleId": 903080,
+   "outputId": 2,
+   "inputModuleId": 903005,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 903087,
+   "outputModuleId": 903081,
+   "outputId": 2,
+   "inputModuleId": 903006,
+   "inputId": 4,
+   "color": "#C0583B"
+  }
+ ]
+}

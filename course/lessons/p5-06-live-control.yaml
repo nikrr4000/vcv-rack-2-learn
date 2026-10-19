@@ -1,0 +1,402 @@
+id: p5-06-live-control
+num: "5.6"
+part: 5
+title: Живое управление
+goal: Играть патч руками — заглушать части мьютом, возвращать секвенсор на первый шаг и перезапускать такт одной кнопкой.
+builds: Основа аранжировки в части 9 — структура трека строится ручными переключателями на готовых линиях.
+minutes: 35
+requires: [p5-01-clock-tempo, p5-02-seq3]
+glossary: [мьют, живая игра, сброс, триггер, гейт]
+sources: [vcv-free-manual, ne-mutes, sos-gigging]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Живое управление
+    page: |
+      # 5.6 Живое управление
+      **Ты научишься:** заглушать линии [[мьют|мьютом]], делать [[сброс]] секвенсора и такта кнопкой.
+      **Ты соберёшь:** мелодию из урока 5.2 с тремя «кнопками»: **Mutes** на [[гейт|гейте]], **Pulses** на сбросе секвенсора, **Push** на сбросе такта.
+      **Понадобится:** 35 минут, уроки 5.1 и 5.2. Начни с тихой громкости.
+      Это первый шаг к [[живая игра|живой игре]]: патч слушается рук, а не только записанных ручек.
+    figure: { template: flow, layout: two-rows, nodes: [{ id: clk, label: Clocked, kind: gate }, { id: seq, label: SEQ 3, kind: cv }, { id: mutes, label: Mutes, kind: gate }, { id: env, label: ADSR, kind: cv }, { id: pul, label: Pulses, kind: gate }, { id: push, label: Push, kind: gate }], edges: [{ from: clk, to: seq, kind: gate }, { from: seq, to: mutes, kind: gate }, { from: mutes, to: env, kind: gate }, { from: pul, to: seq, kind: gate }, { from: push, to: clk, kind: gate }], caption: "Три ручных вмешательства: мьют на гейте, сброс секвенсора и сброс такта." }
+    faq:
+      - q: Зачем играть патч руками, если он уже играет сам?
+        a: "Живой патч не звучит одинаково от начала до конца. Ты убираешь и возвращаешь линии, и из одного цикла рождается структура: вступление, развитие, пауза."
+      - q: Нужны ли для этого MIDI-клавиши?
+        a: "Нет. В уроке все жесты делаются мышью: кнопки Mutes, Pulses и Push доступны прямо на панели."
+      - q: Что такое Pulses?
+        a: "Модуль из десяти кнопок. Каждая выдаёт короткий импульс и гейт, пока нажата. Подходит там, где нужен ручной сигнал: сбросы, запуски."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про ручное управление. Ошибаться можно: ответы покажут, что разобрать.
+    questions:
+      - q: Ты заглушил Mutes на линии гейтов. Что произойдёт со звуком?
+        free: true
+        options:
+          - { text: "Новые ноты не запускаются, а начатая доигрывает хвост", correct: true, why: "Мьют убирает только гейт. Огибающая закончит Release сама, и звук затихнет." }
+          - { text: "Звук обрывается мгновенно", why: "Мгновенно обрывается мьют самого звука. Мьют гейта оставляет хвост огибающей." }
+          - { text: "Высота падает на самую низкую ноту", why: "Так бывает при мьюте CV высоты. Мьют гейта высоту не трогает." }
+      - q: Чем у Pulses выход Row 1 trigger отличается от Row 1 gate?
+        options:
+          - { text: "Trigger — короткий импульс в момент нажатия, gate держится, пока кнопка нажата", correct: true, why: "Trigger около 1 мс, gate — всё время, пока держишь кнопку." }
+          - { text: "Они одинаковые", why: "Триггер и гейт отличаются длиной. Для сброса нужен триггер, для ноты — гейт." }
+          - { text: "Trigger держится, а gate короткий", why: "Наоборот: короткий импульс — это триггер." }
+      - q: Зачем во время игры вручную сбрасывать секвенсор и такт?
+        options:
+          - { text: "Чтобы вернуть паттерны на одну и ту же долю", correct: true, why: "После пауз и вариаций партии расходятся. Сброс собирает их на первой доле." }
+          - { text: "Чтобы поднять темп", why: "Сброс темп не меняет. Темп задаёт ручка Master clock." }
+          - { text: "Чтобы сохранить патч", why: "Сброс и сохранение не связаны. Сброс двигает только указатель шага." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Три жеста
+    page: |
+      # Три жеста
+      Живая игра в модуляре состоит из трёх жестов.
+      Первый — включить или отключить часть. Это [[мьют]]: кнопка заглушает линию.
+      Второй — вернуть всё на начало. Это [[сброс]]: импульс на вход Reset.
+      Третий — запустить событие вручную. Для этого есть кнопки: Pulses и Push.
+    figure: { template: flow, layout: row, nodes: [{ id: mute, label: Мьют, kind: gate }, { id: reset, label: Сброс, kind: gate }, { id: button, label: Кнопка, kind: gate }], edges: [{ from: mute, to: reset, kind: gate }, { from: reset, to: button, kind: gate }], caption: "Три жеста: заглушить, вернуть на начало, запустить." }
+    simpler: Представь, что ты ведёшь оркестр. Одним жестом просишь замолчать скрипки. Другим говоришь «все с первой доли». Третьим даёшь вступление. Три жеста, и музыка течёт по-новому.
+    faq:
+      - q: Чем мьют отличается от выключателя?
+        a: Мьют просто не пропускает сигнал, пока включён. Модуль за ним продолжает работать, и после снятия мьюта линия возвращается в игру без пауз и перезапуска.
+      - q: Что делает сброс с темпом?
+        a: "Ничего. Сброс двигает только позицию: секвенсор возвращается на первый шаг, делители на первую долю. Скорость задаёт Master clock."
+      - q: Зачем кнопка, если можно крутить ручки?
+        a: "Ручка меняет значение плавно, а кнопка выдаёт мгновенное событие: сброс, запуск, акцент. Для таких жестов нужен импульс."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Мьют в разных местах
+    page: |
+      # Мьют в разных местах
+      Результат мьюта зависит от того, куда его поставить.
+      Мьют звука даёт тишину сразу. Мьют гейта оставляет хвост: огибающая доигрывает по Release.
+      Мьют такта замораживает секвенсор на текущем шаге. Мьют высоты роняет сигнал до 0 В, то есть до ноты C4.
+      Выбирай место под нужный эффект. Кнопок немного, жесты чёткие.
+    figure: { template: table, rows: [["Куда поставить", "Что произойдёт"], ["На звук", "Тишина сразу"], ["На гейт", "Хвост доигрывает"], ["На такт", "Шаг замирает"], ["На высоту", "Сигнал падает на 0 В"]], caption: "Один и тот же мьют даёт разный эффект в разных местах цепи." }
+    simpler: Представь рубильник в разных местах дома. Выключишь у лампы, и свет погаснет сразу. Выключишь у розетки, и ток не пойдёт дальше. Выключишь на кухне, и погаснет только кухня.
+    faq:
+      - q: Какой мьют лучше для паузы в ритме?
+        a: Мьют на гейте. Новые ноты не запускаются, а хвост доигрывает, поэтому пауза звучит мягко. Мьют звука режет резко и может дать щелчок.
+      - q: Что будет, если заглушить такт у секвенсора?
+        a: Секвенсор замрёт на текущем шаге. После снятия мьюта он продолжит с того же шага. Все остальные части патча тактируются отдельно и играют дальше.
+      - q: Не слишком ли много кнопок для живой игры?
+        a: "Да, можно перегрузить музыку. Лучше немного жестов, но чётких: один-два мьюта и один сброс дают больше структуры, чем десяток кнопок."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Мьют на гейте
+    page: |
+      # Мьют на гейте
+      **SEQ 3** играет мелодию. Гейт идёт через строку **Row 1** модуля **Mutes** и дальше в **ADSR**.
+      Нажми **Row 1 mute**. Новые ноты перестанут запускаться, а последняя доиграет хвост.
+      Отпусти мьют: мелодия возвращается «в долю».
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "120" }, Steps: { display: "8" }, CV 1 step 1: { raw: 0 }, CV 1 step 2: { raw: 0.1667 }, CV 1 step 3: { raw: 0.3333 }, CV 1 step 4: { raw: 0.5833 }, CV 1 step 5: { raw: 0.3333 }, CV 1 step 6: { raw: 0.1667 }, CV 1 step 7: { raw: 0 }, CV 1 step 8: { raw: 0.5833 }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 } } }
+      - { ref: mutes, plugin: Fundamental, slug: Mutes, params: { Row 1 mute: { raw: 0 } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "40" }, Release: { display: "400" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+    cables:
+      - { from: [seq, CV 1], to: [vco, 1V/octave pitch] }
+      - { from: [seq, Trigger], to: [mutes, Row 1] }
+      - { from: [mutes, Row 1], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mutes, text: "**Row 1 mute** глушит выход строки. Вход слева, выход справа.", targets: [{ module: mutes, param: Row 1 mute }, { module: mutes, input: Row 1 }, { module: mutes, output: Row 1 }] }
+      - { after: env, text: "**Release** задаёт, как долго звук доигрывает после мьюта.", targets: [{ module: env, param: Release }] }
+    faq:
+      - q: После мьюта звук не оборвался. Это ошибка?
+        a: Нет. Мьют убрал только гейт, огибающая дошла до конца Release. Если хочешь резче, укороти Release у ADSR.
+      - q: Мелодия не вернулась на то же место после снятия мьюта.
+        a: Секвенсор не останавливался, он шёл всё время. Ноты, прошедшие под мьютом, ты просто не слышал. Вернулся ты на текущий шаг цикла.
+      - q: Звука нет вообще. Что проверить?
+        a: "Возможно, SEQ 3 остановлен: новый уже идёт, а Run на идущем останавливает. Нажми Run один раз. Проверь и кнопку Row 1 mute: она должна быть отжата."
+
+  - id: b6
+    type: live
+    preset: live
+    title: Два сброса
+    page: |
+      # Два сброса
+      Мелодия идёт от **Clocked** и **SEQ 3**. Кнопка **Row 1 push** у **Pulses** подаёт импульс на **Reset** секвенсора.
+      Кнопка **Push** подаёт импульс на **Reset** такта. Нажми их по очереди посреди мелодии и сравни.
+      После первого мелодия начинается с первой ноты. После второго заново встают и такт, и мелодия.
+    modules:
+      - { ref: clk, plugin: ImpromptuModular, slug: Clocked, params: { Master clock: { display: "120" } } }
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Steps: { display: "8" }, CV 1 step 1: { raw: 0 }, CV 1 step 2: { raw: 0.1667 }, CV 1 step 3: { raw: 0.3333 }, CV 1 step 4: { raw: 0.5833 }, CV 1 step 5: { raw: 0.3333 }, CV 1 step 6: { raw: 0.1667 }, CV 1 step 7: { raw: 0 }, CV 1 step 8: { raw: 0.5833 } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: pulses, plugin: Fundamental, slug: Pulses }
+      - { ref: push, plugin: Fundamental, slug: Push }
+    cables:
+      - { from: [clk, Clock 1], to: [seq, Clock] }
+      - { from: [seq, CV 1], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Triangle], to: [audio, "To \"device output 1\""] }
+      - { from: [pulses, Row 1 trigger], to: [seq, Reset] }
+      - { from: [push, Trigger], to: [clk, Reset] }
+    notes:
+      - { after: pulses, text: "**Row 1 trigger** даёт короткий импульс. Нажми **Row 1 push**.", targets: [{ module: pulses, param: Row 1 push }, { module: pulses, output: Row 1 trigger }] }
+    faq:
+      - q: В чём разница между двумя сбросами на слух?
+        a: Сброс секвенсора возвращает только мелодию, такт продолжает идти. Сброс Clocked вернёт всё сразу. Когда у такта одна партия, звук почти одинаков, разница видна в больших патчах.
+      - q: Pulses и Push — одно и то же?
+        a: Почти. Оба дают импульс. Pulses — десять кнопок в одном модуле, Push — одна кнопка с режимом Hold. Для сбросов хватит любого.
+      - q: Нажимаю кнопку, а мелодия не вернулась в начало.
+        a: "Проверь кабель: триггер должен идти именно в Reset, а не в Clock. И убедись, что секвенсор идёт, а не стоит."
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Mutes
+    page: |
+      # Панель Mutes
+      **Mutes** — десять независимых строк. В уроке нужна одна.
+    module: { ref: mutes, plugin: Fundamental, slug: Mutes }
+    notes:
+      - { text: "Входы **Row 1…10** слева принимают сигнал. Каждая строка независима.", targets: [{ module: mutes, input: Row 1 }, { module: mutes, input: Row 10 }] }
+      - { text: "Выходы **Row 1…10** справа отдают сигнал своей строки.", targets: [{ module: mutes, output: Row 1 }, { module: mutes, output: Row 10 }] }
+      - { text: "Кнопка **Row 1 mute** заглушает свою строку. Нажал — выход на 0 В, отпустил — сигнал идёт.", targets: [{ module: mutes, param: Row 1 mute }, { module: mutes, param: Row 10 mute }] }
+      - { text: "Ставь Mutes туда, где нужна пауза: на гейт, такт или звук." }
+    faq:
+      - q: Что на выходе Mutes, когда строка заглушена?
+        a: 0 В. Для гейта это значит «нет события», для звука тишина, для высоты нота C4 из-за нуля.
+      - q: Работает ли Mutes с аудио?
+        a: Да. Строка пропускает любой сигнал, пока не заглушена. Но на аудио мьют режет резко, а на гейте даёт мягкую паузу.
+      - q: Можно ли заглушить несколько линий одной кнопкой?
+        a: Нет, у каждой строки своя кнопка. Чтобы глушить сразу несколько линий, подключи к строкам разные сигналы и нажимай нужные кнопки вместе.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Панель Pulses
+    page: |
+      # Панель Pulses
+      **Pulses** — десять кнопок с двумя выходами каждая.
+    module: { ref: pulses, plugin: Fundamental, slug: Pulses }
+    notes:
+      - { text: "Кнопка **Row 1 push** запускает строку 1. Входов у модуля нет.", targets: [{ module: pulses, param: Row 1 push }] }
+      - { text: "Выход **Row 1 trigger** даёт короткий импульс около 1 мс в момент нажатия. Он годится для сброса.", targets: [{ module: pulses, output: Row 1 trigger }] }
+      - { text: "Выход **Row 1 gate** держит 10 В, пока кнопка нажата.", targets: [{ module: pulses, output: Row 1 gate }] }
+      - { text: "Остальные строки 2–10 работают так же." }
+    faq:
+      - q: Что выбрать, trigger или gate?
+        a: Для сброса и запуска нужен trigger. Gate нужен, когда событие должно длиться, пока держишь кнопку, например для ноты.
+      - q: Почему у Pulses нет входов?
+        a: "Он работает только руками: нажал — получил сигнал. Если нужен импульс от такта, бери Gates или Logic."
+      - q: Чем Pulses отличается от Push?
+        a: Push — одна кнопка с режимом Hold. Pulses — десять кнопок в одном модуле, каждая с двумя выходами. Для нескольких жестов Pulses компактнее.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Нажимай **Row 1 mute** в разных местах мелодии."
+        see: "Каждый раз огибающая доигрывает хвост и затихает. Новые ноты не начинаются."
+      - do: "Отпусти **Row 1 mute**."
+        see: "Мелодия возвращается «в долю», секвенсор шёл всё время."
+      - do: "Нажми **Row 1 push** у Pulses посреди цикла."
+        see: "Мелодия сразу вернулась к первой ноте."
+      - do: "Уменьши **Release** у ADSR до минимума и снова нажми мьют."
+        see: "Звук обрывается почти сразу: хвост короткий."
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "120" }, Steps: { display: "8" }, CV 1 step 1: { raw: 0 }, CV 1 step 2: { raw: 0.1667 }, CV 1 step 3: { raw: 0.3333 }, CV 1 step 4: { raw: 0.5833 }, CV 1 step 5: { raw: 0.3333 }, CV 1 step 6: { raw: 0.1667 }, CV 1 step 7: { raw: 0 }, CV 1 step 8: { raw: 0.5833 }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 } } }
+      - { ref: mutes, plugin: Fundamental, slug: Mutes, params: { Row 1 mute: { raw: 0 } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "40" }, Release: { display: "400" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: pulses, plugin: Fundamental, slug: Pulses }
+    cables:
+      - { from: [seq, CV 1], to: [vco, 1V/octave pitch] }
+      - { from: [seq, Trigger], to: [mutes, Row 1] }
+      - { from: [mutes, Row 1], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+      - { from: [pulses, Row 1 trigger], to: [seq, Reset] }
+    notes:
+      - { after: pulses, text: "**Row 1 push** подаёт сброс на **Reset** секвенсора.", targets: [{ module: pulses, param: Row 1 push }] }
+    faq:
+      - q: Почему при мьюте звук не обрывается мгновенно?
+        a: Мьют убирает гейт, а не звук. Огибающая начинает Release и затихает по нему. Для резкого обрыва укороти Release.
+      - q: Pulses сбросил мелодию, но ритм остался прежним.
+        a: Сброс вернул указатель на первый шаг. Расстановка триггеров не менялась, поэтому ритм тот же. Изменилась только позиция в цикле.
+      - q: Можно держать мьют, пока играю другими кнопками?
+        a: Да. Мьют держится, пока кнопка включена. Pulses работает независимо, и мелодия при этом остаётся заглушённой.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — патч для живой игры
+    task: |
+      Собери патч для живой игры сам, между маркерами «Верстак».
+      1. **Clocked**, **SEQ 3**, **Mutes**, **ADSR**, **VCA**, **VCO**, **Pulses** и **Push**.
+      2. Мелодия: `Clock 1` → `Clock` у SEQ 3, `CV 1` → `1V/octave pitch` у VCO.
+      3. Гейт через мьют: `Trigger` → `Row 1` слева у Mutes, `Row 1` справа → `Gate` у ADSR.
+      4. Звук: `Envelope` → `CV` у VCA, `Sawtooth` → `Channel` у VCA, выход `Channel` → вход 1 у Audio.
+      5. Кнопки: `Row 1 trigger` у Pulses → `Reset` у SEQ 3, `Trigger` у Push → `Reset` у Clocked.
+      6. Выставь на SEQ 3 разные ноты, не глуши Row 1 и нажми «Проверить».
+    given: [audio]
+    check: p5-06-live-control
+    hints:
+      "module:clk":
+        - Нужен источник такта.
+        - Генератор такта из набора Impromptu Modular.
+        - "Поставь на верстак **Clocked**."
+      "module:seq":
+        - Нужен секвенсор.
+        - Секвенсор из набора Fundamental, как в уроке 5.2.
+        - "Поставь на верстак **SEQ 3**."
+      "module:mutes":
+        - Нужен модуль с кнопками заглушения.
+        - Его название — множественное число от слова «мьют».
+        - "Поставь на верстак **Mutes**."
+      "module:env":
+        - Нужна огибающая.
+        - Огибающая из набора Fundamental.
+        - "Поставь на верстак **ADSR**."
+      "module:vca":
+        - Нужен усилитель.
+        - Усилитель из набора Fundamental.
+        - "Поставь на верстак **VCA**."
+      "module:vco":
+        - Нужен источник звука.
+        - Осциллятор из набора Fundamental.
+        - "Поставь на верстак **VCO**."
+      "module:pulses":
+        - Нужна ручная кнопка для сброса секвенсора.
+        - Модуль с десятью кнопками из набора Fundamental.
+        - "Поставь на верстак **Pulses**."
+      "module:push":
+        - Нужна кнопка для сброса такта.
+        - Одна кнопка из набора Fundamental.
+        - "Поставь на верстак **Push**."
+      "module:out":
+        - Нужен выход звука.
+        - Модуль Audio уже стоит в ряду.
+        - "Не убирай Audio из ряда и подключай кабель к его первому входу."
+      "cable:1":
+        - Секвенсор не получает такт.
+        - Какой выход Clocked ведёт в Clock у SEQ 3?
+        - "`Clock 1` у Clocked → `Clock` у SEQ 3."
+      "cable:2":
+        - Мелодия не доходит до высоты.
+        - Какой выход SEQ 3 даёт напряжение шага?
+        - "`CV 1` у SEQ 3 → `1V/octave pitch` у VCO."
+      "cable:3":
+        - Ритм не идёт через мьют.
+        - Входы Mutes слева, выходы справа.
+        - "`Trigger` у SEQ 3 → вход `Row 1` слева у Mutes."
+      "cable:4":
+        - После мьюта гейт не идёт в огибающую.
+        - Какой выход Mutes берёт сигнал строки 1?
+        - "Выход `Row 1` справа у Mutes → `Gate` у ADSR."
+      "cable:5":
+        - Звук не управляется огибающей.
+        - Что должно прийти на CV у VCA?
+        - "`Envelope` у ADSR → `CV` у VCA."
+      "cable:6":
+        - Пила не идёт в усилитель.
+        - Какой вход VCA принимает звук?
+        - "`Sawtooth` у VCO → `Channel` у VCA."
+      "cable:7":
+        - Голос собран, а тишина.
+        - Откуда звук выходит из VCA и куда он должен прийти?
+        - "`Channel` у VCA → `To \"device output 1\"` у Audio этого ряда."
+      "cable:8":
+        - Нет кнопки «вернуться на первый шаг».
+        - Какой выход Pulses даёт короткий импульс и какой вход SEQ 3 принимает сброс?
+        - "`Row 1 trigger` у Pulses → `Reset` у SEQ 3."
+      "cable:9":
+        - Нет кнопки «сброс такта».
+        - Какой выход Push даёт импульс и какой вход Clocked принимает сброс?
+        - "`Trigger` у Push → `Reset` у Clocked."
+      "probe:1":
+        - Огибающая стоит, ритма нет.
+        - Не заглушена ли строка Row 1 у Mutes и идут ли Clocked и SEQ 3?
+        - "Отожми Row 1 mute. Если такт стоит, нажми Run один раз: на идущем он останавливает."
+    faq:
+      - q: Проверка не видит ритма. Что глушит гейт?
+        a: Скорее всего, нажата Row 1 mute. Мьют держит выход на 0 В, и огибающая не получает гейта. Отожми кнопку и проверь ещё раз.
+      - q: Какой Reset у Clocked, вход или кнопка?
+        a: Тебе нужен вход Reset. Кабель идёт с выхода Trigger у Push. Кнопка на панели Clocked делает то же вручную.
+      - q: Можно ли перепутать Row 1 слева и справа у Mutes?
+        a: Можно. Слева входы, справа выходы. Гейт идёт слева, а после мьюта выходит справа к ADSR.
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Мелодия молчит, хотя секвенсор идёт и мьют отпущен.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "120" }, Steps: { display: "8" }, CV 1 step 1: { raw: 0 }, CV 1 step 2: { raw: 0.1667 }, CV 1 step 3: { raw: 0.3333 }, CV 1 step 4: { raw: 0.5833 }, CV 1 step 5: { raw: 0.3333 }, CV 1 step 6: { raw: 0.1667 }, CV 1 step 7: { raw: 0 }, CV 1 step 8: { raw: 0.5833 }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 } } }
+      - { ref: mutes, plugin: Fundamental, slug: Mutes, params: { Row 1 mute: { raw: 0 } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "300" }, Sustain: { display: "40" }, Release: { display: "400" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+    cables:
+      - { from: [seq, CV 1], to: [vco, 1V/octave pitch] }
+      - { from: [seq, Trigger], to: [mutes, Row 1] }
+      - { from: [mutes, Row 1], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    break: { remove_cable: [mutes, Row 1, env, Gate] }
+    check: { kind: fixed, expect_cable: [mutes, Row 1, env, Gate] }
+    hints:
+      fixed:
+        - Гейт доходит до Mutes, а огибающая не оживает. Чего не хватает после мьюта?
+        - Посмотри на вход Gate у ADSR. Откуда он берёт сигнал?
+        - "Соедини выход `Row 1` справа у Mutes с `Gate` у ADSR."
+    faq:
+      - q: Мьют отпущен, а звука нет. Почему?
+        a: "Гейт заходит в Mutes, но дальше не идёт: выход строки не подключён к ADSR. Мьют здесь ни при чём, разорвана сама линия."
+      - q: Как отличить это от включённого мьюта?
+        a: При включённом мьюте выход строки подключён, но стоит на 0 В. Здесь выход вообще без кабеля. Проверь, куда идёт линия от Row 1 справа.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Три жеста живой игры: [[мьют]], [[сброс]] и ручной импульс от кнопки.
+      - Результат мьюта зависит от места. На гейте он оставляет хвост огибающей, на звуке режет сразу.
+      - Pulses даёт [[триггер]] для сбросов и гейт, пока держишь кнопку.
+      - Сброс секвенсора и сброс такта — разные вмешательства. Темп не меняет ни тот, ни другой.
+      **Источники:** руководство VCV Free (Mutes, Pulses, Push); Noise Engineering, «Getting Started: Mutes»; Sound On Sound, «Guide To Gigging With Modular Synths».
+    questions:
+      - q: Что происходит при мьюте звука, гейта, такта и высоты?
+        options:
+          - { text: "Тишина, хвост, замирание шага, падение на 0 В", correct: true, why: "Каждый мьют режет свою часть: звук, гейт, такт или напряжение высоты." }
+          - { text: "Во всех случаях звук обрывается сразу", why: "Только мьют звука даёт мгновенную тишину. Остальные звучат иначе." }
+          - { text: "Во всех случаях меняется темп", why: "Мьют темп не трогает. Он только блокирует сигнал." }
+      - q: Чем Row N trigger отличается от Row N gate?
+        options:
+          - { text: "Trigger — короткий импульс, gate — пока держишь кнопку", correct: true, why: "Для сброса нужен триггер, для длинных событий — гейт." }
+          - { text: "Gate короче триггера", why: "Наоборот: триггер — короткий импульс." }
+          - { text: "Они одинаковы", why: "Они различаются длиной. Сброс чаще берёт триггер." }
+    next: |
+      # Дальше: 6.1
+      **MIDI в напряжения.** Клавиатура и контроллеры начнут играть твой патч.
+    faq:
+      - q: Как вернуть нужную долю после мьюта?
+        a: Подай сброс на секвенсор и на такт. Тогда все партии встанут на первую долю вместе. Это самый чистый способ собрать музыку после вариаций.
+      - q: Что повторить, если сброс не работает?
+        a: Проверь, что кабель идёт в Reset, а не в Clock, и что источник даёт именно триггер. Затем вернись к блоку «Два сброса».

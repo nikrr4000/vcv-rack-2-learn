@@ -1,0 +1,1252 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 405001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "c464c57f6c14",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 405002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 405005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 405006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 405009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405016,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 405017,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 2.000008,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    25,
+    4
+   ]
+  },
+  {
+   "id": 405018,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    35,
+    4
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405019,
+   "plugin": "Fundamental",
+   "model": "Process",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    42,
+    4
+   ]
+  },
+  {
+   "id": 405020,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    48,
+    4
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 405021,
+   "plugin": "Fundamental",
+   "model": "Process",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -3.3219279999999998,
+     "id": 0
+    }
+   ],
+   "pos": [
+    57,
+    4
+   ]
+  },
+  {
+   "id": 405022,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    63,
+    4
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b5",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 405023,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.2,
+     "id": 0
+    }
+   ],
+   "pos": [
+    70,
+    4
+   ]
+  },
+  {
+   "id": 405024,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    74,
+    4
+   ]
+  },
+  {
+   "id": 405031,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405032,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    21,
+    5
+   ]
+  },
+  {
+   "id": 405033,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -0.999989,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    25,
+    5
+   ]
+  },
+  {
+   "id": 405034,
+   "plugin": "Fundamental",
+   "model": "SHASR",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    35,
+    5
+   ]
+  },
+  {
+   "id": 405035,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    43,
+    5
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405036,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    52,
+    5
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 405037,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    61,
+    5
+   ]
+  },
+  {
+   "id": 405042,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405043,
+   "plugin": "Fundamental",
+   "model": "Process",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 405044,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    23,
+    6
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405045,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    32,
+    6
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 405046,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    41,
+    6
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 405047,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    50,
+    6
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b7",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 405048,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    57,
+    6
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b7",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 405049,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    6
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b7",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 405050,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405051,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    15,
+    7
+   ]
+  },
+  {
+   "id": 405052,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 2.000008,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    19,
+    7
+   ]
+  },
+  {
+   "id": 405053,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    29,
+    7
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405054,
+   "plugin": "Fundamental",
+   "model": "Process",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    36,
+    7
+   ]
+  },
+  {
+   "id": 405055,
+   "plugin": "Fundamental",
+   "model": "Process",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -3.3219279999999998,
+     "id": 0
+    }
+   ],
+   "pos": [
+    42,
+    7
+   ]
+  },
+  {
+   "id": 405056,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    48,
+    7
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b8",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 405057,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.2,
+     "id": 0
+    }
+   ],
+   "pos": [
+    55,
+    7
+   ]
+  },
+  {
+   "id": 405058,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    59,
+    7
+   ]
+  },
+  {
+   "id": 405059,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -1,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    69,
+    7
+   ]
+  },
+  {
+   "id": 405068,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405069,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    19,
+    8
+   ]
+  },
+  {
+   "id": 405070,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    8
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b9",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 405071,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    68,
+    8
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b9",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 405072,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405073,
+   "plugin": "Fundamental",
+   "model": "Noise",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    15,
+    9
+   ]
+  },
+  {
+   "id": 405074,
+   "plugin": "Fundamental",
+   "model": "LFO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 2.000008,
+     "id": 2
+    },
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    19,
+    9
+   ]
+  },
+  {
+   "id": 405075,
+   "plugin": "Fundamental",
+   "model": "Process",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    29,
+    9
+   ]
+  },
+  {
+   "id": 405076,
+   "plugin": "Fundamental",
+   "model": "Process",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 3.321928,
+     "id": 0
+    }
+   ],
+   "pos": [
+    35,
+    9
+   ]
+  },
+  {
+   "id": 405077,
+   "plugin": "Fundamental",
+   "model": "Rescale",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.2,
+     "id": 0
+    }
+   ],
+   "pos": [
+    41,
+    9
+   ]
+  },
+  {
+   "id": 405078,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    45,
+    9
+   ]
+  },
+  {
+   "id": 405085,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    55,
+    9
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b10",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405086,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b11",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405087,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    10
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b11",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 405088,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    10
+   ],
+   "data": {
+    "lesson": "p4-05-sample-hold-slew",
+    "block": "b11",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 405007,
+   "outputModuleId": 405005,
+   "outputId": 0,
+   "inputModuleId": 405006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405008,
+   "outputModuleId": 405005,
+   "outputId": 0,
+   "inputModuleId": 405006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405025,
+   "outputModuleId": 405016,
+   "outputId": 0,
+   "inputModuleId": 405019,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405026,
+   "outputModuleId": 405017,
+   "outputId": 3,
+   "inputModuleId": 405019,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405027,
+   "outputModuleId": 405019,
+   "outputId": 0,
+   "inputModuleId": 405021,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405028,
+   "outputModuleId": 405021,
+   "outputId": 4,
+   "inputModuleId": 405023,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405029,
+   "outputModuleId": 405023,
+   "outputId": 0,
+   "inputModuleId": 405024,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405030,
+   "outputModuleId": 405024,
+   "outputId": 1,
+   "inputModuleId": 405005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405038,
+   "outputModuleId": 405032,
+   "outputId": 0,
+   "inputModuleId": 405034,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405039,
+   "outputModuleId": 405033,
+   "outputId": 3,
+   "inputModuleId": 405034,
+   "inputId": 8,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405040,
+   "outputModuleId": 405034,
+   "outputId": 0,
+   "inputModuleId": 405037,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405041,
+   "outputModuleId": 405034,
+   "outputId": 1,
+   "inputModuleId": 405037,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405060,
+   "outputModuleId": 405051,
+   "outputId": 0,
+   "inputModuleId": 405054,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405061,
+   "outputModuleId": 405052,
+   "outputId": 3,
+   "inputModuleId": 405054,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405062,
+   "outputModuleId": 405054,
+   "outputId": 0,
+   "inputModuleId": 405055,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405063,
+   "outputModuleId": 405055,
+   "outputId": 4,
+   "inputModuleId": 405057,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405064,
+   "outputModuleId": 405057,
+   "outputId": 0,
+   "inputModuleId": 405058,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405065,
+   "outputModuleId": 405058,
+   "outputId": 1,
+   "inputModuleId": 405005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405066,
+   "outputModuleId": 405054,
+   "outputId": 0,
+   "inputModuleId": 405059,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405067,
+   "outputModuleId": 405055,
+   "outputId": 4,
+   "inputModuleId": 405059,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405079,
+   "outputModuleId": 405073,
+   "outputId": 0,
+   "inputModuleId": 405075,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405080,
+   "outputModuleId": 405074,
+   "outputId": 3,
+   "inputModuleId": 405075,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405081,
+   "outputModuleId": 405075,
+   "outputId": 0,
+   "inputModuleId": 405076,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405082,
+   "outputModuleId": 405076,
+   "outputId": 4,
+   "inputModuleId": 405077,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405083,
+   "outputModuleId": 405077,
+   "outputId": 0,
+   "inputModuleId": 405078,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 405084,
+   "outputModuleId": 405078,
+   "outputId": 1,
+   "inputModuleId": 405005,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

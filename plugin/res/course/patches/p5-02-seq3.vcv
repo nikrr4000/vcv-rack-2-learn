@@ -1,0 +1,1405 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 502001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "7abf63858a5d",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 502002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 502005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 502006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 502009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502016,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 8,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    },
+    {
+     "value": 0.1667,
+     "id": 5
+    },
+    {
+     "value": 0.3333,
+     "id": 6
+    },
+    {
+     "value": 0.5833,
+     "id": 7
+    },
+    {
+     "value": 0.3333,
+     "id": 8
+    },
+    {
+     "value": 0.1667,
+     "id": 9
+    },
+    {
+     "value": 0,
+     "id": 10
+    },
+    {
+     "value": 0.5833,
+     "id": 11
+    },
+    {
+     "value": 1,
+     "id": 28
+    },
+    {
+     "value": 1,
+     "id": 29
+    },
+    {
+     "value": 1,
+     "id": 30
+    },
+    {
+     "value": 0,
+     "id": 31
+    },
+    {
+     "value": 1,
+     "id": 32
+    },
+    {
+     "value": 1,
+     "id": 33
+    },
+    {
+     "value": 1,
+     "id": 34
+    },
+    {
+     "value": 0,
+     "id": 35
+    }
+   ],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 502017,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    44,
+    4
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502018,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    51,
+    4
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 502019,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    58,
+    4
+   ]
+  },
+  {
+   "id": 502020,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.661249,
+     "id": 0
+    },
+    {
+     "value": 0.3,
+     "id": 2
+    }
+   ],
+   "pos": [
+    68,
+    4
+   ]
+  },
+  {
+   "id": 502021,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    76,
+    4
+   ]
+  },
+  {
+   "id": 502022,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.61928,
+     "id": 1
+    },
+    {
+     "value": 0.4,
+     "id": 2
+    },
+    {
+     "value": 0.650515,
+     "id": 3
+    }
+   ],
+   "pos": [
+    80,
+    4
+   ]
+  },
+  {
+   "id": 502029,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502030,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 502031,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    5
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502032,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    49,
+    5
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 502033,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    58,
+    5
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 502034,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    65,
+    5
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b6",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 502035,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    72,
+    5
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b6",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 502036,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    81,
+    5
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b6",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 502037,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b7",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502038,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": 502039,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    6
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502040,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    49,
+    6
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b7",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 502041,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    58,
+    6
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b7",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 502042,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    67,
+    6
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b7",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 502043,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    76,
+    6
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b7",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 502044,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    85,
+    6
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b7",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 502045,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502046,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 8,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    },
+    {
+     "value": 0.1667,
+     "id": 5
+    },
+    {
+     "value": 0.3333,
+     "id": 6
+    },
+    {
+     "value": 0.5833,
+     "id": 7
+    },
+    {
+     "value": 0.3333,
+     "id": 8
+    },
+    {
+     "value": 0.1667,
+     "id": 9
+    },
+    {
+     "value": 0,
+     "id": 10
+    },
+    {
+     "value": 0.5833,
+     "id": 11
+    },
+    {
+     "value": 1,
+     "id": 28
+    },
+    {
+     "value": 1,
+     "id": 29
+    },
+    {
+     "value": 1,
+     "id": 30
+    },
+    {
+     "value": 0,
+     "id": 31
+    },
+    {
+     "value": 1,
+     "id": 32
+    },
+    {
+     "value": 1,
+     "id": 33
+    },
+    {
+     "value": 1,
+     "id": 34
+    },
+    {
+     "value": 0,
+     "id": 35
+    }
+   ],
+   "pos": [
+    15,
+    7
+   ]
+  },
+  {
+   "id": 502047,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    38,
+    7
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b8",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502048,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    45,
+    7
+   ]
+  },
+  {
+   "id": 502049,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.661249,
+     "id": 0
+    },
+    {
+     "value": 0.3,
+     "id": 2
+    }
+   ],
+   "pos": [
+    55,
+    7
+   ]
+  },
+  {
+   "id": 502050,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    63,
+    7
+   ]
+  },
+  {
+   "id": 502051,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.61928,
+     "id": 1
+    },
+    {
+     "value": 0.4,
+     "id": 2
+    },
+    {
+     "value": 0.650515,
+     "id": 3
+    }
+   ],
+   "pos": [
+    67,
+    7
+   ]
+  },
+  {
+   "id": 502052,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 4
+    }
+   ],
+   "pos": [
+    77,
+    7
+   ]
+  },
+  {
+   "id": 502060,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502061,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    17,
+    8
+   ]
+  },
+  {
+   "id": 502062,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    23,
+    8
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b9",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 502063,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    66,
+    8
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b9",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 502064,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b10",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502065,
+   "plugin": "Fundamental",
+   "model": "SEQ3",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 5,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    },
+    {
+     "value": 0.1667,
+     "id": 5
+    },
+    {
+     "value": 0.3333,
+     "id": 6
+    },
+    {
+     "value": 0.5833,
+     "id": 7
+    },
+    {
+     "value": 0.3333,
+     "id": 8
+    },
+    {
+     "value": 0.1667,
+     "id": 9
+    },
+    {
+     "value": 0,
+     "id": 10
+    },
+    {
+     "value": 0.5833,
+     "id": 11
+    },
+    {
+     "value": 1,
+     "id": 28
+    },
+    {
+     "value": 1,
+     "id": 29
+    },
+    {
+     "value": 1,
+     "id": 30
+    },
+    {
+     "value": 1,
+     "id": 31
+    },
+    {
+     "value": 1,
+     "id": 32
+    },
+    {
+     "value": 1,
+     "id": 33
+    },
+    {
+     "value": 1,
+     "id": 34
+    },
+    {
+     "value": 1,
+     "id": 35
+    }
+   ],
+   "pos": [
+    15,
+    9
+   ]
+  },
+  {
+   "id": 502066,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    38,
+    9
+   ]
+  },
+  {
+   "id": 502067,
+   "plugin": "Fundamental",
+   "model": "VCF",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.661249,
+     "id": 0
+    },
+    {
+     "value": 0.3,
+     "id": 2
+    }
+   ],
+   "pos": [
+    48,
+    9
+   ]
+  },
+  {
+   "id": 502068,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    56,
+    9
+   ]
+  },
+  {
+   "id": 502069,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0.174743,
+     "id": 0
+    },
+    {
+     "value": 0.61928,
+     "id": 1
+    },
+    {
+     "value": 0.4,
+     "id": 2
+    },
+    {
+     "value": 0.650515,
+     "id": 3
+    }
+   ],
+   "pos": [
+    60,
+    9
+   ]
+  },
+  {
+   "id": 502076,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    70,
+    9
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b10",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502077,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    10
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b11",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502078,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    10
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b11",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 502079,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    10
+   ],
+   "data": {
+    "lesson": "p5-02-seq3",
+    "block": "b11",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 502007,
+   "outputModuleId": 502005,
+   "outputId": 0,
+   "inputModuleId": 502006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502008,
+   "outputModuleId": 502005,
+   "outputId": 0,
+   "inputModuleId": 502006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502023,
+   "outputModuleId": 502016,
+   "outputId": 1,
+   "inputModuleId": 502019,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502024,
+   "outputModuleId": 502016,
+   "outputId": 0,
+   "inputModuleId": 502022,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502025,
+   "outputModuleId": 502019,
+   "outputId": 2,
+   "inputModuleId": 502020,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502026,
+   "outputModuleId": 502020,
+   "outputId": 0,
+   "inputModuleId": 502021,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502027,
+   "outputModuleId": 502022,
+   "outputId": 0,
+   "inputModuleId": 502021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502028,
+   "outputModuleId": 502021,
+   "outputId": 0,
+   "inputModuleId": 502005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502053,
+   "outputModuleId": 502046,
+   "outputId": 1,
+   "inputModuleId": 502048,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502054,
+   "outputModuleId": 502046,
+   "outputId": 0,
+   "inputModuleId": 502051,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502055,
+   "outputModuleId": 502048,
+   "outputId": 2,
+   "inputModuleId": 502049,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502056,
+   "outputModuleId": 502049,
+   "outputId": 0,
+   "inputModuleId": 502050,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502057,
+   "outputModuleId": 502051,
+   "outputId": 0,
+   "inputModuleId": 502050,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502058,
+   "outputModuleId": 502050,
+   "outputId": 0,
+   "inputModuleId": 502005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502059,
+   "outputModuleId": 502046,
+   "outputId": 1,
+   "inputModuleId": 502052,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502070,
+   "outputModuleId": 502065,
+   "outputId": 1,
+   "inputModuleId": 502066,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502071,
+   "outputModuleId": 502065,
+   "outputId": 0,
+   "inputModuleId": 502069,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502072,
+   "outputModuleId": 502066,
+   "outputId": 2,
+   "inputModuleId": 502067,
+   "inputId": 3,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502073,
+   "outputModuleId": 502067,
+   "outputId": 0,
+   "inputModuleId": 502068,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502074,
+   "outputModuleId": 502069,
+   "outputId": 0,
+   "inputModuleId": 502068,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 502075,
+   "outputModuleId": 502068,
+   "outputId": 0,
+   "inputModuleId": 502005,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

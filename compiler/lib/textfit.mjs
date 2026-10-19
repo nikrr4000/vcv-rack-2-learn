@@ -338,9 +338,12 @@ function splitAtom(a, w) {
 }
 
 /** Lays out markdown at `width`; returns {blocks: [{kind, lines: [{text, width}], height}], splitWords}. */
-export function layout(md, width, st = textStyle()) {
+export function layout(md, width, st = textStyle(), { regularAs = null } = {}) {
 	const doc = { blocks: [], splitWords: false };
-	for (const b of parse(md)) {
+	const blocks = parse(md);
+	// FlowOpts.italic / .bold in Flow.cpp: regular spans drawn in another face.
+	if (regularAs) for (const b of blocks) for (const s of b.spans) if (s.style === "regular") s.style = regularAs;
+	for (const b of blocks) {
 		const list = b.kind === "ul" || b.kind === "ol";
 		const indent = list ? st.listIndent : 0;
 		const w = Math.max(10, width - indent);
@@ -478,6 +481,34 @@ export function pageBox(hp, { footer = false } = {}) {
 	const top = p.accentRule + p.padTop - 2 + p.headerHeight;
 	const h = p.rackHeight - top - p.padBottom - (footer ? p.footerHeight : 0);
 	return { w, h };
+}
+
+/**
+ * The brief of a Task module (TaskView::draw): the block title as a heading, then for «Покрути сам» per
+ * step the action (11.5 pt, 20 px checkbox column) and «→ see» (10.5 pt italic), 8 px between steps,
+ * then the task text; a 30 px «Проверить» bar below when the task has a check. Fits when it needs no
+ * scrolling at the build-time margins.
+ */
+export function fitTask(title, steps, text, hp, { checkable = false } = {}) {
+	const box = pageBox(hp);
+	const w = box.w;
+	const h = box.h - (checkable ? 30 : 0);
+	const wFit = w * (1 - TOKENS.textfit.widthMargin);
+	const body = textStyle();
+	let y = 0;
+	if (title) y += flatHeight(layout(`# ${title}`, wFit, body), body) + 6;
+	for (const s of steps) {
+		const ds = textStyle({ bodySize: 11.5 });
+		y += flatHeight(layout(s.do, wFit - 20, ds), ds);
+		if (s.see) {
+			const ss = textStyle({ bodySize: 10.5 });
+			y += 1 + flatHeight(layout(`→ ${s.see}`, wFit - 20, ss, { regularAs: "italic" }), ss);
+		}
+		y += 8;
+	}
+	if (text) y += flatHeight(layout(text, wFit, body), body) + 6;
+	const room = h - TOKENS.textfit.spareLines * body.bodySize * body.lineHeight;
+	return { height: y, room, fits: y <= room };
 }
 
 /**

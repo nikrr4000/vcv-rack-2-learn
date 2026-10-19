@@ -1,0 +1,931 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 603001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "1c3a82999926",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 603002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    0
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    57,
+    0
+   ]
+  },
+  {
+   "id": 603005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    64,
+    0
+   ]
+  },
+  {
+   "id": 603006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    74,
+    0
+   ]
+  },
+  {
+   "id": 603009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603012,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b3",
+    "item": "page-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 603013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603016,
+   "plugin": "Core",
+   "model": "MIDITriggerToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 603017,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    32,
+    4
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603018,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    39,
+    4
+   ]
+  },
+  {
+   "id": 603019,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    49,
+    4
+   ]
+  },
+  {
+   "id": 603020,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    59,
+    4
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 603021,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    66,
+    4
+   ]
+  },
+  {
+   "id": 603026,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603027,
+   "plugin": "Core",
+   "model": "MIDITriggerToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 603028,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    28,
+    5
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603029,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    37,
+    5
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 603030,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    46,
+    5
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 603031,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    55,
+    5
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b6",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 603032,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    5
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b6",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 603033,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b7",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603034,
+   "plugin": "Core",
+   "model": "MIDITriggerToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    15,
+    6
+   ]
+  },
+  {
+   "id": 603035,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    26,
+    6
+   ]
+  },
+  {
+   "id": 603036,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    36,
+    6
+   ]
+  },
+  {
+   "id": 603037,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    46,
+    6
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603038,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    53,
+    6
+   ]
+  },
+  {
+   "id": 603039,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 7.643856,
+     "id": 4
+    }
+   ],
+   "pos": [
+    57,
+    6
+   ]
+  },
+  {
+   "id": 603045,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603046,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    7
+   ]
+  },
+  {
+   "id": 603047,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    7
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b8",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 603048,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    7
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b8",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 603049,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603050,
+   "plugin": "Core",
+   "model": "MIDITriggerToCVInterface",
+   "version": "2.6.6",
+   "params": [],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 603051,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": -12.000058,
+     "id": 2
+    }
+   ],
+   "pos": [
+    26,
+    8
+   ]
+  },
+  {
+   "id": 603052,
+   "plugin": "Fundamental",
+   "model": "ADSR",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 0
+    },
+    {
+     "value": 0.575257,
+     "id": 1
+    },
+    {
+     "value": 1,
+     "id": 2
+    },
+    {
+     "value": 0.5,
+     "id": 3
+    }
+   ],
+   "pos": [
+    36,
+    8
+   ]
+  },
+  {
+   "id": 603053,
+   "plugin": "Fundamental",
+   "model": "VCA-1",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    46,
+    8
+   ]
+  },
+  {
+   "id": 603058,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    50,
+    8
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603059,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b10",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603060,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    9
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b10",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 603061,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    9
+   ],
+   "data": {
+    "lesson": "p6-03-pads",
+    "block": "b10",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 603007,
+   "outputModuleId": 603005,
+   "outputId": 0,
+   "inputModuleId": 603006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603008,
+   "outputModuleId": 603005,
+   "outputId": 0,
+   "inputModuleId": 603006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603022,
+   "outputModuleId": 603016,
+   "outputId": 0,
+   "inputModuleId": 603019,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603023,
+   "outputModuleId": 603018,
+   "outputId": 2,
+   "inputModuleId": 603021,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603024,
+   "outputModuleId": 603019,
+   "outputId": 0,
+   "inputModuleId": 603021,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603025,
+   "outputModuleId": 603021,
+   "outputId": 0,
+   "inputModuleId": 603005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603040,
+   "outputModuleId": 603034,
+   "outputId": 0,
+   "inputModuleId": 603036,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603041,
+   "outputModuleId": 603035,
+   "outputId": 2,
+   "inputModuleId": 603038,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603042,
+   "outputModuleId": 603036,
+   "outputId": 0,
+   "inputModuleId": 603038,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603043,
+   "outputModuleId": 603038,
+   "outputId": 0,
+   "inputModuleId": 603005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603044,
+   "outputModuleId": 603038,
+   "outputId": 0,
+   "inputModuleId": 603039,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603054,
+   "outputModuleId": 603050,
+   "outputId": 0,
+   "inputModuleId": 603052,
+   "inputId": 4,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603055,
+   "outputModuleId": 603051,
+   "outputId": 2,
+   "inputModuleId": 603053,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603056,
+   "outputModuleId": 603052,
+   "outputId": 0,
+   "inputModuleId": 603053,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 603057,
+   "outputModuleId": 603053,
+   "outputId": 0,
+   "inputModuleId": 603005,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

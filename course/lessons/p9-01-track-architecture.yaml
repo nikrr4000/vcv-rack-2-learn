@@ -1,0 +1,427 @@
+id: p9-01-track-architecture
+num: "9.1"
+part: 9
+title: Архитектура патча-трека
+goal: Собрать каркас трека в одном патче — мастер-такт, ряд инструмента, шину и мастер-микшер.
+builds: Каркас, в который в уроках 9.2 и 9.3 переедут ударные, бас и пэд из части 8.
+minutes: 45
+requires: [p5-01-clock-tempo, p7-03-mixer-levels]
+glossary: [патч-трек, ряд инструмента, шина, мастер-микшер, такт, сброс, секвенсор]
+sources: [ne-clocks, impromptu-clocked, omri-techno, patch-tweak]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Архитектура патча-трека
+    page: |
+      # 9.1 Архитектура патча-трека
+      **Ты научишься:** держать целый трек в одном патче: один мастер-[[такт]], [[ряд инструмента|ряд на инструмент]], [[шина|шину]] и [[мастер-микшер]].
+      **Ты соберёшь:** каркас — Clocked, одну учебную строку, шину Mix, VCA Mix и Notes.
+      **Понадобится:** 45 минут, уроки 5.1 и 7.3, тихая громкость.
+      Без каркаса пять инструментов превращаются в клубок кабелей. В нём нельзя ни отключить часть, ни понять, что за что отвечает.
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: clk, label: Clocked, kind: gate }
+        - { id: seq, label: SEQ 3, kind: gate }
+        - { id: env, label: ADSR, kind: cv }
+        - { id: vca, label: VCA, kind: audio }
+        - { id: bus, label: Mix, kind: audio }
+        - { id: master, label: VCA Mix, kind: audio }
+        - { id: out, label: Audio, kind: audio }
+      edges:
+        - { from: clk, to: seq, kind: gate }
+        - { from: seq, to: env, kind: gate }
+        - { from: env, to: vca, kind: cv }
+        - { from: vca, to: bus, kind: audio }
+        - { from: bus, to: master, kind: audio }
+        - { from: master, to: out, kind: audio }
+      caption: Такт сверху, звук снизу. Каждый инструмент займёт свой ряд, а сходятся они в мастере.
+    faq:
+      - q: Зачем собирать каркас, если у меня уже есть инструменты из части 8?
+        a: Инструменты из части 8 живут в отдельных патчах и играют каждый в своём темпе. Каркас даёт им общий такт, общий сброс и общий выход. Без него вместе они не сыграют.
+      - q: Можно ли начать с готового трека из интернета?
+        a: Можно, но разбирать чужой клубок кабелей сложнее, чем собрать свой порядок. Здесь ты строишь раскладку, по которой потом читаешь любой патч.
+      - q: Что такое «учебная строка» в каркасе?
+        a: Заглушка из секвенсора, огибающей, VCO и VCA. Она нужна, чтобы проверить такт, шину и мастер. Настоящие инструменты заменят её в уроках 9.2 и 9.3.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про такт, [[сброс]] и шину. Ответы подскажут, что повторить.
+    questions:
+      - q: Зачем в треке один мастер-такт для всех секвенсоров?
+        free: true
+        options:
+          - { text: "Чтобы все партии шли в одном темпе и стартовали вместе", correct: true, why: "Один источник времени держит партии вместе. Изменил темп в одном месте, и поменялся весь трек." }
+          - { text: "Чтобы снизить нагрузку на процессор", why: "Нагрузка тут ни при чём. Общий такт нужен ради синхронности, а не экономии." }
+          - { text: "Rack не позволяет завести два Clocked", why: "Позволяет. Но два темпа в одном треке разойдутся, поэтому темп один." }
+      - q: Что произойдёт, если один сигнал Reset придёт на все секвенсоры сразу?
+        options:
+          - { text: "Все вернутся на первый шаг и снова совпадут", correct: true, why: "Reset говорит «начни с начала». Если он общий, партии стартуют вместе." }
+          - { text: "Звук остановится до нажатия Run", why: "Это работа Run. Reset не останавливает такт, он возвращает секвенсор на первый шаг." }
+          - { text: "Изменится темп", why: "Темп задаёт ручка Master clock. Reset его не трогает." }
+      - q: Зачем ударные сначала сводят на шину, а потом в мастер?
+        options:
+          - { text: "Группа получает один уровень и один канал мастера", correct: true, why: "Шина складывает партии. Баланс внутри группы ставишь у инструментов, баланс групп на мастере." }
+          - { text: "Шина делает бочку громче", why: "Микшер складывает сигналы и ослабляет их, но не усиливает. Громкость ставят ручками." }
+          - { text: "Audio принимает не больше трёх кабелей", why: "Такого ограничения нет. Группировка нужна для порядка и для одной ручки на группу." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Три потока
+    page: |
+      # Три потока
+      [[патч-трек|Патч-трек]] — один патч, где живёт весь трек. В нём идут три потока.
+      Время: мастер-[[такт]] задаёт темп. Остальные темпы запрещены.
+      Управление: [[секвенсор|секвенсоры]] и огибающие превращают такт в ноты и запуски. О звуке они ничего не знают.
+      Звук: каждый инструмент заканчивается одним выходом. Выходы сходятся на шины, потом на мастер.
+    figure: { template: table, rows: [[Поток, Что несёт, Где живёт], [время, такт и Reset, Clocked], [управление, триггеры и CV, SEQ 3 и ADSR], [звук, аудио ±5 В, VCO VCA микшеры]], caption: Границы потоков — места, где сигнал меняет роль. }
+    simpler: Оркестр. Дирижёр — мастер-такт, он один. Ноты у музыкантов — управление. Звук из зала идёт на один микрофон — мастер.
+    faq:
+      - q: Почему нельзя дать каждому секвенсору свой темп?
+        a: Свободные темпы расходятся и через минуту уже не совпадают. Один Clocked с общим Reset держит все партии на одной сетке, а делители дают разные скорости от одного источника.
+      - q: Где граница между управлением и звуком?
+        a: На входах CV и Gate модулей звука. До них идут триггеры и огибающие, после них идёт аудио. На VCA оба потока встречаются.
+      - q: Почему Reset нужен, если такт и так общий?
+        a: Такт задаёт скорость, а не место в цикле. После остановки секвенсоры могут встать на разные шаги. Reset возвращает их всех на первый.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Раскладка патча
+    page: |
+      # Раскладка патча
+      Правила этого курса — наш метод, а не стандарт Rack. Источников про раскладку почти нет, поэтому мы выбрали порядок сами.
+      Слева направо: время, управление, звук. Сверху вниз: один ряд на инструмент. Внизу: шины, мастер, Audio.
+      Уровень инструмента ставишь у него самого, ручкой **Level** на VCA. Баланс групп ставишь на мастере.
+    figure:
+      template: mixer
+      channels:
+        - { label: ударные, level: 3.5 }
+        - { label: бас, level: 3 }
+        - { label: пэд, level: 2.5 }
+        - { label: лид, level: 3 }
+      headroom: 10
+      caption: Четыре канала мастера. Пики держим заметно ниже предела 10 В.
+    simpler: Как в квартире. Кухня, комната, ванная — у каждой своя дверь. Чтобы найти кран, не нужно обходить весь дом.
+    faq:
+      - q: Обязательно ли строго по этим правилам?
+        a: Нет. Порядок нужен, чтобы через неделю ты мог понять свой патч с первого взгляда. Если у тебя другая раскладка, держи её одинаковой во всём треке.
+      - q: Почему уровень ставят на VCA, а не на мастере?
+        a: Мастер отвечает за баланс групп. Громкость отдельного инструмента определяется его VCA, поэтому там её легче найти. Тогда мастер остаётся с запасом.
+      - q: Чем патч-трек отличается от трека в Omri Cohen?
+        a: "Порядок тот же: такт, бочка, мастер, хэты, бас. Но Omri берёт платный набор барабанов. Здесь все барабаны собраны из модулей Fundamental."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Время и запуск
+    page: |
+      # Время и запуск
+      **Clocked** отдаёт такт на SEQ 3. На ряду триггеров горят шаги 1, 3, 5 и 7.
+      Каждый включённый шаг запускает ADSR: на его экране видно огибающую.
+      Нажми кнопку **Reset** у Clocked. Секвенсор вернётся на первый шаг, и огибающая сразу ответит.
+    modules:
+      - ref: clk
+        plugin: ImpromptuModular
+        slug: Clocked
+        params: { Master clock: { display: "120" } }
+      - ref: seq
+        plugin: Fundamental
+        slug: SEQ3
+        params:
+          Step 1 trigger: { raw: 1 }
+          Step 3 trigger: { raw: 1 }
+          Step 5 trigger: { raw: 1 }
+          Step 7 trigger: { raw: 1 }
+      - ref: env
+        plugin: Fundamental
+        slug: ADSR
+        params: { Attack: { display: "1" }, Decay: { display: "250" }, Sustain: { display: "0" } }
+    cables:
+      - { from: [clk, Clock 1], to: [seq, Clock] }
+      - { from: [clk, Reset], to: [seq, Reset] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+    notes:
+      - { after: clk, text: "**Clock 1** тактирует секвенсор, **Reset** возвращает его на начало.", targets: [{ module: clk, output: Clock 1 }, { module: clk, output: Reset }] }
+      - { after: seq, text: "Выход **Trigger** выдаёт импульс на каждом включённом шаге.", targets: [{ module: seq, output: Trigger }] }
+    faq:
+      - q: Почему огибающая поднимается не на каждый такт?
+        a: Включены только шаги 1, 3, 5 и 7. На выключенных шагах триггера нет, и огибающая молчит. Включи ещё шаг, и пик добавится.
+      - q: Почему тактов больше, чем запусков огибающей?
+        a: Такт идёт на каждый шаг, а огибающая запускается только на включённых. Остальные такты секвенсор пропускает.
+      - q: Что, если я нажал Reset, а картинка не поменялась?
+        a: Проверь кабель от Reset у Clocked до Reset у SEQ 3. Без него секвенсор не знает, что надо начать заново.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Звук на мастер
+    page: |
+      # Звук на мастер
+      Здесь один [[ряд инструмента|ряд инструмента]]. VCO идёт в VCA, потом в шину **Mix**, потом в канал 1 мастера.
+      Мастер — это **VCA Mix**. Его выход **Mix** идёт в Audio.
+      Начни с тихого уровня Audio. На ручке **Channel 1 level** стоит −10 dB, а запас на мастере оставлен.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "50" } } }
+      - { ref: bus, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+      - { ref: master, plugin: Fundamental, slug: VCMixer, params: { Channel 1 level: { display: "-10" }, Mix level: { display: "0" } } }
+    cables:
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [bus, Channel 1] }
+      - { from: [bus, Mix], to: [master, Channel 1] }
+      - { from: [master, Mix], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: vca, text: "**Level** — громкость этого инструмента. Её ставят здесь.", targets: [{ module: vca, param: Level }] }
+      - { after: bus, text: "Шина **Mix** складывает до шести входов.", targets: [{ module: bus, output: Mix }] }
+      - { after: master, text: "**Channel 1 level** — баланс канала. **Mix level** держи не выше 0 dB.", targets: [{ module: master, param: Channel 1 level }, { module: master, param: Mix level }] }
+    faq:
+      - q: Звук тихий. Это нормально?
+        a: Да. Канал мастера стоит на −10 dB, а VCA на 50 %. Так остаётся запас для остальных инструментов. Сначала сведи всех, потом решай, где громче.
+      - q: Можно ли выход VCA сразу подать в мастер, без шины?
+        a: "Можно, пока инструмент один. Шина нужна для группы: четыре ударных получают одну ручку и один канал мастера."
+      - q: Почему у шины нет ручки на каждый канал?
+        a: У Mix только общая ручка Level. Баланс внутри шины ставь на VCA каждого инструмента.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Clocked
+    page: |
+      # Панель Clocked
+      Для каркаса важны три вещи: темп только здесь, два такта идут на секвенсоры, Reset идёт на всех.
+    module: { ref: clk, plugin: ImpromptuModular, slug: Clocked }
+    notes:
+      - { text: "**Master clock** — темп в BPM, от 30 до 300. Другого темпа в треке нет.", targets: [{ module: clk, param: Master clock }] }
+      - { text: "**Clock 1** — такт для секвенсоров. Ручка **Clk 1 ratio** меняет его скорость относительно мастера.", targets: [{ module: clk, output: Clock 1 }, { module: clk, param: Clk 1 ratio }] }
+      - { text: "**Clock 2** и **Clock 3** — два других такта с собственными ручками ratio.", targets: [{ module: clk, output: Clock 2 }, { module: clk, output: Clock 3 }] }
+      - { text: "Выход **Reset** подай на каждый секвенсор. Кнопка **Reset** запускает его вручную.", targets: [{ module: clk, output: Reset }, { module: clk, param: Reset }] }
+      - { text: "**Run** останавливает такт. Раздавать его по модулям не нужно.", targets: [{ module: clk, param: Run }] }
+    later:
+      - { what: "Ratio, Swing и Pulse width у Clocked", lesson: "9.2" }
+    faq:
+      - q: Ничего не играет, а Clocked стоит. Что проверить?
+        a: Посмотри на кнопку Run. Если такт остановлен, секвенсоры молчат. Новый Clocked обычно идёт сразу, но после Reset он может стоять.
+      - q: Чем Master clock отличается от Clk ratio?
+        a: "Master clock задаёт темп в BPM, а ratio показывает коэффициент: во сколько раз этот выход быстрее или медленнее мастера. У них разные единицы."
+      - q: Нужно ли подавать Run на каждый модуль?
+        a: Нет. Остановка такта останавливает всех. Общий нужен только Reset.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Панель VCA Mix
+    page: |
+      # Панель VCA Mix
+      В треке это мастер. Четыре канала, у каждого свой уровень и своя CV-дорожка.
+    module: { ref: master, plugin: Fundamental, slug: VCMixer }
+    notes:
+      - { text: "**Channel 1 level** — уровень канала в dB. От минус бесконечности до 6,02 dB.", targets: [{ module: master, param: Channel 1 level }] }
+      - { text: "**Channel 1** на входе — сюда приходит шина или инструмент.", targets: [{ module: master, input: Channel 1 }] }
+      - { text: "**Channel 1** на выходе — сигнал после своей ручки. Он нужен для посыла на эффект.", targets: [{ module: master, output: Channel 1 }] }
+      - { text: "**Channel 1 CV** умножает канал на напряжение. Так секции будут включать слои в уроке 9.4.", targets: [{ module: master, input: Channel 1 CV }] }
+      - { text: "**Mix level** — общий уровень суммы. Выше 0 dB запас пропадает.", targets: [{ module: master, param: Mix level }] }
+      - { text: "Выход **Mix** — сумма всех каналов. Он идёт в Audio.", targets: [{ module: master, output: Mix }] }
+    faq:
+      - q: Какой канал под какой инструмент?
+        a: Раскладка курса — канал 1 шина ударных, канал 2 бас, канал 3 пэд, канал 4 лид. Запиши её в Notes, чтобы не искать по кабелям.
+      - q: Что будет, если на Channel CV нет кабеля?
+        a: Канал открыт, как будто CV равен максимуму. Пока секции не включены, так и надо.
+      - q: Зачем Mix level, если есть уровни каналов?
+        a: Уровни каналов делят баланс, а Mix level двигает всю сумму сразу. Он нужен, чтобы убавить итог, не трогая баланс.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поставь **Master clock** на 100, потом на 140."
+        see: Строка играет медленнее, потом быстрее. Другого темпа в патче нет.
+      - do: "Нажми **Reset** у Clocked несколько раз подряд."
+        see: Строка каждый раз начинается заново. Это общий «ноль» трека.
+      - do: "Выключи шаг **Step 3 trigger** у SEQ 3."
+        see: В цепочке остаётся три удара вместо четырёх, пауза на месте шага.
+      - do: "Верни **Master clock** на 120 и поверни **Level** у VCA."
+        see: Громкость строки растёт и падает, темп не меняется.
+    modules:
+      - ref: clk
+        plugin: ImpromptuModular
+        slug: Clocked
+        params: { Master clock: { display: "120" } }
+      - ref: seq
+        plugin: Fundamental
+        slug: SEQ3
+        params: { Step 1 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 } }
+      - ref: env
+        plugin: Fundamental
+        slug: ADSR
+        params: { Attack: { display: "1" }, Decay: { display: "250" }, Sustain: { display: "0" } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "50" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [seq, Clock] }
+      - { from: [clk, Reset], to: [seq, Reset] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: clk, text: "Шаги 1 и 2 — ручка и кнопка Clocked.", targets: [{ module: clk, param: Master clock }, { module: clk, param: Reset }] }
+    faq:
+      - q: Master clock не меняет темп. Почему?
+        a: Проверь, что крутишь ручку Clocked, а не Tempo у SEQ 3. Секвенсор здесь тактируется от Clocked, его собственный темп не используется.
+      - q: После Reset ничего не изменилось.
+        a: Возможно, секвенсор уже стоял на первом шаге. Нажми Reset в середине цепочки. Если звук не меняется, проверь кабель Reset.
+      - q: Выключил шаг, а удар остался.
+        a: Кнопку шага можно нажать не туда. Горящая кнопка включена, тёмная выключена. Смотри на кнопку Step 3 trigger.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — каркас трека
+    task: |
+      Собери каркас на верстаке. Каждый инструмент в своём ряду.
+      1. Clocked: **Master clock** от 100 до 140 BPM. Включи шаги у SEQ 3.
+      2. `Clock 1` → `Clock`, `Reset` → `Reset`, `Trigger` → `Gate` у ADSR.
+      3. `Envelope` → `CV` у VCA, `Sawtooth` → `Channel`.
+      4. VCA → шина Mix → `Channel 1` VCA Mix → Audio. **Mix level** не выше 0 dB.
+      5. Добавь Notes: темп, тональность («не выбрана») и раскладку каналов.
+    given: [audio]
+    check: p9-01-track-architecture
+    hints:
+      "cable:1":
+        - Секвенсор не слышит мастер-такт.
+        - Какой выход Clocked ведёт на секвенсор?
+        - "`Clock 1` у Clocked → вход `Clock` у SEQ 3."
+      "cable:2":
+        - После остановки секвенсор уедет от такта.
+        - Что возвращает все секвенсоры на первый шаг?
+        - "`Reset` у Clocked → вход `Reset` у SEQ 3."
+      "cable:3":
+        - Строка не запускается.
+        - Какой выход SEQ 3 даёт импульсы по шагам?
+        - "`Trigger` у SEQ 3 → вход `Gate` у ADSR."
+      "cable:4":
+        - Огибающая ничем не управляет.
+        - Куда должна идти огибающая, чтобы менять громкость?
+        - "`Envelope` у ADSR → вход `CV` у VCA."
+      "cable:5":
+        - До VCA не доходит звук.
+        - Какой выход VCO даёт пилу?
+        - "`Sawtooth` у VCO → вход `Channel` у VCA."
+      "cable:6":
+        - Звук строки никуда не уходит.
+        - Куда сходятся выходы инструментов?
+        - "Выход `Channel` у VCA → `Channel 1` у шины Mix."
+      "cable:7":
+        - Шина не связана с мастером.
+        - Какой выход шины и какой вход мастера?
+        - "`Mix` у шины → `Channel 1` у VCA Mix."
+      "cable:8":
+        - Мастер ничего не отдаёт в Audio.
+        - Какой выход мастера несёт сумму?
+        - "`Mix` у VCA Mix → `To \"device output 1\"` у Audio."
+      "param:1":
+        - Темп трека для упражнения — танцевальный.
+        - Сколько BPM на Master clock?
+        - Поставь **Master clock** от 100 до 140.
+      "param:2":
+        - У мастера нет запаса.
+        - Что стоит на Mix level?
+        - Поставь **Mix level** не выше 0 dB.
+      "probe:1":
+        - Огибающая не поднимается.
+        - Идёт ли такт и горит ли хоть один шаг в ряду триггеров?
+        - Включи кнопки **Step N trigger** у SEQ 3 и проверь Run у Clocked.
+      "probe:2":
+        - На мастере нет сигнала.
+        - Пройди цепочку от огибающей до канала мастера. Где сигнал пропадает?
+        - Проверь кабели VCA → шина → `Channel 1` у VCA Mix и уровень канала.
+      "module:notes":
+        - Через неделю не вспомнить, что за что.
+        - Какого модуля нет в патче?
+        - Добавь Notes и запиши темп, тональность и раскладку каналов.
+    faq:
+      - q: Что писать в Notes, если тональность ещё не выбрана?
+        a: Пиши «не выбрана». Тональность появится в уроке 9.3. Заметка нужна, чтобы потом не искать по кабелям.
+      - q: Нужны ли настоящие инструменты из части 8?
+        a: Пока нет. Строка-заглушка проверяет такт, шину и мастер. Настоящие инструменты переедут в уроки 9.2 и 9.3.
+      - q: Проверка не видит текст Notes. Зачем он тогда?
+        a: Проверка видит сам модуль, а текст читает человек. Он нужен тебе, чтобы через неделю понять собственный патч.
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Строка играет, но после остановки уезжает от такта.
+      Нажми **Reset** у Clocked. Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - ref: clk
+        plugin: ImpromptuModular
+        slug: Clocked
+        params: { Master clock: { display: "120" } }
+      - ref: seq
+        plugin: Fundamental
+        slug: SEQ3
+        params: { Step 1 trigger: { raw: 1 }, Step 3 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 7 trigger: { raw: 1 } }
+      - ref: env
+        plugin: Fundamental
+        slug: ADSR
+        params: { Attack: { display: "1" }, Decay: { display: "250" }, Sustain: { display: "0" } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "130.81" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "50" } } }
+    cables:
+      - { from: [clk, Clock 1], to: [seq, Clock] }
+      - { from: [clk, Reset], to: [seq, Reset] }
+      - { from: [seq, Trigger], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Sawtooth], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [audio, "To \"device output 1\""] }
+    break: { remove_cable: [clk, Reset, seq, Reset] }
+    check: { kind: fixed, expect_cable: [clk, Reset, seq, Reset] }
+    hints:
+      fixed:
+        - Нажимаешь Reset, а строка не начинается заново.
+        - Проследи, куда идёт выход Reset у Clocked.
+        - Соедини `Reset` у Clocked с `Reset` у SEQ 3.
+    faq:
+      - q: Почему без Reset строка «уезжает»?
+        a: Такт идёт сам, а секвенсор помнит свой шаг. После остановки и запуска он встаёт не на первый шаг. Общий Reset возвращает всех к нулю.
+      - q: Откуда вообще берётся рассинхрон?
+        a: Из-за остановки и запуска в разное время или из-за разной длины партий. Общий Reset выравнивает всё в одной точке.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - В патче-треке три потока: время, управление, звук.
+      - Темп один — у Clocked. На каждый секвенсор идут `Clock` и `Reset`.
+      - Раскладка: слева направо время, управление, звук; сверху вниз по ряду на инструмент.
+      - Уровень инструмента ставь у него, баланс групп на мастере.
+      - Notes хранит темп, тональность и раскладку каналов.
+      **Источники:** Noise Engineering, «Getting Started: Clocks»; документация Impromptu Modular (Clocked); Omri Cohen, «Building a Techno patch from scratch».
+    questions:
+      - q: Что нужно подать с Clocked на каждый секвенсор?
+        options:
+          - { text: "Такт и Reset", correct: true, why: "Такт задаёт скорость, Reset возвращает на первый шаг. Вместе они держат партии вместе." }
+          - { text: "Только такт", why: "Без Reset после остановки секвенсоры разойдутся." }
+          - { text: "Только Run", why: "Run останавливает такт целиком. Раздавать его не нужно." }
+    next: |
+      # Дальше: 9.2
+      **Ритм-секция.** Бочка, снейр и хэт из части 8 переедут в каркас и сыграют от одного такта.
+    faq:
+      - q: Сохранить ли каркас?
+        a: Да. Сохрани патч под номером 9.1. Дальше ты будешь переносить в него инструменты из части 8.
+      - q: Что повторить, если каркас не собирается?
+        a: Урок 5.1 про Clocked и урок 7.3 про микшеры. Чаще всего забывают Reset или путают Mix и Channel.

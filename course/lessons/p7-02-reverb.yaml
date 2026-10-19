@@ -1,0 +1,368 @@
+id: p7-02-reverb
+num: "7.2"
+part: 7
+title: Реверберация
+goal: Поставить Plateau за голосом и управлять тем, насколько звук далёк, — от сухого и близкого до звука в большом зале.
+builds: Реверберация отодвигает пэд и лид от баса и барабанов, чтобы партии трека не стояли на одной линии.
+minutes: 30
+requires: [p3-05-first-voice]
+glossary: [реверберация, предзадержка, размер и время затухания, диффузия, заморозка хвоста]
+sources: [valley-plateau, ne-mixers, sos-modular-effects]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Реверберация
+    page: |
+      # 7.2 Реверберация
+      **Ты научишься:** ставить [[реверберация|реверберацию]] за голосом и двигать звук ближе или дальше от слушателя.
+      **Ты соберёшь:** голос из VCO, ADSR и VCA, а за ним Plateau с выходом в оба канала Audio.
+      **Понадобится:** 30 минут и голос из урока 3.5. Перед первым звуком убавь громкость.
+      Эффект работает на «расстояние», и в треке он держит партии в разных местах комнаты.
+    figure:
+      template: flow
+      layout: row
+      nodes:
+        - { id: voice, label: Голос, kind: audio }
+        - { id: plateau, label: Plateau, kind: audio }
+        - { id: out, label: Audio, kind: audio }
+      edges:
+        - { from: voice, to: plateau, kind: audio }
+        - { from: plateau, to: out, kind: audio }
+      caption: Голос идёт в Plateau, а из него два выхода, левый и правый, — в Audio.
+    faq:
+      - q: Чем реверберация отличается от эха из урока 7.1?
+        a: Эхо — несколько чётких повторов. Реверберация — тысячи частых и размытых, они сливаются в хвост без отдельных ударов.
+      - q: Зачем реверберации два выхода?
+        a: Хвост получается разным слева и справа, и от этого звук кажется объёмным. Поэтому Left и Right у Plateau подключают в оба канала Audio.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса о комнате и хвосте. Ответы покажут, что запомнить.
+    questions:
+      - q: Чем реверберация отличается от эха?
+        free: true
+        options:
+          - { text: "Много частых размытых повторов сливаются в хвост", correct: true, why: "Повторы идут так часто, что глаз не различил бы отдельных ударов. Остаётся плавно гаснущий хвост." }
+          - { text: "Это то же эхо под другим названием", why: "Эхо — чёткие отдельные повторы. У реверберации их тысячи, и они слиты." }
+          - { text: "Это фильтр, который убирает высокие", why: "Фильтр меняет тембр. Реверберация добавляет ощущение пространства." }
+      - q: Как сделать звук «дальше»?
+        options:
+          - { text: "Убавить сухой, добавить мокрый, поставить Pre-delay и срезать верха", correct: true, why: "Дальний звук тише прямого, у него есть пауза перед хвостом и мягче верха." }
+          - { text: "Довести Decay до максимума", why: "Длинный хвост не равен расстоянию. Звук станет заплывшим, но не дальним." }
+          - { text: "Просто убавить общую громкость", why: "Тихий звук остаётся близким. Расстояние даёт соотношение сухого и хвоста." }
+      - q: Что делает Hold у Plateau?
+        options:
+          - { text: "Замораживает хвост, пока Hold включён", correct: true, why: "Хвост перестаёт затухать и звучит ровно, пока ты не выключишь Hold или не нажмёшь Clear." }
+          - { text: "Выключает реверберацию", why: "Для этого служит Wet level. Hold только держит уже созданный хвост." }
+          - { text: "Удерживает ноту голоса", why: "Hold у Plateau не связан с Hold у Push. Он действует на хвост, а не на ноту." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Комната из отражений
+    page: |
+      # Комната из отражений
+      Хлопни в ладоши в пустом зале. Сначала слышен сам хлопок, потом отражения от стен, пола и потолка.
+      Через десятки миллисекунд отражений уже тысячи, и они сливаются в хвост, который гаснет. Это и есть [[реверберация]].
+      Plateau строит такой хвост по схеме Даттерро, 1997 год. В ней вход, пауза, блок размытия, «бак» из двух цепочек фильтров и два выхода.
+      Звук слева и справа немного разный, поэтому пространство кажется объёмным.
+      Размер комнаты и время затухания хвоста задают ручки [[размер и время затухания|Size и Decay]].
+    figure:
+      template: flow
+      layout: two-rows
+      nodes:
+        - { id: in, label: Вход, kind: audio }
+        - { id: pre, label: Пауза, kind: audio }
+        - { id: diff, label: Диффузор, kind: audio }
+        - { id: tank, label: Бак, kind: audio }
+        - { id: out, label: Left и Right, kind: audio }
+      edges:
+        - { from: in, to: pre, kind: audio }
+        - { from: pre, to: diff, kind: audio }
+        - { from: diff, to: tank, kind: audio }
+        - { from: tank, to: out, kind: audio }
+      caption: Путь звука внутри Plateau. Каждая ступень имеет свои ручки.
+    simpler: Крик в пустом зале. Сначала твой голос, потом тысячи эхо от стен. Они накладываются друг на друга, пока не затихнут. Этот гаснущий гул и называют реверберацией.
+    faq:
+      - q: Почему хвост называют хвостом?
+        a: После прямого звука остаётся гаснущая часть, похожая на след за кометой. Чем больше комната, тем он длиннее и тем медленнее гаснет.
+      - q: Реверберация делает звук громче?
+        a: Нет. Она добавляет к сухому звуку хвост, и сумма может стать заметнее. Но громкость самого голоса остаётся прежней.
+      - q: Где у Plateau ручка размера комнаты?
+        a: "Это Size. Она работает вместе с Decay: Size задаёт размер комнаты, Decay — как долго гаснет хвост. Подробнее в блоке про панель."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Близко и далеко
+    page: |
+      # Близко и далеко
+      Слух определяет расстояние до источника по трём признакам.
+      «Близко»: прямого звука много, хвоста мало, и он начинается сразу.
+      «Далеко»: прямого звука меньше, хвоста больше, а между ними есть пауза. Эту паузу называют [[предзадержка|предзадержкой]], она задаётся ручкой **Pre-delay**.
+      Громкость тут ни при чём: тихий звук может оставаться близким.
+    figure:
+      template: table
+      rows:
+        - ["", "Близко", "Далеко"]
+        - ["Dry level", "100 %", "60 %"]
+        - ["Wet level", "15 %", "70 %"]
+        - ["Pre-delay", "0 мс", "40 мс"]
+        - ["Reverb high cut", "14080 Hz", "3000 Hz"]
+      caption: Два набора ручек Plateau. Начни с них и подстрой на слух.
+    simpler: Друг рядом говорит тебе в ухо — слышно только его, без комнаты. Тот же друг в конце длинного коридора — голос тише, с гулом и небольшой паузой.
+    faq:
+      - q: "Что важнее для расстояния: Wet или Pre-delay?"
+        a: Работают вместе. Wet добавляет хвост, а Pre-delay отделяет его от удара. Попробуй менять по одному и слушай, что меняется.
+      - q: Почему «далеко» тоже темнее?
+        a: "Воздух и стены съедают верхние частоты, поэтому далёкий звук мягче. На Plateau это делает Reverb high cut: вниз по Hz звук темнеет."
+      - q: Можно ли просто убавить громкость, чтобы звук отошёл?
+        a: Нет. Тихий звук остаётся рядом, как шёпот в ухо. Расстояние задают соотношение сухого и хвоста и пауза перед ним.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Голос в комнате
+    page: |
+      # Голос в комнате
+      Голос играет ноту, пока ты держишь **Push**. За ним стоит Plateau.
+      Сейчас набор «близко»: хвост короткий и тихий.
+      Нажми Push и посмотри на Scope: после отпускания волна ещё живёт.
+    modules:
+      - { ref: push, plugin: Fundamental, slug: Push }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "150" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: plateau, plugin: Valley, slug: Plateau, params: { Dry level: { display: "100" }, Wet level: { display: "15" }, Pre-delay: { display: "0" }, Size: { display: "30" }, Decay: { display: "30" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Triangle], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [plateau, Left] }
+      - { from: [plateau, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [plateau, Right], to: [audio, "To \"device output 2\""] }
+      - { from: [plateau, Left], to: [scope, Ch 1] }
+    notes:
+      - { after: push, text: "Нажми **Push**: нота и хвост.", targets: [{ module: push, param: Push }] }
+      - { after: plateau, text: "**Wet level** — сколько хвоста. **Dry level** — сколько прямого звука.", targets: [{ module: plateau, param: Wet level }, { module: plateau, param: Dry level }] }
+      - { after: scope, text: "**Ch 1** — левый выход Plateau. Хвост виден после ноты.", targets: [{ module: scope, input: Ch 1 }] }
+    faq:
+      - q: Нажал Push, а хвоста почти нет. Это нормально?
+        a: Да. В наборе «близко» Wet level 15 % и Decay 30 %, хвост короткий. В следующих блоках ты подними их и услышишь комнату.
+      - q: Почему кабель идёт только в Left, а не в Right?
+        a: Голос моно, и один вход Left достаточно. Plateau сам делает из него два канала, левый и правый, разные по хвосту.
+      - q: Почему на Scope только левый канал?
+        a: Хватает одного, чтобы увидеть хвост. Правый выход ведёт себя похоже, но не идентично, и вторая линия только запутала бы картинку.
+
+  - id: b6
+    type: anatomy
+    preset: anatomy
+    title: "Панель Plateau: баланс и пространство"
+    page: |
+      # Панель Plateau: баланс и пространство
+      Первая половина ручек отвечает за «где» стоит звук.
+      Вторая половина — в следующем блоке.
+    module: { ref: plateau, plugin: Valley, slug: Plateau }
+    notes:
+      - { text: "**Left** и **Right** — входы и выходы. Один вход Left принимает моно-голос.", targets: [{ module: plateau, input: Left }, { module: plateau, output: Left }, { module: plateau, output: Right }] }
+      - { text: "**Dry level** — прямой звук, по умолчанию 100 %. **Wet level** — хвост, по умолчанию 50 %.", targets: [{ module: plateau, param: Dry level }, { module: plateau, param: Wet level }] }
+      - { text: "**Pre-delay** — пауза перед хвостом, от 0 до 500 мс.", targets: [{ module: plateau, param: Pre-delay }] }
+      - { text: "**Size** — размер комнаты, от 0 до 100 %.", targets: [{ module: plateau, param: Size }] }
+      - { text: "**Decay** — затухание хвоста. Около максимума хвост почти не гаснет.", targets: [{ module: plateau, param: Decay }] }
+      - { text: "**Diffusion** — [[диффузия]]: размазанность хвоста. Около нуля слышны отдельные эхо.", targets: [{ module: plateau, param: Diffusion }] }
+    faq:
+      - q: Чем отличаются Size и Decay?
+        a: Size задаёт размер «комнаты», Decay — как долго гаснет хвост. Большой Size при малом Decay даёт просторно, но коротко. Малый Size при большом Decay — тесно и долго.
+      - q: Что такое Diffusion?
+        a: Это насколько хвост гладкий. При 100 % слышно ровное облако, при 0 — отдельные эхо. Для привычной реверберации оставляй около 100 %.
+      - q: Зачем Dry level, если есть Wet level?
+        a: Вместе они задают баланс. Dry — прямой звук, Wet — хвост. Для эффекта «далеко» убавляют Dry и добавляют Wet.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: "Панель Plateau: тон и заморозка"
+    page: |
+      # Панель Plateau: тон и заморозка
+      Остальные ручки меняют окраску хвоста и дают нажимные кнопки.
+    module: { ref: plateau, plugin: Valley, slug: Plateau }
+    notes:
+      - { text: "**Reverb high cut** — срез верхов внутри хвоста. По умолчанию 14080 Hz, вниз по Hz хвост темнеет.", targets: [{ module: plateau, param: Reverb high cut }] }
+      - { text: "**Input high cut** и **Input low cut** — те же срезы, но на входе, до хвоста.", targets: [{ module: plateau, param: Input high cut }, { module: plateau, param: Input low cut }] }
+      - { text: "**Modulation depth**, **Modulation rate**, **Modulation shape** медленно качают времена, и хвост «плавает».", targets: [{ module: plateau, param: Modulation depth }, { module: plateau, param: Modulation rate }, { module: plateau, param: Modulation shape }] }
+      - { text: "**Hold** — [[заморозка хвоста]]: хвост не гаснет, пока Hold включён.", targets: [{ module: plateau, param: Hold }] }
+      - { text: "**Clear** обрывает хвост сразу.", targets: [{ module: plateau, param: Clear }] }
+      - { text: "**Diffuse input** размазывает вход до реверберации.", targets: [{ module: plateau, param: Diffuse input }] }
+    later:
+      - { what: Режим Tuned mode и игра хвостом по 1V/oct, lesson: "8.6" }
+      - { what: "Входы CV и ручки глубины", lesson: "8.6" }
+    faq:
+      - q: Зачем срезать верха в хвосте?
+        a: Мягкий хвост звучит дальше и теплее, а голос не теряет чёткости. Reverb high cut вниз по Hz — самый простой способ убрать лишнюю яркость.
+      - q: Чем Hold отличается от большого Decay?
+        a: Hold замораживает именно сейчас, а Decay задаёт общий характер затухания. Hold можно включить и выключить во время игры.
+      - q: Что такое Clear?
+        a: Это кнопка, которая сразу обрубает хвост. Нужна, когда заморозил его через Hold, а затем хочешь тишину.
+
+  - id: b8
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Подними **Wet level** с 0 до 100 %."
+        see: "Звук уходит из сухой комнаты в зал, на Scope хвост после ноты длиннее."
+      - do: "Двигай **Pre-delay** от 0 до 100 мс."
+        see: "Сначала чёткий удар, потом хвост. Чем больше пауза, тем «отдельнее» комната."
+      - do: "Поставь **Size** на 80 %, а **Decay** на 20 %. Затем наоборот."
+        see: "Большой Size при малом Decay — просторно, но коротко. Наоборот — тесно, но долго."
+      - do: "Опусти **Reverb high cut** до 3000 Hz."
+        see: "Хвост темнеет и становится мягче."
+      - do: "Двигай **Diffusion** от 100 % до 0."
+        see: "Гладкий хвост рассыпается на отдельные эхо."
+      - do: "Нажми **Push**, во время ноты включи **Hold**, затем **Clear**."
+        see: "Hold держит хвост, Clear его обрывает. Потом выключи оба."
+    modules:
+      - { ref: push, plugin: Fundamental, slug: Push }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "150" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: plateau, plugin: Valley, slug: Plateau, params: { Dry level: { display: "100" }, Wet level: { display: "15" }, Pre-delay: { display: "0" }, Size: { display: "30" }, Decay: { display: "30" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Triangle], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [plateau, Left] }
+      - { from: [plateau, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [plateau, Right], to: [audio, "To \"device output 2\""] }
+      - { from: [plateau, Left], to: [scope, Ch 1] }
+    notes:
+      - { after: plateau, text: "Шаги 1–5 — ручки этого Plateau.", targets: [{ module: plateau, param: Wet level }, { module: plateau, param: Pre-delay }, { module: plateau, param: Reverb high cut }] }
+    faq:
+      - q: Включил Hold, а звук стал громким и не гаснет. Что делать?
+        a: Выключи Hold и нажми Clear. Замороженный хвост звучит постоянно, поэтому держи Wet level умеренным, пока пробуешь.
+      - q: Я слышу хвост только после нажатия Push, а потом тишина. Так и надо?
+        a: Да. Голос играет, пока нажат Push, потом остаётся только хвост. Чем больше Wet level и Decay, тем дольше он слышен.
+      - q: Не слышу разницы, когда двигаю Diffusion.
+        a: На длинных звуках и высоком Decay разница заметнее. Подними Wet level и Decay, нажми Push и сравни 100 % и 0.
+
+  - id: b9
+    type: practice
+    preset: practice
+    title: Практика — ближе и дальше
+    task: |
+      Собери голос с Plateau и найди два набора ручек: «близко» и «далеко».
+      1. На верстак: **VCO**, **ADSR**, **VCA-1**, **Push** и **Plateau**.
+      2. Голос: VCO → VCA-1, `Envelope` → `CV` у VCA-1, `Gate` у Push → `Gate` у ADSR.
+      3. Эффект: `Channel` у VCA-1 → `Left` у Plateau.
+      4. Выходы: `Left` у Plateau → вход 1 у Audio, `Right` → вход 2.
+      5. **Wet level** не ниже 10 %, **Decay** не выше 90 %, **Hold** выключен. Включи Hold у Push и нажми «Проверить».
+    given: [audio]
+    check: p7-02-reverb
+    hints:
+      "cable:1":
+        - Реверберации нечего обрабатывать.
+        - Откуда звук голоса и в какой вход Plateau он идёт?
+        - "Выход `Channel` у VCA-1 → вход `Left` у Plateau."
+      "cable:2":
+        - Реверберация собрана, а слева пусто.
+        - Какой выход Plateau ведёт на первый вход Audio?
+        - "Выход `Left` у Plateau → вход 1 у Audio."
+      "cable:3":
+        - Звук только слева.
+        - Нужен второй выход Plateau.
+        - "Выход `Right` у Plateau → вход 2 у Audio."
+      "param:1":
+        - Реверберации не слышно.
+        - Посмотри на Wet level у Plateau.
+        - Подними Wet level хотя бы до 10 %.
+      "param:2":
+        - Патч заплывает.
+        - Что отвечает за затухание хвоста?
+        - Поставь Decay на 90 % или ниже.
+      "param:3":
+        - Хвост бесконечный.
+        - Что у Plateau заморожено?
+        - Выключи Hold у Plateau или нажми Clear.
+      "probe:1":
+        - На левом выходе нет сигнала.
+        - Звучит ли голос и дошёл ли он до входа Left?
+        - Включи Hold у Push и проверь кабель из VCA-1 в Left у Plateau.
+      "probe:2":
+        - Правый выход молчит.
+        - Подключён ли выход Right и звучит ли голос?
+        - "Выход `Right` у Plateau → вход 2 у Audio, затем снова нажми «Проверить»."
+    faq:
+      - q: Как показать два набора ручек?
+        a: Проверка смотрит только на базовые условия. Запиши значения «близко» и «далеко» на бумагу или в Notes и сравни их на слух, переключая между ними.
+      - q: Проверка говорит, что на правом выходе тихо, а на левом нормально.
+        a: Правый канал по уровню слабее, пока хвост короткий. Подними Wet level и Decay, и размах на Right вырастет.
+      - q: Нужно ли подавать сигнал в Right у Plateau?
+        a: Нет. Хватает Left, а Right у входа можно оставить пустым. Обязательны оба выхода в Audio.
+
+  - id: b10
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Нажимаешь **Push**, а новые ноты не рождают хвоста. Старый хвост гаснет, а нового нет.
+      Найди одну ошибку и исправь её.
+    modules:
+      - { ref: push, plugin: Fundamental, slug: Push }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "5" }, Decay: { display: "150" }, Sustain: { display: "0" }, Release: { display: "100" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: plateau, plugin: Valley, slug: Plateau, params: { Dry level: { display: "60" }, Wet level: { display: "70" }, Pre-delay: { display: "40" }, Size: { display: "70" }, Decay: { display: "50" } } }
+    cables:
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vco, Triangle], to: [vca, Channel] }
+      - { from: [vca, Channel], to: [plateau, Left] }
+      - { from: [plateau, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [plateau, Right], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: plateau, text: "Здесь что-то не так.", targets: [{ module: plateau, input: Left }] }
+    break: { remove_cable: [vca, Channel, plateau, Left] }
+    check: { kind: fixed, expect_cable: [vca, Channel, plateau, Left] }
+    hints:
+      fixed:
+        - Звук голоса не доходит до эффекта.
+        - Посмотри на вход Left у Plateau.
+        - "Соедини `Channel` у VCA-1 со входом `Left` у Plateau."
+    faq:
+      - q: Почему ноты пропали совсем, а не только хвост?
+        a: Plateau выводит и сухой звук, но он идёт через её вход. Без кабеля на входе нечему быть ни прямым звуком, ни хвостом.
+
+  - id: b11
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - **Реверберация** — тысячи частых отражений, слитых в гаснущий хвост.
+      - «Далеко» — меньше Dry level, больше Wet level, есть Pre-delay и мягче верха.
+      - **Size** задаёт размер комнаты, **Decay** — как долго гаснет хвост.
+      - **Hold** замораживает хвост, **Clear** обрывает его.
+      Сохрани патч как `vcv-7.2.vcv`.
+      **Источники:** документация Valley Plateau (Dale Johnson); Noise Engineering, «Getting Started: Mixers»; William Stokes, «Getting Wet: Using Effects» (Sound On Sound).
+    questions:
+      - q: Что отличает «далеко» от «близко»?
+        options:
+          - { text: "Меньше прямого звука, больше хвоста, есть пауза", correct: true, why: "Так слух понимает, что источник отошёл. Одной громкостью расстояние не передать." }
+          - { text: "Звук просто тише", why: "Тихий звук остаётся близким. Расстояние задают хвост и пауза." }
+          - { text: "Decay доведён до максимума", why: "Длинный хвост даёт заплывший звук, а не дальний." }
+    next: |
+      # Дальше: 7.3
+      **Микшер и уровни.** Ты сложишь несколько партий и научишься не перегружать выход.
+    faq:
+      - q: "Чем реверберацию лучше подавать: на сам голос или отдельным каналом?"
+        a: Для начала ставь за голосом, как здесь. В части 9 ты научишься подавать её отдельным каналом полностью мокрой и менять громкость возврата.
+      - q: Что повторить, если хвост заплывает?
+        a: Посмотри на Decay и Wet level. Выше 90 % хвост почти не гаснет, а высокий Wet заглушает сухой звук.

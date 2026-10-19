@@ -1,0 +1,368 @@
+id: p7-04-stereo
+num: "7.4"
+part: 7
+title: Стерео
+goal: Развести партии по левому и правому каналам модулем Fade и расширить картинку модулем Mid/Side.
+builds: В части 9 бас и ударные стоят в центре, а пэд и лид разведены по бокам, и без этого урока картинка будет плоской.
+minutes: 30
+requires: [p7-03-mixer-levels]
+glossary: [стерео и моно, панорама, центр и бок, ширина стерео, кроссфейд]
+sources: [vcv-free-manual, ne-mixers, omri-vca-course]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Стерео
+    page: |
+      # 7.4 Стерео
+      **Ты научишься:** разводить партии влево и вправо и менять ширину картинки.
+      **Ты соберёшь:** две партии, Fade, который расставляет их по каналам, и Mid/Side, который расширяет стерео.
+      **Понадобится:** 30 минут и урок 7.3 про уровни. Лучше слушать в наушниках, но не громко.
+      Это последняя ступень «живого» звука перед записью.
+    figure: { template: stereo, sources: [{ label: "партия 1", pan: -0.8, width: 0 }, { label: "партия 2", pan: 0.8, width: 0 }, { label: "пэд", pan: 0, width: 0.7 }], caption: "Партии в стереополе. Точка — положение, полоса — ширина." }
+    faq:
+      - q: Нужны ли колонки, чтобы услышать стерео?
+        a: Подойдут наушники или две колонки. Одна колонка сложит оба канала вместе, и ты не услышишь разницу между левым и правым.
+      - q: Почему стерео идёт отдельным уроком?
+        a: "Для привычной картинки трека партии стоят по-разному: бас и ударные в центре, лид и пэд по бокам. Одним микшером этого не сделать."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про каналы и ширину. Ответы подскажут, что повторить.
+    questions:
+      - q: Что такое стерео?
+        free: true
+        options:
+          - { text: "Два канала, левый и правый, и разница между ними", correct: true, why: "Разные сигналы в двух каналах дают ощущение места. Одинаковые дают моно." }
+          - { text: "Звук, который громче обычного", why: "Громкость и стерео — разные вещи. Стерео про положение, а не про уровень." }
+          - { text: "Звук через реверберацию", why: "Реверберация — эффект. Стерео — способ передать положение." }
+      - q: В Fade вход Ch 1 занят, Ch 2 пуст. Crossfade полностью влево. Где звук?
+        options:
+          - { text: "Только в выходе Ch 1, в Ch 2 тишина", correct: true, why: "Влево каждый вход идёт в свой выход. Пустой Ch 2 даёт тишину." }
+          - { text: "В обоих выходах поровну", why: "Поровну будет в середине ручки, а не слева." }
+          - { text: "Только в выходе Ch 2", why: "Влево вход Ch 1 идёт в выход Ch 1. Перепутаны направления." }
+      - q: Что делает Decoder width 0 % у Mid/Side?
+        options:
+          - { text: "Убирает бок, оба выхода одинаковы, это моно", correct: true, why: "Ширина — усиление бокового канала. При 0 остаётся один центр." }
+          - { text: "Выключает звук", why: "Ширина не громкость. При 0 звук остаётся, но один и тот же в обоих каналах." }
+          - { text: "Меняет левый и правый местами", why: "Ширина не меняет направление. Это делает Crossfade у Fade." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Моно и стерео
+    page: |
+      # Моно и стерео
+      Моно — один канал: слева и справа звучит одно и то же. [[стерео и моно|Стерео]] — два канала, левый и правый.
+      Если одну партию отправить только влево, а другую только вправо, слушатель услышит каждую со своей стороны.
+      Если обе идут поровну в оба канала, получится моно.
+      [[панорама|Панорама]] — распределение одной партии между левым и правым каналом.
+    figure: { template: stereo, sources: [{ label: "слева", pan: -1, width: 0 }, { label: "центр", pan: 0, width: 0 }, { label: "справа", pan: 1, width: 0 }], caption: "Три положения одной партии на оси от L до R." }
+    simpler: Два динамика, как две ладони. Если хлопнуть левой, звук слева; правой — справа; обеими — посередине. Панорама решает, какая ладонь хлопнет и с какой силой.
+    faq:
+      - q: Чем моно хуже стерео?
+        a: Моно ничем не хуже, у него просто нет положения. В треке часть партий оставляют в центре, а остальные разводят, чтобы получилась картинка.
+      - q: Как понять, что звук моно?
+        a: Подай один выход одновременно в оба входа Audio. Слева и справа будет одно и то же, и звук покажется точкой посередине.
+      - q: Что значит «посередине» в Fade?
+        a: Crossfade на 50 % кладёт обе партии в оба выхода поровну. Поэтому они слышны вместе, и положения нет.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Центр и бок
+    page: |
+      # Центр и бок
+      Стерео можно описать иначе: [[центр и бок]].
+      Центр — то, что одинаково слева и справа: `M = (L + R) / 2`. Бок — чем левый отличается от правого: `S = (L − R) / 2`.
+      Обратно: `L = M + S × ширина` и `R = M − S × ширина`. [[ширина стерео|Ширина]] — усиление бока, центр не меняется.
+      При 100 % ты получаешь исходные каналы. Выше — бока сильнее, в нуле остаётся один центр, то есть моно.
+    figure: { template: stereo, sources: [{ label: "ширина 0 %", pan: 0, width: 0 }, { label: "100 %", pan: 0, width: 0.4 }, { label: "150 %", pan: 0, width: 0.7 }], caption: "Чем больше ширина, тем шире полоса вокруг центра." }
+    simpler: Двое поют. То, что поют вместе, — центр. То, что поёт только один, — бок. Mid/Side позволяет сделать громче только то, что поют по отдельности.
+    faq:
+      - q: Зачем мне формулы?
+        a: Чтобы понимать, что делает ручка. Центр — полусумма каналов, бок — полуразность. Ширина усиливает только бок, поэтому центр остаётся на месте.
+      - q: Почему Mid/Side не расширит моно-звук?
+        a: У моно оба канала равны, разность нулевая, бока нет. Усиливать нечего, поэтому Decoder width ничего не изменит. Сначала разведи партии Fade.
+      - q: Что будет при ширине выше 100 %?
+        a: Бока усилены, картинка шире. Но слишком большая ширина делает центр слабым по сравнению с краями, и звук расплывается.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Fade разводит партии
+    page: |
+      # Fade разводит партии
+      Две партии: пила и треугольник. Они идут в **Fade**, а выходы Fade — в левый и правый каналы.
+      Сейчас **Crossfade** на 0 %: пила слева, треугольник справа.
+      Двигай Crossfade вправо и слушай, как партии меняются местами.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: fade, plugin: Fundamental, slug: Fade, params: { Crossfade: { display: "0" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [fade, Ch 1] }
+      - { from: [vco2, Triangle], to: [fade, Ch 2] }
+      - { from: [fade, Ch 1], to: [audio, "To \"device output 1\""] }
+      - { from: [fade, Ch 2], to: [audio, "To \"device output 2\""] }
+      - { from: [fade, Ch 1], to: [scope, Ch 1] }
+      - { from: [fade, Ch 2], to: [scope, Ch 2] }
+    notes:
+      - { after: fade, text: "**Crossfade** — слева партии на своих местах, справа меняются.", targets: [{ module: fade, param: Crossfade }] }
+      - { after: scope, text: "**Ch 1** — левый канал, **Ch 2** — правый.", targets: [{ module: scope, input: Ch 1 }, { module: scope, input: Ch 2 }] }
+    faq:
+      - q: Почему слева пила, а справа треугольник?
+        a: Crossfade на 0 % ведёт вход Ch 1 в выход Ch 1, а Ch 2 в Ch 2. Выход Ch 1 подключён к левому каналу, Ch 2 — к правому.
+      - q: Что на середине ручки?
+        a: Обе партии идут в оба выхода поровну. Стерео пропадает, и на Scope две линии становятся одинаковыми.
+      - q: У Fade нет ручки громкости. Как убавить?
+        a: Убавь на источнике или в микшере перед Fade, как в уроке 7.3. Fade только распределяет, а уровень не меняет.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Mid/Side расширяет
+    page: |
+      # Mid/Side расширяет
+      Выходы Fade идут в кодер **Mid/Side**, а декодер возвращает левый и правый каналы.
+      При **Decoder width** 100 % картинка такая же, как до Mid/Side.
+      Опусти ширину до 0 %: слева и справа одно и то же. Подними до 150 %: картинка шире.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: fade, plugin: Fundamental, slug: Fade, params: { Crossfade: { display: "0" } } }
+      - { ref: ms, plugin: Fundamental, slug: MidSide, params: { Encoder width: { display: "100" }, Decoder width: { display: "100" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [fade, Ch 1] }
+      - { from: [vco2, Triangle], to: [fade, Ch 2] }
+      - { from: [fade, Ch 1], to: [ms, Encoder left] }
+      - { from: [fade, Ch 2], to: [ms, Encoder right] }
+      - { from: [ms, Decoder left], to: [audio, "To \"device output 1\""] }
+      - { from: [ms, Decoder right], to: [audio, "To \"device output 2\""] }
+      - { from: [ms, Decoder left], to: [scope, Ch 1] }
+      - { from: [ms, Decoder right], to: [scope, Ch 2] }
+    notes:
+      - { after: ms, text: "**Decoder width** — ширина. 0 % — моно, 100 % — как было, 150 % — шире.", targets: [{ module: ms, param: Decoder width }] }
+    faq:
+      - q: Почему при ширине 0 % слева и справа одно и то же?
+        a: Боковой канал убран, остался один центр. Оба выхода получают его, поэтому звук становится моно.
+      - q: Почему при 150 % громче?
+        a: Боковая часть усилена, и размах каналов растёт. Если уровень вырос, убавь его в микшере, как в уроке 7.3.
+      - q: Нужно ли подключать Decoder mid и Decoder side?
+        a: Нет. Пока на них нет кабелей, они получают сигналы с выходов кодера. Поэтому Mid/Side работает как один расширитель.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Fade
+    page: |
+      # Панель Fade
+      Fade ты видел в уроке 4.6. Здесь он расставляет партии.
+    module: { ref: fade, plugin: Fundamental, slug: Fade }
+    notes:
+      - { text: "**Ch 1** и **Ch 2** — входы двух партий и их выходы.", targets: [{ module: fade, input: Ch 1 }, { module: fade, input: Ch 2 }, { module: fade, output: Ch 1 }, { module: fade, output: Ch 2 }] }
+      - { text: "**Crossfade** — [[кроссфейд]]: 0 % — партии на своих местах, 100 % — меняются, 50 % — поровну.", targets: [{ module: fade, param: Crossfade }] }
+      - { text: "Вход **Crossfade** двигает ручку напряжением. Ручка **Crossfade CV** задаёт глубину.", targets: [{ module: fade, input: Crossfade }, { module: fade, param: Crossfade CV }] }
+    later:
+      - { what: Автопанорама от LFO на входе Crossfade, lesson: "9.5" }
+    faq:
+      - q: Как работает Fade с одним входом?
+        a: Если занят только один вход, ручка Crossfade работает как панорама. Партия плавно переезжает из одного выхода в другой.
+      - q: Что такое Pan law в меню Fade?
+        a: Это правило громкости в центре, чтобы звук не проваливался. Открой меню правой кнопкой мыши и посмотри, что выбрано.
+      - q: Можно ли двигать Crossfade от LFO?
+        a: Да. Подай LFO во вход Crossfade, и партии поплывут сами. Для начала оставь ручку и послушай, как она работает.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Панель Mid/Side
+    page: |
+      # Панель Mid/Side
+      Верхняя часть — кодер, нижняя — декодер. Между ними идёт центр и бок.
+    module: { ref: ms, plugin: Fundamental, slug: MidSide }
+    notes:
+      - { text: "**Encoder left** и **Encoder right** — входы кодера. Сюда идут левый и правый каналы.", targets: [{ module: ms, input: Encoder left }, { module: ms, input: Encoder right }] }
+      - { text: "**Encoder mid** и **Encoder side** — центр и бок после кодера.", targets: [{ module: ms, output: Encoder mid }, { module: ms, output: Encoder side }] }
+      - { text: "**Encoder width** — ширина на входе. От 0 до 200 %, по умолчанию 100 %.", targets: [{ module: ms, param: Encoder width }] }
+      - { text: "**Decoder mid** и **Decoder side** — входы декодера. Без кабеля берут сигнал кодера.", targets: [{ module: ms, input: Decoder mid }, { module: ms, input: Decoder side }] }
+      - { text: "**Decoder width** — ширина на выходе, так же от 0 до 200 %.", targets: [{ module: ms, param: Decoder width }] }
+      - { text: "**Decoder left** и **Decoder right** — выходы, идут в Audio.", targets: [{ module: ms, output: Decoder left }, { module: ms, output: Decoder right }] }
+    faq:
+      - q: Зачем два регулятора ширины?
+        a: Encoder width меняет ширину до обработки между кодером и декодером, Decoder width — после. Для расширителя хватает одного, второй держи на 100 %.
+      - q: Что такое нормализация входа у Decoder mid и Decoder side?
+        a: Если в вход нет кабеля, он сам получает сигнал с выхода кодера. Так Mid/Side работает без лишних проводов. Про нормализацию — урок 1.4.
+      - q: Что будет, если обе ширины поставить на 150 %?
+        a: Ширина перемножается, получается 2,25 раза. Звук может стать слишком широким, поэтому держи одну ручку на 100 %.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Двигай **Crossfade** у Fade от 0 до 100 %."
+        see: "Партии меняются местами. На середине обе в обоих каналах."
+      - do: "Выдерни кабель из входа **Ch 2** у Fade и снова двигай **Crossfade**."
+        see: "С одним входом Fade работает как панорама: партия едет слева направо."
+      - do: "Верни кабель. Опусти **Decoder width** со 100 на 0 %."
+        see: "Оба канала одинаковы, стерео пропало."
+      - do: "Подними **Decoder width** до 150 %."
+        see: "Картинка шире, размах каналов на Scope растёт."
+      - do: "Верни ширину на 100 % и опусти **Encoder width** до 0 %."
+        see: "Бок убран ещё до декодера, результат такой же, как при Decoder width 0 %."
+      - do: "Не поднимай обе ширины выше 100 % сразу."
+        see: "Ширина перемножается: 150 % и 150 % дают 2,25 раза."
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: fade, plugin: Fundamental, slug: Fade, params: { Crossfade: { display: "0" } } }
+      - { ref: ms, plugin: Fundamental, slug: MidSide, params: { Encoder width: { display: "100" }, Decoder width: { display: "100" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [fade, Ch 1] }
+      - { from: [vco2, Triangle], to: [fade, Ch 2] }
+      - { from: [fade, Ch 1], to: [ms, Encoder left] }
+      - { from: [fade, Ch 2], to: [ms, Encoder right] }
+      - { from: [ms, Decoder left], to: [audio, "To \"device output 1\""] }
+      - { from: [ms, Decoder right], to: [audio, "To \"device output 2\""] }
+      - { from: [ms, Decoder left], to: [scope, Ch 1] }
+      - { from: [ms, Decoder right], to: [scope, Ch 2] }
+    notes:
+      - { after: ms, text: "Шаги 3–5 — ручки этого Mid/Side.", targets: [{ module: ms, param: Decoder width }, { module: ms, param: Encoder width }] }
+    faq:
+      - q: Я двигаю Decoder width, а разницы не слышу.
+        a: "Проверь, что партии разведены: Crossfade должен быть слева, и в Ch 1 и Ch 2 должны быть разные звуки. На одинаковых каналах расширять нечего."
+      - q: После шага 2 звук пропал справа. Так и надо?
+        a: Да, пока кабель выдернут, Ch 2 молчит. Верни кабель из VCO в Ch 2 у Fade, и правый канал вернётся.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — разведи партии
+    task: |
+      Разведи две партии и расширь картинку.
+      1. На верстак: два **VCO**, **Fade** и **Mid/Side**.
+      2. Выход `Sawtooth` каждого VCO → `Ch 1` и `Ch 2` у Fade.
+      3. Выходы `Ch 1` и `Ch 2` у Fade → `Encoder left` и `Encoder right`.
+      4. `Decoder left` → вход 1 у Audio, `Decoder right` → вход 2.
+      5. **Crossfade** не выше 30 %, **Decoder width** не ниже 110 %. Нажми «Проверить».
+    given: [audio]
+    check: p7-04-stereo
+    hints:
+      "cable:1":
+        - Первая партия не попала на Fade.
+        - "Куда подать пилу первого VCO: в Ch 1 или в Crossfade?"
+        - "`Sawtooth` первого VCO → `Ch 1` у Fade."
+      "cable:2":
+        - Вторая партия не попала на Fade.
+        - Куда идёт кабель от второго VCO?
+        - "`Sawtooth` второго VCO → `Ch 2` у Fade."
+      "cable:3":
+        - Левый канал не дошёл до кодера.
+        - Какой выход Fade ведёт в Encoder left?
+        - "Выход `Ch 1` у Fade → вход `Encoder left` у Mid/Side."
+      "cable:4":
+        - Правый канал не дошёл до кодера.
+        - Какой выход Fade ведёт в Encoder right?
+        - "Выход `Ch 2` у Fade → вход `Encoder right` у Mid/Side."
+      "cable:5":
+        - Слева в Audio пусто.
+        - Какой выход декодера ведёт на первый вход Audio?
+        - "Выход `Decoder left` → вход 1 у Audio."
+      "cable:6":
+        - Справа в Audio пусто.
+        - Какой выход декодера ведёт на второй вход Audio?
+        - "Выход `Decoder right` → вход 2 у Audio."
+      "param:1":
+        - Партии не разведены.
+        - Где стоит Crossfade?
+        - Поставь Crossfade на 30 % или левее.
+      "param:2":
+        - Картинка узкая.
+        - Какая ручка расширяет стерео?
+        - Поставь Decoder width на 110 % или выше.
+      "probe:1":
+        - В Decoder left нет сигнала.
+        - Где разрыв на пути партия, Fade, Encoder left, Decoder left?
+        - Проверь кабели 1, 3 и 5.
+      "probe:2":
+        - В Decoder right нет сигнала.
+        - Где разрыв на пути партия, Fade, Encoder right, Decoder right?
+        - Проверь кабели 2, 4 и 6.
+    faq:
+      - q: Что делает Crossfade на 30 % и ниже?
+        a: Партии остаются почти на своих сторонах. Чем левее, тем меньше смесь. На 50 % обе партии звучат в обоих каналах, и стерео нет.
+      - q: Можно ли автоматизировать панораму LFO?
+        a: Можно, но проверка этого не требует. Подай LFO во вход Crossfade у Fade, когда базовая схема заработает.
+      - q: Проверка говорит, что на одном канале мало сигнала.
+        a: "Посмотри на кабели 1–6: чаще всего потерян один. Скорее всего, не хватает пути от одной из партий до выхода декодера."
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Вторая партия пропала: справа тихо, а левая стала шире и громче.
+      Найди одну ошибку и исправь её.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: fade, plugin: Fundamental, slug: Fade, params: { Crossfade: { display: "0" } } }
+      - { ref: ms, plugin: Fundamental, slug: MidSide, params: { Encoder width: { display: "100" }, Decoder width: { display: "150" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [fade, Ch 1] }
+      - { from: [vco2, Triangle], to: [fade, Ch 2] }
+      - { from: [fade, Ch 1], to: [ms, Encoder left] }
+      - { from: [fade, Ch 2], to: [ms, Encoder right] }
+      - { from: [ms, Decoder left], to: [audio, "To \"device output 1\""] }
+      - { from: [ms, Decoder right], to: [audio, "To \"device output 2\""] }
+      - { from: [ms, Decoder left], to: [scope, Ch 1] }
+      - { from: [ms, Decoder right], to: [scope, Ch 2] }
+    notes:
+      - { after: ms, text: "Здесь что-то не так.", targets: [{ module: ms, input: Encoder right }] }
+    break: { remove_cable: [fade, Ch 2, ms, Encoder right] }
+    check: { kind: fixed, expect_cable: [fade, Ch 2, ms, Encoder right] }
+    hints:
+      fixed:
+        - Правый канал не получает вторую партию.
+        - Проследи, куда идёт выход Ch 2 у Fade.
+        - "Соедини `Ch 2` у Fade с `Encoder right` у Mid/Side."
+    faq:
+      - q: Почему без правого канала левый стал шире?
+        a: Кодер не получил вторую партию, бок построен от одной. Декодер при ширине 150 % усиливает его, и левый звук кажется шире, чем был.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Стерео — два канала. Разные сигналы слева и справа дают положение.
+      - **Fade** разводит две партии: Crossfade слева — на своих местах, посередине — в обоих поровну.
+      - **Mid/Side** делит звук на центр и бок. Ширина — усиление бока, в нуле остаётся моно.
+      - Расширять можно только то, что различается слева и справа. Сначала разведи, потом расширяй.
+      Сохрани патч как `vcv-7.4.vcv`.
+      **Источники:** руководство VCV Free (Fundamental), раздел Mid/Side. Noise Engineering, «Getting Started: Mixers». Omri Cohen, курс «VCAs in the Modular Environment with VCV Rack 2».
+    questions:
+      - q: Почему Decoder width не расширит моно-сигнал?
+        options:
+          - { text: "В моно нет различия каналов, бок пуст", correct: true, why: "Ширина усиливает бок. Если левый и правый равны, бока нет, и усиливать нечего." }
+          - { text: "Decoder width действует только на низкие частоты", why: "Ширина не зависит от частоты. Она усиливает разность каналов." }
+          - { text: "Нужно сначала включить реверберацию", why: "Реверберация не нужна. Достаточно развести партии." }
+    next: |
+      # Дальше: 7.5
+      **Запись в файл.** Ты запишешь свой патч в WAV и проверишь, что уровень не перегружен.
+    faq:
+      - q: Что повторить, если картинка не расширяется?
+        a: Проверь, что партии разные и разведены Fade. На одинаковых каналах Mid/Side ничего не изменит. Потом посмотри на Decoder width.
+      - q: Какой материал по теме использовать дальше?
+        a: Руководство VCV Free описывает Fade и Mid/Side. Остальное в курсе собрано из общих идей про панораму и микшер.

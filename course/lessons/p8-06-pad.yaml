@@ -1,0 +1,454 @@
+id: p8-06-pad
+num: "8.6"
+part: 8
+title: Пэд
+goal: Собрать на основе голоса из урока 3.5 мягкий фон — два расстроенных осциллятора, дыхание тембра, медленную огибающую и реверберацию.
+builds: Шестой инструмент трека. В уроке 9.3 пэд даёт гармонию под басом и лидом.
+minutes: 45
+requires: [p6-04-polyphony, p2-03-two-oscillators, p7-02-reverb, p3-05-first-voice]
+glossary: [расстройка и биения, ансамблевый эффект, медленная атака и долгий релиз, PWM, полифония, реверберация, цент, голос синтезатора]
+sources: [sos-strings, vcv-manual-polyphony, valley-plateau]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Пэд
+    page: |
+      # 8.6 Пэд
+      **Ты научишься:** собирать **пэд** — мягкий фон, который вплывает, «дышит» и тает — и играть им аккордами.
+      **Ты соберёшь:** два VCO → Mixer → VCF → VCA-1 с медленным ADSR → Sum → Plateau.
+      **Понадобится:** 45 минут и уроки про расстройку, [[полифония|полифонию]] и [[реверберация|реверберацию]]. Громкость держи низкой.
+      Патч понадобится в части 9, сохрани его в конце урока.
+    faq:
+      - q: "Чем пэд отличается от баса и лида?"
+        a: "Это тот же голос из урока 3.5, но звук не бьёт, а вплывает. Его делают расстройка двух осцилляторов, медленная модуляция и длинная огибающая. Реверберация размывает края."
+      - q: "Почему пэд играет аккордами?"
+        a: "Пэд заполняет пространство под основной партией, поэтому ему нужны сразу несколько нот. Один набор модулей играет несколько нот, если кабель полифонический."
+      - q: "Звук будет громким?"
+        a: "Аккорд из трёх голосов громче одной ноты. Убавь громкость в системе и держи Level у Sum не выше 60 %."
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы покажут, о чём будет урок.
+    questions:
+      - q: "Зачем два осциллятора на одну ноту, расстроенных на несколько центов?"
+        free: true
+        options:
+          - { text: "Между ними возникают медленные биения, звук «шевелится»", correct: true, why: "Небольшая разница частот даёт пульсации громкости. Звук кажется широким, как ансамбль." }
+          - { text: "Чтобы звук был громче", why: "Расстройка не добавляет громкость. Она меняет характер звука." }
+          - { text: "Чтобы получилась октава", why: "Октава — это удвоение частоты. Расстройка в несколько центов в сотни раз меньше." }
+      - q: "Что изменить, чтобы пэд не бил с первой миллисекунды, а нарастал?"
+        options:
+          - { text: "Поднять Attack у ADSR до сотен миллисекунд", correct: true, why: "Attack — время подъёма огибающей. Чем оно больше, тем плавнее звук вплывает." }
+          - { text: "Поднять Release до секунд", why: "Release работает после отпускания ноты, на начало звука он не влияет." }
+          - { text: "Убавить Level у VCA-1", why: "Тише — не значит плавнее. Начало звука остаётся резким." }
+      - q: "Что делает Sum перед Plateau?"
+        options:
+          - { text: "Складывает голоса полифонического кабеля в один сигнал", correct: true, why: "Plateau принимает моно-вход. Sum сводит все голоса в один." }
+          - { text: "Расстраивает голоса", why: "Высота голосов остаётся прежней. Sum работает только с громкостью." }
+          - { text: "Делит сигнал на левый и правый", why: "За стерео отвечает Plateau, у него два выхода. Sum только складывает." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Что делает звук пэдом
+    page: |
+      # Что делает звук пэдом
+      **Пэд** — звук без резкого начала. Ноты вплывают, держатся и долго тают.
+      Он занимает место под главной партией.
+      Три приёма делают его живым.
+      Первый: два осциллятора на одной ноте, чуть [[расстройка и биения|расстроенные]]. Их частоты расходятся на несколько [[цент|центов]], и звук пульсирует.
+    page2: |
+      Второй: [[PWM|медленная модуляция]] ширины импульса от LFO. Тембр не стоит на месте.
+      Вместе это [[ансамблевый эффект]] — ощущение хора.
+      Третий: [[медленная атака и долгий релиз|медленная огибающая]] и [[реверберация]], которая размывает края.
+    figure: { template: adsr, a: 0.5, d: 1, s: 0.8, r: 2, gate: 3, markers: true, caption: "Огибающая пэда: Attack 500 мс, Decay 1 с, Sustain 80 %, Release 2 с." }
+    simpler: Представь хор. Каждый певец чуть не попадает в ноту, поэтому звук шевелится. Вступают они медленно, а замирают долго, как в большом зале.
+    faq:
+      - q: "На сколько расстраивать осцилляторы?"
+        a: "На 10 центов вниз у одного и на 10 вверх у другого. Больше 20 центов уже слышно как фальшь. Меньше 5 центов биения слишком медленные и едва заметны."
+      - q: "Что такое биения?"
+        a: "Пульсации громкости при сложении двух близких частот. Скорость равна разнице в герцах. У 260 и 263 Гц это около 3 пульсаций в секунду."
+      - q: "Зачем в пэде реверберация?"
+        a: "Она размывает края нот и заполняет паузы. Звук становится фоном, а не отдельными нотами. Wet level около 50 % — хорошее начало."
+
+  - id: b4
+    type: story
+    preset: story
+    title: Аккорд и Sum
+    page: |
+      # Аккорд и Sum
+      Для аккорда нужна [[полифония]]: один кабель несёт до 16 голосов, и один набор модулей играет их все.
+      В демо аккорд собирает **Merge** из трёх констант 8vert: C, Es и G.
+      Каждая нота — отдельный [[канал полифонического кабеля|канал]] в общем кабеле.
+    page2: |
+      Перед реверберацией голоса надо свести: за это отвечает **Sum**.
+      Plateau принимает один сигнал, и Sum складывает все голоса в него.
+      Три голоса громче одного, поэтому **Level** у Sum держи не выше 60 %.
+    figure: { template: keyboard, from: C4, to: C5, marks: [{ note: C4, volts: 0 }, { note: "D#4", volts: 0.25 }, { note: G4, volts: 0.58 }], caption: "Аккорд из трёх нот: C, Es, G. Вольты 0, 0,25 и 0,58 на входе 1V/octave pitch." }
+    simpler: Три музыканта играют каждый свою ноту, а звукорежиссёр сводит их в один микрофон. Merge собирает музыкантов, Sum — звукорежиссёр.
+    faq:
+      - q: "Зачем Merge, если есть клавиатура?"
+        a: "В демо нет MIDI-клавиатуры, и аккорд задан постоянными напряжениями. В практике ты возьмёшь MIDI to CV и сыграешь аккорд сам."
+      - q: "Что будет без Sum?"
+        a: "Plateau получит только первый канал, остальные голоса пропадут. Аккорд превратится в одну ноту."
+      - q: "Почему Level у Sum не выше 60 %?"
+        a: "Три голоса складываются и перегружают выход. 60 % и ниже оставляют запас по уровню, а звук не хрипит."
+
+  - id: b5
+    type: live
+    preset: live
+    title: Два осциллятора и дыхание
+    page: |
+      # Два осциллятора и дыхание
+      Первый VCO играет прямоугольник чуть ниже C4, второй — пилу чуть выше. Оба идут в Mixer.
+      LFO качает ширину импульса первого. Подвинь **Frequency** у второго VCO на 3 Гц: биения ускоряются.
+    modules:
+      - { ref: vcoa, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "260.12" }, Pulse width modulation: { display: "40" } } }
+      - { ref: vcob, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "263.15" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.3" }, Offset: { display: "Bipolar" } } }
+      - { ref: mix, plugin: Fundamental, slug: Mixer, params: { Level: { display: "60" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [vcoa, Pulse width modulation] }
+      - { from: [vcoa, Square], to: [mix, Channel 1] }
+      - { from: [vcob, Sawtooth], to: [mix, Channel 2] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 1\""] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: vcob, text: "**Frequency** на 10 центов выше C4. У первого VCO — на 10 ниже.", targets: [{ module: vcob, param: Frequency }] }
+      - { after: lfo, text: "**Triangle** медленно качает ширину импульса.", targets: [{ module: lfo, output: Triangle }] }
+    faq:
+      - q: "Откуда числа 260,12 и 263,15 Гц?"
+        a: "Это C4 (261,63 Гц), сдвинутая на 10 центов вниз и вверх. Разница около 3 Гц даёт три биения в секунду."
+      - q: "Что делает Pulse width modulation?"
+        a: "Это глубина входа от LFO. При 0 ширина импульса стоит на 50 %, при 40 % LFO заметно её качает. Тембр прямоугольника то уже, то шире."
+      - q: "Биения почти не слышны."
+        a: "Увеличь разницу частот осцилляторов до 3–5 Гц или убедись, что оба идут в Mixer. Расстройка больше 20 центов уже фальшивит."
+
+  - id: b6
+    type: live
+    preset: live
+    title: Медленная огибающая и реверберация
+    page: |
+      # Медленная огибающая и реверберация
+      Теперь [[голос синтезатора|голос]] в духе 3.5: пила → VCF → VCA-1, огибающая ADSR, кнопка Push. **Hold** держит ноту.
+      Сними Hold. Нота уходит за 2 секунды, а хвост реверберации растворяется ещё дольше.
+      Подвинь **Wet level** у Plateau от 0 до 80 %. Пэд из сухого становится облаком.
+    modules:
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1800" }, Resonance: { display: "15" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "500" }, Decay: { display: "1000" }, Sustain: { display: "80" }, Release: { display: "2000" } } }
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 1 } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: plateau, plugin: Valley, slug: Plateau, params: { Dry level: { display: "70" }, Wet level: { display: "50" }, Size: { display: "60" }, Decay: { display: "65" } } }
+    cables:
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [plateau, Left] }
+      - { from: [plateau, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [plateau, Right], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: env, text: "**Attack** 500 мс и **Release** 2 с.", targets: [{ module: env, param: Attack }, { module: env, param: Release }] }
+      - { after: plateau, text: "**Wet level** — доля реверберации.", targets: [{ module: plateau, param: Wet level }] }
+    faq:
+      - q: "Звук не появляется после нажатия."
+        a: "Это атака 500 мс: пэд вплывает полсекунды. Подожди и убедись, что Hold у Push включён. Без него нота звучит, пока держишь кнопку."
+      - q: "Почему Size 60, Decay 65?"
+        a: "Size задаёт размер комнаты, Decay — как долго гаснет хвост. Средние значения дают просторный, но не затянутый фон. Верни их, если реверберация заливает звук."
+      - q: "Реверберация слишком громкая."
+        a: "Опусти Wet level до 30 % или подними Dry level. Wet — обработанный звук, Dry — исходный."
+
+  - id: b7
+    type: live
+    preset: live
+    title: Аккорд
+    page: |
+      # Аккорд
+      Три константы 8vert дают ноты C, Es и G. Merge собирает их в один полифонический кабель.
+      Тот же голос играет сразу три ноты. Sum сводит их в один сигнал.
+    modules:
+      - { ref: chord, plugin: Fundamental, slug: 8vert, params: { Row 1 gain: { display: "0" }, Row 2 gain: { display: "0.25" }, Row 3 gain: { display: "0.58" } } }
+      - { ref: merge, plugin: Fundamental, slug: Merge }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1800" }, Resonance: { display: "15" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "500" }, Decay: { display: "1000" }, Sustain: { display: "80" }, Release: { display: "2000" } } }
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 1 } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: sum, plugin: Fundamental, slug: Sum, params: { Level: { display: "30" } } }
+    cables:
+      - { from: [chord, Row 1], to: [merge, Channel 1] }
+      - { from: [chord, Row 2], to: [merge, Channel 2] }
+      - { from: [chord, Row 3], to: [merge, Channel 3] }
+      - { from: [merge, Polyphonic], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Sawtooth], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [sum, Polyphonic] }
+      - { from: [sum, Monophonic], to: [audio, "To \"device output 1\""] }
+      - { from: [sum, Monophonic], to: [audio, "To \"device output 2\""] }
+    notes:
+      - { after: merge, text: "**Merge** собирает три ноты в один кабель.", targets: [{ module: merge, output: Polyphonic }] }
+      - { after: sum, text: "**Sum** сводит три голоса в один.", targets: [{ module: sum, input: Polyphonic }] }
+    faq:
+      - q: "Почему Row 1 gain показывает вольты?"
+        a: "Пока в Row нет кабеля на входе, ручка работает как источник константы и показывает вольты. 0,25 В — это три полутона вверх, 0,58 В — семь."
+      - q: "Слышно только одну ноту."
+        a: "Проверь, что Merge получает все три строки и что кабель из Merge идёт во вход 1V/octave pitch у VCO. Один кабель в Merge даёт один голос."
+      - q: "Аккорд хрипит."
+        a: "Три голоса складываются. Опусти Level у Sum до 30 % или ниже, Level у VCA-1 тоже можно убавить."
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Plateau для пэда
+    page: |
+      # Plateau для пэда
+      Plateau из урока 7.2 здесь работает как фон. Нужны пять ручек.
+    module: { ref: plateau, plugin: Valley, slug: Plateau, params: { Dry level: { display: "70" }, Wet level: { display: "50" }, Size: { display: "60" }, Decay: { display: "65" } } }
+    notes:
+      - { text: "**Dry level** — исходный звук без реверберации.", targets: [{ module: plateau, param: Dry level }] }
+      - { text: "**Wet level** — доля реверберации в выходе.", targets: [{ module: plateau, param: Wet level }] }
+      - { text: "**Size** — размер комнаты.", targets: [{ module: plateau, param: Size }] }
+      - { text: "**Decay** — как долго гаснет хвост.", targets: [{ module: plateau, param: Decay }] }
+      - { text: "**Hold** замораживает хвост. Держи его выключенным.", targets: [{ module: plateau, param: Hold }] }
+    faq:
+      - q: "Зачем на пэд сразу два выхода Left и Right?"
+        a: "Plateau даёт стереокартинку: левый и правый выход чуть различаются. Подключи оба к Audio, и пэд станет шире. С одним выходом звук моно."
+      - q: "Что произойдёт, если включить Hold?"
+        a: "Хвост реверберации перестанет затухать и будет звучать бесконечно. Чтобы убрать, выключи Hold или нажми Clear."
+      - q: "Зачем Dry level, если есть Wet?"
+        a: "Dry сохраняет чёткость нот. Если оставить только Wet, пэд станет размытым облаком без ясной высоты."
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поставь **Frequency** у второго VCO на 261 и на 266 Гц."
+        see: "От почти унисона к заметным биениям. Выше 270 Гц уже фальшивит."
+      - do: "Подними **Pulse width modulation** у первого VCO от 0 до 60 %."
+        see: "Тембр из неподвижного становится «дышащим»."
+      - do: "Двигай **Frequency** у LFO от 0,1 до 1 Гц."
+        see: "Покачивание быстрее или медленнее."
+      - do: "Поставь **Attack** на 100 мс, потом на 2000 мс."
+        see: "От лёгкого входа к долгому нарастанию."
+      - do: "Двигай **Wet level** у Plateau от 0 до 80 %."
+        see: "Пэд из сухого становится облаком."
+    modules:
+      - { ref: vcoa, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "260.12" }, Pulse width modulation: { display: "40" } } }
+      - { ref: vcob, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "263.15" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.3" }, Offset: { display: "Bipolar" } } }
+      - { ref: mix, plugin: Fundamental, slug: Mixer, params: { Level: { display: "60" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1800" }, Resonance: { display: "15" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "500" }, Decay: { display: "1000" }, Sustain: { display: "80" }, Release: { display: "2000" } } }
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 1 } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: plateau, plugin: Valley, slug: Plateau, params: { Dry level: { display: "70" }, Wet level: { display: "50" }, Size: { display: "60" }, Decay: { display: "65" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [vcoa, Pulse width modulation] }
+      - { from: [vcoa, Square], to: [mix, Channel 1] }
+      - { from: [vcob, Sawtooth], to: [mix, Channel 2] }
+      - { from: [mix, Mix], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [plateau, Left] }
+      - { from: [plateau, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [plateau, Right], to: [audio, "To \"device output 2\""] }
+    faq:
+      - q: "Пэд слишком тёмный."
+        a: "Подними Cutoff frequency у VCF до 3000–4000 Гц. Для пэда фильтр обычно мягкий, но 1800 Гц — не предел."
+      - q: "Пэд обрывается сразу после отпускания."
+        a: "Release слишком короткий. Подними его до 2000 мс, чтобы нота растворялась, а не обрывалась."
+      - q: "Звук свистит."
+        a: "Resonance выше 40 % начинает свистеть. Верни его на 15 %."
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — свой пэд
+    task: |
+      Собери пэд сам, между маркерами «Верстак».
+      1. Два **VCO** и **LFO**: `Triangle` → `Pulse width modulation` у первого VCO, `Offset` у LFO — Bipolar.
+      2. Звук: `Square` первого VCO → `Channel 1` у **Mixer**, `Sawtooth` второго → `Channel 2`, `Mix` → `Audio` у **VCF**.
+      3. Голос: `Lowpass filter` → `Channel` у **VCA-1**, `Envelope` → `CV`. Gate держит Push с Hold.
+      4. Конец: `Channel` у VCA-1 → `Polyphonic` у **Sum**, `Monophonic` → `Left` у **Plateau**, `Left` и `Right` → входы 1 и 2 у Audio.
+      5. Первый VCO ниже 261 Гц, второй выше 262,3 Гц. **Attack** от 400 мс, **Release** от 800 мс, **Level** у Sum до 60 %.
+    given: [audio]
+    check: p8-06-pad
+    hints:
+      "cable:1":
+        - "Тембр не «дышит»."
+        - "Какой выход LFO даёт треугольник и куда он идёт?"
+        - "`Triangle` у LFO → `Pulse width modulation` у первого VCO."
+      "cable:2":
+        - "Первый осциллятор не звучит."
+        - "Какой выход VCO даёт прямоугольник?"
+        - "`Square` у первого VCO → `Channel 1` у Mixer."
+      "cable:3":
+        - "Второго осциллятора нет в миксе."
+        - "Какой выход второго VCO даёт пилу?"
+        - "`Sawtooth` у второго VCO → `Channel 2` у Mixer."
+      "cable:4":
+        - "Сумма не доходит до фильтра."
+        - "Откуда выходит Mixer?"
+        - "`Mix` у Mixer → `Audio` у VCF."
+      "cable:5":
+        - "До усилителя звук не доходит."
+        - "Какой выход VCF ведёт к VCA-1?"
+        - "`Lowpass filter` у VCF → `Channel` у VCA-1."
+      "cable:6":
+        - "Пэд не нарастает."
+        - "Что управляет VCA-1 через вход CV?"
+        - "`Envelope` у ADSR → `CV` у VCA-1."
+      "cable:7":
+        - "Голоса нечем свести."
+        - "В какой вход Sum идёт VCA-1?"
+        - "`Channel` у VCA-1 → `Polyphonic` у Sum."
+      "cable:8":
+        - "Реверберации нечего обрабатывать."
+        - "Какой выход Sum ведёт в Plateau?"
+        - "`Monophonic` у Sum → `Left` у Plateau."
+      "cable:9":
+        - "Левый канал не попал в Audio."
+        - "Какой выход Plateau ведёт на первый выход устройства?"
+        - "`Left` у Plateau → `To \"device output 1\"` у Audio."
+      "cable:10":
+        - "Звук только слева."
+        - "Правый выход Plateau нужен второму выходу."
+        - "`Right` у Plateau → `To \"device output 2\"` у Audio."
+      "param:1":
+        - "Первый осциллятор не расстроен вниз."
+        - "Ручка Frequency первого VCO."
+        - "Поставь Frequency чуть ниже 261 Гц, около 260,1."
+      "param:2":
+        - "Второй осциллятор не расстроен вверх."
+        - "Ручка Frequency второго VCO."
+        - "Поставь Frequency чуть выше 262,3 Гц, около 263,2."
+      "param:3":
+        - "Ширина импульса не движется."
+        - "Ручка Pulse width modulation у первого VCO."
+        - "Подними её хотя бы до 20 %."
+      "param:4":
+        - "LFO слишком быстрый для пэда."
+        - "Ручка Frequency у LFO."
+        - "Поставь Frequency не выше 1 Гц."
+      "param:5":
+        - "Атака слишком быстрая для пэда."
+        - "Ручка Attack у ADSR."
+        - "Поставь Attack не меньше 400 мс."
+      "param:6":
+        - "Пэд обрывается."
+        - "Ручка Release у ADSR."
+        - "Поставь Release не меньше 800 мс."
+      "param:7":
+        - "Пэд свистит."
+        - "Ручка Resonance у VCF."
+        - "Убавь Resonance до 40 % или ниже."
+      "param:8":
+        - "Голоса перегружают выход."
+        - "Ручка Level у Sum."
+        - "Убавь Level до 60 % или ниже."
+      "param:9":
+        - "Реверберации не слышно."
+        - "Ручка Wet level у Plateau."
+        - "Подними Wet level хотя бы до 25 %."
+      "param:10":
+        - "Хвост заморожен."
+        - "Кнопка Hold у Plateau."
+        - "Выключи Hold или нажми Clear."
+      "param:11":
+        - "Ширина импульса качается только в одну сторону."
+        - "Переключатель Offset у LFO."
+        - "Переключи Offset на Bipolar."
+      "probe:1":
+        - "На левом выходе нет сигнала."
+        - "Держится ли нота, прошла ли атака и дошёл ли звук до Left у Plateau?"
+        - "Включи Hold у Push, подожди секунду-две и нажми «Проверить» ещё раз."
+      "probe:2":
+        - "Правый выход молчит."
+        - "Подключён ли Right у Plateau к Audio?"
+        - "`Right` у Plateau → `To \"device output 2\"` у Audio, и пэд должен звучать."
+    faq:
+      - q: "Нужна ли MIDI-клавиатура?"
+        a: "Для проверки нет: достаточно Push с Hold. Но с клавиатуры пэд играет аккордами. Поставь MIDI to CV, подай V/OCT на оба VCO и Gate на ADSR."
+      - q: "Проверка молчит, а я слышу пэд."
+        a: "Атака медленная, поэтому подожди секунду-две после нажатия и повтори проверку. Пока нота не поднялась, сигнал на выходе Plateau слишком слабый."
+      - q: "Нужно ли включать Hold у Plateau?"
+        a: "Нет, наоборот: Hold у Plateau должен быть выключен. Это заморозка хвоста, а не Hold у Push."
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Этот пэд звучит, но тембр стоит на месте, как застывший.
+      Найди одну ошибку и исправь её одним кабелем.
+    modules:
+      - { ref: vcoa, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "260.12" }, Pulse width modulation: { display: "40" } } }
+      - { ref: vcob, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "263.15" } } }
+      - { ref: lfo, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.3" }, Offset: { display: "Bipolar" } } }
+      - { ref: mix, plugin: Fundamental, slug: Mixer, params: { Level: { display: "60" } } }
+      - { ref: vcf, plugin: Fundamental, slug: VCF, params: { Cutoff frequency: { display: "1800" }, Resonance: { display: "15" } } }
+      - { ref: env, plugin: Fundamental, slug: ADSR, params: { Attack: { display: "500" }, Decay: { display: "1000" }, Sustain: { display: "80" }, Release: { display: "2000" } } }
+      - { ref: push, plugin: Fundamental, slug: Push, params: { Hold: { raw: 1 } } }
+      - { ref: vca, plugin: Fundamental, slug: VCA-1, params: { Level: { display: "100" } } }
+      - { ref: plateau, plugin: Valley, slug: Plateau, params: { Dry level: { display: "70" }, Wet level: { display: "50" }, Size: { display: "60" }, Decay: { display: "65" } } }
+    cables:
+      - { from: [lfo, Triangle], to: [vcoa, Pulse width modulation] }
+      - { from: [vcoa, Square], to: [mix, Channel 1] }
+      - { from: [vcob, Sawtooth], to: [mix, Channel 2] }
+      - { from: [mix, Mix], to: [vcf, Audio] }
+      - { from: [vcf, Lowpass filter], to: [vca, Channel] }
+      - { from: [push, Gate], to: [env, Gate] }
+      - { from: [env, Envelope], to: [vca, CV] }
+      - { from: [vca, Channel], to: [plateau, Left] }
+      - { from: [plateau, Left], to: [audio, "To \"device output 1\""] }
+      - { from: [plateau, Right], to: [audio, "To \"device output 2\""] }
+    break: { remove_cable: [lfo, Triangle, vcoa, Pulse width modulation] }
+    check: { kind: fixed, expect_cable: [lfo, Triangle, vcoa, Pulse width modulation] }
+    hints:
+      fixed:
+        - "Тембр не «дышит». Что должно качать ширину импульса?"
+        - "Проследи выход LFO и вход Pulse width modulation у первого VCO."
+        - "Соедини `Triangle` у LFO с `Pulse width modulation` у первого VCO."
+    faq:
+      - q: "Почему без этого кабеля тембр застыл?"
+        a: "Ширина импульса остаётся на 50 %, потому что LFO никуда не идёт. Биения от расстройки остаются, но медленного дыхания тембра нет."
+      - q: "Как услышать разницу?"
+        a: "С кабелем тембр прямоугольника медленно меняется, будто звук то уже, то шире. Без него сохраняются только биения."
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Пэд — тот же голос из 3.5 с двумя расстроенными осцилляторами и медленной модуляцией.
+      - Attack от 400 мс и Release от 800 мс дают вплывание и растворение.
+      - Merge собирает аккорд, Sum сводит голоса перед Plateau.
+      - Plateau размывает края: Wet level около 50 %, Hold выключен.
+      Сохрани патч как `vcv-8.6.vcv`: он понадобится в части 9.
+      **Источники:** Sound On Sound, «Synthesizing Strings: PWM String Sounds». Руководство VCV Rack, раздел «Polyphony». Документация Valley Plateau.
+    questions:
+      - q: "Зачем Sum стоит перед Plateau и что было бы без него?"
+        options:
+          - { text: "Plateau получил бы один голос, аккорд пропал бы", correct: true, why: "Plateau принимает моно-вход. Sum сводит все голоса в один сигнал." }
+          - { text: "Пэд стал бы громче", why: "Без Sum пропадут голоса, громче пэд не станет." }
+          - { text: "Реверберация заработала бы быстрее", why: "Скорость реверберации от Sum не зависит." }
+    next: |
+      # Дальше: 8.7
+      **Текстура.** Clouds превращает звук в облако зёрен, а шум и случайные значения оживляют его.
+    faq:
+      - q: "Что повторить, если пэд звучит плоско?"
+        a: "Проверь расстройку двух VCO и Pulse width modulation. Если расстройки нет, биения исчезают, и звук становится жёстким."
+      - q: "Зачем сохранять патч?"
+        a: "В части 9 пэд даст гармонию под басом и лидом. Файл `vcv-8.6.vcv` понадобится там как готовый инструмент."

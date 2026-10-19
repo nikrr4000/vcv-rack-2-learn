@@ -1,0 +1,363 @@
+id: p4-05-sample-hold-slew
+num: "4.5"
+part: 4
+title: Выборка-хранение, слайд, глайд
+goal: Превращать непрерывный сигнал в ступени, сглаживать ступени в переходы и запоминать несколько значений в регистре.
+builds: Основа случайного арпеджиатора, портаменто для баса в части 8 и запоминания найденной мелодии.
+minutes: 35
+requires: [p4-04-randomness]
+glossary: [выборка-хранение, слайд, глайд, трек-хранение, регистр сдвига, 1V/oct]
+sources: [sos-16, vcv-free-manual, mn-maths, loopop-sh-switch]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Выборка-хранение и слайд
+    page: |
+      # 4.5 Выборка-хранение, слайд, глайд
+      **Ты научишься:** брать снимок сигнала по такту, сглаживать скачки и запоминать ряд значений.
+      **Ты соберёшь:** случайную мелодию с плавными переходами между нотами.
+      **Понадобится:** 35 минут и урок 4.4 про случайность.
+      Эти три приёма превращают шум в мелодию, которую можно слушать и запомнить.
+    figure:
+      template: flow
+      layout: row
+      nodes:
+        - { id: noise, label: Noise, kind: audio }
+        - { id: sh, label: S&H, kind: cv }
+        - { id: slew, label: Slew, kind: cv }
+        - { id: vco, label: VCO pitch, kind: audio }
+      edges:
+        - { from: noise, to: sh, kind: audio }
+        - { from: sh, to: slew, kind: cv }
+        - { from: slew, to: vco, kind: cv }
+      caption: Шум превращается в ступени, ступени сглаживаются, результат ведёт высоту.
+    faq:
+      - q: Зачем делать из шума ступени?
+        a: Шум меняется тысячи раз в секунду и для высоты не годится. Выборка-хранение берёт одно значение по такту и держит. Получается ряд нот.
+      - q: Чем это отличается от Random из урока 4.4?
+        a: Random делает то же самое внутри себя. Здесь ты собираешь схему сам из шума, такта и Process. Источником может быть любой сигнал, не только шум.
+      - q: Что будет в конце урока?
+        a: Случайная мелодия, где ноты переходят плавно, как скольжение. В части 5 к ней добавится квантизатор, и ноты встанут в строй.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса до объяснений. Ответы подскажут, чему посвящён урок.
+    questions:
+      - q: Что делает выборка-хранение?
+        free: true
+        options:
+          - { text: "По сигналу запуска берёт значение входа и держит его до следующего запуска", correct: true, why: "Это мгновенный снимок. Пока нового запуска нет, выход стоит на одном значении." }
+          - { text: "Усредняет вход за время", why: "Усреднением занимаются сглаживатели. S&H берёт одно значение и держит." }
+          - { text: "Записывает вход как звук", why: "Запись звука делает сэмплер. S&H запоминает одно число напряжения, а не звук." }
+      - q: Slew стоит на 100 мс/В, вход подскочил на 5 В. За какое время выход дойдёт?
+        options:
+          - { text: "Примерно за 0,5 секунды", correct: true, why: "100 мс на каждый вольт, вольт пять. Пять раз по 100 мс даёт 500 мс." }
+          - { text: "Мгновенно", why: "Мгновенным переход был бы при Slew 0. Любое положительное значение его растягивает." }
+          - { text: "За 100 миллисекунд", why: "Это время на один вольт. Скачок на 5 В пройдёт в пять раз дольше." }
+      - q: Гейт на Process не подключён. Какой выход сглаживает, Slew или Glide?
+        options:
+          - { text: "Slew, а Glide повторяет вход без задержки", correct: true, why: "Slew сглаживает, пока гейт низкий, а пустой вход считается низким. Glide включается только на высоком гейте." }
+          - { text: "Оба одинаково", why: "Логика гейта у них обратная. Один сглаживает на низком гейте, другой на высоком." }
+          - { text: "Ни один", why: "Гейт нужен не всегда. Пустой вход считается низким, и Slew работает." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Выборка-хранение
+    page: |
+      # Выборка-хранение
+      [[выборка-хранение|Выборка-хранение]] (S&H) — один из старейших приёмов модульного синтеза.
+      Сигнал запуска — гейт или триггер — делает мгновенный снимок входного напряжения. Выход держит это значение, пока не придёт следующий запуск.
+      Если подать на вход шум, получится ряд случайных ступеней. Каждый такт — новая ступень, между тактами тишина изменений.
+      У Process рядом есть [[трек-хранение|Track & hold]]: пока гейт высокий, выход замирает, пока низкий — повторяет вход.
+    figure: { template: steps, values: [3, 7, 2, 6, 4, 5, 1, 7], gates: [1, 1, 1, 1, 1, 1, 1, 1], caption: "Выход S&H: на каждом такте новая ступень, между тактами значение держится." }
+    simpler: Представь, что ты фотографируешь бегущую воду раз в секунду и показываешь снимок, пока не сделаешь новый. Вода течёт непрерывно, а картинка меняется ступенями.
+    faq:
+      - q: Какой сигнал запускает S&H?
+        a: Гейт или триггер на входе Gate. Берётся значение в момент положительного фронта. Подойдёт Square от LFO как простой такт.
+      - q: Что будет, если такт идёт быстро?
+        a: Ступени чаще, ноты бегут быстрее. На высокой частоте такта ноты сливаются в трель. Для мелодии держи частоту в пределах 1–8 Гц.
+      - q: Чем Track & hold отличается от Sample & hold?
+        a: Sample & hold берёт снимок на фронте гейта. Track & hold всё время повторяет вход, пока гейт низкий, и замирает на высоком.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Слайд и глайд
+    page: |
+      # Слайд и глайд
+      [[слайд|Слайд]] ограничивает скорость изменения напряжения. Скачок превращается в плавный подъём или спуск.
+      Скорость задаётся в миллисекундах на вольт. При 100 мс/В скачок на 5 В занимает около 0,5 секунды.
+      [[глайд|Глайд]] — то же, но по гейту. Выход **Slew** сглаживает, пока гейт низкий. Выход **Glide** сглаживает только пока гейт высокий.
+      Поэтому портаменто на Glide звучит только на легато: пока клавиша держится.
+    figure: { template: table, rows: [["Выход", "Гейт низкий", "Гейт высокий"], ["Slew", "сглаживает", "повторяет вход"], ["Glide", "повторяет вход", "сглаживает"]], caption: "Когда сглаживают выходы Process." }
+    simpler: Представь, что ты ведёшь пальцем по струне. Slew — это скольжение между нотами, пока гейт низкий. Glide скользит, только пока ты держишь палец, и скачет, когда отпускаешь.
+    faq:
+      - q: Почему при больших значениях Slew нота не успевает дойти?
+        a: Если скачок идёт дольше, чем интервал между тактами, новая нота приходит раньше, чем выход достигает предыдущей. Высота плывёт, не успевая остановиться.
+      - q: Gate не подключён, а Glide не сглаживает. Это поломка?
+        a: Нет. Пустой Gate считается низким, а Glide работает только на высоком гейте. Нажми кнопку Gate на панели Process, и он начнёт сглаживать.
+      - q: Что такое мс/В?
+        a: Время в миллисекундах, нужное, чтобы выход изменился на один вольт. Чем число больше, тем медленнее слайд. На 0 слайда нет.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Случайная мелодия
+    page: |
+      # Случайная мелодия
+      **Noise** даёт шум. Первый **Process** берёт из него снимок по каждому такту от LFO. Второй **Process** сглаживает ступени.
+      Сглаженное идёт через **Rescale** на высоту VCO ([[1V/oct|1 В на октаву]]).
+      Слушай, как ноты плавно переходят одна в другую. Поставь **Slew** у второго Process на 0, и переходы превратятся в скачки.
+    modules:
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: clk, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "4" }, Offset: Unipolar } }
+      - { ref: sh, plugin: Fundamental, slug: Process }
+      - { ref: gl, plugin: Fundamental, slug: Process, params: { Slew: { display: "100" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "20" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+    cables:
+      - { from: [noise, White noise], to: [sh, Voltage] }
+      - { from: [clk, Square], to: [sh, Gate] }
+      - { from: [sh, Sample & hold], to: [gl, Voltage] }
+      - { from: [gl, Slew], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Triangle], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: clk, text: "**Square** — такт. Каждый фронт заставляет Process взять новый снимок.", targets: [{ module: clk, output: Square }] }
+      - { after: sh, text: "**Sample & hold** — ступени, по одной на такт. Такт приходит на **Gate**.", targets: [{ module: sh, output: Sample & hold }, { module: sh, input: Gate }] }
+      - { after: gl, text: "**Slew** 100 мс/В: переходы между нотами плавные.", targets: [{ module: gl, param: Slew }] }
+    faq:
+      - q: Нота дошла не до конца и уже идёт дальше. Почему?
+        a: Slew велик для такой частоты такта. Уменьши Slew или замедли LFO, и нота успеет дойти до значения.
+      - q: Почему Gain у Rescale 20 %?
+        a: Шум даёт около ±5 В, а 1 В на высоте — это октава. На 20 % разброс укладывается примерно в октаву.
+      - q: Где Scope?
+        a: В блоке «Покрути сам». Там ты увидишь ступени и сглаженную линию на экране.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Регистр сдвига
+    page: |
+      # Регистр сдвига
+      **SHASR** (Sample & Hold Analog Shift Register) — восемь выборок-хранений подряд. Это [[регистр сдвига]].
+      Каждый такт новое значение входит в первую строку, а прежние сдвигаются на строку вниз.
+      Здесь шум идёт в **Sample 1**, а такт от LFO — в **Trigger 1**. Остальные входы пусты и берут значения у строки выше.
+      На Scope канал 1 — строка 1, канал 2 — строка 2. Значение сначала появляется на первом, потом переходит на второй.
+    modules:
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: clk, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "0.5" }, Offset: Unipolar } }
+      - { ref: shasr, plugin: Fundamental, slug: SHASR }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [noise, White noise], to: [shasr, Sample 1] }
+      - { from: [clk, Square], to: [shasr, Trigger 1] }
+      - { from: [shasr, Sample 1], to: [scope, Ch 1] }
+      - { from: [shasr, Sample 2], to: [scope, Ch 2] }
+    notes:
+      - { after: shasr, text: "Выходы **Sample 1** и **Sample 2**: строка 1 и строка 2. Остальные выходы так же едут вниз.", targets: [{ module: shasr, output: Sample 1 }, { module: shasr, output: Sample 2 }] }
+      - { after: shasr, text: "**Clear** обнуляет все выходы. **Push** запускает строку 1 вручную. **Randomize** подключает к первой строке случайный источник.", targets: [{ module: shasr, param: Clear }, { module: shasr, param: Push }, { module: shasr, param: Randomize }] }
+    faq:
+      - q: Зачем нужен регистр сдвига?
+        a: Чтобы запомнить последние значения. Нашёл красивую случайную мелодию, остановил такт, и последние восемь нот остались в регистре.
+      - q: Почему пустые входы Sample 2–8 что-то получают?
+        a: Пустой Sample N берёт значение выхода строки выше. Пустой Trigger N берёт триггер строки выше. Поэтому регистр работает с одним кабелем сигнала и одним тактом.
+      - q: Значение на Scope канала 2 повторяет канал 1, но позже. Так и должно быть?
+        a: Да. Строка 2 берёт то, что было в строке 1 на прошлом такте. Это и есть сдвиг.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель Process
+    page: |
+      # Панель Process
+      **Process** — выборка-хранение и слайд в одном модуле. Обойдём его сверху вниз.
+    module: { ref: sh, plugin: Fundamental, slug: Process }
+    notes:
+      - { text: "Входы: **Voltage** — что обрабатываем, **Gate** — команда, **Slew** — CV для скорости слайда.", targets: [{ module: sh, input: Voltage }, { module: sh, input: Gate }, { module: sh, input: Slew }] }
+      - { text: "Ручка **Slew**: от 0 до 10000 мс/В. На 0 слайда нет. Кнопка **Gate** — ручной гейт.", targets: [{ module: sh, param: Slew }, { module: sh, param: Gate }] }
+      - { text: "**Sample & hold** — значение на фронте гейта. **Sample & hold 2** — предыдущее значение: вместе они регистр на два шага.", targets: [{ module: sh, output: Sample & hold }, { module: sh, output: Sample & hold 2 }] }
+      - { text: "**Track & hold** держит значение, пока гейт высокий. **Hold & track** наоборот.", targets: [{ module: sh, output: Track & hold }, { module: sh, output: Hold & track }] }
+      - { text: "**Slew** сглаживает, пока гейт низкий.", targets: [{ module: sh, output: Slew }] }
+      - { text: "**Glide** сглаживает, пока гейт высокий. Это портаменто только на легато.", targets: [{ module: sh, output: Glide }] }
+    faq:
+      - q: Какой выход брать для случайных ступеней?
+        a: Sample & hold. Он меняется только на фронте гейта и держит значение. Остальные выходы нужны для особых случаев.
+      - q: Что делает кнопка Gate на панели?
+        a: Она работает, как будто на вход Gate подали гейт. Удержание держит гейт высоким. Так можно проверить Glide без внешнего такта.
+      - q: Вход Slew — это что?
+        a: CV, которым можно менять скорость слайда извне. В этом уроке он не нужен. Масштаб и знак проверь на своей версии Rack.
+
+  - id: b8
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Поставь **Frequency** у LFO-такта на 1, потом на 4 и на 12 Гц."
+        see: Ноты идут то редко, то частым лепетом, то трелью. На Scope ступени чаще.
+      - do: "Поставь **Slew** у второго Process на 0, потом на 50, 300 и 2000 мс/В."
+        see: Скачки нот становятся мягкими подъёмами. На 2000 нота уже не доходит до значения. На Scope ступени превращаются в наклонные линии.
+      - do: "Перенеси кабель второго Process с **Slew** на **Glide** и понажимай кнопку **Gate**."
+        see: Без гейта Glide повторяет вход, и ноты скачут. С гейтом сглаживание есть.
+    modules:
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: clk, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "4" }, Offset: Unipolar } }
+      - { ref: sh, plugin: Fundamental, slug: Process }
+      - { ref: gl, plugin: Fundamental, slug: Process, params: { Slew: { display: "100" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "20" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "2000" }, Gain 1: { display: "10" }, Gain 2: { display: "10" } } }
+    cables:
+      - { from: [noise, White noise], to: [sh, Voltage] }
+      - { from: [clk, Square], to: [sh, Gate] }
+      - { from: [sh, Sample & hold], to: [gl, Voltage] }
+      - { from: [gl, Slew], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Triangle], to: [audio, "To \"device output 1\""] }
+      - { from: [sh, Sample & hold], to: [scope, Ch 1] }
+      - { from: [gl, Slew], to: [scope, Ch 2] }
+    notes:
+      - { after: clk, text: "Шаг 1 — скорость такта.", targets: [{ module: clk, param: Frequency }] }
+      - { after: gl, text: "Шаги 2 и 3 — ручки второго Process.", targets: [{ module: gl, param: Slew }, { module: gl, param: Gate }, { module: gl, output: Glide }] }
+    faq:
+      - q: На Slew 2000 мелодия стала одной тянущейся нотой. Почему?
+        a: Такт приходит чаще, чем выход успевает дойти до новой ступени. Нота всё время только начинает двигаться к цели. Уменьши Slew.
+      - q: Я нажал Gate, а Slew не сглаживает.
+        a: Это ожидаемо. Slew сглаживает, пока гейт низкий. На высоком гейте он повторяет вход. Для сглаживания на высоком гейте возьми Glide.
+      - q: Как увидеть ступени и сглаженную линию вместе?
+        a: "Смотри на Scope: канал 1 — ступени после первого Process, канал 2 — выход Slew второго. Сравни, как ступени превращаются в наклоны."
+
+  - id: b9
+    type: practice
+    preset: practice
+    title: Практика — случайная мелодия
+    task: |
+      Собери случайную мелодию с портаменто на верстаке между маркерами.
+      1. **Noise**, **LFO**, два **Process**, **Rescale**, **VCO**.
+      2. `White noise` → `Voltage` у первого Process. `Square` у LFO → `Gate` у первого Process. **Frequency** у LFO — от 1 до 8 Гц.
+      3. `Sample & hold` первого → `Voltage` второго Process.
+      4. `Slew` второго → `Signal` у Rescale, `Signal` → `1V/octave pitch` у VCO.
+      5. **Slew** у второго Process — от 20 до 400 мс/В, **Gain** у Rescale — от 5 до 30 %.
+      6. `Triangle` у VCO → `To "device output 1"` у Audio. Нажми «Проверить».
+    given: [audio]
+    check: p4-05-sample-hold-slew
+    hints:
+      "cable:1":
+        - Нечего запоминать. Что у нас случайное?
+        - Какой выход Noise даёт белый шум и какой вход у Process принимает сигнал?
+        - "`White noise` у Noise → вход `Voltage` у первого Process."
+      "cable:2":
+        - Выборка не знает, когда брать значение. Что подаёт такт?
+        - Какой выход LFO даёт прямоугольник?
+        - "`Square` у LFO → вход `Gate` у первого Process."
+      "cable:3":
+        - Слайду нечего сглаживать.
+        - Куда идут ступени первого Process?
+        - "`Sample & hold` первого Process → вход `Voltage` второго Process."
+      "cable:4":
+        - Сглаженное значение не уходит дальше.
+        - Какой выход второго Process сглаживает?
+        - "`Slew` второго Process → вход `Signal` у Rescale."
+      "cable:5":
+        - Высота не меняется.
+        - Какой вход у VCO принимает высоту?
+        - "`Signal` у Rescale → вход `1V/octave pitch` у VCO."
+      "cable:6":
+        - Звука нет.
+        - Какой выход VCO в этом уроке идёт в Audio?
+        - "`Triangle` у VCO → вход `To \"device output 1\"` у Audio этого ряда."
+      "param:1":
+        - Слайд почти не слышен или слишком вязкий.
+        - Посмотри на Slew у второго Process.
+        - Поставь Slew у второго Process между 20 и 400 мс/В.
+      "param:2":
+        - Такт слишком медленный или слишком быстрый.
+        - Посмотри на Frequency у LFO.
+        - Поставь Frequency у LFO между 1 и 8 Гц.
+      "param:3":
+        - Шум даёт ±5 В, это ±5 октав.
+        - Посмотри на Gain у Rescale.
+        - Поставь Gain у Rescale между 5 и 30 %.
+      "probe:1":
+        - Выборка не меняется.
+        - Идёт ли такт в Gate первого Process, а шум в Voltage?
+        - Проверь кабели `Square` → `Gate` и `White noise` → `Voltage` у первого Process.
+      "probe:2":
+        - Слайд не движется.
+        - Идёт ли выход Sample & hold первого Process во второй?
+        - Соедини `Sample & hold` первого с `Voltage` второго Process и проверь ещё раз.
+    faq:
+      - q: Какой из двух Process какой?
+        a: Первый берёт снимки шума, второй сглаживает. Они одинаковые, различаются кабелями. Первый Process получает шум и такт, второй — ступени.
+      - q: Нужен ли SHASR для проверки?
+        a: Нет, проверка его не смотрит. Подключи его после проверки и послушай, как регистр запоминает последние ноты.
+      - q: Звук есть, но нота одна и не меняется.
+        a: Проверь, идёт ли такт в Gate первого Process и не слишком ли низкая Frequency у LFO. Gain у Rescale по умолчанию 0, подними его до 5 % и выше.
+
+  - id: b10
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      Мелодия превратилась в одну плывущую ноту. Ступеней нет, высота тянется между значениями.
+      Найди одну неверную настройку и исправь её. Кабели трогать не нужно.
+    modules:
+      - { ref: noise, plugin: Fundamental, slug: Noise }
+      - { ref: clk, plugin: Fundamental, slug: LFO, params: { Frequency: { display: "4" }, Offset: Unipolar } }
+      - { ref: sh, plugin: Fundamental, slug: Process }
+      - { ref: gl, plugin: Fundamental, slug: Process, params: { Slew: { display: "100" } } }
+      - { ref: res, plugin: Fundamental, slug: Rescale, params: { Gain: { display: "20" } } }
+      - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+    cables:
+      - { from: [noise, White noise], to: [sh, Voltage] }
+      - { from: [clk, Square], to: [sh, Gate] }
+      - { from: [sh, Sample & hold], to: [gl, Voltage] }
+      - { from: [gl, Slew], to: [res, Signal] }
+      - { from: [res, Signal], to: [vco, 1V/octave pitch] }
+      - { from: [vco, Triangle], to: [audio, "To \"device output 1\""] }
+    break: { set_param: { module: gl, name: Slew, value: { display: "10000" } } }
+    check: { kind: fixed, expect_cable: [sh, Sample & hold, gl, Voltage], expect_param: { module: gl, name: Slew, display_max: 400 } }
+    hints:
+      fixed:
+        - Нота не успевает дойти до цели. Что растягивает переход?
+        - Посмотри на Slew у второго Process.
+        - Поставь Slew у второго Process не выше 400 мс/В.
+    faq:
+      - q: Почему на 5000 мс/В высота плывёт вечно?
+        a: На максимуме скачок на один вольт занимает 10 секунд, а такт приходит чаще. Выход всё время догоняет и не успевает остановиться.
+      - q: Какое значение Slew подходит?
+        a: Для случайной мелодии с тактом 1–8 Гц годится от 20 до 400 мс/В. Чем чаще такт, тем меньше должен быть Slew.
+
+  - id: b11
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Выборка-хранение берёт снимок по гейту и держит его. Шум превращается в ступени.
+      - Слайд сглаживает скачки, скорость в мс/В. Glide работает только на высоком гейте.
+      - SHASR — регистр сдвига на восемь строк. Пустые входы берут значения у строки выше.
+      - Слишком большой Slew не даёт нотам дойти до цели.
+      Сохрани патч: в части 5 к нему добавится квантизатор.
+      **Источники:** Sound On Sound, «Synth Secrets», статья про S&H; Make Noise, руководство MATHS; Loopop, «Modular Analog RAM»; руководство VCV Rack Free.
+    questions:
+      - q: Чем Slew отличается от Glide и что значит мс/В?
+        options:
+          - { text: "Slew сглаживает на низком гейте, Glide на высоком", correct: true, why: "Логика гейта у выходов обратная. Единица мс/В — время на изменение в 1 В." }
+          - { text: "Slew быстрее Glide, а мс/В — миллисекунды в секунду", why: "Скорость задаёт ручка Slew у обоих. Единица означает время на вольт." }
+          - { text: "Это одно и то же", why: "Выходы различаются тем, при каком гейте они сглаживают." }
+    next: |
+      # Дальше: 4.6
+      **Кроссфейд и сравнение.** Модуляция начнёт переключать и смешивать сигналы, а не только двигать ручки.
+    faq:
+      - q: Что повторить, если не слышно сглаживания?
+        a: Блок про слайд и глайд. Проверь, какой выход идёт в Rescale и что гейт у второго Process подходит для этого выхода.
+      - q: Где применять регистр сдвига?
+        a: Когда нашёл случайную мелодию и хочешь её сохранить. Останови такт, и последние значения останутся на выходах SHASR.

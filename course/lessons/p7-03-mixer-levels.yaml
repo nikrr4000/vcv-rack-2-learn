@@ -1,0 +1,383 @@
+id: p7-03-mixer-levels
+num: "7.3"
+part: 7
+title: Микшер, уровни, перегруз
+goal: Свести три партии в одну линию так, чтобы они звучали вместе и не перегружали выход, и поставить индикатор перегруза на Compare.
+builds: В части 9 из нескольких партий нужно собрать трек, и без запаса по уровню сумма ударных, баса и лида забьёт выход.
+minutes: 35
+requires: [p3-03-vca]
+glossary: [сведение, запас по уровню, перегруз, постановка уровней, компаратор]
+sources: [vcv-voltage-standards, sos-09, dewald-gain, pc-line-level, ne-mixers]
+
+blocks:
+  - id: b1
+    type: cover
+    preset: cover
+    title: Микшер, уровни, перегруз
+    page: |
+      # 7.3 Микшер, уровни, перегруз
+      **Ты научишься:** складывать партии в одну линию, держать [[запас по уровню]] и видеть [[перегруз]] на индикаторе.
+      **Ты соберёшь:** три VCO в VCMixer, а рядом Compare с Scope, которые показывают, когда сумма выходит за предел.
+      **Понадобится:** 35 минут и урок 3.3 про VCA. Перед первым звуком убавь громкость: сумма быстро становится слишком громкой.
+    figure: { template: mixer, channels: [{ label: "партия 1", level: 5 }, { label: "партия 2", level: 5 }, { label: "партия 3", level: 5 }, { label: "сумма", level: 15 }], headroom: 10, caption: "Три партии по ±5 В в сумме могут дать до ±15 В. Красный столбик вышел за предел." }
+    faq:
+      - q: Почему нельзя просто поставить все партии на максимум?
+        a: Партии складываются. Три громких звука дают сумму громче любого из них, и она упирается в предел Audio. Тогда пики обрезаются, и звук искажается.
+      - q: Нужен ли мне этот урок, если я играю одной партией?
+        a: Для одной партии почти нет. Но в части 9 ты сведёшь бас, барабаны и лид, и уровни придётся ставить заранее, а не на слух в последний момент.
+
+  - id: b2
+    type: quiz
+    preset: quiz
+    title: Что ты уже знаешь
+    lead: |
+      # Сначала угадай
+      Три вопроса про сумму и предел. Ответы подскажут, на что обратить внимание.
+    questions:
+      - q: Три партии по ±5 В сложены в Mix на 100 %. Что будет?
+        free: true
+        options:
+          - { text: "Сумма может дорасти до ±15 В и выйти за предел", correct: true, why: "Напряжения складываются. Если пики партий совпадут, сумма выйдет за ±10 В, и Audio обрежет их." }
+          - { text: "Сумма останется ±5 В, микшер усредняет", why: "Mixer складывает сигналы без усреднения. Общая громкость растёт." }
+          - { text: "Громкость вырастет втрое, Audio справится", why: "Audio обрезает всё выше предела и добавляет искажение." }
+      - q: Зачем нужен запас по уровню?
+        options:
+          - { text: "Чтобы пики суммы не упирались в предел", correct: true, why: "Пока пики внутри предела, обрезания нет. Запас — расстояние до предела." }
+          - { text: "Чтобы звук был тише", why: "Запас — не тишина. Это расстояние между пиками и пределом." }
+          - { text: "Чтобы микшер работал быстрее", why: "Скорость работы от уровня не зависит." }
+      - q: Какой выход Compare поднимается, когда сигнал превышает порог?
+        options:
+          - { text: "Clip gate", correct: true, why: "Clip gate даёт 10 В, пока A выходит за диапазон от −B до B. Это индикатор перегруза." }
+          - { text: "A>B, потому что A всегда больше", why: "A>B сравнивает два сигнала, а нужен порог на одном сигнале." }
+          - { text: "Maximum", why: "Maximum отдаёт большее из двух значений, а не гейт перегруза." }
+
+  - id: b3
+    type: story
+    preset: story
+    title: Вольты складываются
+    page: |
+      # Вольты складываются
+      Звук в Rack идёт в вольтах. Стандарт для аудио — ±5 В, размах 10 В.
+      [[сведение|Сведение]] — это сложение партий с подгонкой громкостей. Напряжения складываются буквально: три партии по ±5 В могут дать ±15 В.
+      Audio на выходе обрежет сигнал около ±10 В. Это и есть [[перегруз]]: пики срезаны, звук хрипит.
+      Внутри Rack числа не обрезаются, поэтому искажение прячется до выхода. Уровни ставят заранее.
+    figure: { template: voltages, ranges: [{ label: "партия", min: -5, max: 5 }, { label: "предел Audio", min: -10, max: 10 }, { label: "сумма трёх", min: -15, max: 15 }], caption: "Одна партия укладывается в предел. Сумма трёх — нет." }
+    simpler: Три человека кричат в одно окно. Каждый громкий в меру, но вместе — оглушают. Чтобы окно не лопнуло, каждого просят говорить тише.
+    faq:
+      - q: Почему Rack не показывает перегруз сам?
+        a: Внутри патча числа бесконечно растут без обрезания. Резкий предел появляется только на выходе в Audio. Поэтому индикатор ставят вручную, как в этом уроке.
+      - q: Что значит «около ±10 В»?
+        a: Audio срезает сигнал на ±10 В, это его предел. Номинал звука ±5 В, так что до предела остаётся запас в 5 В, или около 6 dB.
+      - q: Все ли партии складываются в ±15 В?
+        a: Только если пики совпадают. Разные звуки пикуют в разное время, но совпадения случаются, и к ним надо быть готовым.
+
+  - id: b4
+    type: story
+    preset: story
+    title: Запас и правило трети
+    page: |
+      # Запас и правило трети
+      [[запас по уровню]] — расстояние от пиков суммы до предела. Номинал ±5 В и предел ±10 В дают запас около 6 dB.
+      Децибел измеряет отношение: −6 dB — вдвое тише по размаху, −10 dB — примерно втрое.
+      Правило курса: при N партиях ставь каждой около 1/N. Три партии — каждая около −10 dB, и сумма остаётся около ±5 В.
+      Выбор уровней на каждой ступени цепочки называют [[постановка уровней|постановкой уровней]].
+    figure: { template: mixer, channels: [{ label: "партия 1", level: 1.6 }, { label: "партия 2", level: 1.6 }, { label: "партия 3", level: 1.6 }, { label: "сумма", level: 4.7 }], headroom: 10, caption: "Те же три партии по −10 dB. Сумма умещается в номинал." }
+    simpler: Ведро с водой переливается через край. Если налить в три стакана по трети ведра, а потом слить вместе, вода как раз заполнит ведро и не польётся.
+    faq:
+      - q: Что такое децибел простыми словами?
+        a: "Это способ сравнить два уровня. Каждые −6 dB уровень падает вдвое, каждые −20 dB — в десять раз. Для нас важно: −10 dB около трети."
+      - q: Почему не ставить каждую партию на максимум?
+        a: В железном модуляре советуют выводить сигнал горячее, чтобы заглушить шум. В цифровом Rack шумового пола нет, а запас нужен, поэтому лучше держать пики ниже предела.
+      - q: Почему правило трети не точное?
+        a: Пики разных партий совпадают редко. Поэтому ориентир «около −10 dB» работает для трёх партий, а точный уровень подбирают по Scope и на слух.
+
+  - id: b5
+    type: live
+    preset: live
+    title: Сумма в Mixer
+    page: |
+      # Сумма в Mixer
+      Три VCO играют аккорд. Они идут в **Mixer** без ослабления, а сумма на Compare и Scope.
+      **Ch 1** на Scope — сумма, **Ch 2** — индикатор перегруза. Убавь громкость и слушай.
+      Сумма хрипит: Clip gate поднимается.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -8 } } }
+      - { ref: vco3, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: mixer, plugin: Fundamental, slug: Mixer, params: { Level: { display: "100" } } }
+      - { ref: cmp, plugin: Fundamental, slug: Compare, params: { B offset: { display: "5" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [mixer, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [mixer, Channel 2] }
+      - { from: [vco3, Sawtooth], to: [mixer, Channel 3] }
+      - { from: [mixer, Mix], to: [cmp, A] }
+      - { from: [cmp, Clip gate], to: [scope, Ch 2] }
+      - { from: [mixer, Mix], to: [scope, Ch 1] }
+      - { from: [mixer, Mix], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mixer, text: "**Level** — единственная ручка. Она двигает всю сумму сразу.", targets: [{ module: mixer, param: Level }] }
+      - { after: cmp, text: "**Clip gate** горит, когда сумма выходит за порог.", targets: [{ module: cmp, output: Clip gate }] }
+    faq:
+      - q: Почему у Mixer одна ручка, а не по ручке на канал?
+        a: Fundamental Mixer только складывает входы, раздельных уровней у него нет. Для баланса партий нужен VCMixer, его покажет следующий блок.
+      - q: Звук хрипит и щёлкает. Это сломано?
+        a: Нет, это и есть перегруз. Сумма вышла за предел, Audio обрезал пики. Подними Level к 33 %, и хрип пропадёт.
+      - q: Что такое Level 33 %?
+        a: Это общий уровень суммы в процентах. Три партии на 33 % по размаху примерно равны одной на 100 %.
+
+  - id: b6
+    type: live
+    preset: live
+    title: Уровни в VCMixer
+    page: |
+      # Уровни в VCMixer
+      Теперь те же три партии идут через **VCMixer**. У каждого канала своя ручка.
+      Все три стоят на −10 dB. Сумма умещается в номинал, Clip gate поднимается редко.
+      Подними **Channel 1 level** до +6 dB: одна партия съедает запас.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -8 } } }
+      - { ref: vco3, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: mix, plugin: Fundamental, slug: VCMixer, params: { Channel 1 level: { raw: 0.316228 }, Channel 2 level: { raw: 0.316228 }, Channel 3 level: { raw: 0.316228 } } }
+      - { ref: cmp, plugin: Fundamental, slug: Compare, params: { B offset: { display: "5" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [mix, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [mix, Channel 2] }
+      - { from: [vco3, Sawtooth], to: [mix, Channel 3] }
+      - { from: [mix, Mix], to: [cmp, A] }
+      - { from: [cmp, Clip gate], to: [scope, Ch 2] }
+      - { from: [mix, Mix], to: [scope, Ch 1] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mix, text: "**Channel 1 level** — громкость первой партии. Подними её к +6 dB.", targets: [{ module: mix, param: Channel 1 level }] }
+      - { after: cmp, text: "**B offset** — порог в вольтах. Здесь 5 В.", targets: [{ module: cmp, param: B offset }] }
+    faq:
+      - q: Почему на дисплее Channel 1 level стоит −10 dB, а не процент?
+        a: "У VCMixer усиление показано в децибелах: 0 dB значит «без изменений», −6 dB — вдвое тише. Минимум — минус бесконечность, то есть тишина."
+      - q: Чем −10 dB отличается от 33 % у Mixer?
+        a: Результат почти одинаков, но у VCMixer уровень задан для каждого канала отдельно. Можно убавить только одну партию, не трогая остальные.
+      - q: Зачем у VCMixer ещё и ручка Mix level?
+        a: Это общий уровень суммы. Её держат на 0 dB. Если поднять выше, запас уменьшится, поэтому лучше убавлять каналы.
+
+  - id: b7
+    type: anatomy
+    preset: anatomy
+    title: Панель VCMixer
+    page: |
+      # Панель VCMixer
+      Четыре канала, одна сумма. Обойдём главные органы управления.
+    module: { ref: mix, plugin: Fundamental, slug: VCMixer }
+    notes:
+      - { text: "**Channel 1**…**Channel 4** — входы партий.", targets: [{ module: mix, input: Channel 1 }, { module: mix, input: Channel 4 }] }
+      - { text: "**Channel 1 level** и остальные — ручки каждого канала. От `-inf` до +6 dB, 0 dB без изменений.", targets: [{ module: mix, param: Channel 1 level }, { module: mix, param: Channel 4 level }] }
+      - { text: "**Mix level** — общий уровень суммы. От `-inf` до +6 dB, держи 0 dB.", targets: [{ module: mix, param: Mix level }] }
+      - { text: "Выход **Mix** — сумма всех каналов после их ручек.", targets: [{ module: mix, output: Mix }] }
+      - { text: "Выходы **Channel 1**…**Channel 4** отдают каждую партию после её ручки.", targets: [{ module: mix, output: Channel 1 }, { module: mix, output: Channel 4 }] }
+      - { text: "**Mix CV** и **Channel 1 CV** управляют уровнями напряжением.", targets: [{ module: mix, input: Mix CV }, { module: mix, input: Channel 1 CV }] }
+    faq:
+      - q: Как читать dB на ручке Channel level?
+        a: Так же, как на микшерном пульте. 0 dB — партия идёт без изменений, −6 dB — вдвое тише по размаху, −10 dB — примерно втрое. Выше 0 dB усиливает.
+      - q: Что делают входы CV у VCMixer?
+        a: Они двигают уровень канала напряжением, как ручка. Например, огибающая может открывать партию по ходу трека. В этом уроке они не нужны.
+      - q: Нужно ли использовать все четыре канала?
+        a: Нет. Незанятые каналы молчат и не влияют на сумму. Для трёх партий хватит трёх.
+
+  - id: b8
+    type: anatomy
+    preset: anatomy
+    title: Compare как индикатор
+    page: |
+      # Compare как индикатор
+      С Compare ты уже работал в уроке 4.6. Здесь он следит за порогом.
+    module: { ref: cmp, plugin: Fundamental, slug: Compare }
+    notes:
+      - { text: "Вход **A** — то, что проверяем. Сюда идёт сумма.", targets: [{ module: cmp, input: A }] }
+      - { text: "**B offset** — порог в вольтах. Пока B пуст, ручка задаёт B прямо.", targets: [{ module: cmp, param: B offset }] }
+      - { text: "**Clip gate** — гейт 10 В, пока A выходит за диапазон от −B до B. Это [[компаратор|индикатор]] перегруза.", targets: [{ module: cmp, output: Clip gate }] }
+    later:
+      - { what: Выходы Maximum, Minimum, Limit, Limit gate, A<B, lesson: "4.6" }
+    faq:
+      - q: Зачем ставить порог 5 В, а не 10 В?
+        a: При 5 В индикатор срабатывает при выходе за номинал. При 10 В он сообщит только о настоящем пределе Audio. Для запаса удобнее 5 В.
+      - q: Что значит диапазон от −B до B?
+        a: Гейт поднимается, если сигнал выше B или ниже −B. Так порог работает для обеих полуволн.
+      - q: Меняет ли Compare сам звук?
+        a: Нет. Он только измеряет. Звук идёт мимо него, а Compare выдаёт отдельный гейт.
+
+  - id: b9
+    type: try
+    preset: try
+    title: Покрути сам
+    steps:
+      - do: "Опусти **Channel 1 level**, **Channel 2 level**, **Channel 3 level** до −10 dB."
+        see: "Clip gate на Scope перестаёт гореть, сумма умещается в номинал."
+      - do: "Подними **Channel 1 level** к +6 dB."
+        see: "Clip gate снова поднимается, на Ch 1 растёт пик. Опусти ручку, пока гейт не погаснет."
+      - do: "Двигай **B offset** с 5 В на 10 В."
+        see: "При 5 В индикатор сообщает «вышел за номинал», при 10 В — «упёрся в предел Audio»."
+      - do: "Подними **Mix level** выше 0 dB, затем верни."
+        see: "Выше нуля запас уменьшается. Верни 0 dB."
+      - do: "Уравняй три партии на слух и по Scope."
+        see: "Вклад каждой на Ch 1 сопоставим, ни одна не заглушает остальные."
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -8 } } }
+      - { ref: vco3, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: mix, plugin: Fundamental, slug: VCMixer }
+      - { ref: cmp, plugin: Fundamental, slug: Compare, params: { B offset: { display: "5" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [mix, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [mix, Channel 2] }
+      - { from: [vco3, Sawtooth], to: [mix, Channel 3] }
+      - { from: [mix, Mix], to: [cmp, A] }
+      - { from: [cmp, Clip gate], to: [scope, Ch 2] }
+      - { from: [mix, Mix], to: [scope, Ch 1] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mix, text: "Шаги 1, 2 и 4 — ручки этого микшера.", targets: [{ module: mix, param: Channel 1 level }, { module: mix, param: Mix level }] }
+    faq:
+      - q: Я опустил уровни, а Clip gate всё равно горит. Почему?
+        a: Возможно, один из каналов остался выше −10 dB, или Mix level выше 0 dB. Проверь все четыре ручки и Mix level.
+      - q: Что значит `-inf` на ручке?
+        a: Минус бесконечность — полная тишина канала. Это нижний край ручки.
+      - q: Где грань между громко и перегрузом?
+        a: Перегруз — когда Clip gate при пороге 10 В горит, или звук хрипит. Всё, что ниже, остаётся чистым, но громкость зависит от Level у Audio.
+
+  - id: b10
+    type: practice
+    preset: practice
+    title: Практика — три партии без перегруза
+    task: |
+      Собери три партии в VCMixer с индикатором перегруза.
+      1. На верстак: три **VCO**, **VCMixer**, **Compare** и **Scope**.
+      2. Выход `Sawtooth` каждого VCO → `Channel 1`, `Channel 2`, `Channel 3` у VCMixer.
+      3. Выход `Mix` → вход `A` у Compare и вход 1 у Audio.
+      4. Выход `Clip gate` → `Ch 2` у Scope.
+      5. **Channel 1 level**…**Channel 3 level** от −20 до −9 dB, **Mix level** не выше 0 dB, **B offset** не ниже 4,5 В. Нажми «Проверить».
+    given: [audio]
+    check: p7-03-mixer-levels
+    hints:
+      "cable:1":
+        - Первая партия не доходит до микшера.
+        - Какой выход VCO даёт пилу и в какой вход VCMixer её подать?
+        - "`Sawtooth` первого VCO → `Channel 1` у VCMixer."
+      "cable:2":
+        - Второй партии не слышно.
+        - Куда идёт кабель от второго VCO?
+        - "`Sawtooth` второго VCO → `Channel 2` у VCMixer."
+      "cable:3":
+        - Третьей партии не слышно.
+        - Куда идёт кабель от третьего VCO?
+        - "`Sawtooth` третьего VCO → `Channel 3` у VCMixer."
+      "cable:4":
+        - Микшер собран, а в Audio пусто.
+        - Откуда брать сумму?
+        - "Выход `Mix` у VCMixer → вход 1 у Audio."
+      "cable:5":
+        - Индикатор ничего не измеряет.
+        - Что мы сравниваем с порогом, и в какой вход Compare это подать?
+        - "Выход `Mix` у VCMixer → вход `A` у Compare."
+      "cable:6":
+        - Индикатор не виден.
+        - Какой выход Compare показывает перегруз гейтом?
+        - "Выход `Clip gate` у Compare → вход `Ch 2` у Scope."
+      "param:1":
+        - Первый канал слишком громкий или не слышен.
+        - Три партии складываются. Какой уровень получается по правилу трети?
+        - Поставь Channel 1 level около −10 dB, в пределах от −20 до −9.
+      "param:2":
+        - Второй канал слишком громкий или не слышен.
+        - Три партии складываются, каждой нужен запас.
+        - Поставь Channel 2 level около −10 dB, в пределах от −20 до −9.
+      "param:3":
+        - Третий канал слишком громкий или не слышен.
+        - Три партии складываются, каждой нужен запас.
+        - Поставь Channel 3 level около −10 dB, в пределах от −20 до −9.
+      "param:4":
+        - Микшер усиливает сумму.
+        - Что стоит на Mix level?
+        - Поставь Mix level на 0 dB или ниже.
+      "param:5":
+        - Индикатор срабатывает на нормальном звуке.
+        - Сколько вольт составляет номинал?
+        - Поставь B offset между 4,5 и 10 В.
+      "probe:1":
+        - Сигнала на Mix почти нет.
+        - Все ли три кабеля на месте, и не стоят ли уровни на минус бесконечности?
+        - Проверь кабели Sawtooth в Channel 1–3 и подними уровни выше −20 dB.
+      "probe:2":
+        - Clip gate всё время высокий.
+        - Сумма постоянно выше порога.
+        - Убавь уровни каналов или Mix level, пока гейт не будет опускаться.
+    faq:
+      - q: Почему проверка не пускает уровни выше −9 dB?
+        a: Три пилы по −9 dB дают сумму около 5 В. Выше риск перегруза. Правило трети — это около −10 dB на канал.
+      - q: Clip gate всё время горит, хотя я всё сделал по условиям.
+        a: Возможно, B offset слишком мал или уровни у верхней границы. Подними B offset до 5 В и убавь каналы к −12 dB.
+      - q: Нужно ли подключать Scope?
+        a: Для проверки нужен кабель Clip gate в Scope Ch 2. Он же показывает, когда гейт горит.
+
+  - id: b11
+    type: debug
+    preset: debug
+    title: Найди поломку
+    task: |
+      В Audio слышны искажения, Clip gate на Scope поднимается снова и снова.
+      Найди одну ошибку и исправь её.
+    modules:
+      - { ref: vco1, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -12 } } }
+      - { ref: vco2, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -8 } } }
+      - { ref: vco3, plugin: Fundamental, slug: VCO, params: { Frequency: { raw: -5 } } }
+      - { ref: mix, plugin: Fundamental, slug: VCMixer, params: { Channel 1 level: { raw: 0.316228 }, Channel 2 level: { raw: 0.316228 }, Channel 3 level: { raw: 0.316228 } } }
+      - { ref: cmp, plugin: Fundamental, slug: Compare, params: { B offset: { display: "5" } } }
+      - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "500" } } }
+    cables:
+      - { from: [vco1, Sawtooth], to: [mix, Channel 1] }
+      - { from: [vco2, Sawtooth], to: [mix, Channel 2] }
+      - { from: [vco3, Sawtooth], to: [mix, Channel 3] }
+      - { from: [mix, Mix], to: [cmp, A] }
+      - { from: [cmp, Clip gate], to: [scope, Ch 2] }
+      - { from: [mix, Mix], to: [scope, Ch 1] }
+      - { from: [mix, Mix], to: [audio, "To \"device output 1\""] }
+    notes:
+      - { after: mix, text: "Здесь что-то не так.", targets: [{ module: mix, param: Channel 1 level }] }
+    break: { set_param: { module: mix, name: Channel 1 level, value: { raw: 1.414214 } } }
+    check: { kind: fixed, expect_param: { module: mix, name: Channel 1 level, display_max: -9 } }
+    hints:
+      fixed:
+        - Одна партия громче остальных.
+        - Сравни ручки уровней у всех трёх каналов.
+        - Верни Channel 1 level к −10 dB, как у двух других.
+    faq:
+      - q: Почему одна громкая партия портит всю сумму?
+        a: Её пик складывается с пиками двух других, и сумма выходит за порог. Остальные каналы на месте, а запас съеден одним.
+
+  - id: b12
+    type: recap
+    preset: recap
+    title: Итог
+    page: |
+      # Итог
+      - Напряжения партий складываются, поэтому сумма бывает громче каждой партии.
+      - Номинал звука ±5 В, предел Audio около ±10 В. Между ними запас по уровню.
+      - Правило курса: при трёх партиях каждой около −10 dB, при N партиях — около 1/N.
+      - **VCMixer** задаёт уровень каждого канала. **Compare** с выходом **Clip gate** показывает перегруз.
+      Сохрани патч как `vcv-7.3.vcv`.
+      **Источники:** VCV Rack Manual, раздел Voltage Standards; Sound On Sound, «An Introduction To VCAs» (ч. 9); Gahlord Dewald, «Modular live performance: controlling volume»; Perfect Circuit, «Eurorack and Line Level Signals»; Noise Engineering, «Getting Started: Mixers».
+    questions:
+      - q: Почему сумма трёх партий может быть громче каждой и как это предотвратить?
+        options:
+          - { text: "Напряжения складываются, поэтому убавь каждую партию", correct: true, why: "Сумма растёт по размаху. Уровни ставят заранее, оставляя запас до предела." }
+          - { text: "Микшер сам усредняет громкость", why: "Mixer и VCMixer складывают сигналы. Усреднения нет." }
+          - { text: "Нужно поднять Mix level выше 0 dB", why: "Это уменьшит запас ещё сильнее. Лучше убавлять каналы." }
+    next: |
+      # Дальше: 7.4
+      **Стерео.** Ты разведёшь партии влево и вправо и сделаешь картинку шире.
+    faq:
+      - q: Что повторить, если Clip gate горит всё время?
+        a: "Убавь уровни каналов к −10 dB и проверь Mix level: он не выше 0 dB. Затем посмотри B offset: порог должен быть около 5 В."
+      - q: Где этот навык пригодится дальше?
+        a: "В части 9 ты сводишь бас, барабаны и лид. Там те же правила: запас, раздельные уровни и индикатор."
