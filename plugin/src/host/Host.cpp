@@ -269,10 +269,9 @@ void AtlasHost::doOpenLesson(const std::string& id) {
 	if (audio) {
 		for (int64_t mid : APP->engine->getModuleIds()) {
 			engine::Module* m = APP->engine->getModule(mid);
-			if (m && m->model && m->model->plugin && m->model->plugin->slug == "Core" && m->model->slug == "AudioInterface2") {
+			// Every Audio module of the lesson (the demo bus and the practice rows) gets the learner's device.
+			if (m && m->model && m->model->plugin && m->model->plugin->slug == "Core" && m->model->slug == "AudioInterface2")
 				m->dataFromJson(audio);
-				break;
-			}
 		}
 		json_decref(audio);
 	}
@@ -388,13 +387,12 @@ void AtlasHost::applyMixer() {
 		return;
 	// Only the active block sounds: its channel at its level, every other channel at 0.
 	for (size_t i = 0; i < L->blocks.size(); i++) {
-		const Block& b = L->blocks[i];
-		if (b.mixerId < 0 || b.mixerParam < 0)
-			continue;
-		engine::Module* m = APP->engine->getModule(b.mixerId);
-		if (!m || b.mixerParam >= (int) m->params.size())
-			continue;
-		APP->engine->setParamValue(m, b.mixerParam, (int) i == block ? b.level : 0.f);
+		for (const Block::Channel& c : L->blocks[i].channels) {
+			engine::Module* m = APP->engine->getModule(c.mixerId);
+			if (!m || c.param < 0 || c.param >= (int) m->params.size())
+				continue;
+			APP->engine->setParamValue(m, c.param, (int) i == block ? c.level : 0.f);
+		}
 	}
 }
 

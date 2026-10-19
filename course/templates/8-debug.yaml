@@ -1,0 +1,17 @@
+# Template A.8 `debug` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b8
+  type: debug
+  preset: debug
+  title: Найди поломку
+  task: |
+    Этот голос молчит. Найди одну ошибку и исправь её.
+  modules: [ … the working voice … ]
+  cables: [ … ]
+  break: { remove_cable: [env, Envelope, vca, CV] }
+  check: { kind: fixed, expect_cable: [env, Envelope, vca, CV] }
+  hints:
+    fixed:
+      - Нажимаешь Push — что должно открыть звук?
+      - Проследи, куда идёт выход ADSR.
+      - Соедини Envelope у ADSR с CV у VCA.
+  faq: [ … ]

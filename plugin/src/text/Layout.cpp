@@ -102,8 +102,8 @@ std::vector<Atom> atomize(const Block& b, Measurer& m, const TextStyle& st) {
 	for (const Span& sp : b.spans) {
 		FontId f = b.kind == BLOCK_HEADING ? F_HEADING : fontFor(sp.style);
 		float size = b.kind == BLOCK_HEADING ? st.headingSize : sp.style == STYLE_MONO ? st.monoSize : st.bodySize;
-		if (sp.style == STYLE_MONO && b.kind != BLOCK_HEADING) {
-			// A value is never broken across lines.
+		if (sp.style == STYLE_MONO && b.kind != BLOCK_HEADING && utf8Length(sp.text) <= 12) {
+			// A short value («440 Гц») is never broken across lines; long names may break at spaces.
 			addText(sp.text, f, size, sp.term);
 			continue;
 		}

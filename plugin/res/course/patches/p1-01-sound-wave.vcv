@@ -1,0 +1,836 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 101001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "",
+    "item": "",
+    "state": {
+     "layoutHash": "23039ea371d9",
+     "blockIndex": 0
+    }
+   }
+  },
+  {
+   "id": 101002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101003,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    48,
+    0
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b1",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101004,
+   "plugin": "VCVRackMcpServer",
+   "model": "RackMcpServer",
+   "version": "2.1.1",
+   "params": [
+    {
+     "value": 2600,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 1
+    }
+   ],
+   "pos": [
+    65,
+    0
+   ]
+  },
+  {
+   "id": 101005,
+   "plugin": "Fundamental",
+   "model": "VCMixer",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 1
+    },
+    {
+     "value": 0,
+     "id": 2
+    },
+    {
+     "value": 0,
+     "id": 3
+    },
+    {
+     "value": 0,
+     "id": 4
+    }
+   ],
+   "pos": [
+    72,
+    0
+   ]
+  },
+  {
+   "id": 101006,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    82,
+    0
+   ]
+  },
+  {
+   "id": 101009,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b2",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101010,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    13,
+    1
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b2",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101011,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b3",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    2
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101013,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b4",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    3
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101015,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    4
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b5",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101016,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    21,
+    4
+   ]
+  },
+  {
+   "id": 101017,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    31,
+    4
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b5",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101018,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 6.643856,
+     "id": 4
+    },
+    {
+     "value": 0,
+     "id": 7
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    38,
+    4
+   ]
+  },
+  {
+   "id": 101019,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    52,
+    4
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b5",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 101020,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    61,
+    4
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b5",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 101024,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    5
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b6",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101025,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [],
+   "pos": [
+    17,
+    5
+   ]
+  },
+  {
+   "id": 101026,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    31,
+    5
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b6",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101027,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    38,
+    5
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b6",
+    "item": "note-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 101028,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    45,
+    5
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b6",
+    "item": "note-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 101029,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    52,
+    5
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b6",
+    "item": "note-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 101030,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    59,
+    5
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b6",
+    "item": "note-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 101031,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    66,
+    5
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b6",
+    "item": "note-6",
+    "state": {}
+   }
+  },
+  {
+   "id": 101032,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    6
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b7",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101033,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    15,
+    6
+   ]
+  },
+  {
+   "id": 101034,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    6
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b7",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101035,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 6.643856,
+     "id": 4
+    },
+    {
+     "value": 0,
+     "id": 7
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    32,
+    6
+   ]
+  },
+  {
+   "id": 101039,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    7
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b8",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101040,
+   "plugin": "Core",
+   "model": "AudioInterface2",
+   "version": "2.6.6",
+   "params": [
+    {
+     "value": 1,
+     "id": 0
+    }
+   ],
+   "pos": [
+    15,
+    7
+   ]
+  },
+  {
+   "id": 101041,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    21,
+    7
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b8",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 101042,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    64,
+    7
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b8",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 101043,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    8
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b9",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101044,
+   "plugin": "Fundamental",
+   "model": "VCO",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 0,
+     "id": 2
+    }
+   ],
+   "pos": [
+    15,
+    8
+   ]
+  },
+  {
+   "id": 101045,
+   "plugin": "Fundamental",
+   "model": "Scope",
+   "version": "2.6.4",
+   "params": [
+    {
+     "value": 6.643856,
+     "id": 4
+    },
+    {
+     "value": 1,
+     "id": 7
+    },
+    {
+     "value": 1,
+     "id": 0
+    },
+    {
+     "value": 1,
+     "id": 2
+    }
+   ],
+   "pos": [
+    25,
+    8
+   ]
+  },
+  {
+   "id": 101049,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    39,
+    8
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b9",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101050,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    9
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b10",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101051,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    25,
+    9
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b10",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 101052,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    40,
+    9
+   ],
+   "data": {
+    "lesson": "p1-01-sound-wave",
+    "block": "b10",
+    "item": "page-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": [
+  {
+   "id": 101007,
+   "outputModuleId": 101005,
+   "outputId": 0,
+   "inputModuleId": 101006,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101008,
+   "outputModuleId": 101005,
+   "outputId": 0,
+   "inputModuleId": 101006,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101021,
+   "outputModuleId": 101016,
+   "outputId": 0,
+   "inputModuleId": 101018,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101022,
+   "outputModuleId": 101016,
+   "outputId": 2,
+   "inputModuleId": 101018,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101023,
+   "outputModuleId": 101016,
+   "outputId": 2,
+   "inputModuleId": 101005,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101036,
+   "outputModuleId": 101033,
+   "outputId": 0,
+   "inputModuleId": 101035,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101037,
+   "outputModuleId": 101033,
+   "outputId": 2,
+   "inputModuleId": 101035,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101038,
+   "outputModuleId": 101033,
+   "outputId": 2,
+   "inputModuleId": 101005,
+   "inputId": 2,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101046,
+   "outputModuleId": 101044,
+   "outputId": 0,
+   "inputModuleId": 101045,
+   "inputId": 0,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101047,
+   "outputModuleId": 101044,
+   "outputId": 2,
+   "inputModuleId": 101045,
+   "inputId": 1,
+   "color": "#C0583B"
+  },
+  {
+   "id": 101048,
+   "outputModuleId": 101044,
+   "outputId": 2,
+   "inputModuleId": 101005,
+   "inputId": 3,
+   "color": "#C0583B"
+  }
+ ]
+}

@@ -187,11 +187,14 @@ bool Pack::loadJson(json_t* r) {
 			b.y = real(bounds, "y");
 			b.w = real(bounds, "w");
 			b.h = real(bounds, "h");
-			json_t* ch = json_object_get(x, "channel");
-			if (ch && json_is_object(ch)) {
-				b.mixerId = id64(json_object_get(ch, "mixerId"));
-				b.mixerParam = integer(ch, "param", -1);
-				b.level = real(ch, "level", 1.f);
+			size_t c;
+			json_t* ch;
+			json_array_foreach(json_object_get(x, "channels"), c, ch) {
+				Block::Channel bc;
+				bc.mixerId = id64(json_object_get(ch, "mixerId"));
+				bc.param = integer(ch, "param", -1);
+				bc.level = real(ch, "level", 1.f);
+				b.channels.push_back(bc);
 			}
 			size_t m;
 			json_t* f;

@@ -1,0 +1,206 @@
+{
+ "p1-01-sound-wave/b1/page-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 516.0
+ },
+ "p1-01-sound-wave/b10/page-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 336.0
+ },
+ "p1-01-sound-wave/b10/page-2": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 156.0
+ },
+ "p1-01-sound-wave/b10/quiz-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b10/quiz-1#1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b10/quiz-1#2": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b10/quiz-1#3": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b2/page-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 156.0
+ },
+ "p1-01-sound-wave/b2/quiz-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b2/quiz-1#1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b2/quiz-1#2": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b2/quiz-1#3": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b3/page-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 336.0
+ },
+ "p1-01-sound-wave/b4/page-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 336.0
+ },
+ "p1-01-sound-wave/b5/note-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b5/note-2": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 100.0
+ },
+ "p1-01-sound-wave/b5/note-3": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b5/page-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 276.0
+ },
+ "p1-01-sound-wave/b6/note-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b6/note-2": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b6/note-3": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b6/note-4": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b6/note-5": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b6/note-6": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 100.0
+ },
+ "p1-01-sound-wave/b6/page-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 216.0
+ },
+ "p1-01-sound-wave/b7/note-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b7/task-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b8/task-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b8/task-1#1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b8/task-1#2": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b9/note-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 74.0
+ },
+ "p1-01-sound-wave/b9/task-1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b9/task-1#1": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ },
+ "p1-01-sound-wave/b9/task-1#2": {
+  "overflow": false,
+  "pages": 1,
+  "splitWords": false,
+  "width": 210.0
+ }
+}

@@ -1,0 +1,18 @@
+# Template A.4 `anatomy` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b4
+  type: anatomy
+  preset: anatomy
+  title: Панель Scope
+  page: |
+    # Панель Scope
+    Обойдём панель сверху вниз. Подписи справа указывают на каждую ручку.
+  module: { ref: scope, plugin: Fundamental, slug: Scope }
+  notes:
+    - { text: "**Time** — ширина экрана во времени. Меньше число — волна растянута.", targets: [{ module: scope, param: Time }] }
+    - { text: "**Ch 1 scale** — масштаб по вертикали для первого канала.", targets: [{ module: scope, param: "Ch 1 scale" }] }
+    - { text: "**Trigger** — порог, с которого начинается развёртка: волна перестаёт «бежать».", targets: [{ module: scope, param: Trigger position }] }
+  later:
+    - { what: "Режим X×Y", lesson: "4.6" }
+  faq:
+    - q: Волна на экране бежит. Что крутить?
+      a: Порог синхронизации (Trigger). Поставь его внутрь размаха волны — картинка остановится.

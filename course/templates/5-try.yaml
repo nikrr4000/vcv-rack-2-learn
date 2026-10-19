@@ -1,0 +1,15 @@
+# Template A.5 `try` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b5
+  type: try
+  preset: try
+  title: Покрути сам
+  steps:
+    - do: "Поверни **Frequency** у VCO вправо на четверть оборота."
+      see: "Волна на Scope сжимается, тон выше."
+    - do: "Уменьши **Time** у Scope до 2."
+      see: "Периоды становятся шире — проще разглядеть форму."
+  modules: [ … same as live … ]
+  cables: [ … ]
+  faq:
+    - q: Ничего не меняется, когда кручу Frequency.
+      a: Проверь, что крутишь ручку VCO, к которому подключён Scope, и что кабель идёт с выхода, а не на вход.

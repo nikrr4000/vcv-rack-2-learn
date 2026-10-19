@@ -1,0 +1,16 @@
+# Template A.9 `recap` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b9
+  type: recap
+  preset: recap
+  title: Итог
+  page: |
+    # Итог
+    - **Частота** — высота тона, **амплитуда** — громкость, **форма волны** — тембр.
+    - Гармоники объясняют, почему пила ярче синуса.
+    - Scope показывает напряжение во времени; Trigger останавливает картинку.
+    **Источники:** Gordon Reid, «Synth Secrets», ч. 1 (Sound On Sound); Chris Meyer, «The Basic Concepts of Synthesis».
+  next: |
+    # Дальше: 1.2
+    Напряжение — единственный язык модулей. Разберём, чем аудио отличается от CV, гейта и триггера.
+  questions: [ … 1–2 recap questions in the quiz format … ]
+  faq: [ … ]

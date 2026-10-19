@@ -68,9 +68,13 @@ struct Block {
 	std::string simpler;
 	std::string plain;  // block text for the tutor header
 	float x = 0, y = 0, w = 0, h = 0;  // the row's module bounds in rack px
-	int64_t mixerId = -1;
-	int mixerParam = -1;
-	float level = 0.f;
+	/** Demo bus channels of this block (one per bus: mono 1, stereo 2); opened only while it is active. */
+	struct Channel {
+		int64_t mixerId = -1;
+		int param = -1;
+		float level = 1.f;
+	};
+	std::vector<Channel> channels;
 };
 
 struct Lesson {

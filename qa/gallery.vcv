@@ -1,0 +1,351 @@
+{
+ "version": "2.6.6",
+ "zoom": 1,
+ "gridOffset": [
+  -1,
+  -1
+ ],
+ "modules": [
+  {
+   "id": 990001,
+   "plugin": "Atlas",
+   "model": "Navigator",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    0
+   ],
+   "data": {
+    "lesson": "",
+    "block": "",
+    "item": "",
+    "state": {}
+   }
+  },
+  {
+   "id": 990002,
+   "plugin": "Atlas",
+   "model": "Page",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    11,
+    0
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b1",
+    "item": "page-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 990003,
+   "plugin": "Atlas",
+   "model": "Note",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    36,
+    0
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b1",
+    "item": "note-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 990004,
+   "plugin": "Atlas",
+   "model": "Quiz",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    45,
+    0
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b1",
+    "item": "quiz-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 990005,
+   "plugin": "Atlas",
+   "model": "Task",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    60,
+    0
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b1",
+    "item": "task-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 990006,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    75,
+    0
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b1",
+    "item": "bench-left",
+    "state": {}
+   }
+  },
+  {
+   "id": 990007,
+   "plugin": "Atlas",
+   "model": "Bench",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    78,
+    0
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b1",
+    "item": "bench-right",
+    "state": {}
+   }
+  },
+  {
+   "id": 990008,
+   "plugin": "Atlas",
+   "model": "Tutor",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    81,
+    0
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b1",
+    "item": "",
+    "state": {}
+   }
+  },
+  {
+   "id": 990009,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    1
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b2",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 990010,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    17,
+    1
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b2",
+    "item": "figure-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 990011,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    34,
+    1
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b2",
+    "item": "figure-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 990012,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    51,
+    1
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b2",
+    "item": "figure-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 990013,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    68,
+    1
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b2",
+    "item": "figure-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 990014,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    2
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b3",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 990015,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    17,
+    2
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b3",
+    "item": "figure-2",
+    "state": {}
+   }
+  },
+  {
+   "id": 990016,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    34,
+    2
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b3",
+    "item": "figure-3",
+    "state": {}
+   }
+  },
+  {
+   "id": 990017,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    51,
+    2
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b3",
+    "item": "figure-4",
+    "state": {}
+   }
+  },
+  {
+   "id": 990018,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    68,
+    2
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b3",
+    "item": "figure-5",
+    "state": {}
+   }
+  },
+  {
+   "id": 990019,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    0,
+    3
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b4",
+    "item": "figure-1",
+    "state": {}
+   }
+  },
+  {
+   "id": 990020,
+   "plugin": "Atlas",
+   "model": "Figure",
+   "version": "2.1.0",
+   "params": [],
+   "pos": [
+    17,
+    3
+   ],
+   "data": {
+    "lesson": "_gallery",
+    "block": "b4",
+    "item": "figure-2",
+    "state": {}
+   }
+  }
+ ],
+ "cables": []
+}

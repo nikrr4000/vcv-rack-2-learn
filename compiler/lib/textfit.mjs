@@ -244,7 +244,7 @@ function atomize(block, st) {
 	for (const sp of block.spans) {
 		const f = block.kind === "h" ? F.HEADING : fontFor(sp.style);
 		const size = block.kind === "h" ? st.headingSize : sp.style === "mono" ? st.monoSize : st.bodySize;
-		if (sp.style === "mono" && block.kind !== "h") {
+		if (sp.style === "mono" && block.kind !== "h" && [...sp.text].length <= 12) {
 			addText(sp.text, f, size, sp.term);
 			continue;
 		}

@@ -1,0 +1,14 @@
+# Template A.1 `cover` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b1
+  type: cover
+  preset: cover
+  title: Звук как волна
+  page: |
+    # 1.1 Звук как волна
+    **Ты научишься:** отличать четыре формы волны на слух и на экране, читать **Scope** (осциллограф).
+    **Ты соберёшь:** VCO → Scope → Audio — «глаз» курса, он нужен в каждом уроке.
+    **Понадобится:** 25 минут, наушники или колонки на тихой громкости.
+  figure: { template: waveforms, shapes: [sine, triangle, saw, square], periods: 2 }
+  faq:
+    - q: Зачем мне Scope, если я и так слышу звук?
+      a: Ухо говорит «ярче» или «глуше», а Scope показывает почему — форму волны. Дальше по курсу ты будешь проверять свои патчи по экрану, не только на слух.

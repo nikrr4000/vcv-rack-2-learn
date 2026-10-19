@@ -1,0 +1,240 @@
+[
+ {
+  "template": "waveforms",
+  "shapes": [
+   "sine",
+   "triangle",
+   "saw",
+   "square"
+  ],
+  "periods": 2
+ },
+ {
+  "template": "harmonics",
+  "shape": "saw",
+  "count": 8,
+  "law": "1/n"
+ },
+ {
+  "template": "adsr",
+  "a": 0.05,
+  "d": 0.3,
+  "s": 0.4,
+  "r": 0.6,
+  "gate": 1.2,
+  "markers": true
+ },
+ {
+  "template": "voltages",
+  "ranges": [
+   {
+    "label": "аудио",
+    "min": -5,
+    "max": 5
+   },
+   {
+    "label": "CV",
+    "min": 0,
+    "max": 10
+   },
+   {
+    "label": "гейт",
+    "min": 0,
+    "max": 10
+   },
+   {
+    "label": "биполяр. CV",
+    "min": -5,
+    "max": 5
+   }
+  ]
+ },
+ {
+  "template": "keyboard",
+  "from": "C3",
+  "to": "C5",
+  "marks": [
+   {
+    "note": "C3",
+    "volts": -1
+   },
+   {
+    "note": "C4",
+    "volts": 0
+   },
+   {
+    "note": "C5",
+    "volts": 1
+   }
+  ]
+ },
+ {
+  "template": "flow",
+  "nodes": [
+   {
+    "id": "vco",
+    "label": "VCO",
+    "kind": "audio"
+   },
+   {
+    "id": "vcf",
+    "label": "VCF",
+    "kind": "audio"
+   },
+   {
+    "id": "vca",
+    "label": "VCA",
+    "kind": "audio"
+   },
+   {
+    "id": "out",
+    "label": "Audio",
+    "kind": "audio"
+   },
+   {
+    "id": "push",
+    "label": "Push",
+    "kind": "gate"
+   },
+   {
+    "id": "env",
+    "label": "ADSR",
+    "kind": "cv"
+   }
+  ],
+  "edges": [
+   {
+    "from": "vco",
+    "to": "vcf",
+    "kind": "audio"
+   },
+   {
+    "from": "vcf",
+    "to": "vca",
+    "kind": "audio"
+   },
+   {
+    "from": "vca",
+    "to": "out",
+    "kind": "audio"
+   },
+   {
+    "from": "push",
+    "to": "env",
+    "kind": "gate"
+   },
+   {
+    "from": "env",
+    "to": "vca",
+    "kind": "cv"
+   }
+  ],
+  "layout": "two-rows"
+ },
+ {
+  "template": "filter",
+  "type": "lp",
+  "cutoff": 800,
+  "resonance": 0.3
+ },
+ {
+  "template": "clock",
+  "bpm": 120,
+  "divisions": [
+   1,
+   2,
+   4
+  ],
+  "bars": 2
+ },
+ {
+  "template": "steps",
+  "values": [
+   0,
+   3,
+   5,
+   7,
+   5,
+   3,
+   10,
+   7
+  ],
+  "gates": [
+   1,
+   1,
+   0,
+   1,
+   1,
+   0,
+   1,
+   1
+  ]
+ },
+ {
+  "template": "mixer",
+  "channels": [
+   {
+    "label": "кик",
+    "level": 8
+   },
+   {
+    "label": "бас",
+    "level": 6
+   },
+   {
+    "label": "хэт",
+    "level": 3
+   },
+   {
+    "label": "лид",
+    "level": 11
+   }
+  ],
+  "headroom": 10
+ },
+ {
+  "template": "stereo",
+  "sources": [
+   {
+    "label": "кик",
+    "pan": 0,
+    "width": 0
+   },
+   {
+    "label": "хэт",
+    "pan": 0.5,
+    "width": 0.1
+   },
+   {
+    "label": "пэд",
+    "pan": 0,
+    "width": 0.9
+   }
+  ]
+ },
+ {
+  "template": "table",
+  "rows": [
+   [
+    "Сигнал",
+    "Диапазон",
+    "Пример"
+   ],
+   [
+    "аудио",
+    "±5 В",
+    "VCO"
+   ],
+   [
+    "CV",
+    "0…10 В",
+    "LFO"
+   ],
+   [
+    "гейт",
+    "0 / 10 В",
+    "Push"
+   ]
+  ]
+ }
+]

@@ -1,0 +1,12 @@
+# Template A.6 `quiz` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b6
+  type: quiz
+  preset: quiz
+  title: Проверь себя
+  questions:
+    - q: Ты сыграл ту же ноту на октаву выше. Что изменилось в волне?
+      options:
+        - { text: Частота выросла вдвое, correct: true, why: "Октава — это удвоение частоты, период стал вдвое короче." }
+        - { text: Амплитуда выросла вдвое, why: "Выше — не значит громче: размах волны не изменился." }
+        - { text: Изменилась форма волны, why: "Форма отвечает за тембр, а не за высоту." }
+      free: true          # allow «Свой ответ» graded by the tutor

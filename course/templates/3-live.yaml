@@ -1,0 +1,24 @@
+# Template A.3 `live` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b3
+  type: live
+  preset: live
+  title: Четыре формы волны
+  page: |
+    # Четыре формы волны
+    Перед тобой VCO, подключённый к Scope и к выходу. Сейчас на экране **пила** (Sawtooth).
+    Переключи кабель на другие выходы VCO: Sine, Triangle, Square. Высота тона не меняется — меняется **тембр**.
+  modules:
+    - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" } } }
+    - { ref: scope, plugin: Fundamental, slug: Scope, params: { Time: { display: "5" } } }
+  cables:
+    - { from: [vco, Sawtooth], to: [scope, Ch 1] }
+    - { from: [vco, Sawtooth], to: [audio, Left input] }
+  notes:
+    - { after: vco, text: "Четыре выхода — четыре формы. Попробуй каждую.", targets: [{ module: vco, output: Sine }, { module: vco, output: Sawtooth }] }
+    - { after: scope, text: "Time — сколько миллисекунд помещается на экран.", targets: [{ module: scope, param: Time }] }
+  figure: { template: harmonics, shape: saw, count: 8, law: 1/n }
+  faq:
+    - q: Почему пила звучит ярче синуса?
+      a: В пиле много гармоник — призвуков, кратных основной частоте. В синусе только одна. Больше гармоник — ярче тембр.
+    - q: Кабель на Sine — а звука почти не слышно. Это нормально?
+      a: Да. Синус без гармоник звучит мягко и кажется тише. Подними уровень на Audio или переключись на пилу для сравнения.

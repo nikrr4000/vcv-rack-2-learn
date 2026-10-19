@@ -1,0 +1,20 @@
+# Template A.7 `practice` (plan Appendix A). Names in examples are illustrative; copy real ones from the snapshots.
+- id: b7
+  type: practice
+  preset: practice
+  title: Практика: голос с огибающей
+  task: |
+    1. Поставь на верстак VCO, VCF, VCA, ADSR и Push.
+    2. Пила VCO → вход VCF, выход LPF → вход VCA, выход VCA → вход 1 Audio.
+    3. Огибающая ADSR → CV-вход VCA. Push → Gate ADSR.
+    4. Нажми Push: звук есть, пока кнопка нажата.
+  given: [audio]
+  check: p3-05-first-voice           # reuse vcv/course/checks/<id>.json (names verified live)
+  hints:                              # ladder per check item, from vague to exact
+    "cable:3":
+      - Звук есть всегда, даже без нажатия? Подумай, что решает, когда звучать.
+      - Посмотри на VCA — что управляет его громкостью?
+      - Выход ADSR (Envelope) → вход CV у VCA.
+  faq:
+    - q: Можно взять VCA Mix вместо VCA?
+      a: Можно, если проверка не требует именно VCA. Здесь требует — урок про VCA, возьми VCA.
