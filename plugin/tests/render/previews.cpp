@@ -1,3 +1,4 @@
+#include <map>
 // Module previews from a pack, drawn by the plugin's own views (visual QA without Rack).
 //
 //   render previews <pack.json> <outdir> [all | <lesson> …] [--dark] [--sheet]
@@ -32,6 +33,7 @@ using namespace atlas;
 namespace {
 
 const float H = 380.f;
+std::map<std::string, int> truncatedFigures;  // figure item → labels cut with «…»
 
 struct Canvas {
 	NVGcontext* vg;
@@ -183,7 +185,10 @@ int renderLesson(const Pack& pk, const Lesson& L, const std::string& out, bool d
 			for (int v : variants) {
 				float w = it.kind == "bench" ? 30.f : hpOf(it, it.kind == "note" ? 8 : it.kind == "page" ? 24 : it.kind == "figure" ? 16 : 14);
 				Canvas c(w, H, dark, L.part);
+				int before = ellipsizedCount() + hiddenEdgeCount();
 				drawItem(c.vg, c.st, pk, L, B, it, 0, v, note);
+				if (it.kind == "figure" && ellipsizedCount() + hiddenEdgeCount() > before)
+					truncatedFigures[L.id + "/" + B.id + "/" + it.id] = ellipsizedCount() + hiddenEdgeCount() - before;
 				std::string name = out + "/" + L.id + "-" + B.id + "-" + it.id + (v ? "-v" + std::to_string(v) : "") + sfx + ".png";
 				c.write(name);
 				n++;
@@ -331,8 +336,14 @@ int previewsMain(int argc, char** argv) {
 		over += kv.second.overflow;
 		multi += kv.second.pages > 1;
 	}
+	for (const auto& kv : truncatedFigures) {
+		json_t* e = json_object();
+		json_object_set_new(e, "overflow", json_false());
+		json_object_set_new(e, "truncated", json_integer(kv.second));
+		json_object_set_new(r, kv.first.c_str(), e);
+	}
 	json_dump_file(r, (out + (dark ? "/report-dark.json" : "/report.json")).c_str(), JSON_INDENT(1) | JSON_SORT_KEYS);
 	json_decref(r);
-	std::printf("%d images; %zu text areas, %d with several pages, %d overflowing or scrolling\n", n, textReports().size(), multi, over);
+	std::printf("%d images; %zu text areas, %d with several pages, %d overflowing or scrolling; %zu figures with cut labels or hidden edges\n", n, textReports().size(), multi, over, truncatedFigures.size());
 	return 0;
 }

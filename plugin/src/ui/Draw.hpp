@@ -96,6 +96,10 @@ void drawLight(NVGcontext* vg, const Style& st, float cx, float cy, float r, int
 
 /** Single-line text truncated with «…» to fit `maxW`. */
 std::string ellipsize(NVGcontext* vg, int font, float size, const std::string& s, float maxW);
+/** How many strings ellipsize() has shortened so far (visual QA counts truncated figure labels). */
+int& ellipsizedCount();
+/** How many flow-figure edges were drawn straight through another box (visual QA). */
+int& hiddenEdgeCount();
 
 /** The accent mixed into the panel color (opaque), e.g. 0.15 for active fills. */
 NVGcolor tint(const Style& st, float amount);

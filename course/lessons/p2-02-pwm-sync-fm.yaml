@@ -181,7 +181,7 @@ blocks:
     page: |
       # Вибрато и FM
       Несущая — верхний **VCO** на 261,63 Гц. Его **Frequency modulation** качает `Sine` от LFO со скоростью 5 Гц. Глубина 5 %.
-      Слышно вибрато. Теперь перенеси кабель в `Sine` нижнего VCO на 523,25 Гц и подними глубину до 30 %.
+      Слышно вибрато. Теперь перенеси начало кабеля с `Sine` у LFO на `Sine` нижнего VCO (523,25 Гц) и подними глубину до 30 %.
       Появится звон. Переключи **FM mode** в Linear и сравни.
     modules:
       - { ref: carrier, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "261.63" }, Frequency modulation: { display: "5" }, FM mode: 1V/octave } }
@@ -375,7 +375,7 @@ blocks:
       - При жёсткой синхронизации высоту задаёт ведущий VCO, окраску — ведомый.
       - FM медленная даёт вибрато, на звуковой скорости рождает новые частоты и меняет тембр.
       - Кабель на входе работает только при ненулевой глубине.
-      Сохрани патч: Ctrl+S сохраняет твою копию урока.
+      Сохрани патч: ⌘S сохраняет твою копию урока.
       **Источники:** Gordon Reid, «Synth Secrets», ч. 10 и 12 (Sound On Sound); руководство VCV Free; Omri Cohen, «Getting Practical with Modular Synthesis in VCV Rack 2».
     questions:
       - q: LFO идёт в Pulse width modulation, глубина 0 %. Что слышно?

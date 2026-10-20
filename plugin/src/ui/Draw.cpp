@@ -233,9 +233,20 @@ void drawLight(NVGcontext* vg, const Style& st, float cx, float cy, float r, int
 	nvgFill(vg);
 }
 
+int& ellipsizedCount() {
+	static int n = 0;
+	return n;
+}
+
+int& hiddenEdgeCount() {
+	static int n = 0;
+	return n;
+}
+
 std::string ellipsize(NVGcontext* vg, int font, float size, const std::string& s, float maxW) {
 	if (text::textWidth(vg, font, size, s) <= maxW)
 		return s;
+	ellipsizedCount()++;
 	std::string out;
 	for (size_t i = 0; i < s.size(); i = text::utf8Next(s, i)) {
 		std::string next = s.substr(0, text::utf8Next(s, i));

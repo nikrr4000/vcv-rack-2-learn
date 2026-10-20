@@ -350,7 +350,7 @@ blocks:
       - **Fade** разводит две партии: Crossfade слева — на своих местах, посередине — в обоих поровну.
       - **Mid/Side** делит звук на центр и бок. Ширина — усиление бока, в нуле остаётся моно.
       - Расширять можно только то, что различается слева и справа. Сначала разведи, потом расширяй.
-      Сохрани патч как `vcv-7.4.vcv`.
+      Сохрани патч: ⌘S сохраняет твою копию урока.
       **Источники:** руководство VCV Free (Fundamental), раздел Mid/Side. Noise Engineering, «Getting Started: Mixers». Omri Cohen, курс «VCAs in the Modular Environment with VCV Rack 2».
     questions:
       - q: Почему Decoder width не расширит моно-сигнал?

@@ -176,7 +176,7 @@ blocks:
     page: |
       # Акценты
       Здесь та же мелодия, но без слайда. Напряжение **CV 2** идёт на **Resonance**: на шагах 1, 4 и 7 резонанс открывается.
-      Подними **CV 2 step 2** до 3 В. Ещё один шаг становится акцентным.
+      Подними **CV 2 step 3** до 3 В. Ещё один шаг становится акцентным.
     modules:
       - { ref: seq, plugin: Fundamental, slug: SEQ3, params: { Tempo: { display: "480" }, Step 1 trigger: { raw: 1 }, Step 2 trigger: { raw: 0 }, Step 3 trigger: { raw: 1 }, Step 4 trigger: { raw: 1 }, Step 5 trigger: { raw: 1 }, Step 6 trigger: { raw: 0 }, Step 7 trigger: { raw: 1 }, Step 8 trigger: { raw: 1 }, CV 1 step 3: { display: "1" }, CV 1 step 4: { display: "0.58" }, CV 1 step 5: { display: "0.25" }, CV 1 step 7: { display: "0.83" }, CV 1 step 8: { display: "0.58" }, CV 2 step 1: { display: "3" }, CV 2 step 4: { display: "3" }, CV 2 step 7: { display: "3" } } }
       - { ref: vco, plugin: Fundamental, slug: VCO, params: { Frequency: { display: "65.41" } } }
@@ -425,7 +425,7 @@ blocks:
       - Cutoff frequency CV задаёт глубину огибающей, Resonance — остроту квакания.
       - Акцент открывает резонанс на выбранных шагах: CV 2 → Resonance.
       - Слайд скользит на шагах с высоким CV 3: Glide у Process, время — Slew.
-      Сохрани патч как `vcv-8.4.vcv`: он понадобится в части 9.
+      Сохрани патч (⌘S): твоя копия урока 8.4 понадобится в части 9.
       **Источники:** MusicRadar, «Producer's Guide to the Roland TB-303». MusicRadar, «Make an Acid Bassline». Блог Noise Engineering, «Gamut Repetitor Acid Basslines». Omri Cohen, «TB-303 in VCV Rack».
     questions:
       - q: "Чем отличаются выходы Slew и Glide у Process?"
@@ -440,4 +440,4 @@ blocks:
       - q: "Что повторить, если бас не квакает?"
         a: "Проверь кабель Envelope → Frequency у VCF и ручку Cutoff frequency CV. Если она у нуля, огибающая не двигает срез."
       - q: "Зачем сохранять патч?"
-        a: "В части 9 бас встанет в одну тональность с пэдом. Файл `vcv-8.4.vcv` понадобится как готовый инструмент."
+        a: "В части 9 бас встанет в одну тональность с пэдом. Твоя копия урока 8.4 понадобится как готовый инструмент."

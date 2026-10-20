@@ -217,7 +217,7 @@ blocks:
       - do: "Перенеси кабель с **XOR** на **AND**, потом на **OR**."
         see: "На AND нот мало: такты редко совпадают. На OR ритм плотнее, чем у любого из входов."
       - do: "Возьми **NOT A** вместо XOR."
-        see: "Ритм из пауз первого такта: ноты звучат там, где у A тишина."
+        see: "Ритм повторяет первый такт и не зависит от второго: NOT A определяется только входом A."
     modules:
       - { ref: clk, plugin: ImpromptuModular, slug: Clocked, params: { Master clock: { display: "120" }, Clk 1 ratio: { raw: 1 }, Clk 2 ratio: { raw: 2 } } }
       - { ref: logic, plugin: Fundamental, slug: Logic }

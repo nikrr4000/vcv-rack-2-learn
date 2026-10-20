@@ -435,7 +435,16 @@ void drawFlow(NVGcontext* vg, const Style& st, const Rect& r, json_t* j) {
 		b.label = str(v, "label", b.id);
 		b.kind = str(v, "kind", "audio");
 		boxes.push_back(b);
-		(two && b.kind != "audio" ? bottom : top).push_back(i);
+		// Row: explicit `row: 0|1`, else sound on top and control below.
+		json_t* rv = json_object_get(v, "row");
+		bool low = rv && json_is_integer(rv) ? json_integer_value(rv) == 1 : b.kind != "audio";
+		(two && low ? bottom : top).push_back(i);
+	}
+	// Two rows asked for but one is empty (all control, or all sound): split in node order.
+	if (two && (top.empty() || bottom.empty())) {
+		std::vector<size_t> all = top.empty() ? bottom : top;
+		top.assign(all.begin(), all.begin() + (all.size() + 1) / 2);
+		bottom.assign(all.begin() + (all.size() + 1) / 2, all.end());
 	}
 	float bh = 22.f, gapX = 14.f;
 	auto place = [&](std::vector<size_t>& row, float cy) {
@@ -458,6 +467,7 @@ void drawFlow(NVGcontext* vg, const Style& st, const Rect& r, json_t* j) {
 				return &b;
 		return nullptr;
 	};
+	int lanes = 0;  // edges routed over their row so far (each one a little higher)
 	json_array_foreach(json_object_get(j, "edges"), i, v) {
 		Box* a = find(str(v, "from"));
 		Box* b = find(str(v, "to"));
@@ -473,6 +483,31 @@ void drawFlow(NVGcontext* vg, const Style& st, const Rect& r, json_t* j) {
 			x0 = fwd ? a->r.right() : a->r.x;
 			x1 = fwd ? b->r.x : b->r.right();
 			y0 = y1 = a->r.y + bh / 2;
+			bool through = false;
+			for (const Box& o : boxes)
+				if (&o != a && &o != b && std::fabs(o.r.y - a->r.y) < 1.f && o.r.x > std::min(x0, x1) - 1.f && o.r.right() < std::max(x0, x1) + 1.f)
+					through = true;
+			if (through) {
+				// Around the boxes in between: up from the source, across above the row, down into the target.
+				float yr = std::max(r.y + 2.f, a->r.y - 7.f - 4.f * lanes++);
+				float xa = a->r.x + a->r.w * (fwd ? 0.7f : 0.3f), xb = b->r.x + b->r.w * (fwd ? 0.3f : 0.7f);
+				auto seg = [&](float sx, float sy, float ex, float ey) {
+					if (style == 0) {
+						nvgBeginPath(vg);
+						nvgMoveTo(vg, sx, sy);
+						nvgLineTo(vg, ex, ey);
+						nvgStrokeColor(vg, c);
+						nvgStrokeWidth(vg, w);
+						nvgStroke(vg);
+					}
+					else
+						dashed(vg, c, sx, sy, ex, ey, style == 1 ? 4.f : 0.6f, 3.f, w);
+				};
+				seg(xa, a->r.y, xa, yr);
+				seg(xa, yr, xb, yr);
+				arrow(vg, xb, yr, xb, b->r.y, c, w, style);
+				continue;
+			}
 		}
 		else {
 			bool down = b->r.y > a->r.y;
@@ -720,7 +755,16 @@ void drawTable(NVGcontext* vg, const Style& st, const Rect& r, json_t* j) {
 	for (size_t i = 0; i < nr; i++)
 		nc = std::max(nc, json_array_size(json_array_get(rows, i)));
 	float rowH = std::min(26.f, r.h / nr);
-	float colW = r.w / nc;
+	// Columns as wide as their longest cell (+6 px padding), scaled down together when the table is wider than the figure.
+	std::vector<float> need(nc, 0.f), colX(nc + 1, r.x);
+	for (size_t i = 0; i < nr; i++)
+		for (size_t k = 0; k < nc; k++)
+			need[k] = std::max(need[k], text::textWidth(vg, font(st, i == 0 ? F_BOLD : F_BODY), 10.f, valueText(json_array_get(json_array_get(rows, i), k))) + 6.f);
+	float total = 0.f;
+	for (float x : need)
+		total += x;
+	for (size_t k = 0; k < nc; k++)
+		colX[k + 1] = colX[k] + (total > 0.f ? need[k] * r.w / total : r.w / nc);
 	for (size_t i = 0; i < nr; i++) {
 		float y = r.y + rowH * i;
 		if (i > 0)
@@ -728,8 +772,8 @@ void drawTable(NVGcontext* vg, const Style& st, const Rect& r, json_t* j) {
 		for (size_t k = 0; k < nc; k++) {
 			std::string t = valueText(json_array_get(json_array_get(rows, i), k));
 			text::FontId f = i == 0 ? F_BOLD : F_BODY;
-			NVGcolor c = i == 0 ? st.pal.ink : st.pal.ink;
-			label(vg, st, r.x + colW * k + 3.f, y + rowH / 2 + 3.6f, ellipsize(vg, font(st, f), 10.f, t, colW - 6.f), NVG_ALIGN_LEFT | NVG_ALIGN_BASELINE, &c, f, 10.f);
+			NVGcolor c = st.pal.ink;
+			label(vg, st, colX[k] + 3.f, y + rowH / 2 + 3.6f, ellipsize(vg, font(st, f), 10.f, t, colX[k + 1] - colX[k] - 6.f), NVG_ALIGN_LEFT | NVG_ALIGN_BASELINE, &c, f, 10.f);
 		}
 	}
 	hline(vg, st.pal.ink2, r.x, r.y + rowH + 0.5f, r.right());

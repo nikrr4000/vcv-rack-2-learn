@@ -17,13 +17,13 @@ blocks:
     page: |
       # 7.5 Запись в файл
       **Ты научишься:** писать звук патча в файл через **Recorder** и следить, чтобы запись не перегрузилась.
-      **Ты соберёшь:** партию, VCMixer и два выхода — в Audio, чтобы слышать, и в Recorder, чтобы писать.
+      **Ты соберёшь:** партию, VCA Mix и два выхода — в Audio, чтобы слышать, и в Recorder, чтобы писать.
       **Понадобится:** 30 минут и урок 7.3 про уровни. Перед первым звуком убавь громкость.
     figure:
       template: flow
       layout: row
       nodes:
-        - { id: mix, label: VCMixer, kind: audio }
+        - { id: mix, label: VCA Mix, kind: audio }
         - { id: audio, label: Audio, kind: audio }
         - { id: rec, label: Recorder, kind: audio }
       edges:
@@ -113,7 +113,7 @@ blocks:
     title: Путь к записи
     page: |
       # Путь к записи
-      Партия идёт в **VCMixer**. Его выход **Mix** разветвляется: в Audio, чтобы слышать, и в **Left/mono** у Recorder.
+      Партия идёт в **VCA Mix**. Его выход **Mix** разветвляется: в Audio, чтобы слышать, и в **Left/mono** у Recorder.
       Запись не включена, ты только смотришь на уровень.
       Подними **Channel 1 level** к +6 dB: Mix на Scope растёт, и у Recorder загорелся бы красный индикатор.
     modules:
@@ -166,7 +166,7 @@ blocks:
     preset: try
     title: Покрути сам
     steps:
-      - do: "Подними **Channel 1 level** у VCMixer к +6 dB, затем верни −10 dB."
+      - do: "Подними **Channel 1 level** у VCA Mix к +6 dB, затем верни −10 dB."
         see: "На Scope растёт пик, индикатор Recorder краснеет. Убавь, пока он не потухнет."
       - do: "Открой меню Recorder правым кликом. Выбери WAV и посмотри разрядности."
         see: "Там же Output file. Формат меняй, пока запись остановлена, и запомни выбор для расчёта."
@@ -202,9 +202,9 @@ blocks:
     title: Практика — 30 секунд в WAV
     task: |
       Подготовь запись и сделай её сам.
-      1. На верстак: **VCO**, **VCMixer** и **Recorder**.
-      2. `Sawtooth` у VCO → `Channel 1` у VCMixer.
-      3. `Mix` у VCMixer → `Left/mono` у Recorder и → вход 1 у Audio.
+      1. На верстак: **VCO**, **VCA Mix** и **Recorder**.
+      2. `Sawtooth` у VCO → `Channel 1` у VCA Mix.
+      3. `Mix` у VCA Mix → `Left/mono` у Recorder и → вход 1 у Audio.
       4. **Mix level** не выше 0 dB, чтобы запись не получилась горячей.
       5. Нажми «Проверить». Потом сам нажми **Record**, запиши 30 секунд, останови и найди файл. Его размер сравни с формулой.
     given: [audio]
@@ -213,18 +213,18 @@ blocks:
       "cable:1":
         - Recorder ничего не получает и запишет тишину.
         - Какой выход микшера ведёт в Recorder?
-        - "Выход `Mix` у VCMixer → вход `Left/mono` у Recorder."
+        - "Выход `Mix` у VCA Mix → вход `Left/mono` у Recorder."
       "cable:2":
         - Ты записываешь то, чего не слышишь.
         - Куда ещё нужен тот же сигнал?
-        - "Выход `Mix` у VCMixer → вход 1 у Audio."
+        - "Выход `Mix` у VCA Mix → вход 1 у Audio."
       "param:1":
         - Запись выйдет горячей.
         - Что стоит на Mix level?
         - Поставь Mix level на 0 dB или ниже.
       "probe:1":
         - Сигнала на Mix нет.
-        - "Звучат ли партии: кабели в каналах VCMixer и уровни выше минус бесконечности?"
+        - "Звучат ли партии: кабели в каналах VCA Mix и уровни выше минус бесконечности?"
         - Подай сигнал в Channel 1 и подними уровень, затем нажми «Проверить».
     faq:
       - q: Проверка не смотрит на файл. Как узнать, что он правильный?
@@ -259,7 +259,7 @@ blocks:
       fixed:
         - Звук идёт мимо Recorder.
         - Посмотри на вход Left/mono у Recorder.
-        - "Соедини `Mix` у VCMixer со входом `Left/mono` у Recorder."
+        - "Соедини `Mix` у VCA Mix со входом `Left/mono` у Recorder."
     faq:
       - q: Почему в Audio звук есть, а в Recorder нет?
         a: Recorder пишет только то, что подано в его собственные входы. Кабель в Audio никак на него не влияет.
@@ -274,7 +274,7 @@ blocks:
       - Красный индикатор означает перегруз. Убавляй уровень до записи, потом исправить нельзя.
       - Размер несжатого файла считают по формуле: частота, разрядность и каналы.
       - **Gate** держит запись, пока он высокий, **Trigger** переключает её импульсами.
-      Сохрани патч как `vcv-7.5.vcv`.
+      Сохрани патч: ⌘S сохраняет твою копию урока.
       **Источники:** документация VCV Recorder. Perfect Circuit, «Eurorack and Line Level Signals». Peter Kirn, «How to make a multitrack recording in VCV Rack» (CDM).
     questions:
       - q: Что решает, будет файл моно или стерео?

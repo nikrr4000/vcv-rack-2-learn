@@ -22,13 +22,13 @@ blocks:
       Одной цели обычно мало одной модуляции. Здесь научишься управлять вкладом каждой.
     figure:
       template: flow
-      layout: row
+      layout: two-rows
       nodes:
-        - { id: slow, label: LFO медленный, kind: cv }
-        - { id: fast, label: LFO быстрый, kind: cv }
-        - { id: mix, label: CV Mix, kind: cv }
-        - { id: res, label: Rescale, kind: cv }
-        - { id: vcf, label: VCF, kind: audio }
+        - { id: slow, label: LFO медленный, kind: cv, row: 0 }
+        - { id: fast, label: LFO быстрый, kind: cv, row: 0 }
+        - { id: mix, label: CV Mix, kind: cv, row: 1 }
+        - { id: res, label: Rescale, kind: cv, row: 1 }
+        - { id: vcf, label: VCF, kind: audio, row: 1 }
       edges:
         - { from: slow, to: mix, kind: cv }
         - { from: fast, to: mix, kind: cv }
@@ -79,7 +79,7 @@ blocks:
       **От какого значения и до какого?** Это [[смещение]] и границы: Offset, Minimum, Maximum.
       **Сколько источников?** Это [[сумма модуляций|сумма]]: несколько сигналов в один.
       Это те же умножение и сложение, что в уроке 1.4. Просто источников теперь больше одного.
-    figure: { template: flow, layout: row, nodes: [{ id: src, label: Источники, kind: cv }, { id: scale, label: Масштаб, kind: cv }, { id: sum, label: Сумма, kind: cv }, { id: lim, label: Границы, kind: cv }, { id: tgt, label: Цель, kind: audio }], edges: [{ from: src, to: scale, kind: cv }, { from: scale, to: sum, kind: cv }, { from: sum, to: lim, kind: cv }, { from: lim, to: tgt, kind: cv }], caption: "Путь модуляции: источники, масштаб, сумма, границы, цель." }
+    figure: { template: flow, layout: two-rows, nodes: [{ id: src, label: Источники, kind: cv, row: 0 }, { id: scale, label: Масштаб, kind: cv, row: 0 }, { id: sum, label: Сумма, kind: cv, row: 0 }, { id: lim, label: Границы, kind: cv, row: 1 }, { id: tgt, label: Цель, kind: audio, row: 1 }], edges: [{ from: src, to: scale, kind: cv }, { from: scale, to: sum, kind: cv }, { from: sum, to: lim, kind: cv }, { from: lim, to: tgt, kind: cv }], caption: "Путь модуляции: источники, масштаб, сумма, границы, цель." }
     simpler: "Представь микшерный пульт для ручки. Каждый источник идёт на свой фейдер, фейдеры складываются в одну дорожку, а на выходе стоит ограничитель громкости. Так и здесь: у каждого сигнала свой Level."
     faq:
       - q: Чем масштаб отличается от смещения?
@@ -163,7 +163,7 @@ blocks:
       - q: Вход CV 3 пустой, а на выходе постоянное напряжение. Откуда?
         a: Пустой вход CV Mix получает 10 В сам по себе. Если Level у него не нулевой, на сумму идёт постоянное смещение. На 20 % это 2 В.
       - q: Что значит отрицательный Level?
-        a: Сигнал перевёрнут. На −60 % он вдвое слабее, чем при 60 %, и идёт вниз там, где был вверх. Срез сначала закрывается, потом открывается.
+        a: Сигнал перевёрнут. На −60 % он той же силы, что при 60 %, но идёт вниз там, где был вверх. Срез сначала закрывается, потом открывается.
       - q: Чем CV Mix отличается от аудиомикшера?
         a: Принцип тот же, сумма входов. Но CV Mix рассчитан на управляющие сигналы, а не на звук, и у него есть отрицательные Level.
 
@@ -183,7 +183,7 @@ blocks:
       - { text: "Вход и выход **Signal** — сюда приходит сумма и отсюда уходит результат.", targets: [{ module: res, input: Signal }, { module: res, output: Signal }] }
     faq:
       - q: В каком порядке Rescale всё делает?
-        a: "В уроке считаем так: сначала Gain, потом Offset, потом границы. Точный порядок в твоей версии проверь, поглядев на Scope после выхода Signal."
+        a: "В уроке считаем так: сначала Gain, потом Offset, потом границы. Результат виден на Scope после выхода Signal."
       - q: Зачем ограничивать верх перед фильтром?
         a: Без границы сумма может открыть фильтр слишком широко. Maximum не даёт срезу уйти выше нужной точки, и звук остаётся в нужном диапазоне.
       - q: Что делает Offset у Rescale, если у LFO уже есть Offset?

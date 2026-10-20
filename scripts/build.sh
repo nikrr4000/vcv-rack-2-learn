@@ -28,7 +28,7 @@ echo "== text areas (render harness, every module of every lesson)"
 make -C rack/plugin/tests render 2>&1 | quiet | grep -E "error" && exit 1 || true
 rm -rf rack/build/previews-qa && mkdir -p rack/build/previews-qa
 rack/plugin/tests/bin/render previews rack/plugin/res/course/pack.json rack/build/previews-qa all | tail -1
-node -e 'const r=require(process.argv[1]);const o=Object.keys(r).filter((k)=>r[k].overflow);if(o.length){console.error("overflowing or scrolling:",o.join(", "));process.exit(1)}' "$REPO/rack/build/previews-qa/report.json"
+node -e 'const r=require(process.argv[1]);const o=Object.keys(r).filter((k)=>r[k].overflow||r[k].truncated);if(o.length){console.error("overflowing text or cut figure labels:",o.join(", "));process.exit(1)}' "$REPO/rack/build/previews-qa/report.json"
 if [ $TEST = 1 ]; then
 	DEST="$REPO/rack/.rack-test/plugins-mac-arm64/Atlas"
 	rm -rf "$DEST" && mkdir -p "$DEST"
