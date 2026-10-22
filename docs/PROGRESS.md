@@ -72,6 +72,8 @@ Read this first after a compaction or restart; continue from the first task that
 - Tutor latency, stub path (5 runs, `TutorRunner` + `vcv/tutor/stub-claude.mjs`, delta pause 0): process start → warm-up answered 26–27 ms; message sent → first chunk 0.3 ms, whole reply 0.3–0.4 ms. In Rack the plugin polls every 250 ms, so the first chunk shows within ≤ 250 ms of arriving at the server. Real model: start + MCP connect + warm-up happen at lesson open, not on the first question.
 - owner-install.sh: dry run and a real run tested with `HOME=rack/.fakehome` (fake AtlasTutor and Atlas folders backed up, new Atlas copied; launchctl line only printed in the dry run).
 
+- First real tutor run (owner, 2026-10-20, `app/state/rack-tutor.jsonl`): lesson p1-01, warm-up answered, one reply of 566 chars, idle exit after 15 min; **no `fallback`** — the CLI accepted every flag of §7.2.
+
 ## Background processes
 
 None.
