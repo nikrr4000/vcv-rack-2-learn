@@ -26,7 +26,7 @@
 ## Установка
 
 ```bash
-git clone https://github.com/GillGate/vcv-rack-2-learn.git
+git clone https://github.com/nikrr4000/vcv-rack-2-learn.git
 cd vcv-rack-2-learn
 scripts/build.sh      # SDK и пакеты при первом запуске, проверка уроков, сборка плагина, тесты
 scripts/install.sh    # плагин → папка плагинов Rack (старый Atlas уходит в atlas-backups)
@@ -64,3 +64,7 @@ make -C plugin/tests client                      # плагин ↔ сервер
 ## Происхождение
 
 Репозиторий выделен из learn-with-claude с сохранением истории.
+
+## Лицензия
+
+Лицензия пока не выбрана: все права защищены. Rack SDK, против которого собирается плагин, распространяется по GPL-3.0; шрифты PT Sans, PT Serif и JetBrains Mono — по SIL Open Font License.
