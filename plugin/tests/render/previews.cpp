@@ -304,7 +304,7 @@ int renderShell(const Pack& pk, const std::string& lesson, const std::string& ou
 		float w = 20 * 15.f;
 		Canvas c(w, H, dark, 0);
 		PageView v;
-		v.header = "Памятка · ноты и вольты";
+		v.header = "Памятка · звук и вольты";
 		v.text.md = md;
 		v.text.title = true;
 		v.text.page = pg;

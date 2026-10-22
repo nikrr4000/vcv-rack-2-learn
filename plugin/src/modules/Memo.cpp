@@ -46,7 +46,7 @@ struct MemoWidget : AtlasWidget {
 	MemoModule* mm() { return (MemoModule*) am; }
 
 	void drawView(NVGcontext* vg, const Style& st, float w, float h) override {
-		view.header = "Памятка · ноты и вольты";
+		view.header = "Памятка · звук и вольты";
 		view.text.md = memoText();
 		view.text.title = true;
 		view.text.reportId = "memo/notes-voltage";
