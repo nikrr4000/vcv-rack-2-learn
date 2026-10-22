@@ -76,6 +76,8 @@ Read this first after a compaction or restart; continue from the first task that
 
 - Owner report (2026-10-22): every glide (outline, «Дальше») went to the same spot above-left of the lesson rows. Cause: Rack loads module `pos` as `pos * RACK_GRID_SIZE + RACK_OFFSET` (RackWidget.cpp:500, offset 30000×38000 px); `blockRect`, the tutor patch line and the practice-scope fallback compared widget y with `row * 380` without the offset, found nothing and fell back to pack bounds near 0,0. Fixed with `rowTop(row)`; the fallback rect is offset too. Side effect fixed by the same change: the tutor's patch line was always empty (the server fell back to the REST summary).
 
+- Owner report 2 (2026-10-22): the glide bug stayed after reinstalling. Cause: owner-install.sh kept backups as `Atlas.bak-*` / `AtlasTutor.bak-*` **inside** the plugins folder; Rack loads plugins in raw directory order (`system::getEntries` → `fs::directory_iterator`, unsorted) and skips a second plugin with the same slug, and on the owner's disk `Atlas.bak-20261022-163212` (the first, buggy build) came before `Atlas`. The old AtlasTutor was never disabled either. owner-install.sh now keeps backups in `Rack2/atlas-backups/` and moves earlier `*.bak-*` out of the plugins folder. The Navigator menu shows the loaded build.
+
 ## Background processes
 
 None.
