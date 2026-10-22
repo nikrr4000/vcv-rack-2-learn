@@ -16,6 +16,7 @@ extern Model* modelQuiz;
 extern Model* modelTask;
 extern Model* modelBench;
 extern Model* modelTutor;
+extern Model* modelMemo;
 
 namespace atlas {
 

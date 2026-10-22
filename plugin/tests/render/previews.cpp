@@ -34,6 +34,7 @@ namespace {
 
 const float H = 380.f;
 std::map<std::string, int> truncatedFigures;  // figure item → labels cut with «…»
+std::string memoPath;  // res/memo/notes-voltage.md next to the pack's res/course
 
 struct Canvas {
 	NVGcontext* vg;
@@ -290,6 +291,32 @@ int renderShell(const Pack& pk, const std::string& lesson, const std::string& ou
 		c.write(out + "/tutor-module" + sfx + ".png");
 		n++;
 	}
+	// Памятка: every page at its default width (the same PageView as the Memo module).
+	std::string md;
+	if (FILE* f = std::fopen(memoPath.c_str(), "rb")) {
+		char buf[4096];
+		size_t k;
+		while ((k = std::fread(buf, 1, sizeof(buf), f)) > 0)
+			md.append(buf, k);
+		std::fclose(f);
+	}
+	for (int pg = 0; !md.empty() && pg < 40; pg++) {
+		float w = 20 * 15.f;
+		Canvas c(w, H, dark, 0);
+		PageView v;
+		v.header = "Памятка · ноты и вольты";
+		v.text.md = md;
+		v.text.title = true;
+		v.text.page = pg;
+		v.text.reportId = "memo/notes-voltage";
+		Pointer p;
+		Hits hits;
+		v.draw(c.vg, c.st, w, H, p, hits);
+		c.write(out + "/memo-p" + std::to_string(pg + 1) + sfx + ".png");
+		n++;
+		if (pg + 1 >= v.text.count())
+			break;
+	}
 	return n;
 }
 
@@ -297,6 +324,10 @@ int renderShell(const Pack& pk, const std::string& lesson, const std::string& ou
 
 int previewsMain(int argc, char** argv) {
 	std::string packPath = argv[2], out = argv[3];
+	{
+		std::string dir = packPath.substr(0, packPath.find_last_of('/'));  // …/res/course
+		memoPath = dir.substr(0, dir.find_last_of('/')) + "/memo/notes-voltage.md";
+	}
 	bool dark = false;
 	std::vector<std::string> lessons;
 	for (int i = 4; i < argc; i++) {

@@ -20,6 +20,7 @@
     { "slug": "Quiz", "name": "Вопрос", "description": "Вопрос с вариантами и своим ответом", "tags": ["Utility"] },
     { "slug": "Task", "name": "Задание", "description": "Задание урока и проверка патча", "tags": ["Utility"] },
     { "slug": "Bench", "name": "Верстак", "description": "Граница места для практики", "tags": ["Utility"] },
-    { "slug": "Tutor", "name": "Репетитор", "description": "Репетитор урока прямо в стойке", "tags": ["Utility"] }
+    { "slug": "Tutor", "name": "Репетитор", "description": "Репетитор урока прямо в стойке", "tags": ["Utility"] },
+    { "slug": "Memo", "name": "Памятка", "description": "Ноты и вольты: 1 В на октаву, полутоны, интервалы, лады, аккорды", "tags": ["Utility"] }
   ]
 }

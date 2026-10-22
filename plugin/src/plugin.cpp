@@ -14,6 +14,7 @@ void init(Plugin* p) {
 	p->addModel(modelTask);
 	p->addModel(modelBench);
 	p->addModel(modelTutor);
+	p->addModel(modelMemo);
 	atlas::settings().load();
 }
 
