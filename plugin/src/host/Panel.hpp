@@ -26,6 +26,12 @@ struct PointerOverlay : widget::Widget {
 	void draw(const DrawArgs& args) override;
 };
 
+constexpr float PANEL_SCALE_MIN = 1.f, PANEL_SCALE_MAX = 2.f;
+/** The side panel's scale in effect: the setting, but the open panel takes at most 60 % of the window. */
+float panelScale();
+/** The side panel's width on screen (open or collapsed), scale included. */
+float panelScreenWidth();
+
 /** Center and radius of a note target in rack coordinates; false when it does not resolve. */
 bool resolveTarget(const Target& t, math::Vec* center, float* radius);
 

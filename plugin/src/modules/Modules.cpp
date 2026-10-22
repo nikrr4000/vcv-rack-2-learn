@@ -127,6 +127,14 @@ void appendAtlasMenu(ui::Menu* menu) {
 		if (v != settings().panelOpen && host())
 			host()->togglePanel();
 	}));
+	menu->addChild(createSubmenuItem("Размер боковой панели", std::to_string((int) std::lround(settings().panelScale * 100)) + " %", [](ui::Menu* sub) {
+		for (int pct : {100, 120, 140, 160, 180, 200}) {
+			sub->addChild(createCheckMenuItem(std::to_string(pct) + " %", "", [pct]() { return std::lround(settings().panelScale * 100) == pct; }, [pct]() {
+				if (host())
+					host()->zoomPanel(0, pct / 100.f);
+			}));
+		}
+	}));
 }
 
 } // namespace atlas

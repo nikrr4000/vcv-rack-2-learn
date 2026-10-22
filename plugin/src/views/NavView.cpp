@@ -246,6 +246,16 @@ void PanelView::draw(NVGcontext* vg, const Style& st, float w, float h, const Na
 	ms.active = map;
 	drawButton(vg, st, mapBtn, map ? "К уроку" : "Карта курса", ms);
 	hits.add(mapBtn, map ? NAV_MAP_CLOSE : NAV_MAP);
+	// Panel size: «A−» / «A+» left of the map button.
+	Rect zoomIn(mapBtn.x - 28.f, y - 2.f, 24.f, 18.f), zoomOut(zoomIn.x - 26.f, y - 2.f, 24.f, 18.f);
+	ButtonState zs;
+	zs.kind = BUTTON_QUIET;
+	zs.hover = p.over(zoomOut);
+	drawButton(vg, st, zoomOut, "A−", zs);
+	hits.add(zoomOut, NAV_ZOOM_OUT);
+	zs.hover = p.over(zoomIn);
+	drawButton(vg, st, zoomIn, "A+", zs);
+	hits.add(zoomIn, NAV_ZOOM_IN);
 	y += 24.f;
 	if (map || !L) {
 		// Course map: every part, scrollable.

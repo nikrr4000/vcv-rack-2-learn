@@ -27,6 +27,8 @@ const Pack& pack();
 struct Settings {
 	std::string atlasUrl = "http://127.0.0.1:5175";
 	bool panelOpen = true;
+	/** Side panel scale: text, buttons and width together (1 = 360 px wide). */
+	float panelScale = 1.f;
 	void load();
 	void save();
 	/** The URL in effect (env first), without a trailing slash. */

@@ -94,6 +94,8 @@ struct AtlasHost : widget::Widget {
 	void prev() { gotoBlock(block - 1); }
 	void completeLesson();
 	void togglePanel();
+	/** Side panel bigger (+1) or smaller (−1) by 0.1, or to the scale `to` when it is > 0; saved. */
+	void zoomPanel(int dir, float to = 0.f);
 
 	const Lesson* currentLesson() const { return pack().lesson(lesson); }
 	const Block* currentBlock() const;

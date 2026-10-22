@@ -368,6 +368,16 @@ void AtlasHost::togglePanel() {
 	post([this]() { startGlide(block, true); });
 }
 
+void AtlasHost::zoomPanel(int dir, float to) {
+	float s = to > 0.f ? to : std::round((panelScale() + 0.1f * dir) * 10.f) / 10.f;
+	s = math::clamp(s, PANEL_SCALE_MIN, PANEL_SCALE_MAX);
+	if (s == settings().panelScale)
+		return;
+	settings().panelScale = s;
+	settings().save();
+	post([this]() { startGlide(block, true); });
+}
+
 void AtlasHost::saveProgress() {
 	progress.save(asset::user("Atlas/progress.json"));
 }
@@ -429,7 +439,7 @@ void AtlasHost::startGlide(int index, bool animate) {
 		return;
 	bound = bound.grow(math::Vec(24, 24));
 	math::Vec size = sc->getSize();
-	float panelW = (navigatorId >= 0 || findNavigator()) ? (settings().panelOpen ? PanelView::WIDTH : PanelView::STRIP) : 0.f;
+	float panelW = (navigatorId >= 0 || findNavigator()) ? panelScreenWidth() : 0.f;
 	math::Vec avail(size.x - panelW, size.y);
 	float zoom = std::min(avail.x / bound.size.x, avail.y / bound.size.y);
 	zoom = math::clamp(zoom, 0.5f, 1.8f);

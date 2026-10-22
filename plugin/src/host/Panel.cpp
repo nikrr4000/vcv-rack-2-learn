@@ -7,6 +7,21 @@
 
 namespace atlas {
 
+float panelScale() {
+	float s = math::clamp(settings().panelScale, PANEL_SCALE_MIN, PANEL_SCALE_MAX);
+	float win = APP && APP->scene ? APP->scene->box.size.x : 0.f;
+	if (win > 0.f)
+		s = std::max(PANEL_SCALE_MIN, std::min(s, win * 0.6f / PanelView::WIDTH));
+	return s;
+}
+
+float panelScreenWidth() {
+	return (settings().panelOpen ? PanelView::WIDTH : PanelView::STRIP) * panelScale();
+}
+
+// The panel is laid out at scale 1 (PanelView::WIDTH wide) and drawn scaled: events come in screen
+// units relative to the panel and are divided by the scale before they meet the layout's hits.
+
 DockPanel::DockPanel() {
 	field = new AtlasField;
 	field->onSubmit = [](const std::string& text) {
@@ -16,7 +31,8 @@ DockPanel::DockPanel() {
 	field->indexAt = [this](math::Vec pos) {
 		Style st = currentStyle(0);
 		const Rect& r = view.tutor.inputRect;
-		return inputIndexAt(APP->window->vg, st, r, field->text, pos.x + r.x, pos.y + r.y);
+		float k = panelScale();
+		return inputIndexAt(APP->window->vg, st, r, field->text, pos.x / k + r.x, pos.y / k + r.y);
 	};
 	addChild(field);
 }
@@ -26,13 +42,13 @@ void DockPanel::step() {
 	visible = h && h->navigatorId >= 0;
 	if (visible && parent) {
 		float menuH = APP->scene->menuBar ? APP->scene->menuBar->box.size.y : 0.f;
-		float w = settings().panelOpen ? PanelView::WIDTH : PanelView::STRIP;
+		float w = panelScreenWidth(), k = panelScale();
 		box.pos = math::Vec(parent->box.size.x - w, menuH);
 		box.size = math::Vec(w, parent->box.size.y - menuH);
 		const Rect& r = view.tutor.inputRect;
 		field->visible = settings().panelOpen && !view.map && r.w > 0;
-		field->box.pos = math::Vec(r.x, r.y);
-		field->box.size = math::Vec(r.w, r.h);
+		field->box.pos = math::Vec(r.x * k, r.y * k);
+		field->box.size = math::Vec(r.w * k, r.h * k);
 	}
 	OpaqueWidget::step();
 }
@@ -58,8 +74,10 @@ void DockPanel::draw(const DrawArgs& args) {
 	view.tutor.focused = field->focused();
 	view.tutor.blink = std::fmod(system::getTime(), 1.0) < 0.6;
 	hits.clear();
+	float k = panelScale();
 	nvgSave(args.vg);
-	view.draw(args.vg, st, box.size.x, box.size.y, s, !settings().panelOpen, ptr, hits);
+	nvgScale(args.vg, k, k);
+	view.draw(args.vg, st, box.size.x / k, box.size.y / k, s, !settings().panelOpen, ptr, hits);
 	nvgRestore(args.vg);
 	Widget::draw(args);
 }
@@ -71,6 +89,8 @@ void DockPanel::act(int a, int arg) {
 	switch (a) {
 		case NAV_COLLAPSE:
 		case NAV_EXPAND: h->togglePanel(); break;
+		case NAV_ZOOM_OUT: h->zoomPanel(-1); break;
+		case NAV_ZOOM_IN: h->zoomPanel(1); break;
 		case NAV_MAP: h->mapOpen = true; break;
 		case NAV_MAP_CLOSE: h->mapOpen = false; break;
 		case NAV_OPEN:
@@ -98,7 +118,8 @@ void DockPanel::act(int a, int arg) {
 
 void DockPanel::onButton(const ButtonEvent& e) {
 	if (e.action == GLFW_PRESS) {
-		const Hit* hit = hits.at(e.pos.x, e.pos.y);
+		float k = panelScale();
+		const Hit* hit = hits.at(e.pos.x / k, e.pos.y / k);
 		if (hit && e.button == GLFW_MOUSE_BUTTON_RIGHT && hit->action == TUTOR_MSG && host()) {
 			std::vector<TutorMessage>& c = host()->conversation(host()->lesson);
 			if (hit->arg >= 0 && hit->arg < (int) c.size())
@@ -116,8 +137,9 @@ void DockPanel::onButton(const ButtonEvent& e) {
 }
 
 void DockPanel::onHover(const HoverEvent& e) {
-	ptr.x = e.pos.x;
-	ptr.y = e.pos.y;
+	float k = panelScale();
+	ptr.x = e.pos.x / k;
+	ptr.y = e.pos.y / k;
 	OpaqueWidget::onHover(e);
 }
 
@@ -130,7 +152,7 @@ void DockPanel::onHoverScroll(const HoverScrollEvent& e) {
 	float dy = e.scrollDelta.y;
 	if (view.map)
 		view.mapScroll.wheel(dy);
-	else if (view.tutor.convRect.contains(e.pos.x, e.pos.y))
+	else if (view.tutor.convRect.contains(e.pos.x / panelScale(), e.pos.y / panelScale()))
 		view.tutor.wheel(dy);
 	else
 		view.outlineScroll.wheel(dy);

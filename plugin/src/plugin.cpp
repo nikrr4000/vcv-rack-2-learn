@@ -52,6 +52,9 @@ void Settings::load() {
 	json_t* po = json_object_get(r, "panelOpen");
 	if (po)
 		panelOpen = json_is_true(po);
+	json_t* ps = json_object_get(r, "panelScale");
+	if (ps && json_is_number(ps))
+		panelScale = (float) json_number_value(ps);
 	json_decref(r);
 }
 
@@ -60,6 +63,7 @@ void Settings::save() {
 	json_t* r = json_object();
 	json_object_set_new(r, "atlasUrl", json_string(atlasUrl.c_str()));
 	json_object_set_new(r, "panelOpen", json_boolean(panelOpen));
+	json_object_set_new(r, "panelScale", json_real(panelScale));
 	json_dump_file(r, asset::user("Atlas/settings.json").c_str(), JSON_INDENT(2));
 	json_decref(r);
 }
