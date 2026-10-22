@@ -12,6 +12,7 @@
  *   STUB_REJECT_FLAGS    comma-separated options to refuse like an old CLI does
  *                        («error: unknown option '--x'», exit 1) — tests the runner's fallback
  *   STUB_DELAY_MS        pause between deltas (default 15)
+ *   STUB_MCP_STATUS      status of the `vcvrack` MCP server in the init event (default «connected»)
  */
 
 import crypto from "node:crypto";
@@ -77,7 +78,9 @@ async function answer(text) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-	out({ type: "system", subtype: "init", session_id: sessionId, cwd: process.cwd(), tools: ["Read"] });
+	const mcpStatus = process.env.STUB_MCP_STATUS || "connected";
+	const tools = ["Read", ...(mcpStatus === "connected" ? ["mcp__vcvrack__vcvrack_get_status", "mcp__vcvrack__vcvrack_list_modules", "mcp__vcvrack__vcvrack_list_cables"] : [])];
+	out({ type: "system", subtype: "init", session_id: sessionId, cwd: process.cwd(), tools, mcp_servers: [{ name: "vcvrack", status: mcpStatus }] });
 	const rl = readline.createInterface({ input: process.stdin });
 	let chain = Promise.resolve();
 	rl.on("line", (raw) => {

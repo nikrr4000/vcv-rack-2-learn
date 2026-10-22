@@ -7,6 +7,9 @@
  * Idle for `idleMs` → stdin is closed and the process exits; the next message starts it again.
  * Opening another lesson closes the old process and starts a new one.
  *
+ * The CLI's `system/init` event says whether the Rack MCP server connected; `mcpOk` keeps it, so the
+ * server can restart a process that started while Rack was still loading the lesson patch.
+ *
  * Probe-and-fallback: a CLI that does not know an optional flag exits at once with «unknown
  * option»; the runner drops that flag (or the next one in OPTIONAL_FLAGS order), remembers it for
  * the server's lifetime, logs it and starts again with the same queue.
@@ -59,7 +62,7 @@ export function flagToDrop(stderr, drop) {
 }
 
 /**
- * `opts`: {command, cwd, env, args(drop) → argv, idleMs, log(event)}.
+ * `opts`: {command, cwd, env, args(drop) → argv, idleMs, log(event), warmup(lesson) → text}.
  * `message.sink`: {push(text), end(full), fail(error)}.
  */
 export class TutorRunner {
@@ -72,6 +75,27 @@ export class TutorRunner {
 		this.current = null;
 		this.spawns = 0;
 		this.idleTimer = null;
+		this.mcpOk = null; // null: not reported yet; true / false from the CLI's init event
+		this.tools = [];
+	}
+
+	/** Stops the process and starts it again for the same lesson (queued messages are kept). */
+	restart(reason) {
+		const keep = [this.current, ...this.queue].filter((m) => m && !m.hidden);
+		const p = this.proc;
+		this.proc = null;
+		this.current = null;
+		this.queue = [];
+		clearTimeout(this.idleTimer);
+		if (p) {
+			this.opts.log({ event: "restart", reason, lesson: this.lesson, pid: p.pid });
+			p.stdin.end();
+			const t = setTimeout(() => p.kill(), 5000);
+			p.once("exit", () => clearTimeout(t));
+		}
+		for (const m of keep) m.deltas = "";
+		this.queue = keep;
+		this.start();
 	}
 
 	/** Starts (or keeps) the process of this lesson. */
@@ -120,6 +144,8 @@ export class TutorRunner {
 		const proc = spawn(command, args, { cwd, env, stdio: ["pipe", "pipe", "pipe"] });
 		this.proc = proc;
 		this.spawns++;
+		this.mcpOk = null;
+		this.tools = [];
 		const state = { stdout: false, stderr: "" };
 		this.opts.log({ event: "spawn", lesson: this.lesson, pid: proc.pid, dropped: [...this.drop] });
 		proc.on("error", (err) => {
@@ -141,7 +167,8 @@ export class TutorRunner {
 		});
 		proc.on("exit", (code) => this.onExit(proc, code, state));
 		// The warm-up goes first, ahead of anything already queued.
-		this.queue.unshift({ text: WARMUP, sink: { push() {}, end() {}, fail() {} }, hidden: true, deltas: "" });
+		const warm = (this.opts.warmup && this.opts.warmup(this.lesson)) || WARMUP;
+		this.queue.unshift({ text: warm, sink: { push() {}, end() {}, fail() {} }, hidden: true, deltas: "" });
 		this.pump();
 	}
 
@@ -161,8 +188,19 @@ export class TutorRunner {
 		} catch {
 			return;
 		}
+		if (ev.type === "system" && ev.subtype === "init") {
+			const servers = Array.isArray(ev.mcp_servers) ? ev.mcp_servers : [];
+			const rack = servers.find((s) => s.name === "vcvrack");
+			this.mcpOk = rack ? rack.status === "connected" : servers.length ? false : null;
+			this.tools = Array.isArray(ev.tools) ? ev.tools : [];
+			this.opts.log({ event: "init", lesson: this.lesson, pid: proc.pid, mcp: servers.map((s) => `${s.name}:${s.status}`), tools: this.tools.length, mcpTools: this.tools.filter((t) => String(t).startsWith("mcp__")).length });
+			return;
+		}
 		const m = this.current;
 		if (!m) return;
+		if (ev.type === "assistant" && Array.isArray(ev.message?.content)) {
+			for (const c of ev.message.content) if (c.type === "tool_use") this.opts.log({ event: "tool", lesson: this.lesson, pid: proc.pid, name: c.name });
+		}
 		if (ev.type === "stream_event" && ev.event?.type === "content_block_delta" && ev.event.delta?.type === "text_delta") {
 			m.deltas += ev.event.delta.text;
 			if (!m.hidden) m.sink.push(ev.event.delta.text);

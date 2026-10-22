@@ -78,6 +78,8 @@ Read this first after a compaction or restart; continue from the first task that
 
 - Owner report 2 (2026-10-22): the glide bug stayed after reinstalling. Cause: owner-install.sh kept backups as `Atlas.bak-*` / `AtlasTutor.bak-*` **inside** the plugins folder; Rack loads plugins in raw directory order (`system::getEntries` → `fs::directory_iterator`, unsorted) and skips a second plugin with the same slug, and on the owner's disk `Atlas.bak-20261022-163212` (the first, buggy build) came before `Atlas`. The old AtlasTutor was never disabled either. owner-install.sh now keeps backups in `Rack2/atlas-backups/` and moves earlier `*.bak-*` out of the plugins folder. The Navigator menu shows the loaded build.
 
+- Owner report 3 (2026-10-22): the tutor «has no MCP and almost no lesson context». `--tools` does not limit MCP tools (CLI reference), so the likely MCP cause is timing: the process started at lesson open while Rack was loading the lesson patch with its own MCP Server, and a failed MCP connection stays failed for the process's life. Now: lesson/open waits up to 6 s for Rack's MCP; the CLI's init event is read (`mcpOk`, tools) and logged; a question restarts a process whose MCP did not connect once Rack answers; the warm-up carries the whole lesson brief (goal, every block); TUTOR.md says when to look into the patch through MCP; every exchange and tool call is logged in `app/state/rack-tutor.jsonl`. Not verified with the real CLI yet.
+
 ## Background processes
 
 None.

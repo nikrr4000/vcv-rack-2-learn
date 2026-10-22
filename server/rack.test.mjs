@@ -17,7 +17,7 @@ import { after, before, describe, test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { reply } from "../../../vcv/tutor/stub-claude.mjs";
-import { blockText, buildHeader, packLesson } from "./context.mjs";
+import { blockText, buildHeader, lessonBrief, packLesson } from "./context.mjs";
 import { flagToDrop, IDLE_MS, OPTIONAL_FLAGS, READ_TOOLS, TutorRunner, tutorArgs, WRITE_TOOLS } from "./runner.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -51,7 +51,7 @@ async function until(fn, ms = 5000) {
 	throw new Error("timed out");
 }
 
-function makeRunner(name, extraEnv = {}, idleMs) {
+function makeRunner(name, extraEnv = {}, idleMs, warmup) {
 	const stubLog = path.join(TMP, `${name}.jsonl`);
 	const events = [];
 	const runner = new TutorRunner({
@@ -60,6 +60,7 @@ function makeRunner(name, extraEnv = {}, idleMs) {
 		env: { ...process.env, STUB_CLAUDE_LOG: stubLog, STUB_DELAY_MS: "2", ...extraEnv },
 		args: (drop) => tutorArgs({ promptFile: PROMPT, mcpConfig: path.join(TMP, "mcp.json"), repo, drop }),
 		idleMs,
+		warmup,
 		log: (e) => events.push(e),
 	});
 	return { runner, stubLog, events };
@@ -161,6 +162,37 @@ describe("runner", () => {
 		runner.close();
 	});
 
+	test("warm-up carries the lesson brief; init reports MCP; restart keeps the queue", async () => {
+		const { runner, stubLog, events } = makeRunner("brief", {}, undefined, (lesson) => lessonBrief(lesson));
+		runner.open(LESSON);
+		await ask(runner, "[kind] ask\n[learner] раз");
+		const warm = readLog(stubLog).find((e) => e.event === "message").text;
+		const L = packLesson(LESSON);
+		assert.ok(warm.includes(`«${L.title}»`));
+		for (const b of L.blocks) assert.ok(warm.includes(`«${b.title}»`), b.id);
+		assert.match(warm, /Готов\?/);
+		assert.equal(runner.mcpOk, true);
+		const init = events.find((e) => e.event === "init");
+		assert.deepEqual(init.mcp, ["vcvrack:connected"]);
+		assert.equal(init.mcpTools, 3);
+		const first = runner.pid;
+		const pending = ask(runner, "[kind] ask\n[learner] два");
+		runner.restart("test");
+		const r = await pending;
+		assert.ok(r.full.length > 0, "the queued question is answered by the new process");
+		assert.notEqual(runner.pid, first);
+		runner.close();
+	});
+
+	test("MCP not connected is reported as mcpOk = false", async () => {
+		const { runner, events } = makeRunner("nomcp", { STUB_MCP_STATUS: "failed" });
+		runner.open(LESSON);
+		await ask(runner, "[kind] ask\n[learner] раз");
+		assert.equal(runner.mcpOk, false);
+		assert.deepEqual(events.find((e) => e.event === "init").mcp, ["vcvrack:failed"]);
+		runner.close();
+	});
+
 	test("unknown options are dropped one by one and the queue survives", async () => {
 		const { runner, events } = makeRunner("fallback", { STUB_REJECT_FLAGS: "--exclude-dynamic-system-prompt-sections,--permission-prompts" });
 		runner.open(LESSON);
@@ -241,6 +273,7 @@ function startServer(port, name) {
 		VCV_NOTES_DIR: notes,
 		VCV_MD_LOG_CONFIG: fx("vcv-md-log.config.json"),
 		RACK_TUTOR_CLAUDE: STUB,
+		RACK_TUTOR_MCP_WAIT_MS: "0",
 		RACK_PORT: "2659",
 		STUB_CLAUDE_LOG: path.join(dir, "stub.jsonl"),
 		STUB_DELAY_MS: "5",
@@ -302,6 +335,9 @@ describe("HTTP /api/rack", () => {
 		assert.match(replies[1], /^✓/);
 		const log = readLog(a.stubLog);
 		assert.equal(log.filter((e) => e.event === "start").length, 1, "one process for the lesson");
+		const warmup = log.find((e) => e.event === "message").text;
+		assert.match(warmup, /^\[lesson p3-05-first-voice «Первый голос»/, "the server warms the tutor up with the lesson brief");
+		assert.match(warmup, /\[outline\]/);
 		const asked = log.filter((e) => e.event === "message").slice(1);
 		assert.equal(asked.length, 3);
 		assert.match(asked[0].text, /^\[lesson p3-05-first-voice «Первый голос», block b6 /);

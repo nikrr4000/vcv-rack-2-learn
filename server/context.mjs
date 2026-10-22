@@ -101,3 +101,27 @@ export async function buildHeader(req, { patchLine = restPatchLine } = {}) {
 	lines.push(`[learner] ${oneLine(req.text, LEARNER_MAX)}`);
 	return lines.join("\n");
 }
+
+export const BRIEF_MAX = 6000;
+
+/**
+ * The warm-up message: the whole lesson in brief (title, goal, every block with its type and opening
+ * lines), sent once when the tutor process starts, so every later question has the lesson around it.
+ * It still asks for a one-word «ok» (the reply is discarded).
+ */
+export function lessonBrief(id, max = BRIEF_MAX) {
+	const L = id ? packLesson(id) : null;
+	if (!L) return null;
+	const head = [`[lesson ${id} «${L.title}»${L.num ? `, урок ${L.num}` : ""}]`];
+	if (L.goal) head.push(`[goal] ${oneLine(plain(L.goal), 300)}`);
+	if (L.builds) head.push(`[builds] ${oneLine(plain(L.builds), 300)}`);
+	const blocks = L.blocks.map((b, i) => `${i + 1}. ${b.id} «${b.title}» (${b.type}): ${oneLine(blockText(b, 400), 260)}`);
+	let outline = blocks.join("\n");
+	if (outline.length > max) outline = `${outline.slice(0, max - 1)}…`;
+	return [
+		...head,
+		"[outline]",
+		outline,
+		"Это план урока, который ученик сейчас проходит в Rack. Держи его в голове: дальше каждое сообщение придёт с заголовком текущего блока. Готов? Это служебная проверка связи: ответь одним словом «ok».",
+	].join("\n");
+}

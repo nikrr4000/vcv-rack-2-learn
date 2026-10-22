@@ -22,7 +22,7 @@ import { childEnv, HttpError, readJson } from "../http.mjs";
 import { APP_STATE_DIR, REPO, VCV_DIR } from "../paths.mjs";
 import { courseLesson } from "../vcv/course.mjs";
 import * as rack from "../vcv/rack.mjs";
-import { buildHeader, KINDS, packLesson } from "./context.mjs";
+import { buildHeader, KINDS, lessonBrief, packLesson } from "./context.mjs";
 import { appendLog, lessonOpened, progressForRack, recordEvent } from "./progress.mjs";
 import { EFFORTS, MODELS, TutorRunner, tutorArgs, writeTutorMcpConfig } from "./runner.mjs";
 
@@ -64,6 +64,13 @@ function getRunner() {
 		cwd: TUTOR_RUN_DIR,
 		env: childEnv({ ENABLE_TOOL_SEARCH: "false", CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" }),
 		args: (drop) => tutorArgs({ model, effort, promptFile: TUTOR_PROMPT, mcpConfig, repo: REPO, drop }),
+		warmup: (lesson) => {
+			try {
+				return lessonBrief(lesson);
+			} catch {
+				return null;
+			}
+		},
 		idleMs: Number(process.env.RACK_TUTOR_IDLE_MS) || undefined,
 		log,
 	});
@@ -129,15 +136,37 @@ export async function health() {
 		// Rack or its MCP server is off
 	}
 	const { model, effort } = tutorSettings();
-	return { ok: true, tutor: { model, effort, claude: Boolean(tutorClaudePath()), lesson: runner?.lesson || null, pid: runner?.pid || null, busy: Boolean(runner?.busy), dropped: runner ? [...runner.drop] : [] }, rack: { reachable: rackUp, port: rackPort() } };
+	return { ok: true, tutor: { model, effort, claude: Boolean(tutorClaudePath()), lesson: runner?.lesson || null, pid: runner?.pid || null, busy: Boolean(runner?.busy), dropped: runner ? [...runner.drop] : [], mcp: runner ? runner.mcpOk : null, mcpTools: runner ? runner.tools.filter((t) => String(t).startsWith("mcp__")).length : 0 }, rack: { reachable: rackUp, port: rackPort() } };
 }
 
-export function openLesson(body) {
+/** Rack's MCP server answers (a lesson patch brings its own MCP Server, which starts a moment after the load). */
+async function rackReachable() {
+	try {
+		await rack.status();
+		return true;
+	} catch {
+		return false;
+	}
+}
+
+/** Waits up to RACK_TUTOR_MCP_WAIT_MS (default 6 s) for Rack, so the tutor connects MCP on its first try. */
+async function waitForRack() {
+	const limit = Number(process.env.RACK_TUTOR_MCP_WAIT_MS ?? 6000);
+	const end = Date.now() + limit;
+	while (true) {
+		if (await rackReachable()) return true;
+		if (Date.now() >= end) return false;
+		await new Promise((r) => setTimeout(r, 500));
+	}
+}
+
+export async function openLesson(body) {
 	const lesson = requireLesson(body.lesson);
 	const progress = lessonOpened(lesson);
 	const r = getRunner();
+	const rackUp = r.lesson === lesson && r.pid ? true : await waitForRack();
 	const started = r.open(lesson);
-	return { lesson, started, pid: r.pid, progress };
+	return { lesson, started, pid: r.pid, rack: rackUp, progress };
 }
 
 export async function ask(body) {
@@ -147,8 +176,11 @@ export async function ask(body) {
 	if (!text && kind !== "review") throw new HttpError(400, "пустой вопрос");
 	const r = getRunner();
 	if (r.lesson !== lesson) r.open(lesson);
+	// Started while Rack was loading and MCP did not connect: start again now that Rack answers.
+	else if (r.pid && r.mcpOk === false && !r.busy && (await rackReachable())) r.restart("mcp was not connected");
 	const header = await buildHeader({ ...body, lesson, kind, text });
 	const stream = createStream((full, error) => {
+		log({ event: "exchange", lesson, block: body.block || null, kind, q: short(text, 300), a: error ? null : short(full, 600), error: error || null, mcp: r.mcpOk });
 		try {
 			appendLog(lesson, [`${kind === "grade" ? "ответ на тест" : "вопрос"}${body.block ? ` (${body.block})` : ""}: «${short(text || "проверь мой патч")}»`, error ? `ошибка: ${short(error)}` : `репетитор: «${short(full)}»`]);
 		} catch (err) {
