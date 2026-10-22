@@ -158,6 +158,7 @@ void AtlasWidget::onButton(const ButtonEvent& e) {
 		const Hit* h = hits.at(e.pos.x, e.pos.y);
 		if (h) {
 			int action = h->action, arg = h->arg;
+			pressedHit = true;
 			onHit(action, arg);
 			e.consume(this);
 			return;
@@ -172,6 +173,26 @@ void AtlasWidget::onHoverScroll(const HoverScrollEvent& e) {
 		return;
 	}
 	ModuleWidget::onHoverScroll(e);
+}
+
+void AtlasWidget::onDragStart(const DragStartEvent& e) {
+	if (pressedHit)
+		return;
+	ModuleWidget::onDragStart(e);
+}
+
+void AtlasWidget::onDragMove(const DragMoveEvent& e) {
+	if (pressedHit)
+		return;
+	ModuleWidget::onDragMove(e);
+}
+
+void AtlasWidget::onDragEnd(const DragEndEvent& e) {
+	if (pressedHit) {
+		pressedHit = false;
+		return;
+	}
+	ModuleWidget::onDragEnd(e);
 }
 
 void ResizeHandle::onDragStart(const DragStartEvent& e) {

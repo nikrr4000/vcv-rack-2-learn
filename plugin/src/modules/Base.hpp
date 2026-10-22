@@ -62,6 +62,12 @@ struct AtlasWidget : ModuleWidget {
 	void onLeave(const LeaveEvent& e) override;
 	void onButton(const ButtonEvent& e) override;
 	void onHoverScroll(const HoverScrollEvent& e) override;
+	/** A press on a hit region is a button click, not a module drag: Rack drags whatever took the
+	 *  press, so without this the module follows the mouse (and the view, while it glides). */
+	bool pressedHit = false;
+	void onDragStart(const DragStartEvent& e) override;
+	void onDragMove(const DragMoveEvent& e) override;
+	void onDragEnd(const DragEndEvent& e) override;
 
 	/** Draws the module in a w × h box with hits registered in `hits`. */
 	virtual void drawView(NVGcontext* vg, const Style& st, float w, float h) = 0;
