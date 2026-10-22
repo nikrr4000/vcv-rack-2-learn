@@ -1,8 +1,8 @@
-// The practice checker, ported from app/server/vcv/checker.mjs (same semantics, same Russian
+// The practice checker, ported from server/checker.mjs (same semantics, same Russian
 // texts, same item keys). No Rack dependency: the patch comes in as a plain model, probe
 // samples from a ProbeSource. The Rack adapter (RackPatch) builds the model from the engine.
 //
-// Check spec (jansson, the format of vcv/course/checks/*.json):
+// Check spec (jansson, the format of facts/checks/*.json):
 //   modules [{ref, plugin, slug}], cables [{from: [ref, out], to: [ref, in]}],
 //   params [{module, name, display_min?, display_max?, display_in?}],
 //   probes [{module, output, ask, samples, interval_ms, expect: {max_gt?, min_lt?, range_gt?}}],

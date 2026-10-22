@@ -1,5 +1,5 @@
 {
-  "$comment": "Visual identity «Атлас». Source of truth for the plugin (rack/plugin/src/ui/ThemeTokens.hpp is generated from this file by rack/compiler/gen-theme.mjs) and for the text-fit tool.",
+  "$comment": "Visual identity «Атлас». Source of truth for the plugin (plugin/src/ui/ThemeTokens.hpp is generated from this file by compiler/gen-theme.mjs) and for the text-fit tool.",
   "themes": {
     "light": { "panel": "#F3EEE4", "ink": "#1E1C19", "ink2": "#6B655C", "hairline": "#D9D1C3", "paper2": "#EAE3D6" },
     "dark": { "panel": "#1C1D1F", "ink": "#ECE6DA", "ink2": "#9A938A", "hairline": "#34363A", "paper2": "#25272A" }

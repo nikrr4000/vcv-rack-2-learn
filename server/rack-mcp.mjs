@@ -8,7 +8,7 @@
  *   RackBusy — HTTP 503 "UI thread not responding": Rack is up, an open menu or dialog blocks it.
  */
 
-import { rackPort } from "../app-settings.mjs";
+import { rackPort } from "./config.mjs";
 
 const TIMEOUT_MS = 3000;
 

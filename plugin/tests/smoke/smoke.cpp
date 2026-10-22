@@ -9,7 +9,7 @@ using namespace rack;
 
 int main(int argc, char** argv) {
 	setvbuf(stdout, nullptr, _IONBF, 0);
-	const char* path = argc > 1 ? argv[1] : "rack/plugin/plugin.dylib";
+	const char* path = argc > 1 ? argv[1] : "plugin/plugin.dylib";
 	void* h = dlopen(path, RTLD_NOW | RTLD_LOCAL);
 	if (!h) {
 		std::printf("FAIL dlopen: %s\n", dlerror());
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 	}
 	plugin::Plugin* p = new plugin::Plugin;
 	p->slug = "Atlas";
-	p->path = "rack/plugin";
+	p->path = "plugin";
 	init(p);
 	int fails = 0;
 	for (plugin::Model* m : p->models) {

@@ -1,5 +1,5 @@
 /**
- * Text fit: the plugin's text layout (rack/plugin/src/text/Layout.cpp) in Node, with the same
+ * Text fit: the plugin's text layout (plugin/src/text/Layout.cpp) in Node, with the same
  * fonts and tokens, measuring like nanovg + fontstash do at zoom 1 on a 2× display:
  * glyph advances truncated to 1/10 px and rounded to whole device pixels, GPOS pair kerning,
  * Rack's DejaVu Sans as the fallback for glyphs the paper fonts lack.

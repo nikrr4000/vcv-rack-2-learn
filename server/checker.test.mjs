@@ -1,5 +1,5 @@
 /**
- * Node checker on the fixtures exported by `vcv/scripts/live-check.mjs --fixtures` (the same fixtures the
+ * Node checker on the fixtures exported by `live-check.mjs --fixtures` (in the original learn-with-claude repository) (the same fixtures the
  * C++ checker of the Atlas plugin replays), plus the `fixed` kind used by debug blocks.
  */
 import assert from "node:assert/strict";
@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 
 import { normalizeCheck, runCheck } from "./checker.mjs";
 
-const DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../rack/plugin/tests/fixtures/checks");
+const DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../plugin/tests/fixtures/checks");
 
 /** A fake REST client over a fixture case: details per module, samples served in turn. */
 export function fixtureRack(c) {

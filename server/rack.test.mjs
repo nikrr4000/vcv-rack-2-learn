@@ -1,5 +1,5 @@
 /**
- * Tutor runtime tests (plan §10.6), all on the stub (`vcv/tutor/stub-claude.mjs`): no model calls.
+ * Tutor runtime tests (plan §10.6), all on the stub (`tutor/stub-claude.mjs`): no model calls.
  *
  *   runner: lesson open starts one process; three messages reuse it; lesson switch replaces it;
  *           idle exit; «unknown option» fallback; deltas arrive in order;
@@ -16,16 +16,15 @@ import path from "node:path";
 import { after, before, describe, test } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { reply } from "../../../vcv/tutor/stub-claude.mjs";
+import { reply } from "../tutor/stub-claude.mjs";
 import { blockText, buildHeader, lessonBrief, packLesson } from "./context.mjs";
 import { flagToDrop, IDLE_MS, OPTIONAL_FLAGS, READ_TOOLS, TutorRunner, tutorArgs, WRITE_TOOLS } from "./runner.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const repo = path.resolve(here, "../../..");
-const app = path.join(repo, "app");
-const STUB = path.join(repo, "vcv", "tutor", "stub-claude.mjs");
-const PROMPT = path.join(repo, "vcv", "tutor", "TUTOR.md");
-const TMP = path.join(app, ".fixtures", "rack-tutor-test");
+const repo = path.resolve(here, "..");
+const STUB = path.join(repo, "tutor", "stub-claude.mjs");
+const PROMPT = path.join(repo, "tutor", "TUTOR.md");
+const TMP = path.join(repo, ".test-tmp", "rack-tutor-test");
 const LESSON = "p3-05-first-voice";
 const OTHER = "p1-01-sound-wave";
 
@@ -56,7 +55,7 @@ function makeRunner(name, extraEnv = {}, idleMs, warmup) {
 	const events = [];
 	const runner = new TutorRunner({
 		command: STUB,
-		cwd: path.join(repo, "vcv", "tutor", "run"),
+		cwd: path.join(TMP, "run"),
 		env: { ...process.env, STUB_CLAUDE_LOG: stubLog, STUB_DELAY_MS: "2", ...extraEnv },
 		args: (drop) => tutorArgs({ promptFile: PROMPT, mcpConfig: path.join(TMP, "mcp.json"), repo, drop }),
 		idleMs,
@@ -76,7 +75,7 @@ function ask(runner, text) {
 before(() => {
 	fs.rmSync(TMP, { recursive: true, force: true });
 	fs.mkdirSync(TMP, { recursive: true });
-	fs.mkdirSync(path.join(repo, "vcv", "tutor", "run"), { recursive: true });
+	fs.mkdirSync(path.join(TMP, "run"), { recursive: true });
 });
 
 describe("runner", () => {
@@ -84,7 +83,7 @@ describe("runner", () => {
 		const a = tutorArgs({ promptFile: PROMPT, mcpConfig: "/x.json", repo, drop: new Set() });
 		const allowed = a.slice(a.indexOf("--allowedTools") + 1, a.indexOf("--disallowedTools"));
 		assert.deepEqual(allowed.slice(0, READ_TOOLS.length), READ_TOOLS);
-		assert.equal(allowed.at(-1), `Read(/${repo}/rack/course/**)`);
+		assert.equal(allowed.at(-1), `Read(/${repo}/course/**)`);
 		assert.ok(allowed.at(-1).startsWith("Read(//"));
 		for (const w of WRITE_TOOLS) assert.ok(a.includes(w) && !allowed.includes(w));
 		for (const f of ["--strict-mcp-config", "--no-session-persistence", "--include-partial-messages", "--disable-slash-commands"]) assert.ok(a.includes(f), f);
@@ -254,31 +253,20 @@ describe("reply shapes (stub)", () => {
 
 function startServer(port, name) {
 	const dir = path.join(TMP, name);
-	const notes = path.join(dir, "vcv");
+	const notes = path.join(dir, "notes");
 	fs.mkdirSync(path.join(dir, "state"), { recursive: true });
-	fs.mkdirSync(notes, { recursive: true });
-	const fx = (n) => path.join(app, ".fixtures", n);
 	const env = {
 		...process.env,
 		PORT: String(port),
-		TOPICS_DIR: fx("topics"),
-		LESSONS_DIR: fx("lessons"),
-		IMG_DIR: fx("img"),
-		PIPELINE_STATE_DIR: path.join(dir, "pipeline-state"),
-		PIPELINE_CONFIG: fx("pipeline-config.json"),
-		MD_LOG_CONFIG: fx("md-log.config.json"),
-		CLAUDE_SETTINGS_PATH: fx("claude-settings.json"),
-		LAUNCH_AGENTS_DIR: fx("launch-agents"),
-		APP_STATE_DIR: path.join(dir, "state"),
-		VCV_NOTES_DIR: notes,
-		VCV_MD_LOG_CONFIG: fx("vcv-md-log.config.json"),
+		STATE_DIR: path.join(dir, "state"),
+		NOTES_DIR: notes,
 		RACK_TUTOR_CLAUDE: STUB,
 		RACK_TUTOR_MCP_WAIT_MS: "0",
 		RACK_PORT: "2659",
 		STUB_CLAUDE_LOG: path.join(dir, "stub.jsonl"),
 		STUB_DELAY_MS: "5",
 	};
-	const child = spawn(process.execPath, [path.join(app, "server", "index.mjs")], { cwd: app, env, stdio: ["ignore", "pipe", "pipe"] });
+	const child = spawn(process.execPath, [path.join(repo, "server", "index.mjs")], { cwd: repo, env, stdio: ["ignore", "pipe", "pipe"] });
 	let out = "";
 	child.stdout.on("data", (d) => (out += d));
 	child.stderr.on("data", (d) => (out += d));
@@ -305,11 +293,9 @@ async function poll(call, id) {
 }
 
 describe("HTTP /api/rack", () => {
-	const fixturesReady = fs.existsSync(path.join(app, ".fixtures", "pipeline-config.json"));
 	let a;
 	let b;
 	before(async () => {
-		if (!fixturesReady) return;
 		a = startServer(5185, "srv-5185");
 		b = startServer(5186, "srv-5186");
 		for (const s of [a, b]) await until(() => s.call("GET", "/api/rack/health").catch(() => null), 15000);
@@ -318,7 +304,7 @@ describe("HTTP /api/rack", () => {
 		for (const s of [a, b]) s?.child.kill();
 	});
 
-	test("open → ask → stream in order; progress; vault note log", { skip: !fixturesReady && "no app/.fixtures (npm run fixtures)" }, async () => {
+	test("open → ask → stream in order; progress; lesson note log", async () => {
 		const h = await a.call("GET", "/api/rack/health");
 		assert.equal(h.tutor.model, "sonnet");
 		assert.equal(h.rack.reachable, false);
@@ -364,7 +350,7 @@ describe("HTTP /api/rack", () => {
 		for (const re of [/урок открыт в Rack/, /блок b2 «Сначала угадай»/, /тест \(b2\): «Что делает VCA\?» → «Громкость» ✓/, /проверка \(b6\): не пройдена, 1\/2; первое: кабель VCF → VCA/, /вопрос \(ответ из урока\): «Зачем\?»/, /вопрос \(b6\): «зачем фильтр\?»/, /репетитор: «/, /урок пройден/]) assert.match(journal, re);
 	});
 
-	test("lesson switch over HTTP replaces the process (server 5186)", { skip: !fixturesReady && "no app/.fixtures" }, async () => {
+	test("lesson switch over HTTP replaces the process (server 5186)", async () => {
 		const o1 = await b.call("POST", "/api/rack/lesson/open", { lesson: LESSON });
 		const { stream } = await b.call("POST", "/api/rack/ask", { lesson: LESSON, block: "b1", kind: "ask", text: "что это?" });
 		await poll(b.call, stream);
@@ -378,7 +364,7 @@ describe("HTTP /api/rack", () => {
 		assert.equal(again.pid, o2.pid);
 	});
 
-	test("bad requests", { skip: !fixturesReady && "no app/.fixtures" }, async () => {
+	test("bad requests", async () => {
 		await assert.rejects(a.call("POST", "/api/rack/lesson/open", { lesson: "../x" }), /400/);
 		await assert.rejects(a.call("GET", "/api/rack/stream/nope?after=0"), /404/);
 		await assert.rejects(a.call("POST", "/api/rack/ask", { lesson: LESSON, kind: "ask", text: "  " }), /400/);

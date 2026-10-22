@@ -1,11 +1,11 @@
 /**
  * Rack-native progress and the lesson note log.
  *
- * Progress lives in `APP_STATE_DIR/rack-progress.json` in the plugin's format
+ * Progress lives in `STATE_DIR/rack-progress.json` in the plugin's format
  * (`{lessons: {<id>: {status, block, reached, updatedAt}}, last, updatedAt}`, times in Unix
  * seconds), so the Navigator merges it as is (newest wins, «learned» never goes back).
  *
- * The vault note of the lesson (`notes.mjs`) gets a compact log at its end, under
+ * The note of the lesson (`notes.mjs`) gets a compact log at its end, under
  * «## Журнал в Rack»: blocks reached, quiz answers, check results, tutor exchanges. Status:
  * opening a lesson moves `study → learning`; «completed» sets `learned`.
  */
@@ -13,8 +13,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { APP_STATE_DIR } from "../paths.mjs";
-import { ensureNote, lessonStatus, noteFile, setLessonStatus } from "../vcv/notes.mjs";
+import { STATE_DIR as APP_STATE_DIR } from "./config.mjs";
+import { ensureNote, lessonStatus, noteFile, setLessonStatus } from "./notes.mjs";
 
 export const LOG_HEADING = "## Журнал в Rack";
 const file = () => path.join(APP_STATE_DIR, "rack-progress.json");

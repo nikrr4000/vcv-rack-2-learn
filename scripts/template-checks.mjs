@@ -8,12 +8,12 @@
  * The patch comes from the compiled .vcv (modules, cables, raw params), display values are derived
  * from the snapshots (switch options, linear/exponential laws, calibration tables).
  *
- *   node rack/scripts/template-checks.mjs [<lesson> …]
+ *   node scripts/template-checks.mjs [<lesson> …]
  */
 import fs from "node:fs";
 import path from "node:path";
 
-import { runCheck } from "../../app/server/vcv/checker.mjs";
+import { runCheck } from "../server/checker.mjs";
 import { facts, RACK } from "../compiler/lib/data.mjs";
 import { lawOf } from "../compiler/lib/resolve.mjs";
 

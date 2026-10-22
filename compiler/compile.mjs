@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * Course compiler: rack/course/lessons/*.yaml → the plugin's course pack and lesson patches.
+ * Course compiler: course/lessons/*.yaml → the plugin's course pack and lesson patches.
  *
- *   node rack/compiler/compile.mjs [--test] [--only <id,…>] [--out <dir>]
+ *   node compiler/compile.mjs [--test] [--only <id,…>] [--out <dir>]
  *
- * Shipped build (default): rack/plugin/res/course/{pack.json, patches/*.vcv}, MCP Server on 2600.
- * Test build (--test): rack/build/test-res/course/…, MCP Server on 2610.
- * Always: rack/build/report.json (per-lesson stats, text pages, warnings) and rack/qa/gallery.vcv.
+ * Shipped build (default): plugin/res/course/{pack.json, patches/*.vcv}, MCP Server on 2600.
+ * Test build (--test): build/test-res/course/…, MCP Server on 2610.
+ * Always: build/report.json (per-lesson stats, text pages, warnings) and qa/gallery.vcv.
  * Exit 1 on any error (schema, references, row widths, text that does not fit, …).
  */
 import fs from "node:fs";
@@ -55,7 +55,7 @@ for (const file of files) {
 		continue;
 	}
 	if (path.basename(file, ".yaml") !== L.id) errors.push(`${L.id}: file name must be ${L.id}.yaml`);
-	if (!order.includes(L.id)) errors.push(`${L.id}: not a lesson of the course (vcv/course/course.json)`);
+	if (!order.includes(L.id)) errors.push(`${L.id}: not a lesson of the course (facts/course.json)`);
 	const ids = L.blocks.map((b) => b.id);
 	if (new Set(ids).size !== ids.length) errors.push(`${L.id}: block ids are not unique`);
 	const r = compileLesson(L, { lessonIndex: order.indexOf(L.id), mcpPort, test });
@@ -105,6 +105,6 @@ if (needs.length) fs.writeFileSync(path.join(RACK, "build/calibration-needs.json
 for (const w of warnings) console.log(`warning: ${w}`);
 for (const e of errors) console.log(`error: ${e}`);
 const blocks = reports.reduce((n, r) => n + r.blocks, 0);
-console.log(`${Object.keys(patches).length} lessons, ${blocks} blocks → ${path.relative(path.resolve(RACK, ".."), outRoot)}; ${errors.length} errors, ${warnings.length} warnings`);
-if (needs.length) console.log(`calibration needed for ${needs.length} param(s): node rack/compiler/calibrate.mjs`);
+console.log(`${Object.keys(patches).length} lessons, ${blocks} blocks → ${path.relative(RACK, outRoot)}; ${errors.length} errors, ${warnings.length} warnings`);
+if (needs.length) console.log(`calibration needed for ${needs.length} param(s): node compiler/calibrate.mjs`);
 process.exit(errors.length ? 1 : 0);

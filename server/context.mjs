@@ -2,7 +2,7 @@
  * The compact header around each learner message (plan §7.3), so the tutor does not need to read
  * files: lesson and block, the block's text, the patch line, the last check, the quiz, the kind.
  *
- * The course pack is `rack/plugin/res/course/pack.json` (env `ATLAS_PACK_JSON` overrides), read
+ * The course pack is `plugin/res/course/pack.json` (env `ATLAS_PACK_JSON` overrides), read
  * again when its mtime changes. The patch line comes from the plugin with the question (it knows
  * the block's bench and given modules); without it the server summarises the whole patch from the
  * Rack REST API, best effort.
@@ -11,15 +11,15 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { REPO } from "../paths.mjs";
-import * as rack from "../vcv/rack.mjs";
+import { REPO } from "./config.mjs";
+import * as rack from "./rack-mcp.mjs";
 
 export const KINDS = ["ask", "grade", "simpler", "example", "review"];
 export const BLOCK_TEXT_MAX = 1200;
 const PATCH_MAX = 700;
 const LEARNER_MAX = 2000;
 
-const packFile = () => process.env.ATLAS_PACK_JSON || path.join(REPO, "rack", "plugin", "res", "course", "pack.json");
+const packFile = () => process.env.ATLAS_PACK_JSON || path.join(REPO, "plugin", "res", "course", "pack.json");
 let cache = null;
 
 export function loadPack() {

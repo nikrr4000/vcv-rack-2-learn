@@ -1,6 +1,6 @@
 /**
  * Text-fit parity: the compiler's Node layout against the plugin's C++ engine with real nanovg
- * measuring (rack/plugin/tests/bin/render layout). Corpus: 200 paragraphs from the course's old
+ * measuring (plugin/tests/bin/render layout). Corpus: 200 paragraphs from the course's old
  * lessons at several widths. Lines must match exactly for at least 95 % of entries and never
  * differ by more than one line per paragraph.
  */
@@ -14,11 +14,11 @@ import { fileURLToPath } from "node:url";
 
 import { layout, paginate, textStyle } from "../lib/textfit.mjs";
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
-const RENDER = path.join(ROOT, "rack/plugin/tests/bin/render");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const RENDER = path.join(ROOT, "plugin/tests/bin/render");
 
 function corpus() {
-	const dir = path.join(ROOT, "vcv/course/lessons");
+	const dir = path.join(ROOT, "facts/lessons");
 	const paras = [];
 	for (const f of fs.readdirSync(dir).sort()) {
 		for (const line of fs.readFileSync(path.join(dir, f), "utf8").split("\n")) {
@@ -35,7 +35,7 @@ function corpus() {
 	return out;
 }
 
-test("Node text-fit matches the C++ engine on 200 paragraphs", { skip: !fs.existsSync(RENDER) && "build rack/plugin/tests (make render) first" }, () => {
+test("Node text-fit matches the C++ engine on 200 paragraphs", { skip: !fs.existsSync(RENDER) && "build plugin/tests (make render) first" }, () => {
 	const c = corpus();
 	const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "parity-"));
 	fs.writeFileSync(path.join(tmp, "corpus.json"), JSON.stringify(c));

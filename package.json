@@ -1,0 +1,14 @@
+{
+  "name": "vcv-rack-2-learn",
+  "version": "2.1.0",
+  "private": true,
+  "description": "«Модульный синтез с нуля»: курс внутри VCV Rack 2 — плагин Atlas, компилятор уроков и ИИ-репетитор на Claude Code.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server/index.mjs",
+    "build": "scripts/build.sh",
+    "install-plugin": "scripts/install.sh",
+    "test": "node --test server/checker.test.mjs server/rack.test.mjs compiler/test/*.test.mjs && node scripts/template-checks.mjs"
+  }
+}

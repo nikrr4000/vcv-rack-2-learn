@@ -1,6 +1,6 @@
 # Rack-free tests and the render harness (plan §10.3, §10.4 fallback). Run from anywhere:
-#   make -C rack/plugin/tests unit      build + run unit tests
-#   make -C rack/plugin/tests render    build the preview renderer (bin/render)
+#   make -C plugin/tests unit      build + run unit tests
+#   make -C plugin/tests render    build the preview renderer (bin/render)
 ROOT := $(abspath ..)
 SRC := $(ROOT)/src
 V := $(ROOT)/tests/vendor
@@ -19,7 +19,7 @@ HARNESS_SRC := $(ROOT)/tests/render/SoftNvg.cpp
 
 .PHONY: unit render clean
 unit: $(BIN)/unit
-	cd $(ROOT)/../.. && $(BIN)/unit $(ONLY)
+	cd $(ROOT)/.. && $(BIN)/unit $(ONLY)
 
 render: $(BIN)/render
 
@@ -45,7 +45,7 @@ clean:
 # Plugin smoke test: loads plugin.dylib with the Rack app's libRack (no window), creates every
 # module and widget (with a module and as a preview), round-trips module data.
 RACK_APP_RES ?= $(HOME)/Applications/VCV Rack 2 Free.app/Contents/Resources
-RACK_SDK := $(ROOT)/../../vcv/.sdk/Rack-SDK
+RACK_SDK := $(ROOT)/../.sdk/Rack-SDK
 .PHONY: smoke
 smoke: $(BIN)/smoke
 	@mkdir -p $(BIN)/rackrun && ln -sf "$(RACK_APP_RES)/libRack.dylib" $(BIN)/rackrun/libRack.dylib

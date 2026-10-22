@@ -6,7 +6,7 @@
  *     as the owner left it. Modules the session did not create are never touched.
  */
 
-import * as rack from "../../../app/server/vcv/rack.mjs";
+import * as rack from "../../server/rack-mcp.mjs";
 
 export { rack };
 

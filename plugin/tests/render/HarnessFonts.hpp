@@ -10,7 +10,7 @@
 
 inline std::string harnessRoot() {
 	const char* r = std::getenv("ATLAS_PLUGIN_DIR");
-	return r ? r : "rack/plugin";
+	return r ? r : "plugin";
 }
 
 inline std::string rackSystemDir() {

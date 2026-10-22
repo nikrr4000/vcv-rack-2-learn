@@ -4,7 +4,7 @@
  *   - switches: the option index;
  *   - numeric: a calibration table measured on the live Rack when there is one; otherwise linear or
  *     exponential interpolation when the snapshot's mid point fits that law (within 1 %); otherwise an error
- *     (rack/course/calibration.json, written by calibrate.mjs).
+ *     (course/calibration.json, written by calibrate.mjs).
  * Names are matched exactly as Rack prints them.
  */
 import { facts } from "./data.mjs";

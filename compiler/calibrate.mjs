@@ -2,15 +2,15 @@
 /**
  * Calibration of params whose display is not linear or exponential (dB levels, …): sweeps the
  * raw range on the owner's live Rack (port 2600, the session's own row, every module deleted
- * afterwards) and stores [raw, display] pairs in rack/course/calibration.json.
+ * afterwards) and stores [raw, display] pairs in course/calibration.json.
  *
- *   node rack/compiler/calibrate.mjs                      the needs the last compile reported
- *   node rack/compiler/calibrate.mjs Core/AudioInterface2 Level
+ *   node compiler/calibrate.mjs                      the needs the last compile reported
+ *   node compiler/calibrate.mjs Core/AudioInterface2 Level
  */
 import fs from "node:fs";
 import path from "node:path";
 
-import { rack, rackReady, session } from "../../vcv/scripts/lib/live.mjs";
+import { rack, rackReady, session } from "../scripts/lib/live.mjs";
 import { RACK } from "./lib/data.mjs";
 
 const file = path.join(RACK, "course/calibration.json");

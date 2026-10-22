@@ -1,46 +1,50 @@
 #!/bin/bash
 # Atlas build: theme tokens → validate → compile → plugin → tests → package.
-#   rack/scripts/build.sh           shipped build: rack/plugin/res/course (MCP on 2600), make dist
-#   rack/scripts/build.sh --test    test build: rack/build/test-res (MCP on 2610), a test copy of the
-#                                   plugin in rack/.rack-test/plugins-mac-arm64/Atlas (never the owner's folder)
+#   scripts/build.sh           shipped build: plugin/res/course (MCP on 2600), make dist
+#   scripts/build.sh --test    test build: build/test-res (MCP on 2610), a test copy of the
+#                                   plugin in .rack-test/plugins-mac-arm64/Atlas (never the owner's folder)
 set -euo pipefail
-cd "$(dirname "$0")/../.."
+cd "$(dirname "$0")/.."
 REPO="$(pwd)"
 TEST=0
 [ "${1:-}" = "--test" ] && TEST=1
 quiet() { grep -v -e xcrun_db -e "no longer supported" -e "^\s*|" -e "^\s*^" -e "warning: In file included" || true; }
 
+# First run: the Rack SDK and the compiler's packages.
+[ -f .sdk/Rack-SDK/plugin.mk ] || scripts/get-sdk.sh
+[ -d compiler/node_modules ] || (cd compiler && npm ci --silent)
+
 echo "== theme tokens"
-node rack/compiler/gen-theme.mjs
+node compiler/gen-theme.mjs
 echo "== validate"
-node rack/compiler/validate.mjs | tail -1
+node compiler/validate.mjs | tail -1
 echo "== compile"
-if [ $TEST = 1 ]; then node rack/compiler/compile.mjs --test | tail -1; else node rack/compiler/compile.mjs | tail -1; fi
+if [ $TEST = 1 ]; then node compiler/compile.mjs --test | tail -1; else node compiler/compile.mjs | tail -1; fi
 echo "== gates"
-node rack/compiler/gates.mjs $([ $TEST = 1 ] && echo --test)
+node compiler/gates.mjs $([ $TEST = 1 ] && echo --test)
 echo "== plugin"
 # Build marker shown in the Navigator's context menu (src/BuildInfo.hpp, not in git).
-BUILD_ID="$(git rev-parse --short HEAD 2>/dev/null || echo nogit)$(git diff --quiet HEAD -- rack/plugin/src 2>/dev/null || echo +)  $(date '+%Y-%m-%d %H:%M')"
-printf '#pragma once\n#define ATLAS_BUILD "%s"\n' "$BUILD_ID" > rack/plugin/src/BuildInfo.hpp
-make -C rack/plugin -j8 2>&1 | quiet | grep -E "error|warning:" && { echo "plugin build has errors or warnings"; exit 1; } || true
-test -f rack/plugin/plugin.dylib
+BUILD_ID="$(git rev-parse --short HEAD 2>/dev/null || echo nogit)$(git diff --quiet HEAD -- plugin/src 2>/dev/null || echo +)  $(date '+%Y-%m-%d %H:%M')"
+printf '#pragma once\n#define ATLAS_BUILD "%s"\n' "$BUILD_ID" > plugin/src/BuildInfo.hpp
+make -C plugin -j8 2>&1 | quiet | grep -E "error|warning:" && { echo "plugin build has errors or warnings"; exit 1; } || true
+test -f plugin/plugin.dylib
 echo "== tests"
-make -C rack/plugin/tests unit 2>&1 | quiet | tail -1
-make -C rack/plugin/tests smoke PACK="$REPO/rack/plugin/res/course/pack.json" 2>&1 | quiet | tail -1
+make -C plugin/tests unit 2>&1 | quiet | tail -1
+make -C plugin/tests smoke PACK="$REPO/plugin/res/course/pack.json" 2>&1 | quiet | tail -1
 echo "== text areas (render harness, every module of every lesson)"
-make -C rack/plugin/tests render 2>&1 | quiet | grep -E "error" && exit 1 || true
-rm -rf rack/build/previews-qa && mkdir -p rack/build/previews-qa
-rack/plugin/tests/bin/render previews rack/plugin/res/course/pack.json rack/build/previews-qa all | tail -1
-node -e 'const r=require(process.argv[1]);const o=Object.keys(r).filter((k)=>r[k].overflow||r[k].truncated);if(o.length){console.error("overflowing text or cut figure labels:",o.join(", "));process.exit(1)}' "$REPO/rack/build/previews-qa/report.json"
+make -C plugin/tests render 2>&1 | quiet | grep -E "error" && exit 1 || true
+rm -rf build/previews-qa && mkdir -p build/previews-qa
+plugin/tests/bin/render previews plugin/res/course/pack.json build/previews-qa all | tail -1
+node -e 'const r=require(process.argv[1]);const o=Object.keys(r).filter((k)=>r[k].overflow||r[k].truncated);if(o.length){console.error("overflowing text or cut figure labels:",o.join(", "));process.exit(1)}' "$REPO/build/previews-qa/report.json"
 if [ $TEST = 1 ]; then
-	DEST="$REPO/rack/.rack-test/plugins-mac-arm64/Atlas"
+	DEST="$REPO/.rack-test/plugins-mac-arm64/Atlas"
 	rm -rf "$DEST" && mkdir -p "$DEST"
-	cp -R rack/plugin/plugin.json rack/plugin/plugin.dylib rack/plugin/res "$DEST/"
-	rm -rf "$DEST/res/course" && cp -R rack/build/test-res/course "$DEST/res/course"
+	cp -R plugin/plugin.json plugin/plugin.dylib plugin/res "$DEST/"
+	rm -rf "$DEST/res/course" && cp -R build/test-res/course "$DEST/res/course"
 	echo "test plugin → $DEST"
 else
 	echo "== package"
-	make -C rack/plugin dist 2>&1 | quiet | grep -E "error" || true
-	ls rack/plugin/dist/*.vcvplugin
+	make -C plugin dist 2>&1 | quiet | grep -E "error" || true
+	ls plugin/dist/*.vcvplugin
 fi
 echo "build OK"

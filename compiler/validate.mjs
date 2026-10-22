@@ -2,8 +2,8 @@
 /**
  * Course validator (plan §10.2): content rules the compiler does not enforce.
  *
- *   node rack/compiler/validate.mjs [<lesson id> …] [--json <file>] [--strict]
- *   node rack/compiler/validate.mjs --keys <check id>      the hint keys a check produces
+ *   node compiler/validate.mjs [<lesson id> …] [--json <file>] [--strict]
+ *   node compiler/validate.mjs --keys <check id>      the hint keys a check produces
  *
  * Errors (exit 1): word limits (quiz, options, explanations, FAQ, notes), FAQ count, banned phrases,
  * «вы» instead of «ты», exclamation marks, number without a space before its unit, unknown glossary

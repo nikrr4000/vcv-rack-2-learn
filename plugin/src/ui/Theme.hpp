@@ -1,6 +1,6 @@
 // The «Атлас» visual identity at runtime: palette by Rack's «Prefer dark panels»,
 // part accents, type scale and the bundled fonts. Numbers come from ThemeTokens.hpp,
-// which is generated from rack/course/design-tokens.json (the text-fit tool reads the same file).
+// which is generated from course/design-tokens.json (the text-fit tool reads the same file).
 #pragma once
 #include <rack.hpp>
 #include "ThemeTokens.hpp"

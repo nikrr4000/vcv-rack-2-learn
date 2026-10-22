@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Updates a row of docs/rack/PROGRESS.md: progress.mjs "<task prefix>" <STATUS> [commit] [notes]
+// Updates a row of docs/PROGRESS.md: progress.mjs "<task prefix>" <STATUS> [commit] [notes]
 import fs from "node:fs";
-const file = new URL("../../docs/rack/PROGRESS.md", import.meta.url);
+const file = new URL("../docs/PROGRESS.md", import.meta.url);
 const [prefix, status, commit = "", notes] = process.argv.slice(2);
 const lines = fs.readFileSync(file, "utf8").split("\n");
 let hit = 0;

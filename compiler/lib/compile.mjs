@@ -324,7 +324,7 @@ export function compileLesson(L, { lessonIndex = 0, mcpPort = 2600, test = false
 			}
 			case "practice": {
 				const check = typeof b.check === "string" ? loadCheck(b.check) : null;
-				if (!check) err(b.id, `check file «${b.check}» not found in vcv/course/checks`);
+				if (!check) err(b.id, `check file «${b.check}» not found in facts/checks`);
 				allTerms.push(...terms(b.task));
 				const tw = taskWidth(b, [], b.task, true);
 				const taskItem = { id: "task-1", kind: "task", mode: "practice", width: tw, text: b.task, check, hints: b.hints || {}, given: [] };

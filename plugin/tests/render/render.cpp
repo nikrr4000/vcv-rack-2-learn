@@ -1,4 +1,4 @@
-// Render harness CLI (visual QA without Rack, see docs/rack/PROGRESS.md):
+// Render harness CLI (visual QA without Rack, see docs/PROGRESS.md):
 //   render gallery <outdir>                 every figure template, light and dark
 //   render previews <pack.json> <outdir> [<spec>…]   module previews from the pack (see previews.cpp)
 #include <cstdio>

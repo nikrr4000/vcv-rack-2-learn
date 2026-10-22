@@ -3,19 +3,19 @@
  * In-Rack QA on a separate test instance (plan §8, §10.4). The session that built the course could
  * not run it — Rack does not start inside its sandbox — so this is the owner's one command:
  *
- *   rack/scripts/build.sh --test && node rack/scripts/rack-test.mjs [<lesson> …] [--shots]
+ *   scripts/build.sh --test && node scripts/rack-test.mjs [<lesson> …] [--shots]
  *
- * Test instance: user folder rack/.rack-test (plugins copied read-only from the owner's Rack folder on
+ * Test instance: user folder .rack-test (plugins copied read-only from the owner's Rack folder on
  * first run, the test build of Atlas installed by build.sh --test), dev bridge on 127.0.0.1:2700,
  * MCP Server of the test patches on 2610, Atlas URL 127.0.0.1:5185 (start `npm run dev:fixtures` there
  * if you want the tutor in the test). For every lesson: open it, step through every block, and check
  * GET /state: no text overflow, no missing pointer target, no missing plugin, Navigator present, the
  * block count as compiled; run every practice check on the template (it must fail) and every debug
- * check (it must fail). Results: rack/build/rack-test.json. Rack is closed with POST /quit; a 10-minute
+ * check (it must fail). Results: build/rack-test.json. Rack is closed with POST /quit; a 10-minute
  * alarm is the safety net.
  *
- * --shots: module screenshots instead (`Rack -t 2`, user folder rack/.rack-shots, one run per
- * ATLAS_PREVIEW variant) into rack/qa/previews/rack-<variant>/.
+ * --shots: module screenshots instead (`Rack -t 2`, user folder .rack-shots, one run per
+ * ATLAS_PREVIEW variant) into qa/previews/rack-<variant>/.
  */
 import { spawn } from "node:child_process";
 import fs from "node:fs";
@@ -23,7 +23,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const RACK_BIN = process.env.RACK_BIN || path.join(os.homedir(), "Applications/VCV Rack 2 Free.app/Contents/MacOS/Rack");
 const OWNER_PLUGINS = path.join(os.homedir(), "Library/Application Support/Rack2/plugins-mac-arm64");
 const COPY = ["ImpromptuModular", "Valley", "AudibleInstruments", "VCV-Recorder", "VCVRackMcpServer"];
@@ -67,9 +67,9 @@ async function waitBridge() {
 }
 
 async function testLessons() {
-	const dir = path.join(REPO, "rack/.rack-test");
+	const dir = path.join(REPO, ".rack-test");
 	prepare(dir);
-	const pack = JSON.parse(fs.readFileSync(path.join(REPO, "rack/build/test-res/course/pack.json"), "utf8"));
+	const pack = JSON.parse(fs.readFileSync(path.join(REPO, "build/test-res/course/pack.json"), "utf8"));
 	const ids = only.length ? only : pack.course.parts.flatMap((p) => p.lessons);
 	const child = startRack(dir, [], { ATLAS_DEV_PORT: "2700", ATLAS_URL: "http://127.0.0.1:5185" });
 	const results = [];
@@ -105,18 +105,18 @@ async function testLessons() {
 		await sleep(1500);
 		child.kill();
 	}
-	fs.mkdirSync(path.join(REPO, "rack/build"), { recursive: true });
-	fs.writeFileSync(path.join(REPO, "rack/build/rack-test.json"), `${JSON.stringify(results, null, 1)}\n`);
+	fs.mkdirSync(path.join(REPO, "build"), { recursive: true });
+	fs.writeFileSync(path.join(REPO, "build/rack-test.json"), `${JSON.stringify(results, null, 1)}\n`);
 	const bad = results.filter((r) => r.problems.length).length;
 	console.log(`rack test: ${results.length - bad}/${results.length} lessons clean`);
 	return bad ? 1 : 0;
 }
 
 async function screenshots() {
-	const dir = path.join(REPO, "rack/.rack-shots");
+	const dir = path.join(REPO, ".rack-shots");
 	fs.mkdirSync(path.join(dir, "plugins-mac-arm64"), { recursive: true });
 	fs.rmSync(path.join(dir, "plugins-mac-arm64/Atlas"), { recursive: true, force: true });
-	fs.cpSync(path.join(REPO, "rack/plugin/dist/Atlas"), path.join(dir, "plugins-mac-arm64/Atlas"), { recursive: true });
+	fs.cpSync(path.join(REPO, "plugin/dist/Atlas"), path.join(dir, "plugins-mac-arm64/Atlas"), { recursive: true });
 	const variants = {
 		default: "",
 		pilot: "Page=p1-01-sound-wave/b3/page-1;Note=p1-01-sound-wave/b5/note-2;Figure=p1-01-sound-wave/b4/figure-1;Quiz=p1-01-sound-wave/b2/quiz-1;Task=p1-01-sound-wave/b8/task-1",
@@ -127,7 +127,7 @@ async function screenshots() {
 		fs.rmSync(path.join(dir, "log.txt"), { force: true });
 		const child = startRack(dir, ["-t", "2"], preview ? { ATLAS_PREVIEW: preview } : {});
 		await new Promise((r) => child.on("exit", r));
-		const out = path.join(REPO, `rack/qa/previews/rack-${name}`);
+		const out = path.join(REPO, `qa/previews/rack-${name}`);
 		fs.mkdirSync(out, { recursive: true });
 		const src = path.join(dir, "screenshots/Atlas");
 		if (fs.existsSync(src)) for (const f of fs.readdirSync(src)) fs.copyFileSync(path.join(src, f), path.join(out, f));

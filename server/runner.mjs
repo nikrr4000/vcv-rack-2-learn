@@ -35,7 +35,7 @@ export function tutorArgs({ model = "sonnet", effort = "low", promptFile, mcpCon
 	if (!drop.has("--append-system-prompt-file")) a.push("--append-system-prompt-file", promptFile);
 	else a.push("--append-system-prompt", fs.readFileSync(promptFile, "utf8"));
 	a.push("--tools", "Read");
-	a.push("--allowedTools", ...READ_TOOLS, `Read(/${path.join(repo, "rack", "course")}/**)`);
+	a.push("--allowedTools", ...READ_TOOLS, `Read(/${path.join(repo, "course")}/**)`);
 	a.push("--disallowedTools", ...WRITE_TOOLS);
 	a.push("--mcp-config", mcpConfig, "--strict-mcp-config");
 	a.push("--setting-sources", "local", "--disable-slash-commands");

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Live module snapshots for the course: `course/modules/_snapshot/<Plugin>.<Slug>.json`.
+ * Live module snapshots for the course: `facts/modules/_snapshot/<Plugin>.<Slug>.json`.
  *
- *   node vcv/scripts/snapshot-modules.mjs [Plugin/Slug …]     (default: every module of course.json)
+ *   node scripts/snapshot-modules.mjs [Plugin/Slug …]     (default: every module of course.json)
  *
  * One module at a time: the exact slug is confirmed in `GET /library/<plugin>`, the module is
  * added in the session's own row, `GET /modules/:id` and `/params` are saved, every parameter
@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 
 import { rack, rackReady, session } from "./lib/live.mjs";
 
-const COURSE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "course");
+const COURSE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "facts");
 const OUT = path.join(COURSE, "modules", "_snapshot");
 const course = JSON.parse(fs.readFileSync(path.join(COURSE, "course.json"), "utf8"));
 const wanted = process.argv.slice(2).length ? process.argv.slice(2) : [...new Set(Object.values(course.lessons).flatMap((l) => l.modules))].sort();

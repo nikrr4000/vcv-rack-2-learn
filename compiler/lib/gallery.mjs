@@ -1,5 +1,5 @@
 /**
- * rack/qa/gallery.vcv: every Atlas module and every figure template in one patch, for looking at
+ * qa/gallery.vcv: every Atlas module and every figure template in one patch, for looking at
  * the look in Rack (switch «Prefer dark panels» for the dark theme). Its items live in the pack as
  * the hidden lesson `_gallery` (not in any part, so the course map never shows it).
  */

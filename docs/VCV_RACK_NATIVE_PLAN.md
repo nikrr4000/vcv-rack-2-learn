@@ -1,6 +1,6 @@
 # Atlas in Rack — the course moves into VCV Rack
 
-A self-contained task for one long autonomous Claude Code session. Read it fully before starting. Everything you need is in this file, in `docs/vcv/VCV_COURSE_RESEARCH.md` (sources), and in what the previous run built (`docs/vcv/REPORT.md`, `vcv/course/`).
+A self-contained task for one long autonomous Claude Code session. Read it fully before starting. Everything you need is in this file, in `docs/vcv/VCV_COURSE_RESEARCH.md` (sources), and in what the previous run built (`docs/vcv/REPORT.md`, `facts/`).
 
 ## 0. What the owner wants
 
@@ -23,9 +23,9 @@ The owner gives full freedom over the look and depth. He will come back after th
 
 ## 2. Run mode
 
-- **One autonomous session, no owner involvement.** Do not ask questions; do not wait for approval. On a failure: record it in `docs/rack/PROGRESS.md`, take the conservative option, continue.
+- **One autonomous session, no owner involvement.** Do not ask questions; do not wait for approval. On a failure: record it in `docs/PROGRESS.md`, take the conservative option, continue.
 - **No stage gates.** Work through the workstreams in order (section 9), but do not stop between them for verification by the owner. Self-verify continuously with the deterministic tools this plan asks you to build (section 10). The only full stop is the end of the plan.
-- **Checkpoint.** Keep `docs/rack/PROGRESS.md` current after every task: workstream, task, status, commit hash, open issues, known follow-ups. If the context is compacted or the session restarts, read `PROGRESS.md` first and continue from the first unfinished task. Never redo a finished task.
+- **Checkpoint.** Keep `docs/PROGRESS.md` current after every task: workstream, task, status, commit hash, open issues, known follow-ups. If the context is compacted or the session restarts, read `PROGRESS.md` first and continue from the first unfinished task. Never redo a finished task.
 - **Save context with subagents.** Content conversion (W7) runs one subagent per course part; module code can be split by module. Each subagent gets exactly the files it needs and returns a summary of at most 15 lines. Re-run validators in the main session after every subagent; send failures to a new fix-up subagent.
 - **Long-running processes** (Atlas test server, test Rack instance, tutor stub) are started as background tasks of this session or with a self-exit timer (`--idle-exit 20m`), so they can always be stopped. The previous run could not `kill` a process started by an earlier command; do not rely on `kill` across commands.
 - **Git.** Branch `rack-native` from `vcv-course`. One commit per task. Never `git push`, never touch remotes.
@@ -35,20 +35,20 @@ The owner gives full freedom over the look and depth. He will come back after th
 
 The session runs in the Claude Code Bash sandbox configured in `.claude/settings.local.json` (the owner updates it before the run, section 13). Rules:
 
-1. **Stay inside `REPO`.** All writes go to `REPO` (`~/Documents/personal/learn-with-claude`). No writes to the vault, `~/Library`, `~/.claude`, or anywhere else. Nothing under any `.claude/` directory is written by you — not even inside `REPO` (the auto-mode classifier refused that last time). Configuration you need goes to normal folders (`vcv/tutor/`, `rack/…`) and is passed by flags.
+1. **Stay inside `REPO`.** All writes go to `REPO` (`~/Documents/personal/learn-with-claude`). No writes to the vault, `~/Library`, `~/.claude`, or anywhere else. Nothing under any `.claude/` directory is written by you — not even inside `REPO` (the auto-mode classifier refused that last time). Configuration you need goes to normal folders (`tutor/`, `rack/…`) and is passed by flags.
 2. **Read-only exceptions:** the owner's Rack plugins folder `~/Library/Application Support/Rack2/plugins-mac-arm64/` may be read (to copy plugins into the test instance). Nothing else outside `REPO` is read except the Rack app bundle in `/Applications`.
 3. **Network:** only the hosts in the sandbox allowlist. Package downloads come from npm and GitHub; GitHub sources come as tarballs from `codeload.github.com` (nested `git clone` fails in the sandbox).
 4. **The owner's live Rack (port 2600)** is used only to verify standard-module behaviour (section 10.5), exactly as the previous run did: modules go into a separate row, every module and cable you create is deleted, nothing else is touched, no patch is saved, loaded or cleared.
 5. **The test Rack instance** (section 8) runs from the app bundle with a user folder inside `REPO`; you may start, restart and stop it freely.
 6. **Never work around the sandbox or a deny rule.** A refusal is a result: record it, use the fallback, list it in the final report.
 7. **No GUI automation** (no scripted clicks or keystrokes in other apps).
-8. **Copyright.** Lesson text is written in your own words. At most one quote per source per lesson, under 15 words, only quotes already verified in `vcv/course/quotes.json`. Figures are drawn from templates (section 6.5), not copied from manuals.
+8. **Copyright.** Lesson text is written in your own words. At most one quote per source per lesson, under 15 words, only quotes already verified in `facts/quotes.json`. Figures are drawn from templates (section 6.5), not copied from manuals.
 
 ## 4. What exists (read before designing)
 
 - `docs/vcv/REPORT.md` — the previous run: what was built, the manual follow-ups, live findings.
-- `vcv/course/` — 52 lessons (`lessons/*.md`, written as notes for a teaching agent, ~77 000 words), 51 module cards (`modules/*.md`), 51 live snapshots (`modules/_snapshot/*.json`: params with names, ranges, `display` at min/mid/max; inputs; outputs), 51 checks (`checks/*.json`, port and param names verified live), glossary (186 terms), `sources.md`, `quotes.json`, `course.json`.
-- `vcv/scripts/` — `snapshot-modules.mjs`, `validate-course.mjs`, `live-check.mjs` (builds reference patches on the live Rack and runs checks), `seed-notes.mjs`, `merge-glossary.mjs`, `lib/`.
+- `facts/` — 52 lessons (`lessons/*.md`, written as notes for a teaching agent, ~77 000 words), 51 module cards (`modules/*.md`), 51 live snapshots (`modules/_snapshot/*.json`: params with names, ranges, `display` at min/mid/max; inputs; outputs), 51 checks (`checks/*.json`, port and param names verified live), glossary (186 terms), `sources.md`, `quotes.json`, `course.json`.
+- `scripts/` — `snapshot-modules.mjs`, `validate-course.mjs`, `live-check.mjs` (builds reference patches on the live Rack and runs checks), `seed-notes.mjs`, `merge-glossary.mjs`, `lib/`.
 - `app/server/vcv/` — `rack.mjs`, `course.mjs`, `checker.mjs`, `notes.mjs`, `tutor.mjs`; the lesson runner `app/server/lessons.mjs` (one `claude -p` per turn, `--resume`, relay MCP for questions).
 - `vcv/tutor-plugin/` — the old `AtlasTutor` plugin (one 30 HP module). It is **replaced** by the new plugin.
 - `vcv/.sdk/Rack-SDK` — Rack SDK 2.6.6 for mac arm64 (it has `rack::network::requestJson`).
@@ -94,11 +94,11 @@ A calm editorial look that stands apart from busy hardware-style panels: printed
 - **Icons.** None from icon fonts; simple vector glyphs drawn with nanovg (arrow, check, cross, question, dot).
 - **Motion.** View transitions between blocks glide over 350 ms with ease-in-out; nothing else animates except the tutor's typing indicator and streaming text.
 
-Write the tokens once in `rack/plugin/src/ui/Theme.hpp` and `rack/course/design-tokens.json` (the compiler's text-fit tool reads the same numbers).
+Write the tokens once in `plugin/src/ui/Theme.hpp` and `course/design-tokens.json` (the compiler's text-fit tool reads the same numbers).
 
 ### 6.2 The plugin `Atlas`
 
-A new plugin, slug `Atlas`, brand «Atlas», licence `proprietary` (personal use; do not copy code from GPL plugins — learn techniques only), source in `rack/plugin/`. It supersedes `AtlasTutor` (its source stays in the repo for reference; the owner's install script moves the old folder to a backup).
+A new plugin, slug `Atlas`, brand «Atlas», licence `proprietary` (personal use; do not copy code from GPL plugins — learn techniques only), source in `plugin/`. It supersedes `AtlasTutor` (its source stays in the repo for reference; the owner's install script moves the old folder to a backup).
 
 Modules (Russian names in the module browser; slugs in English):
 
@@ -184,7 +184,7 @@ A panel docked to the right edge of the Rack window (a scene child, above the ra
 
 #### 6.3.7 The checker in Rack
 
-Port `app/server/vcv/checker.mjs` semantics to C++ (`rack/plugin/src/check/`): modules by plugin/slug with `ref` assignment search, cables by port names, params by display ranges, probes by sampling output voltages (on the engine thread via the module's own `process()` sampling into a ring buffer, read by the UI). The check data is in the pack. Scope of a check: in a `practice` block, the modules between the row's `Bench` markers plus the modules listed in the block's `given` list (block level only); in a `debug` block, the block's own modules (their ids are recorded in the pack). Add a check kind `fixed` (`expect_cable` / `expect_param`) to **both** the Node checker and the C++ checker, with fixtures. Results are shown in `Task` with hint ladders (6.4). The C++ checker must agree with the Node checker on every reference case (10.3).
+Port `server/checker.mjs` semantics to C++ (`plugin/src/check/`): modules by plugin/slug with `ref` assignment search, cables by port names, params by display ranges, probes by sampling output voltages (on the engine thread via the module's own `process()` sampling into a ring buffer, read by the UI). The check data is in the pack. Scope of a check: in a `practice` block, the modules between the row's `Bench` markers plus the modules listed in the block's `given` list (block level only); in a `debug` block, the block's own modules (their ids are recorded in the pack). Add a check kind `fixed` (`expect_cable` / `expect_param`) to **both** the Node checker and the C++ checker, with fixtures. Results are shown in `Task` with hint ladders (6.4). The C++ checker must agree with the Node checker on every reference case (10.3).
 
 #### 6.3.8 Dev bridge (testing only)
 
@@ -192,16 +192,16 @@ When the env var `ATLAS_DEV_PORT` is set, the host serves a tiny HTTP API on `12
 
 ### 6.4 The course pack
 
-Source of truth for content: `rack/course/lessons/<id>.yaml`, one file per lesson, written from the templates in Appendix A and validated by a JSON Schema. The compiler (`rack/compiler/`, Node) turns all lessons into:
+Source of truth for content: `course/lessons/<id>.yaml`, one file per lesson, written from the templates in Appendix A and validated by a JSON Schema. The compiler (`compiler/`, Node) turns all lessons into:
 
-- `rack/plugin/res/course/pack.json` — every block's text (already split into pages by the text-fit tool), quizzes, FAQ, hints, figures, checks, glossary;
-- `rack/plugin/res/course/patches/<id>.vcv` — the lesson patch: rows of blocks laid out by presets (6.6), with Atlas modules carrying references and standard modules carrying cables and parameter values;
-- `rack/build/report.json` — per-lesson stats: blocks, pages per text, overflow warnings, missing targets.
+- `plugin/res/course/pack.json` — every block's text (already split into pages by the text-fit tool), quizzes, FAQ, hints, figures, checks, glossary;
+- `plugin/res/course/patches/<id>.vcv` — the lesson patch: rows of blocks laid out by presets (6.6), with Atlas modules carrying references and standard modules carrying cables and parameter values;
+- `build/report.json` — per-lesson stats: blocks, pages per text, overflow warnings, missing targets.
 
 Lesson YAML top level:
 
 ```yaml
-id: p3-05-first-voice        # same ids as vcv/course
+id: p3-05-first-voice        # same ids as facts
 num: "3.5"
 part: 3
 title: Первый голос
@@ -268,12 +268,12 @@ Only for what preparation cannot cover: a free question, a free answer to grade,
 Replace one-process-per-turn for Rack lessons with **one persistent `claude -p` process per open lesson**, started when the lesson opens:
 
 ```
-cwd: vcv/tutor/run/          (a folder with no .claude/ inside it or above it up to REPO)
+cwd: tutor/run/          (a folder with no .claude/ inside it or above it up to REPO)
 claude -p --input-format stream-json --output-format stream-json --verbose --include-partial-messages
   --model <tutorModel, default sonnet> --effort <tutorEffort, default low>
-  --append-system-prompt-file vcv/tutor/TUTOR.md
+  --append-system-prompt-file tutor/TUTOR.md
   --tools "Read"
-  --allowedTools <the exact MCP read tools: mcp__vcvrack__vcvrack_get_status, …_list_modules, …_get_module, …_get_params, …_list_cables, …_get_rack_layout> "Read(//<REPO absolute path>/rack/course/**)"
+  --allowedTools <the exact MCP read tools: mcp__vcvrack__vcvrack_get_status, …_list_modules, …_get_module, …_get_params, …_list_cables, …_get_rack_layout> "Read(//<REPO absolute path>/course/**)"
   --disallowedTools <the exact MCP write tools: …_add_module, …_delete_module, …_set_params, …_add_cable, …_delete_cable, …_set_layout_preferences>
   --mcp-config <vcvrack http 127.0.0.1:2600 only> --strict-mcp-config
   --setting-sources local --disable-slash-commands
@@ -284,7 +284,7 @@ env: childEnv() minus ANTHROPIC_API_KEY/ANTHROPIC_AUTH_TOKEN, plus ENABLE_TOOL_S
 
 - The session must not run `claude` itself (it is denied), so check flags against the CLI reference (https://code.claude.com/docs/en/cli-reference) and build a **probe-and-fallback** into the runner: if the process exits with an "unknown option" error, retry without the optional flags in this order — `--exclude-dynamic-system-prompt-sections`, `--permission-prompts`, `--effort`, `--append-system-prompt-file` (replaced by `--append-system-prompt` with the file's text, passed as a spawn argument, never through a shell) — and log which were dropped. Do **not** use `--bare` (it does not use the subscription login).
 - MCP permission rules: write the exact tool names, not partial-name wildcards; derive the REPO path at runtime.
-- `--setting-sources local` with the `vcv/tutor/run/` cwd keeps the owner's user settings and hooks (the study-pipeline hooks) out of tutor turns.
+- `--setting-sources local` with the `tutor/run/` cwd keeps the owner's user settings and hooks (the study-pipeline hooks) out of tutor turns.
 - **Warm-up:** right after start, send one hidden message («Готов?» with an instruction to answer «ok») and discard its reply, so MCP is connected and the system prompt is cached before the first real question.
 - The tutor has **no write tools to the patch**: demos are prebuilt in lesson patches. It can read the patch and course files.
 - Idle for 15 minutes → close stdin and let the process exit; restart on the next question (each message carries the context header, 7.3, so nothing important is lost). Lesson switch → close the old process, start the new one.
@@ -308,7 +308,7 @@ The patch line is built by the server from REST `:2600` (or from what the plugin
 
 ### 7.4 Reply templates (in `TUTOR.md`)
 
-`vcv/tutor/TUTOR.md` is short (≤ 700 words, English instructions, Russian examples). It fixes the reply shape so the model does not plan:
+`tutor/TUTOR.md` is short (≤ 700 words, English instructions, Russian examples). It fixes the reply shape so the model does not plan:
 
 - **ask:** 1–3 sentences that answer directly. Then, if useful, one line starting «Покрути:» or «Посмотри:» naming a real module and knob on screen. At most 90 words. No headings, no lists longer than 3 items, no tables.
 - **grade:** first character `✓`, `✗` or `≈`. Then one sentence: what is right or wrong in the learner's own words. Then «Верно так:» + the correct idea in one sentence. At most 60 words.
@@ -319,7 +319,7 @@ The patch line is built by the server from REST `:2600` (or from what the plugin
 
 ### 7.5 Server endpoints for Rack
 
-In `app/server/rack/` (new), mounted at `/api/rack/*`. Ports: the owner's Atlas service is 5175 (never touched by the session); the session's test Atlas server is 5185 (`dev:fixtures`); a second test server for the lesson-switch test uses 5186.
+In `server/` (new), mounted at `/api/rack/*`. Ports: the owner's Atlas service is 5175 (never touched by the session); the session's test Atlas server is 5185 (`dev:fixtures`); a second test server for the lesson-switch test uses 5186.
 
 - `GET /api/rack/health` — Atlas up, tutor model, Rack MCP reachable.
 - `POST /api/rack/lesson/open {lesson}` — start the warm tutor process, mark the vault note `study → learning`.
@@ -331,31 +331,31 @@ The vault note per lesson (`VAULT_STUDY/vcv/notes/<id>.md`, path from the existi
 
 ### 7.6 Stub for tests
 
-`vcv/tutor/stub-claude.mjs` behaves like the persistent process: reads stream-json lines, emits `stream_event` text deltas and a `result` per message, reply text built from the template for the `[kind]`. Atlas settings point to it in fixtures; costs no model calls.
+`tutor/stub-claude.mjs` behaves like the persistent process: reads stream-json lines, emits `stream_event` text deltas and a `result` per message, reply text built from the template for the `[kind]`. Atlas settings point to it in fixtures; costs no model calls.
 
 ## 8. The test Rack instance
 
 For loading lesson patches with the new plugin, the session runs its own Rack:
 
-- User folder `REPO/rack/.rack-test/` (gitignored; `rack/.rack-shots/` and `rack/.fakehome/` too). Plugins: copy from the owner's `~/Library/Application Support/Rack2/plugins-mac-arm64/` (read-only): `ImpromptuModular`, `Valley`, `AudibleInstruments`, `VCV-Recorder`, the Neural-Harmonics folder; `Fundamental` is unpacked by Rack on first start; install the freshly built test package of `Atlas` (below).
-- Seed `rack/.rack-test/settings.json` before the first start with the keys that turn off the tips window and update checks (verify key names in the Rack source, `src/settings.cpp`; expected `showTipsOnLaunch: false`, `autoCheckUpdates: false`).
-- **Test builds are separate.** `rack/scripts/build.sh --test` compiles patches with the MCP Server on port 2610 and the Audio module without a device into `rack/build/test-res/` and installs a test copy of the plugin into `.rack-test` only. The shipped build (`build.sh` without flags) writes `rack/plugin/res/course/` with port 2600; a build gate checks that every shipped patch has MCP on 2600 and no test settings.
+- User folder `REPO/.rack-test/` (gitignored; `.rack-shots/` and `rack/.fakehome/` too). Plugins: copy from the owner's `~/Library/Application Support/Rack2/plugins-mac-arm64/` (read-only): `ImpromptuModular`, `Valley`, `AudibleInstruments`, `VCV-Recorder`, the Neural-Harmonics folder; `Fundamental` is unpacked by Rack on first start; install the freshly built test package of `Atlas` (below).
+- Seed `.rack-test/settings.json` before the first start with the keys that turn off the tips window and update checks (verify key names in the Rack source, `src/settings.cpp`; expected `showTipsOnLaunch: false`, `autoCheckUpdates: false`).
+- **Test builds are separate.** `scripts/build.sh --test` compiles patches with the MCP Server on port 2610 and the Audio module without a device into `build/test-res/` and installs a test copy of the plugin into `.rack-test` only. The shipped build (`build.sh` without flags) writes `plugin/res/course/` with port 2600; a build gate checks that every shipped patch has MCP on 2600 and no test settings.
 - Before each start: delete `log.txt` and `autosave*` in the test folder (a truncated log makes Rack ask a blocking crash question; an autosave overrides the requested patch).
-- Start in the background with a hard time limit (macOS has no `timeout`): `perl -e 'alarm shift; exec @ARGV' 600 "/Applications/VCV Rack 2 Free.app/Contents/MacOS/Rack" -u "$REPO/rack/.rack-test" <patch>` with `ATLAS_DEV_PORT=2700` and `ATLAS_URL=http://127.0.0.1:5185`. Stop it with the dev bridge's `POST /quit`; the alarm is the safety net. Do not use `-d`.
-- Screenshot mode for visual QA uses a separate user folder `rack/.rack-shots/` that contains only `Atlas` (and the Fundamental Rack unpacks): delete `screenshots/Atlas/` before each run (existing files are skipped), run `Rack -u "$REPO/rack/.rack-shots" -t 2` once per preview variant with `ATLAS_PREVIEW` set per model (`Page=<item>;Quiz=<item>;…`), copy the PNGs to `rack/qa/previews/<variant>/`. Verify the output folder on the first run.
+- Start in the background with a hard time limit (macOS has no `timeout`): `perl -e 'alarm shift; exec @ARGV' 600 "/Applications/VCV Rack 2 Free.app/Contents/MacOS/Rack" -u "$REPO/.rack-test" <patch>` with `ATLAS_DEV_PORT=2700` and `ATLAS_URL=http://127.0.0.1:5185`. Stop it with the dev bridge's `POST /quit`; the alarm is the safety net. Do not use `-d`.
+- Screenshot mode for visual QA uses a separate user folder `.rack-shots/` that contains only `Atlas` (and the Fundamental Rack unpacks): delete `screenshots/Atlas/` before each run (existing files are skipped), run `Rack -u "$REPO/.rack-shots" -t 2` once per preview variant with `ATLAS_PREVIEW` set per model (`Page=<item>;Quiz=<item>;…`), copy the PNGs to `qa/previews/<variant>/`. Verify the output folder on the first run.
 - **If Rack cannot start inside the sandbox** (no window, permission errors): record it, keep all deterministic checks (10.1–10.3, 10.5), and move the in-Rack checks to the owner's checklist. Do not try to run Rack outside the sandbox.
 
 ## 9. Workstreams (do them in this order; no owner gates)
 
-**W0 — Orientation.** Find the Rack app (`ls /Applications | grep -i rack`; expected `VCV Rack 2 Free.app`) and use its real path everywhere. Read this plan, `docs/vcv/REPORT.md`, `vcv/course/course.json`, three lessons (`p1-01`, `p3-05`, `p8-01`), two cards, two checks, `vcv/tutor-plugin/src/Tutor.cpp`, `app/server/lessons.mjs`, `app/server/vcv/*.mjs`. Inventory the toolchain (Xcode CLT, `make`, `node`, SDK). Create `docs/rack/PROGRESS.md`, branch `rack-native`.
+**W0 — Orientation.** Find the Rack app (`ls /Applications | grep -i rack`; expected `VCV Rack 2 Free.app`) and use its real path everywhere. Read this plan, `docs/vcv/REPORT.md`, `facts/course.json`, three lessons (`p1-01`, `p3-05`, `p8-01`), two cards, two checks, `vcv/tutor-plugin/src/Tutor.cpp`, `app/server/lessons.mjs`, `app/server/vcv/*.mjs`. Inventory the toolchain (Xcode CLT, `make`, `node`, SDK). Create `docs/PROGRESS.md`, branch `rack-native`.
 
 **W1 — Design system.** Fonts (6.1), `Theme.hpp`, `design-tokens.json`.
 
 **W2 — Plugin core.** Plugin skeleton written by hand (no `helper.py`: it is interactive): `plugin.json`, `Makefile`, `src/plugin.{hpp,cpp}`. The text engine (6.3.3) as a standalone library with unit tests. The host (6.3.1), theme switch, resize handles, panel drawing, previews.
 
-**W3 — Modules.** First export checker fixtures: for every check in `vcv/course/checks/`, the reference patch that `live-check.mjs` builds and the expected result, as JSON in `rack/plugin/tests/fixtures/`. Then `Page`, `Note` + pointer overlay, `Figure` + all templates, `Quiz`, `Task`, `Bench`, the C++ checker, `Navigator` + course map + lesson loading (6.3.2) + docked panel, `Tutor` module and panel UI, the Atlas client (tested against a local stub server here; end-to-end in W6), the dev bridge.
+**W3 — Modules.** First export checker fixtures: for every check in `facts/checks/`, the reference patch that `live-check.mjs` builds and the expected result, as JSON in `plugin/tests/fixtures/`. Then `Page`, `Note` + pointer overlay, `Figure` + all templates, `Quiz`, `Task`, `Bench`, the C++ checker, `Navigator` + course map + lesson loading (6.3.2) + docked panel, `Tutor` module and panel UI, the Atlas client (tested against a local stub server here; end-to-end in W6), the dev bridge.
 
-**W4 — Compiler and tools.** JSON Schema for lesson YAML; compiler (pack, patches, report); layout presets; text-fit tool with `opentype.js`; param resolver (`displayValue` target → raw value using snapshots: exact match among sampled points, linear/exponential interpolation from `min/mid/max` when the unit allows, otherwise a calibration on the live Rack cached in `rack/course/calibration.json`); the course validator (10.2); `rack/scripts/build.sh` = schema → validate → compile → `make` → `make dist` (and `--test`, section 8). At the end of W4, the compiler generates `rack/qa/gallery.vcv`: every module in both themes and every figure template.
+**W4 — Compiler and tools.** JSON Schema for lesson YAML; compiler (pack, patches, report); layout presets; text-fit tool with `opentype.js`; param resolver (`displayValue` target → raw value using snapshots: exact match among sampled points, linear/exponential interpolation from `min/mid/max` when the unit allows, otherwise a calibration on the live Rack cached in `course/calibration.json`); the course validator (10.2); `scripts/build.sh` = schema → validate → compile → `make` → `make dist` (and `--test`, section 8). At the end of W4, the compiler generates `qa/gallery.vcv`: every module in both themes and every figure template.
 
 **W5 — Pilot lesson.** Write `p1-01-sound-wave` in the new format by hand (main session) to the highest standard; it becomes the reference example for writers. Run every check in section 10 on it, including the test instance and screenshots. Fix the plugin and tools until the pilot is excellent. Then write `p3-05-first-voice` (practice-heavy) the same way.
 
@@ -367,7 +367,7 @@ For loading lesson patches with the new plugin, the session runs its own Rack:
 
 **W9 — Whole-course QA.** Everything in section 10 over all 52 lessons. Read-through pass (10.7). Fix and rebuild until clean.
 
-**W10 — Hand-over.** `rack/scripts/owner-install.sh` (section 13), final build, `docs/rack/REPORT.md`, `docs/rack/OWNER_CHECKLIST.md`.
+**W10 — Hand-over.** `scripts/install.sh` (section 13), final build, `docs/REPORT.md`, `docs/OWNER_CHECKLIST.md`.
 
 ## 10. Self-verification (deterministic first)
 
@@ -375,7 +375,7 @@ For loading lesson patches with the new plugin, the session runs its own Rack:
 
 Schema valid · every block id unique · every reference resolves (modules, ports, params by name in snapshots; figures; glossary terms; sources; quotes in `quotes.json`) · every row ≤ 96 HP · every lesson's plugins exist · every practice has a check and a hint ladder · every text block has 2–4 FAQ · plugin compiles without errors.
 
-### 10.2 Content validator (`rack/compiler/validate.mjs`)
+### 10.2 Content validator (`compiler/validate.mjs`)
 
 - Text fit: no page over its box; no block over 3 pages; `Note` ≤ 40 words; quiz question ≤ 30 words, each option ≤ 12 words, each explanation ≤ 40 words; FAQ answer ≤ 70 words.
 - Style lint (Appendix B): sentences ≤ 22 words (warn at 18), no banned phrases, no English sentences in learner text, Rack names in Latin only where they match a snapshot name, «ты» form, no exclamation marks except in quotes, a normal space between a number and its unit («440 Гц»).
@@ -385,13 +385,13 @@ Schema valid · every block id unique · every reference resolves (modules, port
 
 ### 10.3 Unit tests
 
-C++ (plain `clang++`, no Rack): text engine (markdown parsing, line breaking, pagination against fixtures), checker (every case in `vcv/course/checks/*` with the reference patches that `live-check.mjs` builds, exported as JSON fixtures), figure parameter parsing. Node: compiler, layout presets, param resolver, text-fit parity with the C++ engine on a 200-paragraph corpus (same line breaks), tutor runner with the stub, `/api/rack/*`. Existing tests must keep passing.
+C++ (plain `clang++`, no Rack): text engine (markdown parsing, line breaking, pagination against fixtures), checker (every case in `facts/checks/*` with the reference patches that `live-check.mjs` builds, exported as JSON fixtures), figure parameter parsing. Node: compiler, layout presets, param resolver, text-fit parity with the C++ engine on a 200-paragraph corpus (same line breaks), tutor runner with the stub, `/api/rack/*`. Existing tests must keep passing.
 
 ### 10.4 Visual QA
 
-- `rack/qa/previews/` — for each module and each figure template, `Rack -t` screenshots with `ATLAS_PREVIEW` pointing at chosen pack items (long page, short page, page with list and terms, long quiz, failing check, streaming tutor, every figure). Look at every image yourself (Read the PNG). Fix what looks wrong: clipping, crowding, misaligned baselines, poor contrast, inconsistent spacing.
+- `qa/previews/` — for each module and each figure template, `Rack -t` screenshots with `ATLAS_PREVIEW` pointing at chosen pack items (long page, short page, page with list and terms, long quiz, failing check, streaming tutor, every figure). Look at every image yourself (Read the PNG). Fix what looks wrong: clipping, crowding, misaligned baselines, poor contrast, inconsistent spacing.
 - Test instance (section 8): open every lesson patch via the dev bridge; `GET /state` must report no overflow, no missing pointer target, no missing plugin, Navigator present, block count as compiled; `POST /goto` through every block; run every practice check on the template patch (must fail with the first hint) and, for the pilot lessons, on a reference patch built over the test instance's MCP (port 2610) (must pass).
-- Keep `rack/qa/VISUAL_LOG.md`: what you looked at, what you changed.
+- Keep `qa/VISUAL_LOG.md`: what you looked at, what you changed.
 
 ### 10.5 Live verification of demo blocks (owner's Rack, standard modules only)
 
@@ -407,7 +407,7 @@ After W7, a fresh subagent (no part in writing) reads every lesson's learner-fac
 
 ## 11. Atlas web and old pieces
 
-- The old web lesson runner, `vcv/workspace/`, `vcv/course/` and their tests stay and must keep passing; `vcv/course/` remains the fact base (cards, snapshots, checks, sources).
+- The old web lesson runner, `vcv/workspace/`, `facts/` and their tests stay and must keep passing; `facts/` remains the fact base (cards, snapshots, checks, sources).
 - `vcv/tutor-plugin/` stays as source but is no longer built by default.
 - The Atlas «Модульный синтез» screen switches to Rack-native progress (W8).
 
@@ -437,12 +437,12 @@ rack/
     calibration.json
     templates/               Appendix A templates as files (copied from this plan)
   qa/                        gallery.vcv, previews/, VISUAL_LOG.md
-  scripts/                   build.sh, rack-test.mjs, owner-install.sh
+  scripts/                   build.sh, rack-test.mjs, install.sh
   .rack-test/                test Rack user folder (gitignored)
   build/                     compiler output reports (gitignored)
-vcv/tutor/                   TUTOR.md, settings.json, stub-claude.mjs
-app/server/rack/             /api/rack/* endpoints, tutor runner
-docs/rack/                   PROGRESS.md, REPORT.md, OWNER_CHECKLIST.md
+tutor/                   TUTOR.md, settings.json, stub-claude.mjs
+server/             /api/rack/* endpoints, tutor runner
+docs/                   PROGRESS.md, REPORT.md, OWNER_CHECKLIST.md
 ```
 
 ## 13. Owner's part
@@ -452,22 +452,22 @@ docs/rack/                   PROGRESS.md, REPORT.md, OWNER_CHECKLIST.md
 **After the run**, the owner runs one command:
 
 ```
-cd ~/Documents/personal/learn-with-claude && rack/scripts/owner-install.sh
+cd ~/Documents/personal/learn-with-claude && scripts/install.sh
 ```
 
-`owner-install.sh` (written by you; never run against the real home folder — test it with `HOME=$REPO/rack/.fakehome rack/scripts/owner-install.sh --dry-run` and a fake plugins folder; in `--dry-run` it only prints the commands it would run, including the `launchctl` line): moves `~/Library/Application Support/Rack2/plugins-mac-arm64/AtlasTutor` to `…/AtlasTutor.bak-<date>` if present; copies `rack/plugin/dist/Atlas/` into the plugins folder (replacing an older `Atlas` after backing it up); restarts the Atlas service (`launchctl kickstart -k gui/$(id -u)/com.nikrr.atlas`, or prints how to start it); prints «Перезапусти VCV Rack, добавь модуль Atlas → Навигатор и нажми «Продолжить»» and the path to `docs/rack/OWNER_CHECKLIST.md`.
+`install.sh` (written by you; never run against the real home folder — test it with `HOME=$REPO/rack/.fakehome scripts/install.sh --dry-run` and a fake plugins folder; in `--dry-run` it only prints the commands it would run, including the `launchctl` line): moves `~/Library/Application Support/Rack2/plugins-mac-arm64/AtlasTutor` to `…/AtlasTutor.bak-<date>` if present; copies `plugin/dist/Atlas/` into the plugins folder (replacing an older `Atlas` after backing it up); restarts the Atlas service (`launchctl kickstart -k gui/$(id -u)/com.nikrr.atlas`, or prints how to start it); prints «Перезапусти VCV Rack, добавь модуль Atlas → Навигатор и нажми «Продолжить»» and the path to `docs/OWNER_CHECKLIST.md`.
 
 `OWNER_CHECKLIST.md` (Russian): 10–15 checks in the order of the acceptance story (5.1), each one line with the expected result, plus every item the run could not verify.
 
 ## 14. Final report
 
-`docs/rack/REPORT.md` (English): what was built, per workstream; numbers (lessons, blocks, pages, quizzes, FAQ items, figures, checks); every validator and test result; the visual QA log summary; what is `UNVERIFIED` and why; deviations from this plan with reasons; tutor latency measured with the stub path (process start, first chunk) and the expected real-model behaviour. Close with a short Russian summary to the owner in chat.
+`docs/REPORT.md` (English): what was built, per workstream; numbers (lessons, blocks, pages, quizzes, FAQ items, figures, checks); every validator and test result; the visual QA log summary; what is `UNVERIFIED` and why; deviations from this plan with reasons; tutor latency measured with the stub path (process start, first chunk) and the expected real-model behaviour. Close with a short Russian summary to the owner in chat.
 
 ---
 
 ## Appendix A. Block templates
 
-Write blocks by filling these templates; do not invent new block types. Text fields are Markdown subset strings (6.3.3). `faq` and hints are mandatory where shown. Copy these templates into `rack/course/templates/` as files.
+Write blocks by filling these templates; do not invent new block types. Text fields are Markdown subset strings (6.3.3). `faq` and hints are mandatory where shown. Copy these templates into `course/templates/` as files.
 
 Field rules for all templates:
 
@@ -478,7 +478,7 @@ Field rules for all templates:
 - Optional fields: `lead` (a short page before a quiz), `page2` (a second page column in `story`), `simpler` (an everyday analogy, Appendix C) on any text block.
 - `plugins:` in the lesson header is inferred by the compiler; do not write it.
 
-**Port and parameter names in these examples are illustrative.** In real lessons every name must be copied from the module's snapshot (`vcv/course/modules/_snapshot/`); the validator rejects anything else.
+**Port and parameter names in these examples are illustrative.** In real lessons every name must be copied from the module's snapshot (`facts/modules/_snapshot/`); the validator rejects anything else.
 
 ### A.1 `cover`
 
@@ -622,7 +622,7 @@ Wrong options come from real misconceptions (the old lessons' «Пробник»
     3. Огибающая ADSR → CV-вход VCA. Push → Gate ADSR.
     4. Нажми Push: звук есть, пока кнопка нажата.
   given: [audio]
-  check: p3-05-first-voice           # reuse vcv/course/checks/<id>.json (names verified live)
+  check: p3-05-first-voice           # reuse facts/checks/<id>.json (names verified live)
   hints:                              # ladder per check item, from vague to exact
     "cable:3":
       - Звук есть всегда, даже без нажатия? Подумай, что решает, когда звучать.

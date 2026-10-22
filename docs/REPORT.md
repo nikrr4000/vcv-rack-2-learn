@@ -1,24 +1,24 @@
 # Atlas in Rack — run report
 
-Plan: `docs/rack/VCV_RACK_NATIVE_PLAN.md`. Checkpoint with every task, commit and deviation:
-`docs/rack/PROGRESS.md`. Branch `rack-native` (from `vcv-course`), 19 commits, nothing pushed.
-Owner's next step: `rack/scripts/owner-install.sh`, then `docs/rack/OWNER_CHECKLIST.md`.
+Plan: `docs/VCV_RACK_NATIVE_PLAN.md`. Checkpoint with every task, commit and deviation:
+`docs/PROGRESS.md`. Branch `rack-native` (from `vcv-course`), 19 commits, nothing pushed.
+Owner's next step: `scripts/install.sh`, then `docs/OWNER_CHECKLIST.md`.
 
 ## What was built, per workstream
 
 | WS | Result |
 | --- | --- |
 | W0 | Orientation; Rack app found in `~/Applications/VCV Rack 2 Free.app` (2.6.6); SDK 2.6.6 in `vcv/.sdk`; `PROGRESS.md`. |
-| W1 | Design system «Атлас»: PT Serif / PT Sans / JetBrains Mono (OFL, sources pinned), `rack/course/design-tokens.json` → generated `ThemeTokens.hpp`; light and dark palettes, an accent per part. |
+| W1 | Design system «Атлас»: PT Serif / PT Sans / JetBrains Mono (OFL, sources pinned), `course/design-tokens.json` → generated `ThemeTokens.hpp`; light and dark palettes, an accent per part. |
 | W2 | Plugin `Atlas` 2.1.0 (8 modules: Навигатор, Страница, Подпись, Схема, Вопрос, Задание, Верстак, Репетитор). Rack-free text engine (markdown subset, Russian line-breaking rules, pagination) with unit tests; host, theme switch, resize handles, paper panels. |
 | W3 | Every module view; 12 figure templates; C++ checker with exact Node parity on 102 fixture cases and the new `fixed` kind; Navigator with course map, lesson loading (learner copy, layout hash, audio device carried over, missing-plugin notice), docked panel, pointer overlay, glides; Tutor UI and Atlas client; dev bridge for tests. |
 | W4 | Lesson schema, compiler (pack.json + plain-JSON lesson patches, layout presets, demo bus per block, param resolver from display values with live calibration tables), text-fit tool emulating fontstash (200/200 exact parity with C++), validator, build gates, `build.sh` (+ `--test`). |
 | W5 | Pilots 1.1 «Звуковая волна» and 3.5 «Первый голос», written by hand; template checks without Rack; live verification of demo blocks; `rack-test.mjs` for the in-Rack QA run. |
-| W6 | Tutor runtime: `vcv/tutor/TUTOR.md` (600 words), one warm `claude -p` stream-json process per open lesson with warm-up, 15-minute idle exit, lesson-switch replacement and probe-and-fallback for unknown flags; `/api/rack/*` (health, lesson/open, ask + stream polling, progress); context header; compact log in the lesson's vault note; tutor model/effort in Atlas settings; stub; tests. |
+| W6 | Tutor runtime: `tutor/TUTOR.md` (600 words), one warm `claude -p` stream-json process per open lesson with warm-up, 15-minute idle exit, lesson-switch replacement and probe-and-fallback for unknown flags; `/api/rack/*` (health, lesson/open, ask + stream polling, progress); context header; compact log in the lesson's vault note; tutor model/effort in Atlas settings; stub; tests. |
 | W7 | The whole course: 50 lessons converted by 10 writer subagents (sonnet), one per part, from the old lessons, cards, snapshots, checks, glossary and quotes; fixes in the main session. |
 | W8 | Atlas «Модульный синтез» shows Rack progress (block N of M, learned, last lesson), note links, the tutor's state; «Как заниматься в Rack» page. The old web lesson stays as a «веб-урок» link. |
-| W9 | Whole-course QA in both themes with new build gates; read-through by 4 fresh subagents (152 edits) and follow-ups; `rack/qa/VISUAL_LOG.md`. |
-| W10 | `rack/scripts/owner-install.sh`, final build, this report, `OWNER_CHECKLIST.md`. |
+| W9 | Whole-course QA in both themes with new build gates; read-through by 4 fresh subagents (152 edits) and follow-ups; `qa/VISUAL_LOG.md`. |
+| W10 | `scripts/install.sh`, final build, this report, `OWNER_CHECKLIST.md`. |
 
 ## Numbers
 
@@ -33,13 +33,13 @@ Owner's next step: `rack/scripts/owner-install.sh`, then `docs/rack/OWNER_CHECKL
 | Figures | 153 (12 templates) |
 | Notes with pointers | 683 |
 | Tasks | try 52, practice 51 (the old check files, 3-step hint ladders), debug 51 (`fixed` checks) |
-| Package | `rack/plugin/dist/Atlas-2.1.0-mac-arm64.vcvplugin` (1.2 MB) |
+| Package | `plugin/dist/Atlas-2.1.0-mac-arm64.vcvplugin` (1.2 MB) |
 
 ## Verification results (final run, 2026-10-20)
 
 | Check | Result |
 | --- | --- |
-| Validator (`rack/compiler/validate.mjs`) | 52 lessons, 0 errors, 22 warnings (book and site titles in Latin, old-anatomy coverage notes) |
+| Validator (`compiler/validate.mjs`) | 52 lessons, 0 errors, 22 warnings (book and site titles in Latin, old-anatomy coverage notes) |
 | Compiler | 576 blocks, 0 errors, 0 warnings |
 | Build gates (MCP Server on 2600 in every shipped patch, no test settings, one MCP Server per patch, …) | 52 patches, 0 problems |
 | Text areas, render harness, light and dark | 1,956 each: 0 overflowing or scrolling, 0 multi-page |
@@ -54,7 +54,7 @@ Owner's next step: `rack/scripts/owner-install.sh`, then `docs/rack/OWNER_CHECKL
 | All server tests incl. tutor (`app/server/**/*.test.mjs`) | 87/87; tutor runtime 14/14 on test servers 5185/5186 |
 | Plugin Atlas client end to end (real `Client.cpp` on the app's libRack against `/api/rack` with the stub) | 8/8 + the exchange in the note log |
 | Web e2e of the old VCV flow (`app/scripts/e2e-vcv.mjs`) | no failures |
-| `owner-install.sh` | dry run and real run on `HOME=rack/.fakehome` |
+| `install.sh` | dry run and real run on `HOME=rack/.fakehome` |
 | Atlas web screen | checked in the browser on test server 5185 |
 
 Silent outputs in the live verification (66 blocks): MIDI modules without a controller (part 6);
@@ -68,7 +68,7 @@ Render harness: the plugin's views with the real VCV nanovg + fontstash and a so
 2,270 images per theme. Found and fixed in W9: 30 scrolling Task modules (the compiler now models
 TaskView and picks 14–20 HP), 17 figures with cut labels (content-width table columns; explicit
 flow rows), 11 flow figures with edges drawn through boxes (routed over the row), one diagram drawn
-as a chain. Details: `rack/qa/VISUAL_LOG.md`; sheets: `rack/qa/previews/`.
+as a chain. Details: `qa/VISUAL_LOG.md`; sheets: `qa/previews/`.
 
 ## Tutor latency
 

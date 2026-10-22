@@ -9,7 +9,7 @@
     3. Огибающая ADSR → CV-вход VCA. Push → Gate ADSR.
     4. Нажми Push: звук есть, пока кнопка нажата.
   given: [audio]
-  check: p3-05-first-voice           # reuse vcv/course/checks/<id>.json (names verified live)
+  check: p3-05-first-voice           # reuse facts/checks/<id>.json (names verified live)
   hints:                              # ladder per check item, from vague to exact
     "cable:3":
       - Звук есть всегда, даже без нажатия? Подумай, что решает, когда звучать.

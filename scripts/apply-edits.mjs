@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Applies a read-through edit list (plan §10.7) to the lesson YAML files:
- *   node rack/scripts/apply-edits.mjs <edits.json> […] [--dry]
+ *   node scripts/apply-edits.mjs <edits.json> […] [--dry]
  * Each edit {lesson, block, old, new, why}: `old` is replaced by `new` at its first occurrence after
  * the block's `- id: <block>` line and before the next block. An edit whose `old` is not found there
  * is reported and skipped; a file whose YAML no longer parses is left unchanged.
@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 import YAML from "../compiler/node_modules/yaml/dist/index.js";
 
-const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dry = process.argv.includes("--dry");
 const lists = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const byLesson = {};
@@ -20,7 +20,7 @@ for (const f of lists) for (const e of JSON.parse(fs.readFileSync(f, "utf8"))) (
 let applied = 0;
 const skipped = [];
 for (const [id, edits] of Object.entries(byLesson)) {
-	const file = path.join(REPO, "rack/course/lessons", `${id}.yaml`);
+	const file = path.join(REPO, "course/lessons", `${id}.yaml`);
 	let text = fs.readFileSync(file, "utf8");
 	for (const e of edits) {
 		const start = text.search(new RegExp(`^  - id: ${e.block}\\s*$`, "m"));

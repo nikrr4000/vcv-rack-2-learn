@@ -10,28 +10,25 @@
  *
  * One tutor process for the lesson open in Rack (`runner.mjs`); each message goes out wrapped in
  * the context header (`context.mjs`). Exchanges, blocks, quiz answers and checks go into the
- * lesson's vault note (`progress.mjs`). The web lesson runner is not involved.
+ * lesson's note (`progress.mjs`, `notes.mjs`).
  */
 
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
-import { rackPort, readAppSettings, tutorClaudePath } from "../app-settings.mjs";
-import { childEnv, HttpError, readJson } from "../http.mjs";
-import { APP_STATE_DIR, REPO, VCV_DIR } from "../paths.mjs";
-import { courseLesson } from "../vcv/course.mjs";
-import * as rack from "../vcv/rack.mjs";
+import { rackPort, REPO, STATE_DIR as APP_STATE_DIR, TUTOR_DIR, tutorChoice, tutorClaudePath } from "./config.mjs";
+import { childEnv, HttpError, readJson } from "./http.mjs";
+import * as rack from "./rack-mcp.mjs";
 import { buildHeader, KINDS, lessonBrief, packLesson } from "./context.mjs";
 import { appendLog, lessonOpened, progressForRack, recordEvent } from "./progress.mjs";
 import { EFFORTS, MODELS, TutorRunner, tutorArgs, writeTutorMcpConfig } from "./runner.mjs";
 
-export const TUTOR_DIR = path.join(VCV_DIR, "tutor");
-export const TUTOR_RUN_DIR = path.join(TUTOR_DIR, "run");
+export const TUTOR_RUN_DIR = path.join(APP_STATE_DIR, "tutor-run");
 export const TUTOR_PROMPT = path.join(TUTOR_DIR, "TUTOR.md");
 const STREAM_TTL_MS = 10 * 60 * 1000;
 
-export function tutorSettings(s = readAppSettings()) {
+export function tutorSettings(s = tutorChoice()) {
 	return { model: MODELS.includes(s.tutorModel) ? s.tutorModel : "sonnet", effort: EFFORTS.includes(s.tutorEffort) ? s.tutorEffort : "low" };
 }
 
@@ -51,7 +48,7 @@ let runnerKey = "";
 /** The runner for the current claude path and tutor settings (a change restarts it). */
 function getRunner() {
 	const command = tutorClaudePath();
-	if (!command) throw new HttpError(503, "Не найден claude: укажи путь в настройках Atlas");
+	if (!command) throw new HttpError(503, "Не найден claude: поставь Claude Code или укажи путь в RACK_TUTOR_CLAUDE");
 	const { model, effort } = tutorSettings();
 	const key = `${command}|${model}|${effort}|${rackPort()}`;
 	if (runner && runnerKey === key) return runner;
@@ -123,7 +120,7 @@ function readStream(id, after) {
 const LESSON_RE = /^p\d-\d{2}-[a-z0-9-]+$/;
 function requireLesson(id) {
 	if (typeof id !== "string" || !LESSON_RE.test(id)) throw new HttpError(400, "lesson must be a course lesson id");
-	if (!packLesson(id) && !courseLesson(id)) throw new HttpError(404, `нет урока ${id}`);
+	if (!packLesson(id)) throw new HttpError(404, `нет урока ${id}`);
 	return id;
 }
 

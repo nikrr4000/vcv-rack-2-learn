@@ -6,13 +6,13 @@
  * back (displayValue must match the block's targets) and checks that every output with a cable carries
  * a moving signal (5 samples 100 ms apart). Demo cables to the bus are wired to a muted Audio 2 here.
  *
- *   node rack/scripts/live-verify.mjs [<lesson> …] [--port 2610] [--json <file>]
+ *   node scripts/live-verify.mjs [<lesson> …] [--port 2610] [--json <file>]
  */
 import fs from "node:fs";
 import path from "node:path";
 
-import * as rackApi from "../../app/server/vcv/rack.mjs";
-import { rackReady, session, sleep } from "../../vcv/scripts/lib/live.mjs";
+import * as rackApi from "../server/rack-mcp.mjs";
+import { rackReady, session, sleep } from "./lib/live.mjs";
 import { RACK } from "../compiler/lib/data.mjs";
 
 const argv = process.argv.slice(2);

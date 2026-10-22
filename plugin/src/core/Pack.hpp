@@ -1,4 +1,4 @@
-// The course pack (res/course/pack.json, written by rack/compiler): every lesson, block and
+// The course pack (res/course/pack.json, written by compiler): every lesson, block and
 // item, the glossary and the course map. No Rack dependency (jansson only), so the render
 // harness and unit tests read the same file the plugin reads.
 #pragma once

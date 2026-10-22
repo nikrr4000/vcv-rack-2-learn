@@ -1,5 +1,5 @@
 // Dev bridge (testing only, plan §6.3.8): with ATLAS_DEV_PORT set, a tiny HTTP API on
-// 127.0.0.1 for the automated in-Rack checks (rack/scripts/rack-test.mjs). Handlers run on
+// 127.0.0.1 for the automated in-Rack checks (scripts/rack-test.mjs). Handlers run on
 // httplib threads: they enqueue work for the host and wait (10 s at most); /state is served
 // from the snapshot the host publishes in step(). Never active without the env var.
 #include <chrono>

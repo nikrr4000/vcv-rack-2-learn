@@ -8,9 +8,9 @@ import { fileURLToPath } from "node:url";
 
 import YAML from "yaml";
 
-export const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
-export const RACK = path.join(REPO, "rack");
-export const COURSE_OLD = path.join(REPO, "vcv/course");
+export const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+export const RACK = REPO;
+export const COURSE_OLD = path.join(REPO, "facts");
 export const LESSONS_DIR = process.env.ATLAS_LESSONS_DIR || path.join(RACK, "course/lessons");
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));

@@ -13,7 +13,7 @@ namespace {
 
 std::string fixturesDir() {
 	const char* d = std::getenv("ATLAS_FIXTURES");
-	return d ? d : "rack/plugin/tests/fixtures/checks";
+	return d ? d : "plugin/tests/fixtures/checks";
 }
 
 struct FixtureProbes : ProbeSource {

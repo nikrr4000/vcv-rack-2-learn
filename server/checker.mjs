@@ -19,7 +19,7 @@
  * the one that satisfies the most cables and params wins.
  */
 
-import * as defaultRack from "./rack.mjs";
+import * as defaultRack from "./rack-mcp.mjs";
 
 const MAX_ASSIGNMENTS = 20000;
 

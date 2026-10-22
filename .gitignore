@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+.sdk/
+.test-tmp/
+.rack-test/
+.rack-shots/
+.fakehome/
+build/
+state/
+plugin/build/
+plugin/dist/
+plugin/plugin.dylib
+plugin/tests/bin/
+plugin/src/BuildInfo.hpp
