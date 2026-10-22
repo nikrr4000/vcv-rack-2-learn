@@ -74,6 +74,8 @@ Read this first after a compaction or restart; continue from the first task that
 
 - First real tutor run (owner, 2026-10-20, `app/state/rack-tutor.jsonl`): lesson p1-01, warm-up answered, one reply of 566 chars, idle exit after 15 min; **no `fallback`** — the CLI accepted every flag of §7.2.
 
+- Owner report (2026-10-22): every glide (outline, «Дальше») went to the same spot above-left of the lesson rows. Cause: Rack loads module `pos` as `pos * RACK_GRID_SIZE + RACK_OFFSET` (RackWidget.cpp:500, offset 30000×38000 px); `blockRect`, the tutor patch line and the practice-scope fallback compared widget y with `row * 380` without the offset, found nothing and fell back to pack bounds near 0,0. Fixed with `rowTop(row)`; the fallback rect is offset too. Side effect fixed by the same change: the tutor's patch line was always empty (the server fell back to the REST summary).
+
 ## Background processes
 
 None.

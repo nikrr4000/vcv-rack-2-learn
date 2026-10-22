@@ -160,6 +160,11 @@ void AtlasHost::openLesson(const std::string& id) {
 	post([this, id]() { doOpenLesson(id); });
 }
 
+/** Top of a lesson row in rack coordinates: Rack loads `pos` as pos * RACK_GRID_SIZE + RACK_OFFSET. */
+static float rowTop(int row) {
+	return RACK_OFFSET.y + row * RACK_GRID_HEIGHT;
+}
+
 static json_t* audioData() {
 	for (int64_t id : APP->engine->getModuleIds()) {
 		engine::Module* m = APP->engine->getModule(id);
@@ -402,7 +407,7 @@ math::Rect AtlasHost::blockRect(int index) {
 	if (!L || index < 0 || index >= (int) L->blocks.size())
 		return r;
 	const Block& b = L->blocks[index];
-	float rowY = b.row * RACK_GRID_HEIGHT;
+	float rowY = rowTop(b.row);
 	bool any = false;
 	for (widget::Widget* w : APP->scene->rack->getModuleContainer()->children) {
 		if (std::fabs(w->box.pos.y - rowY) > 1.f)
@@ -411,7 +416,7 @@ math::Rect AtlasHost::blockRect(int index) {
 		any = true;
 	}
 	if (!any)
-		r = math::Rect(math::Vec(b.x, b.y), math::Vec(std::max(b.w, 300.f), RACK_GRID_HEIGHT));
+		r = math::Rect(RACK_OFFSET.plus(math::Vec(b.x, b.y)), math::Vec(std::max(b.w, 300.f), RACK_GRID_HEIGHT));
 	return r;
 }
 
@@ -632,7 +637,7 @@ std::string AtlasHost::patchLine(const Block* b) {
 		ids = checkScope(L, b, task, &err);
 	}
 	if (ids.empty()) {
-		float rowY = b->row * RACK_GRID_HEIGHT;
+		float rowY = rowTop(b->row);
 		for (widget::Widget* w : APP->scene->rack->getModuleContainer()->children) {
 			app::ModuleWidget* mw = dynamic_cast<app::ModuleWidget*>(w);
 			if (mw && mw->module && std::fabs(w->box.pos.y - rowY) < 1.f && mw->module->model->plugin->slug != "Atlas")
@@ -720,7 +725,7 @@ std::set<int64_t> AtlasHost::checkScope(const Lesson* L, const Block* B, const I
 	if (found < 2 && error)
 		*error = "Не вижу обоих модулей «Верстак» в этом ряду — проверяю весь ряд.";
 	if (rowY < 0)
-		rowY = B->row * RACK_GRID_HEIGHT;
+		rowY = rowTop(B->row);
 	for (widget::Widget* w : APP->scene->rack->getModuleContainer()->children) {
 		app::ModuleWidget* mw = dynamic_cast<app::ModuleWidget*>(w);
 		if (!mw || !mw->module || std::fabs(w->box.pos.y - rowY) > 1.f)
