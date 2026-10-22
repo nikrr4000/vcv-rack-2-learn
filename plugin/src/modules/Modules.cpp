@@ -1,6 +1,14 @@
 #include "Modules.hpp"
 
 #include "host/Host.hpp"
+#if defined(__has_include)
+#if __has_include("BuildInfo.hpp")
+#include "BuildInfo.hpp"
+#endif
+#endif
+#ifndef ATLAS_BUILD
+#define ATLAS_BUILD "dev"
+#endif
 
 namespace atlas {
 
@@ -111,6 +119,8 @@ struct UrlField : ui::TextField {
 
 void appendAtlasMenu(ui::Menu* menu) {
 	menu->addChild(new ui::MenuSeparator);
+	// Which build is loaded (Rack reads plugin.dylib only at start): version · commit · build time.
+	menu->addChild(createMenuLabel("Atlas " + pluginInstance->version + " · сборка " + ATLAS_BUILD));
 	menu->addChild(createMenuLabel("Адрес Atlas (ATLAS_URL в окружении важнее)"));
 	menu->addChild(new UrlField);
 	menu->addChild(createBoolMenuItem("Боковая панель", "", []() { return settings().panelOpen; }, [](bool v) {

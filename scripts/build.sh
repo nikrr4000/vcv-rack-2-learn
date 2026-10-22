@@ -19,6 +19,9 @@ if [ $TEST = 1 ]; then node rack/compiler/compile.mjs --test | tail -1; else nod
 echo "== gates"
 node rack/compiler/gates.mjs $([ $TEST = 1 ] && echo --test)
 echo "== plugin"
+# Build marker shown in the Navigator's context menu (src/BuildInfo.hpp, not in git).
+BUILD_ID="$(git rev-parse --short HEAD 2>/dev/null || echo nogit)$(git diff --quiet HEAD -- rack/plugin/src 2>/dev/null || echo +)  $(date '+%Y-%m-%d %H:%M')"
+printf '#pragma once\n#define ATLAS_BUILD "%s"\n' "$BUILD_ID" > rack/plugin/src/BuildInfo.hpp
 make -C rack/plugin -j8 2>&1 | quiet | grep -E "error|warning:" && { echo "plugin build has errors or warnings"; exit 1; } || true
 test -f rack/plugin/plugin.dylib
 echo "== tests"
